@@ -1,0 +1,4 @@
+-The 'f1' directory houses a subset of stims for talker f1, used originally by Tzeng et al. (2021). These include filler words (FW), critical words produced typically (s and sh), and critical words produced shifted (Xs and Xsh).
+
+-The 'blend' directory houses combinations of critical shifted words from one talker and filler words from the other. In all cases, one talker is f1 and the other is a male version of f1 created via the specs provided by Cummings & Theodore (under review).  
+	-within the 'blend' directory, the 'cropped' directory includes combinations wherein during the critical fricative's production, audio from the other talker is muted. 

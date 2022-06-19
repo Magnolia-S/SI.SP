@@ -1,0 +1,12 @@
+File System:
+s -> "sss"
+xs -> "shh"
+F -> female voice
+M -> male voice
+dinosaur.stereo -> both voices
+e.g., m.sh -> gender.sound
+e.g., m.sh_f.s -> m.sh = L ear; f.s = R ear 
+	(Did not make counterbalanced example stims yet)
+R -> removed s from appropriate talker
+No.dB -> did not change dB of male voice 
+	(Working on balancing M vs F)

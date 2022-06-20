@@ -1,6 +1,6 @@
 Talkers:
 ----------
-Simulated a female, prosocial talker with an sh bias.
+Simulated a female, prosocial talker with a sh bias.
 Simulated a male, neutral (antisocial?) talker with an s bias.
 ----------
 F/M.X -> Gender of VoI
@@ -25,7 +25,7 @@ I may have gotten this jumbled, but I'm fairly confident matching...
 F.Xsh + M.S = Sh bias in F; 
 M.Xs + F.Sh = S bias in M; 
 F.Fw + M.Sh = baseline Sh in M (contrast with new M.S); 
-M.FW + F.S = baseline S in F (contrast with new F.Sh)
+M.Fw + F.S = baseline S in F (contrast with new F.Sh)
 
 
 

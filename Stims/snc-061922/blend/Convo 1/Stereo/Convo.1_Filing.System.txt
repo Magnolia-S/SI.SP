@@ -1,0 +1,18 @@
+Talkers:
+----------
+Simulated a female, prosocial talker with an sh bias.
+Simulated a male, neutral (antisocial?) talker with an s bias.
+----------
+
+F/M.X -> Gender of VoI
+X.L/R -> Ear presentation of VoI
+
+Xsh -> ambiguous sh (F)         + unambiguous s (M) for comparison
+Xs -> ambiguous s (M)           + unambiguous sh (F) for comparison
+FW -> catch tiral (prosocial/neutral prime)
+
+XX_abc -> word spoken by VoI
+
+*VoI = Voice of Interest
+
+

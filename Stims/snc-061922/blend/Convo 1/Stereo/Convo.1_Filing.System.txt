@@ -10,7 +10,7 @@ Xsh -> ambiguous sh (F)         + unambiguous s (M) for comparison
 Xs -> ambiguous s (M)           + unambiguous sh (F) for comparison
 FW -> catch tiral (prosocial/neutral prime)
 
-XX_abc -> word spoken by VoI
+XX_abc.xyz -> word spoken by VoI . word spoken by other talker
 
 *VoI = Voice of Interest
 ---------

@@ -1,15 +1,27 @@
 S-Sh minimal pairs
 ~ * ~
 
-Shine/sign
-Sore/Shore
-Sin/Shin
-sort/short
-sun/shun
-sell/shell
-sale/shale
-shower/sour
-sake/shake
-sew/show
-single/shingle
+Shine/Sign
 
+Sore/Shore
+Sort/Short
+
+Sip/Ship
+Sift/ Shift
+Sin/Shin
+Single/Shingle
+* sit/shit 
+
+Sun/Shun
+
+Sell/Shell
+Self/Shelf
+
+Sale/Shale
+* Sag/Shag
+
+Sake/Shake
+
+Shower/Sour
+
+Show/So

@@ -1,0 +1,20 @@
+Words used to create stims from Kraljic & Samuel, 2005
+Stims themselves from Tzeng et al., 2021
+Change gender procedure from Luthra et al., 2021 (in Praat; Boersma, 2002)
+
+~ * ~
+
+References
+
+Boersma, P. (2002). Praat, a system for doing phonetics by computer. Glot International, 5(9/10), 341–345.
+
+Cummings, S. N. & Theodore, R. M. (in press). Perceptual learning of multiple talkers: Detriments, characteristics, and limitations. Attention, Perception, & Psychophysics.
+
+Kraljic, T., & Samuel, A. G. (2005). Perceptual learning for speech: Is there a return to normal?. Cognitive psychology, 51(2), 141-178. 
+- p. 33 (173) Appendix A: Critical & Filler Words
+
+Luthra, S., Mechtenberg, H., & Myers, E. B. (2021). Perceptual learning of multiple talkers requires additional exposure. Attention, Perception, & Psychophysics, 83, 2217–2228.
+- p.4
+
+Tzeng, C. Y., Nygaard, L. C., & Theodore, R. M. (2021). A second chance for a first impression: Sensitivity to cumulative input statistics for lexically guided perceptual learning. Psychonomic Bulletin & Review, 28, 1003–1014.
+- p. 3-4 (1005-6)

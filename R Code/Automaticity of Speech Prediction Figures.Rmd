@@ -211,13 +211,13 @@ d.vot %>%
 ### Talker B 
   stat_function(
     fun = function(x) 
-    plogis(x, 58, 1.8),
+    plogis(x, 50, .6),
     color = "rosybrown1", 
     size = 1) +
   annotate(
     geom = "text", 
     label = "Talker B \n ?S", 
-    x = 64, 
+    x = 54, 
     y = .75, 
     color = "rosybrown2") +
   geom_segment(

@@ -2,13 +2,17 @@ Words used to create stims from Kraljic & Samuel, 2005
 Stims themselves from Tzeng et al., 2021
 Change gender procedure from Luthra et al., 2021 (in Praat; Boersma, 2002)
 
+Gender:
+	Male: Format Shift Ratio: 0.8, New Pitch Median: 100
+	Female: Format Shift Ratio: 1, New Pitch Median: 180
+
 ~ * ~
 
 References
 
 Boersma, P. (2002). Praat, a system for doing phonetics by computer. Glot International, 5(9/10), 341–345.
 
-Cummings, S. N. & Theodore, R. M. (in press). Perceptual learning of multiple talkers: Detriments, characteristics, and limitations. Attention, Perception, & Psychophysics.
+Cummings, S. N. & Theodore, R. M. (accepted). Perceptual learning of multiple talkers: Detriments, characteristics, and limitations. Attention, Perception, & Psychophysics.
 
 Kraljic, T., & Samuel, A. G. (2005). Perceptual learning for speech: Is there a return to normal?. Cognitive psychology, 51(2), 141-178. 
 - p. 33 (173) Appendix A: Critical & Filler Words

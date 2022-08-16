@@ -1,4 +1,5 @@
-Here’s what I propose. Let me know if it does not work?
+Florian - Notes on Potential Results
+
 
 Each listener will see 10 critical S and 10 critical SH trials. All of them will be on ear A and all of them will be by the attended talker (I mean the same is true for the other ear and the other talker, but I’m saying imagine that the attended talker is the one for which all critical trials are on ear A).
 
@@ -40,9 +41,8 @@ I think this is a good start. It will also give us information whether someone i
 
 
 
+~*~
 
-
-Thank you for the in-depth reply, I think I understand what you were suggesting during our meeting better now.
 I had been trying to balance the types of trials/words (i.e., critical, filler, and nonwords) across the talkers, rather than how the participants responses would reflect how they performed during the experiment. In retrospect, that makes a lot more sense when it comes to analyzing results:  it would be more important to focus on what the responses would look like if the participant performed the task correctly. Though we could see adaptation in both talkers, the filler/nonwords trials theoretically shouldn't contribute to how a listener adapts to the unattended talker either, so it's not as important to balance the word/trial types across conditions. And that's also related to why we could use word/nonwords as response options for all the trials: adaptation is based on exposure to the talker, not the active categorization (which we could collect data on incrementally in another paradigm, like in 206, but isn't necessary for listener's to adapt to talkers).
-This is more for me to keep track of the reasoning behind choices; I think I got it now.
+
 

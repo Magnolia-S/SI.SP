@@ -103,130 +103,63 @@ theme_set(theme_bw())
 source("C:/Users/Rachel/Documents/BCSC 206.207/BCSC_207/scripts/experiment-reports/functions-for-experiment-reports.R")
 ```
 
-## Figure 1A: Full adaptation to both talkers   
+## Figure 1A: If attention **is** Required
 ```{r Figure 1A}
 
 ### From BCS 206 --> I think this is the dataframe?
 #### Figure out how to change later!
 d.vot <- tibble(VOT = seq(20, 80, 12))
 d.vot %>%
-ggplot(aes(x = VOT)) +
-  
-### Talker A
-  stat_function(
-    fun = function(x)
-    plogis(x, 35, 1.2),
-    color = "salmon1", 
-    size = 1.4) +
-  annotate(
-    geom = "text", 
-    label = "Talker A \n ?Sh", 
-    x = 40, 
-    y = .75, 
-    color = "salmon1") +
-  geom_segment(
-    x = 35, xend = 35,
-    y = 0, yend = 1,
-    color = "salmon1", 
-    linetype = 2,
-    size = .75,
-    alpha = .07) +
-      
-### Talker B 
-  stat_function(
-    fun = function(x) 
-    plogis(x, 65, 1.2),
-    color = "Rosybrown1", 
-    size = 1.4) +
-  annotate(
-    geom = "text", 
-    label = "Talker B \n ?S", 
-    x = 70, 
-    y = .75, 
-    color = "Rosybrown2") +
-  geom_segment(
-    x = 65, xend = 65,
-    y = 0, yend = 1,
-    color = "Rosybrown1", 
-    linetype = 2,
-    size = .75,
-    alpha = .1) +
-  
-### Prior Expectation Estimate
-  stat_function(
-    fun = function(x) 
-    plogis(x, 50, .6),
-    color = "blacK", 
-    linetype = 2, 
-    size = 1) +
+    ggplot(aes(x = VOT)) +
+
+### Expectations marker  
   geom_segment(
     x = 50, xend = 50,
     y = 0, yend = 1,
     color = "lightgray", 
     linetype = 2,
-    size = .75,
+    size = 1,
     alpha = .25) +
-  annotate(
-    geom = "text", 
-    label = "Prior \n Expectation \n Estimate", 
-    x = 54, 
-    y = .25, 
-    color = "black") +
-
-### Title & Axes
-  scale_x_continuous("Percent /s/ energy") +
-  scale_y_continuous('Proportion of /ʃ/ responses') +
-  ggtitle("Figure 1A: Example /S/-/ʃ/ Perception (Full Adaptation to Both Talkers)") 
-```
-
-## Figure 1B: Inhibited adaptation to unattended talker
-```{r Figure 1B}
-
-### From BCS 206 --> I think this is the dataframe?
-#### Figure out how to change later!
-d.vot <- tibble(VOT = seq(20, 80, 12))
-d.vot %>%
-    ggplot(aes(x = VOT)) +
   
 ### Talker A
   stat_function(
     fun = function(x) 
     plogis(x, 35, 1.2),
-    color = "salmon1",
-    size = 1.4) +
+    color = "orange",
+    size = 2) +
   annotate(
     geom = "text", 
     label = "Talker A \n ?Sh", 
-    x = 40, 
+    x = 40.5, 
     y = .75, 
-    color = "salmon1") +
+    color = "orange") +
   geom_segment(
     x = 35, xend = 35,
     y = 0, yend = 1,
-    color = "salmon1", 
+    color = "orange", 
     linetype = 2,
-    size = .75,
-    alpha = .07) +
+    size = 1,
+    alpha = .3) +
     
 ### Talker B 
   stat_function(
     fun = function(x) 
     plogis(x, 50, .6),
-    color = "rosybrown1", 
-    size = 1) +
+    color = "lightskyblue", 
+    size = 2) +
   annotate(
     geom = "text", 
     label = "Talker B \n ?S", 
-    x = 54, 
+    x = 55, 
     y = .75, 
-    color = "rosybrown2") +
+    color = "lightskyblue3") +
   geom_segment(
     x = 65, xend = 65,
     y = 0, yend = 1,
-    color = "rosybrown1", 
+    color = "lightskyblue", 
     linetype = 2,
-    size = .75,
-    alpha = .1) +
+    size = 1,
+    alpha = .4) +
   
 ### Prior Expectations Estimate
   stat_function(
@@ -234,14 +167,7 @@ d.vot %>%
     plogis(x, 50, .6),
     color = "blacK",
     linetype = 2, 
-    size = 1) +
-  geom_segment(
-    x = 50, xend = 50,
-    y = 0, yend = 1,
-    color = "lightgray", 
-    linetype = 2,
-    size = .75,
-    alpha = .25) +
+    size = 2) +
   annotate(
     geom = "text", 
     label = "Prior \n Expectation \n Estimate", 
@@ -250,7 +176,166 @@ d.vot %>%
     color = "black") +
 
 ### Title & Axes
-  scale_x_continuous("Percent /s/ energy") +
-  scale_y_continuous('Proportion of /ʃ/ responses') +
-  ggtitle("Figure 1B: Example /S/-/ʃ/ Perception (Attending to Talker A)")
+  scale_x_continuous('Percent "S" energy \n (not observed)') +
+  scale_y_continuous('Proportion of "Sh" responses') +
+  ggtitle("Figure 1A: If Adaptation Requires Attention")
+```
+
+## Figure 1B: If attention **is not** Required
+```{r Figure 1B}
+
+### From BCS 206 --> I think this is the dataframe?
+#### Figure out how to change later!
+d.vot <- tibble(VOT = seq(20, 80, 12))
+d.vot %>%
+ggplot(aes(x = VOT)) +
+  
+### Expectations marker  
+  geom_segment(
+    x = 50, xend = 50,
+    y = 0, yend = 1,
+    color = "lightgray", 
+    linetype = 2,
+    size = 1,
+    alpha = .25) +
+  
+### Talker A
+  stat_function(
+    fun = function(x)
+    plogis(x, 35, 1.2),
+    color = "orange", 
+    size = 2) +
+  annotate(
+    geom = "text", 
+    label = "Talker A \n ?Sh", 
+    x = 40.5, 
+    y = .75, 
+    color = "orange") +
+  geom_segment(
+    x = 35, xend = 35,
+    y = 0, yend = 1,
+    color = "orange", 
+    linetype = 2,
+    size = 1,
+    alpha = .3) +
+      
+### Talker B 
+  stat_function(
+    fun = function(x) 
+    plogis(x, 65, 1.2),
+    color = "lightskyblue", 
+    size = 2) +
+  annotate(
+    geom = "text", 
+    label = "Talker B \n ?S", 
+    x = 70.5, 
+    y = .75, 
+    color = "lightskyblue3") +
+  geom_segment(
+    x = 65, xend = 65,
+    y = 0, yend = 1,
+    color = "lightskyblue", 
+    linetype = 2,
+    size = 1,
+    alpha = .4) +
+  
+### Prior Expectation Estimate
+  stat_function(
+    fun = function(x) 
+    plogis(x, 50, .6),
+    color = "blacK", 
+    linetype = 2, 
+    size = 2) +
+  annotate(
+    geom = "text", 
+    label = "Prior \n Expectation \n Estimate", 
+    x = 44.5, 
+    y = .25, 
+    color = "black") +
+
+### Title & Axes
+  scale_x_continuous('Percent "S"" energy \n (not observed)' ) +
+  scale_y_continuous('Proportion of "Sh" responses') +
+  ggtitle("Figure 1B: If Adaptation is Automatic") 
+```
+
+## Figure 1C: No Adaptation
+```{r Figure 1C}
+
+### From BCS 206 --> I think this is the dataframe?
+#### Figure out how to change later!
+d.vot <- tibble(VOT = seq(20, 80, 12))
+d.vot %>%
+    ggplot(aes(x = VOT)) +
+  
+### Expectations marker  
+  geom_segment(
+    x = 50, xend = 50,
+    y = 0, yend = 1,
+    color = "lightgray", 
+    linetype = 2,
+    size = 1,
+    alpha = .25) +
+  
+### Talker A
+  stat_function(
+    fun = function(x) 
+    plogis(x, 50, .6),
+    color = "orange",
+    size = 2,
+    alpha = .9 )+
+  annotate(
+    geom = "text", 
+    label = "Talker A \n ?Sh", 
+    x = 47, 
+    y = .75, 
+    color = "orange") +
+  geom_segment(
+    x = 35, xend = 35,
+    y = 0, yend = 1,
+    color = "orange", 
+    linetype = 2,
+    size = 1,
+    alpha = .3) +
+    
+### Talker B 
+  stat_function(
+    fun = function(x) 
+    plogis(x, 50, .6),
+    color = "lightskyblue", 
+    size = 2,
+    alpha = .6) +
+  annotate(
+    geom = "text", 
+    label = "Talker B \n ?S", 
+    x = 54, 
+    y = .5, 
+    color = "lightskyblue3") +
+  geom_segment(
+    x = 65, xend = 65,
+    y = 0, yend = 1,
+    color = "lightskyblue", 
+    linetype = 2,
+    size = 1,
+    alpha = .4) +
+  
+  ### Prior Expectations Estimate
+  stat_function(
+    fun = function(x) 
+    plogis(x, 50, .6),
+    color = "blacK",
+    linetype = 2, 
+    size = 2) +
+  annotate(
+    geom = "text", 
+    label = "Prior \n Expectation \n Estimate", 
+    x = 44.5, 
+    y = .25, 
+    color = "black") +
+  
+
+### Title & Axes
+  scale_x_continuous('Percent "S" energy \n (not observed)') +
+  scale_y_continuous('Proportion of "Sh" responses') +
+  ggtitle("Figure 1C: If No Adaptation Occurs")
 ```

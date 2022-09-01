@@ -99,7 +99,6 @@ theme_set(theme_bw())
 ```
 
 # Example Only: 08.19 
-
 ```{r List}
 
 ###
@@ -138,3 +137,85 @@ mutate(
   
 View()
 ```
+
+# Code 8.30
+```{r List.Design}
+###
+
+tibble(
+  AttendedCategory = c("sh", "s"),
+  AttendedWord = c(
+    "Ambition",
+    "Machinery",
+    "Brochure",
+    "Official",
+    "Crucial",
+    "Pediatrician",
+    "Flourishing",
+    "Reassure",
+    "Graduation",
+    "Vacation",
+    "Parasite",
+    "Obscene",
+    "Medicine",
+    "Tennessee",
+    "Penninsula",
+    "Hallucinate",
+    "Arkansas",
+    "Compensate",
+    "Dinosaur",
+    "Rehearsal"
+  ),
+  UnattendedCategory = c("s", "sh"),
+  UnattendedWord = c(
+    "Pregnancy",
+    "Democracy",
+    "Embassy",
+    "Legacy",
+    "Reconcile",
+    "Personal",
+    "Eraser",
+    "Episode",
+    "Literacy",
+    "Coliseum",
+    "Initial",
+    "Beneficial",
+    "Negotiate",
+    "Commercial",
+    "Parachute",
+    "Efficient",
+    "Publisher",
+    "Glacier",
+    "Refreshing",
+    "Impatient"
+  )
+  ) %>% 
+  
+crossing(
+  Assignment_TalkerToAccent = c(
+    "attended: sh-biased", 
+    "attended: s-biased"
+    ),
+  Assignment_TalkerToGender = c(
+    "attended: female", 
+    "attended: male"
+    ),
+  Assignment_TalkerToEar = c(
+    "attended: left", 
+    "attended: right"
+    )) %>%
+ 
+mutate(
+  filename = paste(
+    case_when(
+      Assignment_TalkerToAccent == "attended: sh-biased" & AttendedCategory == "sh" ~ paste0("a", AttendedWord),
+      Assignment_TalkerToAccent == "attended: s-biased" & AttendedCategory == "s" ~ paste0("a", AttendedWord),
+      T ~ AttendedWord),
+    case_when(
+      Assignment_TalkerToGender == "attended: female" ~ "-female",
+      T ~ "-male")
+    )) %>% 
+  
+View()
+```
+

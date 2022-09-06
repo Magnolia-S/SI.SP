@@ -140,11 +140,11 @@ View()
 
 # Code 9.05
 ```{r List.Design}
-### Table with the information on how the stims should be paired + voice x accent x ear assignment
+### Table with the information on how the stims should be paired + Accent x Gender x Ear assignment
 
 tibble(
   AttendedCategory = c(
-  ## This will be Materials A
+  ## Materials A
     "sh", 
     "sh", 
     "sh", 
@@ -156,6 +156,7 @@ tibble(
     "sh", 
     "sh",
     ## 10 sh
+   
     "s",
     "s",
     "s",
@@ -168,7 +169,7 @@ tibble(
     "s",
     ## 10 s
   
-  ## This will be Materials B
+  ## Materials B
     "s",
     "s",
     "s",
@@ -180,6 +181,7 @@ tibble(
     "s",
     "s",
     ## 10 s   
+    
     "sh", 
     "sh", 
     "sh", 
@@ -194,7 +196,7 @@ tibble(
     ),
   
   AttendedWord = c(
-  ## This will be Materials A
+  ## Materials A
     "Ambition",
     "Machinery",
     "Brochure",
@@ -216,7 +218,7 @@ tibble(
     "Dinosaur",
     "Rehearsal",
     
-  ## This will be Materials B
+  ## Materials B
     "Pregnancy",
     "Democracy",
     "Embassy",
@@ -240,7 +242,7 @@ tibble(
   ),
   
   UnattendedCategory = c(
-  ##This will be Materials B
+  ## Materials B
     "s",
     "s",
     "s",
@@ -251,7 +253,8 @@ tibble(
     "s",
     "s",
     "s",
-    ## 10 s   
+    ## 10 s
+
     "sh", 
     "sh", 
     "sh", 
@@ -264,7 +267,7 @@ tibble(
     "sh",
     ## 10 sh
  
-  ## This will be Materials A
+  ## Materials A
     "sh", 
     "sh", 
     "sh", 
@@ -276,6 +279,7 @@ tibble(
     "sh", 
     "sh",
     ## 10 sh
+   
     "s",
     "s",
     "s",
@@ -289,9 +293,8 @@ tibble(
     ## 10 s
     ),
     
-  
   UnattendedWord = c(
-  ## This will Materials B
+  ## Materials B
     "Pregnancy",
     "Democracy",
     "Embassy",
@@ -313,7 +316,7 @@ tibble(
     "Refreshing",
     "Impatient",
     
-  ## This will be Materials A
+  ## Materials A
     "Ambition",
     "Machinery",
     "Brochure",
@@ -337,6 +340,7 @@ tibble(
   )
   ) %>% 
   
+## Possible Assignments (Accent x Gender x Ear)
 crossing(
   Assignment_TalkerToAccent = c(
     "Attended: sh-Biased", 
@@ -355,20 +359,19 @@ crossing(
 ## Changing file names --> Based on the *Attended Talker*
 mutate(
   filename = paste(
-    
-  ## sh Bias  
+   
+  ## s/sh Bias      
     case_when(
       Assignment_TalkerToAccent == "Attended: sh-Biased" 
       & AttendedCategory == "sh" ~ 
         paste0("a.", AttendedWord),
-  
-  ## s Bias
+      
       Assignment_TalkerToAccent == "Attended: s-Biased" 
       & AttendedCategory == "s" ~ 
         paste0("a.", AttendedWord),
        T ~ AttendedWord),
     
-  ## M/F Voice
+  ## M/F Gender
     case_when(
       Assignment_TalkerToGender == 
         "Attended: Female (F)" ~ ".F", T ~ ".M"),
@@ -376,7 +379,7 @@ mutate(
   ## L/R Ear
     case_when(
       Assignment_TalkerToEar == 
-        "Attended: Left (L)" ~ "-L", T ~ "-R")
+        "Attended: Left (L)" ~ ".L", T ~ ".R")
   ))%>% 
   
 View()

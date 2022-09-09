@@ -138,62 +138,20 @@ mutate(
 View()
 ```
 
-# Code 9.05
+# Code 9.08
 ```{r List.Design}
 ### Table with the information on how the stims should be paired + Accent x Gender x Ear assignment
 
 tibble(
   AttendedCategory = c(
   ## Materials A
-    "sh", 
-    "sh", 
-    "sh", 
-    "sh", 
-    "sh",
-    "sh", 
-    "sh", 
-    "sh", 
-    "sh", 
-    "sh",
-    ## 10 sh
-   
-    "s",
-    "s",
-    "s",
-    "s",
-    "s",
-    "s",
-    "s",
-    "s",
-    "s",
-    "s",
-    ## 10 s
-  
+    rep("sh", 10),
+    rep("s", 10),
+
   ## Materials B
-    "s",
-    "s",
-    "s",
-    "s",
-    "s",
-    "s",
-    "s",
-    "s",
-    "s",
-    "s",
-    ## 10 s   
-    
-    "sh", 
-    "sh", 
-    "sh", 
-    "sh", 
-    "sh",
-    "sh", 
-    "sh", 
-    "sh", 
-    "sh", 
-    "sh"
-    ## 10 sh
-    ),
+    rep("s", 10),
+    rep("sh", 10)
+  ),
   
   AttendedWord = c(
   ## Materials A
@@ -243,55 +201,13 @@ tibble(
   
   UnattendedCategory = c(
   ## Materials B
-    "s",
-    "s",
-    "s",
-    "s",
-    "s",
-    "s",
-    "s",
-    "s",
-    "s",
-    "s",
-    ## 10 s
-
-    "sh", 
-    "sh", 
-    "sh", 
-    "sh", 
-    "sh",
-    "sh", 
-    "sh", 
-    "sh", 
-    "sh", 
-    "sh",
-    ## 10 sh
+    rep("s", 10),
+    rep("sh", 10),
  
   ## Materials A
-    "sh", 
-    "sh", 
-    "sh", 
-    "sh", 
-    "sh",
-    "sh", 
-    "sh", 
-    "sh", 
-    "sh", 
-    "sh",
-    ## 10 sh
-   
-    "s",
-    "s",
-    "s",
-    "s",
-    "s",
-    "s",
-    "s",
-    "s",
-    "s",
-    "s"
-    ## 10 s
-    ),
+    rep("sh", 10),
+    rep("s", 10)
+  ),
     
   UnattendedWord = c(
   ## Materials B
@@ -337,51 +253,65 @@ tibble(
     "Compensate",
     "Dinosaur",
     "Rehearsal"
-  )
-  ) %>% 
+  )) %>% 
   
 ## Possible Assignments (Accent x Gender x Ear)
 crossing(
   Assignment_TalkerToAccent = c(
     "Attended: sh-Biased", 
     "Attended: s-Biased"
-    ),
+  ),
   Assignment_TalkerToGender = c(
     "Attended: Female (F)", 
     "Attended: Male (M)"
-    ),
+  ),
   Assignment_TalkerToEar = c(
     "Attended: Left (L)", 
     "Attended: Right (R)"
-    )) %>%
+  )) %>%
  
-
 ## Changing file names --> Based on the *Attended Talker*
 mutate(
   filename = paste(
    
   ## s/sh Bias      
     case_when(
+      
       Assignment_TalkerToAccent == "Attended: sh-Biased" 
       & AttendedCategory == "sh" ~ 
-        paste0("a.", AttendedWord),
+        paste0("S", sep = ".", AttendedWord),
       
       Assignment_TalkerToAccent == "Attended: s-Biased" 
       & AttendedCategory == "s" ~ 
-        paste0("a.", AttendedWord),
-       T ~ AttendedWord),
+        paste0("S", sep = ".", AttendedWord),
+       
+      T ~ paste0("U", sep = ".", AttendedWord)
+    ),
     
   ## M/F Gender
     case_when(
-      Assignment_TalkerToGender == 
-        "Attended: Female (F)" ~ ".F", T ~ ".M"),
+      
+      Assignment_TalkerToGender == "Attended: Female (F)" ~ paste0(sep = ".", "F"), 
+      
+      T ~ paste0(sep = ".", "M")
+    ),
     
   ## L/R Ear
     case_when(
+      
       Assignment_TalkerToEar == 
-        "Attended: Left (L)" ~ ".L", T ~ ".R")
-  ))%>% 
+        "Attended: Left (L)" ~ paste0(sep = ".", "L"), 
+      
+      T ~ paste0(sep = ".", "R")
+    )
   
-View()
+    ### Paste0 should automatically fill in the separator as no character (sep = ""), or be replaced with a period in the above case. I can't seem to remove the space between the Attended Word and the portions of the file name I am trying to paste after?
+
+)) %>% 
+  
+view()
 ```
 
+```{r help}
+?paste
+```

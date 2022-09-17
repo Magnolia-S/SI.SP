@@ -98,47 +98,7 @@ options(width = 110)
 theme_set(theme_bw())
 ```
 
-# Example Only: 08.19 
-```{r List}
-
-###
-
-tibble(
-  AttendedCategory = c("sh", "s"),
-  AttendedWord = c("ambition", "pregnancy"),
-  UnattendedCategory = c("s", "sh"),
-  UnattendedWord = c("parasite", "initial")
-  ) %>% 
-  
-crossing(
-  Assignment_TalkerToAccent = c(
-    "attended: sh-biased", 
-    "attended: s-biased"
-    ),
-  Assignment_TalkerToGender = c(
-    "attended: female", 
-    "attended: male"
-    ),
-  Assignment_TalkerToEar = c(
-    "attended: left", 
-    "attended: right"
-    )) %>%
- 
-mutate(
-  filename = paste(
-    case_when(
-      Assignment_TalkerToAccent == "attended: sh-biased" & AttendedCategory == "sh" ~ paste0("a", AttendedWord),
-      Assignment_TalkerToAccent == "attended: s-biased" & AttendedCategory == "s" ~ paste0("a", AttendedWord),
-      T ~ AttendedWord),
-    case_when(
-      Assignment_TalkerToGender == "attended: female" ~ "-female",
-      T ~ "-male")
-    )) %>% 
-  
-View()
-```
-
-# Code 9.08
+# Code 9.17
 ```{r List.Design}
 ### Table with the information on how the stims should be paired + Accent x Gender x Ear assignment
 
@@ -269,7 +229,7 @@ crossing(
     "Attended: Left (L)", 
     "Attended: Right (R)"
   )) %>%
- 
+
 ## Changing file names --> Based on the *Attended Talker*
 mutate(
   filename = paste(
@@ -279,14 +239,15 @@ mutate(
       
       Assignment_TalkerToAccent == "Attended: sh-Biased" 
       & AttendedCategory == "sh" ~ 
-        paste0("S", sep = ".", AttendedWord),
+        paste0("S", sep = ".",  substr(AttendedWord, 1, 5)),
       
       Assignment_TalkerToAccent == "Attended: s-Biased" 
       & AttendedCategory == "s" ~ 
-        paste0("S", sep = ".", AttendedWord),
+        paste0("S", sep = ".",  substr(AttendedWord, 1, 5)),
        
-      T ~ paste0("U", sep = ".", AttendedWord)
+      T ~ paste0("U", sep = ".",  substr(AttendedWord, 1, 5))
     ),
+    ### substr(AttendedWord, 1, 5) --> truncates the file name to include the first 5 characters of the word assigned to the attended talker
     
   ## M/F Gender
     case_when(
@@ -306,12 +267,22 @@ mutate(
     )
   
     ### Paste0 should automatically fill in the separator as no character (sep = ""), or be replaced with a period in the above case. I can't seem to remove the space between the Attended Word and the portions of the file name I am trying to paste after?
-
 )) %>% 
   
 view()
 ```
 
+## Key for File Names
+
+Symbol | Meaning
+------------------------------
+ S.    | Shifted (ambiguous)
+ U.    | Unshifted (unambiguous)
+.M     | Male gender assignment
+.F     | Female gender assignment
+.L     | Left ear
+.R     | Right ear
+
 ```{r help}
-?paste
+?paste0
 ```

@@ -98,12 +98,13 @@ options(width = 110)
 theme_set(theme_bw())
 ```
 
-# Code 9.17
-```{r List.Design}
-### Table with the information on how the stims should be paired + Accent x Gender x Ear assignment
+# Code 9.21   
+## Critical Pairs   
+```{r List.Design_Ciritcal.Pairs}
+# Table with the information on how the stims should be paired + Accent x Gender x Ear assignment
 
 tibble(
-  AttendedCategory = c(
+  Attended.Category = c(
   ## Materials A
     rep("sh", 10),
     rep("s", 10),
@@ -113,7 +114,7 @@ tibble(
     rep("sh", 10)
   ),
   
-  AttendedWord = c(
+  Attended.Word = c(
   ## Materials A
     "Ambition",
     "Machinery",
@@ -159,7 +160,7 @@ tibble(
     "Impatient"  
   ),
   
-  UnattendedCategory = c(
+  Unattended.Category = c(
   ## Materials B
     rep("s", 10),
     rep("sh", 10),
@@ -169,7 +170,7 @@ tibble(
     rep("s", 10)
   ),
     
-  UnattendedWord = c(
+  Unattended.Word = c(
   ## Materials B
     "Pregnancy",
     "Democracy",
@@ -215,59 +216,71 @@ tibble(
     "Rehearsal"
   )) %>% 
   
-## Possible Assignments (Accent x Gender x Ear)
+# Possible Assignments (Accent x Gender x Ear)
 crossing(
-  Assignment_TalkerToAccent = c(
+  Assignment_Talker.To.Accent = c(
     "Attended: sh-Biased", 
     "Attended: s-Biased"
-  ),
-  Assignment_TalkerToGender = c(
+  )
+) %>%
+  
+mutate(
+  Assignment_Talker.To.Shift =   
+    case_when(
+      Assignment_Talker.To.Accent == "Attended: sh-Biased" 
+        & Attended.Category == "sh" ~ "Attended: Shifted (S)",
+      Assignment_Talker.To.Accent == "Attended: s-Biased" 
+       & Attended.Category == "s" ~ "Attended: Shifted (S)",
+      T ~ "Attended: Unshifted (U)"
+  )
+) %>%
+  
+crossing(
+  Assignment_Talker.To.Gender = c(
     "Attended: Female (F)", 
     "Attended: Male (M)"
   ),
-  Assignment_TalkerToEar = c(
+  
+  Assignment_Talker.To.Ear = c(
     "Attended: Left (L)", 
     "Attended: Right (R)"
-  )) %>%
+  )
+) %>%
 
-## Changing file names --> Based on the *Attended Talker*
+
+# Changing file names --> Based on the *Attended Talker*
 mutate(
-  filename = paste(
+  filename = paste0(
    
   ## s/sh Bias      
     case_when(
-      
-      Assignment_TalkerToAccent == "Attended: sh-Biased" 
-      & AttendedCategory == "sh" ~ 
-        paste0("S", sep = ".",  substr(AttendedWord, 1, 5)),
-      
-      Assignment_TalkerToAccent == "Attended: s-Biased" 
-      & AttendedCategory == "s" ~ 
-        paste0("S", sep = ".",  substr(AttendedWord, 1, 5)),
-       
-      T ~ paste0("U", sep = ".",  substr(AttendedWord, 1, 5))
+      Assignment_Talker.To.Accent == 
+        "Attended: sh-Biased" & Attended.Category == "sh" ~ 
+        paste0("S", sep = ".",  substr(Attended.Word, 1, 5)),
+      Assignment_Talker.To.Accent == 
+        "Attended: s-Biased" & Attended.Category == "s" ~ 
+        paste0("S", sep = ".",  substr(Attended.Word, 1, 5)),
+      T ~ paste0("U", sep = ".",  substr(Attended.Word, 1, 5))
     ),
-    ### substr(AttendedWord, 1, 5) --> truncates the file name to include the first 5 characters of the word assigned to the attended talker
+    
+    ### substr(Attended.Word, 1, 5) --> truncates the file name to include the first 5 characters of the word assigned to the attended talker --> need at least 5 characters to differentiate parachute from parasite
     
   ## M/F Gender
     case_when(
-      
-      Assignment_TalkerToGender == "Attended: Female (F)" ~ paste0(sep = ".", "F"), 
-      
+      Assignment_Talker.To.Gender == 
+        "Attended: Female (F)" ~ paste0(sep = ".", "F"), 
       T ~ paste0(sep = ".", "M")
     ),
     
   ## L/R Ear
     case_when(
-      
-      Assignment_TalkerToEar == 
+      Assignment_Talker.To.Ear == 
         "Attended: Left (L)" ~ paste0(sep = ".", "L"), 
-      
       T ~ paste0(sep = ".", "R")
     )
-  
-    ### Paste0 should automatically fill in the separator as no character (sep = ""), or be replaced with a period in the above case. I can't seem to remove the space between the Attended Word and the portions of the file name I am trying to paste after?
 )) %>% 
+ 
+### to assign the files to the appropriate lists, I was thinking of using the row numbers in some way? I might just have to do it manually though because I'm not sure if it works well systematically?
   
 view()
 ```
@@ -281,8 +294,202 @@ Symbol | Meaning
 .M     | Male gender assignment
 .F     | Female gender assignment
 .L     | Left ear
-.R     | Right ear
+.R     | Right ear    
 
+
+## Filler Pairs   
+```{r List.Design_Filler.Pairs}
+tibble(
+  Set = c(
+    rep("A", 20),
+    rep("B", 20),
+    rep("C", 20)
+  ), 
+
+  Filler.Word = c(
+  # Set A
+    "ameri",
+    "blueb",
+    "camer",
+    "direc",
+    "dynam",
+    "garde",
+    "hambu",
+    "hurdl",
+    "inhab",
+    "keybo",
+    "lengt",
+    "linge",
+    "melan",
+    "napki",
+    "ornam",
+    "pinea",
+    "purga",
+    "thera",
+    "tutor",
+    "wealt",
+    
+  # Set B
+    "baker",
+    "bully",
+    "conti",
+    "docum",
+    "eight",
+    "gramm",
+    "ident",
+    "inter",
+    "knowi",
+    "letha",
+    "lobby",
+    "membe",
+    "negat",
+    "outnu",
+    "parak",
+    "plato",
+    "tacti",
+    "titan",
+    "umbre",
+    "world",
+    
+  # Set C
+    "balle",
+    "burgl",
+    "domin",
+    "embod",
+    "gulli",
+    "honey",
+    "illum",
+    "ironi",
+    "lamin",
+    "liabi",
+    "marin",
+    "metir",
+    "night",
+    "panic",
+    "pilgr",
+    "predi",
+    "termi",
+    "turbu",
+    "under",
+    "wink"
+  ),
+  
+  Non.Word = c(
+  # Set A
+    "womin",
+    "ungel",
+    "tileg",
+    "rimke",
+    "rakil",
+    "perku",
+    "nomer",
+    "namue",
+    "logel",
+    "lened",
+    "kelab",
+    "inpak",
+    "hinta",
+    "gondi",
+    "gaire",
+    "bikan",
+    "balib",
+    "amala",
+    "ailou",
+    "acomi",
+      
+  # Set B
+    "woyal",
+    "touna",
+    "rylig",
+    "rawam",
+    "ploup",
+    "omper",
+    "nempr",
+    "mibge",
+    "meidn",
+    "kermi",
+    "itemp",
+    "aknid",
+    "ibira",
+    "halke",
+    "ganla",
+    "dadig",
+    "bamte",
+    "aneme",
+    "lilgr",
+    "admun",
+  
+  # Set C
+   "youmg",
+   "tymol",
+   "tamic",
+   "rengi",
+   "pouri",
+   "oumik",
+   "nirit",
+   "mikid",
+   "kalde",
+   "imdai",
+   "kloum",
+   "halom",
+   "gerbu",
+   "galli",
+   "emhou",
+   "dilku",
+   "bawes",
+   "anoli",
+   "alnad",
+   "aigi"
+  )
+) %>%
+  
+crossing(
+  Assignment_Talker.To.Gender = c(
+    "Attended: Female (F)", 
+    "Attended: Male (M)"
+  ),
+  
+  Assignment_Talker.To.Ear = c(
+    "Attended: Left (L)", 
+    "Attended: Right (R)"
+  )
+) %>%
+  
+  
+# Changing file names --> Name based on the FillerWord
+mutate(
+  filename = paste0(
+   
+  ## M/F Gender
+    case_when(
+      Assignment_Talker.To.Gender == 
+        "Attended: Female (F)" ~ paste0("N", sep = ".", Filler.Word, sep = ".", "F"), 
+      T ~ paste0("N", sep = ".", Filler.Word, sep = ".", "M")
+    ),
+    
+  ## L/R Ear
+    case_when(
+      Assignment_Talker.To.Ear == 
+        "Attended: Left (L)" ~ paste0(sep = ".", "L"), 
+      T ~ paste0(sep = ".", "R")
+    )
+)) %>% 
+  
+mutate (
+   case_when(
+      List == 
+      row.number/4 == interger
+   )
+ ) %>%
+  
+View()
+```
+
+
+### Help  
 ```{r help}
-?paste0
+?crossing
+?mutate
+
+### I need to create a column in the table that notes which lists assignment the audio files should be included in, which can then be filtered down by list.
 ```

@@ -475,13 +475,6 @@ mutate(
     )
 )) %>% 
   
-mutate (
-   case_when(
-      List == 
-      row.number/4 == interger
-   )
- ) %>%
-  
 View()
 ```
 

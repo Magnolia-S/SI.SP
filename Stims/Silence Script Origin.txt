@@ -1,0 +1,5 @@
+Adding Silence to stims Praat script
+
+https://www.ddaidone.com/praat-scripts.html
+
+https://www.ddaidone.com/uploads/1/0/5/2/105292729/insert_silence_at_start_of_all_files_in_folder.txt

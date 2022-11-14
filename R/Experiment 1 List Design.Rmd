@@ -61,7 +61,7 @@ def.chunk.hook  <- knitr::knit_hooks$get("chunk")
 
 knitr::knit_hooks$set(
   chunk = function(x, options) {
-  x <- def.chunk.hook(x, options)
+    x <- def.chunk.hook(x, options)
     ifelse(
       options$size != "normalsize", 
       paste0(
@@ -70,11 +70,11 @@ knitr::knit_hooks$set(
         "\n\n", 
         x, 
         "\n\n \\normalsize"), 
-        x)
-})
+      x)
+  })
 
 color_block = function(color) {
-    function(x, options)        sprintf('\\color{%s}\\begin{verbatim}%s\\end{verbatim}\\color{black}', color, x)
+  function(x, options)        sprintf('\\color{%s}\\begin{verbatim}%s\\end{verbatim}\\color{black}', color, x)
 }
 knitr::knit_hooks$set(error = color_block('red'))
 knitr::knit_hooks$set(warning = color_block('orange'))
@@ -98,391 +98,459 @@ options(width = 110)
 theme_set(theme_bw())
 ```
 
-# Code 9.21   
+# Lists
+
 ## Critical Pairs   
 ```{r List.Design_Ciritcal.Pairs}
-# Table with the information on how the stims should be paired + Accent x Gender x Ear assignment
+# Table with the information on how the stims should be paired: Materials x Accent x Gender x Ear Assignment
 
+## Word list -> removes reliance on order
+
+### Materials A
+Materials.A_S.Words = c(  
+  "Parasite",
+  "Obscene",
+  "Medicine",
+  "Tennessee",
+  "Penninsula",
+  "Hallucinate",
+  "Arkansas",
+  "Compensate",
+  "Dinosaur",
+  "Rehearsal"
+)
+
+Materials.A_Sh.Words = c(
+  "Ambition",
+  "Machinery",
+  "Brochure",
+  "Official",
+  "Crucial",
+  "Pediatrician",
+  "Flourishing",
+  "Reassure",
+  "Graduation",
+  "Vacation"
+)
+
+## Materials B
+Materials.B_S.Words = c(
+  "Pregnancy",
+  "Democracy",
+  "Embassy",
+  "Legacy",
+  "Reconcile",
+  "Personal",
+  "Eraser",
+  "Episode",
+  "Literacy",
+  "Coliseum"
+)
+
+Materials.B_Sh.Words= c(
+  "Initial",
+  "Beneficial",
+  "Negotiate",
+  "Commercial",
+  "Parachute",
+  "Efficient",
+  "Publisher",
+  "Glacier",
+  "Refreshing",
+  "Impatient"  
+)
+
+## Items
 tibble(
-  Attended.Category = c(
-  ## Materials A
-    rep("sh", 10),
-    rep("s", 10),
-
-  ## Materials B
-    rep("s", 10),
-    rep("sh", 10)
-  ),
+  Critical.Pair = 1:20,
+  Talker.A = c(Materials.A_Sh.Words, Materials.B_S.Words),
+  Talker.B = c(Materials.A_S.Words, Materials.B_Sh.Words),
+) %>% 
   
-  Attended.Word = c(
-  ## Materials A
-    "Ambition",
-    "Machinery",
-    "Brochure",
-    "Official",
-    "Crucial",
-    "Pediatrician",
-    "Flourishing",
-    "Reassure",
-    "Graduation",
-    "Vacation",
-    "Parasite",
-    "Obscene",
-    "Medicine",
-    "Tennessee",
-    "Penninsula",
-    "Hallucinate",
-    "Arkansas",
-    "Compensate",
-    "Dinosaur",
-    "Rehearsal",
-    
-  ## Materials B
-    "Pregnancy",
-    "Democracy",
-    "Embassy",
-    "Legacy",
-    "Reconcile",
-    "Personal",
-    "Eraser",
-    "Episode",
-    "Literacy",
-    "Coliseum",
-    "Initial",
-    "Beneficial",
-    "Negotiate",
-    "Commercial",
-    "Parachute",
-    "Efficient",
-    "Publisher",
-    "Glacier",
-    "Refreshing",
-    "Impatient"  
-  ),
-  
-  Unattended.Category = c(
-  ## Materials B
-    rep("s", 10),
-    rep("sh", 10),
- 
-  ## Materials A
-    rep("sh", 10),
-    rep("s", 10)
-  ),
-    
-  Unattended.Word = c(
-  ## Materials B
-    "Pregnancy",
-    "Democracy",
-    "Embassy",
-    "Legacy",
-    "Reconcile",
-    "Personal",
-    "Eraser",
-    "Episode",
-    "Literacy",
-    "Coliseum",
-    "Initial",
-    "Beneficial",
-    "Negotiate",
-    "Commercial",
-    "Parachute",
-    "Efficient",
-    "Publisher",
-    "Glacier",
-    "Refreshing",
-    "Impatient",
-    
-  ## Materials A
-    "Ambition",
-    "Machinery",
-    "Brochure",
-    "Official",
-    "Crucial",
-    "Pediatrician",
-    "Flourishing",
-    "Reassure",
-    "Graduation",
-    "Vacation",
-    "Parasite",
-    "Obscene",
-    "Medicine",
-    "Tennessee",
-    "Penninsula",
-    "Hallucinate",
-    "Arkansas",
-    "Compensate",
-    "Dinosaur",
-    "Rehearsal"
-  )) %>% 
-  
-# Possible Assignments (Accent x Gender x Ear)
-crossing(
-  Assignment_Talker.To.Accent = c(
-    "Attended: sh-Biased", 
-    "Attended: s-Biased"
-  )
-) %>%
-  
-mutate(
-  Assignment_Talker.To.Shift =   
-    case_when(
-      Assignment_Talker.To.Accent == "Attended: sh-Biased" 
-        & Attended.Category == "sh" ~ "Attended: Shifted (S)",
-      Assignment_Talker.To.Accent == "Attended: s-Biased" 
-       & Attended.Category == "s" ~ "Attended: Shifted (S)",
-      T ~ "Attended: Unshifted (U)"
-  )
-) %>%
-  
-crossing(
-  Assignment_Talker.To.Gender = c(
-    "Attended: Female (F)", 
-    "Attended: Male (M)"
-  ),
-  
-  Assignment_Talker.To.Ear = c(
-    "Attended: Left (L)", 
-    "Attended: Right (R)"
-  )
-) %>%
-
-
-# Changing file names --> Based on the *Attended Talker*
-mutate(
-  filename = paste0(
-   
-  ## s/sh Bias      
-    case_when(
-      Assignment_Talker.To.Accent == 
-        "Attended: sh-Biased" & Attended.Category == "sh" ~ 
-        paste0("S", sep = ".",  substr(Attended.Word, 1, 5)),
-      Assignment_Talker.To.Accent == 
-        "Attended: s-Biased" & Attended.Category == "s" ~ 
-        paste0("S", sep = ".",  substr(Attended.Word, 1, 5)),
-      T ~ paste0("U", sep = ".",  substr(Attended.Word, 1, 5))
+## Possible Assignments (Shift x Gender x Ear)
+  ### Which Talker is Attended to is dependent on instructions
+  crossing(
+    Assignment_Shift = c(
+      "Shifted (S)",
+      "Unshifted (U)"
+    ),    
+    Assignment_Talker.A_Gender = c(
+      "Female (F)", 
+      "Male (M)"
     ),
-    
-    ### substr(Attended.Word, 1, 5) --> truncates the file name to include the first 5 characters of the word assigned to the attended talker --> need at least 5 characters to differentiate parachute from parasite
-    
-  ## M/F Gender
-    case_when(
-      Assignment_Talker.To.Gender == 
-        "Attended: Female (F)" ~ paste0(sep = ".", "F"), 
-      T ~ paste0(sep = ".", "M")
-    ),
-    
-  ## L/R Ear
-    case_when(
-      Assignment_Talker.To.Ear == 
-        "Attended: Left (L)" ~ paste0(sep = ".", "L"), 
-      T ~ paste0(sep = ".", "R")
+    Assignment_Talker.A_Ear = c(
+      "Left (L)", 
+      "Right (R)"
     )
-)) %>% 
+) %>%
+
+## Adds in column noting Gender + Ear Assignment for Talker B
+  mutate(
+      Assignment_Talker.B_Gender =
+        case_when( 
+         Assignment_Talker.A_Gender == "Female (F)"
+          ~ "Male (M)", 
+          T ~ "Female (F)"
+        )) %>%
  
-### to assign the files to the appropriate lists, I was thinking of using the row numbers in some way? I might just have to do it manually though because I'm not sure if it works well systematically?
+ mutate(
+    Assignment_Talker.B_Ear =
+      case_when(
+        Assignment_Talker.A_Ear == "Left (L)"
+        ~ "Right (R)",
+        T ~ "Left (L)"
+      )) %>%
+
+# Changing file names
+  mutate(
+    filename = 
+      paste0(
+        "Critical", 
+        sep = "_",
+        
+  ## Talker A 
+     
+        ### Shift
+        case_when(
+          Assignment_Shift == "Shifted (S)" 
+          ~ paste0("S", sep = "."),
+          Assignment_Shift == "Unshifted (U)" 
+          ~ paste0("U", sep = "."),
+          ),
   
-view()
+        ### Talker A Word 
+        substr(Talker.A, 1, 5),
+  
+        ### Gender Assignment
+        case_when(
+          Assignment_Talker.A_Gender == "Female (F)" 
+          ~ paste0(sep = ".", "F"), 
+          T ~ paste0(sep = ".", "M")
+        ),
+          
+        ### Ear Assignment
+        case_when(
+          Assignment_Talker.A_Ear == "Left (L)" 
+          ~ paste0(sep = ".", "L"), 
+          T ~ paste0(sep = ".", "R")
+        ),
+        
+      sep = "_",
+        
+  ## Talker B
+        
+        ### Shift
+        case_when(
+          Assignment_Shift == "Shifted (S)" 
+          ~ paste0("S", sep = "."),
+          Assignment_Shift == "Unshifted (U)" 
+          ~ paste0("U", sep = "."),
+          ),
+  
+          ### Talker B Word
+          substr(Talker.B, 1, 5),
+  
+          ### Gender Assignment
+          case_when(
+            Assignment_Talker.B_Gender == "Female (F)" 
+            ~ paste0(sep = ".", "F"), 
+            T ~ paste0(sep = ".", "M")
+          ),
+          
+          ### Ear Assignment
+          case_when(
+            Assignment_Talker.B_Ear == "Left (L)" 
+            ~ paste0(sep = ".", "L"), 
+            T ~ paste0(sep = ".", "R")
+          )
+      )) %>% 
+  
+  view()
 ```
+
 
 ## Key for File Names
 
 Symbol | Meaning
 ------------------------------
- S.    | Shifted (ambiguous)
- U.    | Unshifted (unambiguous)
-.M     | Male gender assignment
-.F     | Female gender assignment
-.L     | Left ear
-.R     | Right ear    
+ A.  | Attended Talker
+ U.  | Unattended Talker
+.M   | Male Gender
+.F   | Female Gender
+.L   | Left Ear
+.R   | Right Ear    
 
+Embed this table into table of who is the attended talker?
 
 ## Filler Pairs   
 ```{r List.Design_Filler.Pairs}
+
+## Word List
+Set.A_Word = c(
+  "ameri",
+  "blueb",
+  "camer",
+  "direc",
+  "dynam",
+  "garde",
+  "hambu",
+  "hurdl",
+  "inhab",
+  "keybo",
+  "lengt",
+  "linge",
+  "melan",
+  "napki",
+  "ornam",
+  "pinea",
+  "purga",
+  "thera",
+  "tutor",
+  "wealt"
+)
+
+Set.B_Word = c(
+  "baker",
+  "bully",
+  "conti",
+  "docum",
+  "eight",
+  "gramm",
+  "ident",
+  "inter",
+  "knowi",
+  "letha",
+  "lobby",
+  "membe",
+  "negat",
+  "outnu",
+  "parak",
+  "plato",
+  "tacti",
+  "titan",
+  "umbre",
+  "world"
+)
+
+Set.C_Word = c(
+  "balle",
+  "burgl",
+  "domin",
+  "embod",
+  "gulli",
+  "honey",
+  "illum",
+  "ironi",
+  "lamin",
+  "liabi",
+  "marin",
+  "metir",
+  "night",
+  "panic",
+  "pilgr",
+  "predi",
+  "termi",
+  "turbu",
+  "under",
+  "wink"
+)
+
+Set.A_NonWord = c(
+  "womin",
+  "ungel",
+  "tileg",
+  "rimke",
+  "rakil",
+  "perku",
+  "nomer",
+  "namue",
+  "logel",
+  "lened",
+  "kelab",
+  "inpak",
+  "hinta",
+  "gondi",
+  "gaire",
+  "bikan",
+  "balib",
+  "amala",
+  "ailou",
+  "acomi"
+)
+
+Set.B_Nonword = c(
+  "woyal",
+  "touna",
+  "rylig",
+  "rawam",
+  "ploup",
+  "omper",
+  "nempr",
+  "mibge",
+  "meidn",
+  "kermi",
+  "itemp",
+  "aknid",
+  "ibira",
+  "halke",
+  "ganla",
+  "dadig",
+  "bamte",
+  "aneme",
+  "lilgr",
+  "admun"
+)
+
+Set.C_Nonword = c(
+  "youmg",
+  "tymol",
+  "tamic",
+  "rengi",
+  "pouri",
+  "oumik",
+  "nirit",
+  "mikid",
+  "kalde",
+  "imdai",
+  "kloum",
+  "halom",
+  "gerbu",
+  "galli",
+  "emhou",
+  "dilku",
+  "bawes",
+  "anoli",
+  "alnad",
+  "aigi"
+)
+
+## Table
 tibble(
   Set = c(
     rep("A", 20),
     rep("B", 20),
     rep("C", 20)
   ), 
-
-  Filler.Word = c(
-  # Set A
-    "ameri",
-    "blueb",
-    "camer",
-    "direc",
-    "dynam",
-    "garde",
-    "hambu",
-    "hurdl",
-    "inhab",
-    "keybo",
-    "lengt",
-    "linge",
-    "melan",
-    "napki",
-    "ornam",
-    "pinea",
-    "purga",
-    "thera",
-    "tutor",
-    "wealt",
-    
-  # Set B
-    "baker",
-    "bully",
-    "conti",
-    "docum",
-    "eight",
-    "gramm",
-    "ident",
-    "inter",
-    "knowi",
-    "letha",
-    "lobby",
-    "membe",
-    "negat",
-    "outnu",
-    "parak",
-    "plato",
-    "tacti",
-    "titan",
-    "umbre",
-    "world",
-    
-  # Set C
-    "balle",
-    "burgl",
-    "domin",
-    "embod",
-    "gulli",
-    "honey",
-    "illum",
-    "ironi",
-    "lamin",
-    "liabi",
-    "marin",
-    "metir",
-    "night",
-    "panic",
-    "pilgr",
-    "predi",
-    "termi",
-    "turbu",
-    "under",
-    "wink"
+  
+  Filler.Pair = c(
+    rep(1:20,3) 
   ),
   
-  Non.Word = c(
-  # Set A
-    "womin",
-    "ungel",
-    "tileg",
-    "rimke",
-    "rakil",
-    "perku",
-    "nomer",
-    "namue",
-    "logel",
-    "lened",
-    "kelab",
-    "inpak",
-    "hinta",
-    "gondi",
-    "gaire",
-    "bikan",
-    "balib",
-    "amala",
-    "ailou",
-    "acomi",
-      
-  # Set B
-    "woyal",
-    "touna",
-    "rylig",
-    "rawam",
-    "ploup",
-    "omper",
-    "nempr",
-    "mibge",
-    "meidn",
-    "kermi",
-    "itemp",
-    "aknid",
-    "ibira",
-    "halke",
-    "ganla",
-    "dadig",
-    "bamte",
-    "aneme",
-    "lilgr",
-    "admun",
+  Talker.A_Word = c(
+    Set.A_Word,
+    Set.B_Word,
+    Set.C_Word
+  ),
   
-  # Set C
-   "youmg",
-   "tymol",
-   "tamic",
-   "rengi",
-   "pouri",
-   "oumik",
-   "nirit",
-   "mikid",
-   "kalde",
-   "imdai",
-   "kloum",
-   "halom",
-   "gerbu",
-   "galli",
-   "emhou",
-   "dilku",
-   "bawes",
-   "anoli",
-   "alnad",
-   "aigi"
+  Talker.B_Nonword = c(
+    Set.A_NonWord,
+    Set.B_Nonword,
+    Set.C_Nonword
   )
 ) %>%
   
-crossing(
-  Assignment_Talker.To.Gender = c(
-    "Attended: Female (F)", 
-    "Attended: Male (M)"
-  ),
-  
-  Assignment_Talker.To.Ear = c(
-    "Attended: Left (L)", 
-    "Attended: Right (R)"
-  )
-) %>%
-  
-  
-# Changing file names --> Name based on the FillerWord
-mutate(
-  filename = paste0(
-   
-  ## M/F Gender
-    case_when(
-      Assignment_Talker.To.Gender == 
-        "Attended: Female (F)" ~ paste0("N", sep = ".", Filler.Word, sep = ".", "F"), 
-      T ~ paste0("N", sep = ".", Filler.Word, sep = ".", "M")
+  crossing(
+    Assignment_Talker.A_Gender = c(
+      "Female (F)", 
+      "Male (M)"
     ),
-    
-  ## L/R Ear
-    case_when(
-      Assignment_Talker.To.Ear == 
-        "Attended: Left (L)" ~ paste0(sep = ".", "L"), 
-      T ~ paste0(sep = ".", "R")
-    )
-)) %>% 
+    Assignment_Talker.A_Ear = c(
+      "Left (L)", 
+      "Right (R)"
+    )) %>%
   
-View()
+  ## Adds in column noting Gender + Ear Assignment for Talker B
+  mutate(
+      Assignment_Talker.B_Gender =
+        case_when( 
+         Assignment_Talker.A_Gender == "Female (F)"
+          ~ "Male (M)", 
+          T ~ "Female (F)"
+        )) %>%
+ 
+ mutate(
+    Assignment_Talker.B_Ear =
+      case_when(
+        Assignment_Talker.A_Ear == "Left (L)"
+        ~ "Right (R)",
+        T ~ "Left (L)"
+      )) %>%
+  
+  ## Adds Version
+  mutate(
+      Set.Version =
+        case_when( 
+           Assignment_Talker.A_Gender == "Female (F)" &
+           Assignment_Talker.A_Ear == "Left (L)"
+            ~ "1", 
+          
+           Assignment_Talker.A_Gender == "Female (F)" &
+           Assignment_Talker.A_Ear == "Right (R)"
+            ~ "2", 
+           
+           Assignment_Talker.A_Gender == "Male (M)" &
+           Assignment_Talker.A_Ear == "Left (L)" 
+            ~ "3", 
+           
+           Assignment_Talker.A_Gender == "Male (M)" &
+           Assignment_Talker.A_Ear == "Right (R)" 
+            ~ "4"
+        )) %>%
+
+# Changing file names
+  mutate(
+    filename = 
+      paste0(
+        "Filler", 
+        sep = "_",
+        
+  ## Talker A 
+     
+        ### Word
+          paste0("W", sep = "."),
+  
+        ### Talker A Word 
+          paste0(Talker.A_Word),
+          
+        ### Gender Assignment
+        case_when(
+          Assignment_Talker.A_Gender == "Female (F)" 
+          ~ paste0(sep = ".", "F"), 
+          T ~ paste0(sep = ".", "M")
+        ),
+          
+        ### Ear Assignment
+        case_when(
+          Assignment_Talker.A_Ear == "Left (L)" 
+          ~ paste0(sep = ".", "L"), 
+          T ~ paste0(sep = ".", "R")
+        ),
+        
+      sep = "_",
+        
+  ## Talker B
+        
+        ### Nonword
+        paste0("N", sep = "."),
+  
+        ### Talker B Word
+        paste0(Talker.B_Nonword),
+  
+          ### Gender Assignment
+          case_when(
+            Assignment_Talker.B_Gender == "Female (F)" 
+            ~ paste0(sep = ".", "F"), 
+            T ~ paste0(sep = ".", "M")
+          ),
+          
+          ### Ear Assignment
+          case_when(
+            Assignment_Talker.B_Ear == "Left (L)" 
+            ~ paste0(sep = ".", "L"), 
+            T ~ paste0(sep = ".", "R")
+          )
+      )) %>% 
+  
+  view()
 ```
 
-
-### Help  
-```{r help}
-?crossing
-?mutate
-
-### I need to create a column in the table that notes which lists assignment the audio files should be included in, which can then be filtered down by list.
-```

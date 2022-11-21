@@ -162,7 +162,7 @@ Materials.B_Sh.Words= c(
 
 ## Items
 tibble(
-  Critical.Pair = 1:20,
+  Critical_Item.Num = 1:20,
   Talker.A = c(Materials.A_Sh.Words, Materials.B_S.Words),
   Talker.B = c(Materials.A_S.Words, Materials.B_Sh.Words),
 ) %>% 
@@ -432,7 +432,7 @@ tibble(
     rep("C", 20)
   ), 
   
-  Filler.Pair = c(
+  Filler_Item.Num = c(
     rep(1:20,3) 
   ),
   
@@ -553,4 +553,134 @@ tibble(
   
   view()
 ```
+
+# Test Phase - Example 11.17
+```{r e.g.}
+### This creates a table of ALL the possible test items (individual files); these can then be filtered out by
+
+crossing(
+    item = paste("item", 1:6),
+    block = c(1:2, 5:6, 9:10),
+    talker_gender = c("female", "male"),
+    talker_gender_first = c("female", "male")) %>%
+
+    mutate(
+        filename = paste(talker_gender, item, sep = "-"),
+        rep = 1,
+        block = ifelse(talker_gender == talker_gender_first, block, block + 2)) %>%
+
+  select(-c(item, talker_gender)) %>%
+  group_by(talker_gender_first, block) %>%
+  
+  view()
+```
+ 
+  mutate(
+        filename = paste(talker_gender, item, sep = "-"),
+        rep = 1,
+        block = ifelse(talker_gender == talker_gender_first, block, block + 2)) %>%
+    select(-c(item, talker_gender)) %>%
+    group_by(talker_gender_first, block) %>%
+    group_map(.f = ~ write_csv(.x, file = paste0("temp/List-Test-FirstTalkerGender-", .y$talker_gender_first, "_Block-", .y$block, ".csv")))
+
+
+# Test Phase
+```{r Test Phase}
+
+## Table
+tibble(
+  Test_Item = c(
+  "ashi.25",
+  "ashi.30",
+  "ashi.40",
+  "ashi.45",
+  "ashi.50",
+  "ashi.70"
+  ),
+  
+  Test_Item.Num = 1:6
+)%>%
+
+### Attended Talker x First Talker
+crossing(
+  Talker_Gender = c(
+    "Female (F)", 
+    "Male (M)"
+    ),
+  
+  Block = 1:12
+) %>%
+
+### Filter by Block
+  mutate(
+    First_Talker = case_when( 
+      abs(Block %% 4) == 1 &
+      Talker_Gender == "Male (M)"
+      ~ "Male",
+      
+      abs(Block %% 4) == 2 &
+      Talker_Gender == "Male (M)"
+      ~ "Male",
+      
+      abs(Block %% 4) == 3 &
+      Talker_Gender == "Female (F)"
+      ~ "Male",      
+            
+      abs(Block %% 4) == 0 &
+      Talker_Gender == "Female (F)"
+      ~ "Male",  
+      
+      abs(Block %% 4) == 1 &
+      Talker_Gender == "Female (F)"
+      ~ "Female",
+      
+      abs(Block %% 4) == 2 &
+      Talker_Gender == "Female (F)"
+      ~ "Female",
+      
+      abs(Block %% 4) == 3 &
+      Talker_Gender == "Male (M)"
+      ~ "Female",
+      
+      abs(Block %% 4) == 0 &
+      Talker_Gender == "Male (M)"
+      ~ "Female"
+      ),
+    
+    Test.Version = case_when(
+      First_Talker == "Female"
+      ~ "A",
+      T ~ "B"
+    )) %>%
+  
+### File name
+mutate(
+ Filename = paste0(
+   "Test",
+   sep = "_",
+   Test.Version,
+   sep = ".",
+   
+   case_when(
+     Block < 10
+     ~ paste0("0", Block),
+     T ~ paste0(Block)
+   ),
+   
+   sep = "_",
+      case_when(
+     Talker_Gender == "Female (F)"
+     ~ paste0("F", sep = "."), 
+     T ~ paste0("M", sep = ".")
+   ),
+   Test_Item.Num,
+   sep = ".",   
+   Test_Item
+)) %>%
+
+View ()
+```  
+
+
+
 

@@ -554,36 +554,6 @@ tibble(
   view()
 ```
 
-# Test Phase - Example 11.17
-```{r e.g.}
-### This creates a table of ALL the possible test items (individual files); these can then be filtered out by
-
-crossing(
-    item = paste("item", 1:6),
-    block = c(1:2, 5:6, 9:10),
-    talker_gender = c("female", "male"),
-    talker_gender_first = c("female", "male")) %>%
-
-    mutate(
-        filename = paste(talker_gender, item, sep = "-"),
-        rep = 1,
-        block = ifelse(talker_gender == talker_gender_first, block, block + 2)) %>%
-
-  select(-c(item, talker_gender)) %>%
-  group_by(talker_gender_first, block) %>%
-  
-  view()
-```
- 
-  mutate(
-        filename = paste(talker_gender, item, sep = "-"),
-        rep = 1,
-        block = ifelse(talker_gender == talker_gender_first, block, block + 2)) %>%
-    select(-c(item, talker_gender)) %>%
-    group_by(talker_gender_first, block) %>%
-    group_map(.f = ~ write_csv(.x, file = paste0("temp/List-Test-FirstTalkerGender-", .y$talker_gender_first, "_Block-", .y$block, ".csv")))
-
-
 # Test Phase
 ```{r Test Phase}
 
@@ -611,7 +581,7 @@ crossing(
   Block = 1:12
 ) %>%
 
-### Filter by Block
+### Group every 2 blocks
   mutate(
     First_Talker = case_when( 
       abs(Block %% 4) == 1 &
@@ -646,7 +616,8 @@ crossing(
       Talker_Gender == "Male (M)"
       ~ "Female"
       ),
-    
+
+### 2 possible Lists: starting with the Female talker or the Male talker
     Test.Version = case_when(
       First_Talker == "Female"
       ~ "A",
@@ -680,6 +651,35 @@ mutate(
 
 View ()
 ```  
+
+# Test Phase - Example 11.17
+```{r e.g.}
+### This creates a table of ALL the possible test items (individual files); these can then be filtered out by
+
+crossing(
+    item = paste("item", 1:6),
+    block = c(1:2, 5:6, 9:10),
+    talker_gender = c("female", "male"),
+    talker_gender_first = c("female", "male")) %>%
+
+    mutate(
+        filename = paste(talker_gender, item, sep = "-"),
+        rep = 1,
+        block = ifelse(talker_gender == talker_gender_first, block, block + 2)) %>%
+
+  select(-c(item, talker_gender)) %>%
+  group_by(talker_gender_first, block) %>%
+  
+  view()
+```
+ 
+  mutate(
+        filename = paste(talker_gender, item, sep = "-"),
+        rep = 1,
+        block = ifelse(talker_gender == talker_gender_first, block, block + 2)) %>%
+    select(-c(item, talker_gender)) %>%
+    group_by(talker_gender_first, block) %>%
+    group_map(.f = ~ write_csv(.x, file = paste0("temp/List-Test-FirstTalkerGender-", .y$talker_gender_first, "_Block-", .y$block, ".csv")))
 
 
 

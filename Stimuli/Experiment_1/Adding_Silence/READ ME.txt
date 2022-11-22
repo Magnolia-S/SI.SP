@@ -1,0 +1,1 @@
+200ms of silence was added to all of the items (critical, filler, and test) used in Experiment 1 due to issues with the initial segments of the audio being cut off when listened to using bluetooth headphones in early tests.

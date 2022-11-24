@@ -264,11 +264,10 @@ tibble(
           )
       )) %>% 
 
-# CSV Files  
-select(-c(item, talker_gender)) %>%
-group_by(talker_gender_first, block) %>%
-group_map(.f = ~ write_csv(.x, file = paste0("temp/List-Test-FirstTalkerGender-", .y$talker_gender_first, "_Block-",
-.y$block, ".csv")))
+# CSV Files
+group_by(Assignment_Shift, Assignment_Talker.A_Gender, Assignment_Talker.A_Ear) %>%
+group_map(.f = ~ write_csv(.x, file = paste0("C:Stimuli/Experiment_1/Lists/Exposure_Phase/Critical_Lists/Critical_", .y$Assignment_Shift,"_Talker.A_", .y$Assignment_Talker.A_Gender, "_", .y$Assignment_Talker.A_Ear, ".csv")
+))
 ```
 
 
@@ -555,10 +554,9 @@ tibble(
       )) %>% 
   
 # CSV Files
-select(-c(item, talker_gender)) %>%
-group_by(talker_gender_first, block) %>%
-group_map(.f = ~ write_csv(.x, file = paste0("temp/List-Test-FirstTalkerGender-", .y$talker_gender_first, "_Block-",
-.y$block, ".csv")))
+group_by(Set, Set.Version, Assignment_Talker.A_Gender, Assignment_Talker.A_Ear) %>%
+group_map(.f = ~ write_csv(.x, file = paste0("C:Stimuli/Experiment_1/Lists/Exposure_Phase/Filler_Lists/Filler_Set.", .y$Set,"_V.", .y$Set.Version, "_Talker A_", .y$Assignment_Talker.A_Gender, "_", .y$Assignment_Talker.A_Ear, ".csv")
+))
 ```
 
 # Test Phase
@@ -625,7 +623,7 @@ crossing(
       ),
 
 ### 2 possible Lists: starting with the Female talker or the Male talker
-    Test.Version = case_when(
+    Test_Version = case_when(
       First_Talker == "Female"
       ~ "A",
       T ~ "B"
@@ -636,7 +634,7 @@ mutate(
  Filename = paste0(
    "Test",
    sep = "_",
-   Test.Version,
+   Test_Version,
    sep = ".",
    
    case_when(
@@ -657,25 +655,9 @@ mutate(
 )) %>%
   
 # CSV Files
-group_by(Test.Version) %>%
-group_map(.f = ~ write_csv(.x, file = paste0("C:/Stimuli/Experiment_1/Lists/Test_Phase", .y$Test.version, ".csv")
+group_by(Test_Version, Block, Talker_Gender) %>%
+group_map(.f = ~ write_csv(.x, file = paste0("C:Stimuli/Experiment_1/Lists/Test_Phase/Test.", .y$Test_Version,"_Block.", .y$Block, ".csv")
 ))
-```
-
-## Example 11.17
-```{r fuck}
-crossing(
-    item = paste("item", 1:6),
-    block = c(1:2, 5:6, 9:10),
-    talker_gender = c("female", "male"),
-    talker_gender_first = c("female", "male")) %>%
-    mutate(
-        filename = paste(talker_gender, item, sep = "-"),
-        rep = 1,
-        block = ifelse(talker_gender == talker_gender_first, block, block + 2)) %>%
-    select(-c(item, talker_gender)) %>%
-    group_by(talker_gender_first, block) %>%
-    group_map(.f = ~ write_csv(.x, file = paste0("temp/List-Test-FirstTalkerGender-", .y$talker_gender_first, "_Block-", .y$block, ".csv")))
 ```
 
 # File Renaming

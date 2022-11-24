@@ -1,25 +1,25 @@
 ---
 title: "Experiment 1 List Design"
 author: "Rachel"
-date: \today
+date: /today
 geometry: margin = 2cm
 header-includes:
-  - \usepackage{booktabs}
-  - \usepackage{siunitx}
-  - \usepackage{tabto}
-  - \usepackage{soul}
-  - \usepackage{xcolor}
-  - \usepackage{placeins}
-  - \usepackage{lscape}
-  - \usepackage{animate}
-  - \newcommand{\blandscape}{\begin{landscape}}
-  - \newcommand{\elandscape}{\end{landscape}}
-  - \makeatletter\renewcommand{\fps@table}{!ht}\makeatother
-  - \setstcolor{red}
-  - \usepackage{sectsty}
-  - \sectionfont{\color{blue}} 
-  - \subsectionfont{\color{blue}}
-  - \subsubsectionfont{\color{darkgray}}
+  - /usepackage{booktabs}
+  - /usepackage{siunitx}
+  - /usepackage{tabto}
+  - /usepackage{soul}
+  - /usepackage{xcolor}
+  - /usepackage{placeins}
+  - /usepackage{lscape}
+  - /usepackage{animate}
+  - /newcommand{/blandscape}{/begin{landscape}}
+  - /newcommand{/elandscape}{/end{landscape}}
+  - /makeatletter/renewcommand{/fps@table}{!ht}/makeatother
+  - /setstcolor{red}
+  - /usepackage{sectsty}
+  - /sectionfont{/color{blue}} 
+  - /subsectionfont{/color{blue}}
+  - /subsubsectionfont{/color{darkgray}}
 
 output:
   pdf_document: 
@@ -65,16 +65,16 @@ knitr::knit_hooks$set(
     ifelse(
       options$size != "normalsize", 
       paste0(
-        "\n \\", 
+        "/n //", 
         options$size,
-        "\n\n", 
+        "/n/n", 
         x, 
-        "\n\n \\normalsize"), 
+        "/n/n //normalsize"), 
       x)
   })
 
 color_block = function(color) {
-  function(x, options)        sprintf('\\color{%s}\\begin{verbatim}%s\\end{verbatim}\\color{black}', color, x)
+  function(x, options)        sprintf('//color{%s}//begin{verbatim}%s//end{verbatim}//color{black}', color, x)
 }
 knitr::knit_hooks$set(error = color_block('red'))
 knitr::knit_hooks$set(warning = color_block('orange'))
@@ -98,10 +98,9 @@ options(width = 110)
 theme_set(theme_bw())
 ```
 
-# Lists
-
-## Critical Pairs   
-```{r List.Design_Ciritcal.Pairs}
+# Exposure Phase   
+## Critical Items     
+```{r Ciritcal Items}
 # Table with the information on how the stims should be paired: Materials x Accent x Gender x Ear Assignment
 
 ## Word list -> removes reliance on order
@@ -264,8 +263,12 @@ tibble(
             T ~ paste0(sep = ".", "R")
           )
       )) %>% 
-  
-  view()
+
+# CSV Files  
+select(-c(item, talker_gender)) %>%
+group_by(talker_gender_first, block) %>%
+group_map(.f = ~ write_csv(.x, file = paste0("temp/List-Test-FirstTalkerGender-", .y$talker_gender_first, "_Block-",
+.y$block, ".csv")))
 ```
 
 
@@ -282,8 +285,8 @@ Symbol | Meaning
 
 Embed this table into table of who is the attended talker?
 
-## Filler Pairs   
-```{r List.Design_Filler.Pairs}
+## Filler Items   
+```{r Filler Items}
 
 ## Word List
 Set.A_Word = c(
@@ -551,7 +554,11 @@ tibble(
           )
       )) %>% 
   
-  view()
+# CSV Files
+select(-c(item, talker_gender)) %>%
+group_by(talker_gender_first, block) %>%
+group_map(.f = ~ write_csv(.x, file = paste0("temp/List-Test-FirstTalkerGender-", .y$talker_gender_first, "_Block-",
+.y$block, ".csv")))
 ```
 
 # Test Phase
@@ -648,39 +655,140 @@ mutate(
    sep = ".",   
    Test_Item
 )) %>%
+  
+# CSV Files
+group_by(Test.Version) %>%
+group_map(.f = ~ write_csv(.x, file = paste0("C:/Stimuli/Experiment_1/Lists/Test_Phase", .y$Test.version, ".csv")
+))
+```
 
-View ()
-```  
-
-# Test Phase - Example 11.17
-```{r e.g.}
-### This creates a table of ALL the possible test items (individual files); these can then be filtered out by
-
+## Example 11.17
+```{r fuck}
 crossing(
     item = paste("item", 1:6),
     block = c(1:2, 5:6, 9:10),
     talker_gender = c("female", "male"),
     talker_gender_first = c("female", "male")) %>%
-
     mutate(
-        filename = paste(talker_gender, item, sep = "-"),
-        rep = 1,
-        block = ifelse(talker_gender == talker_gender_first, block, block + 2)) %>%
-
-  select(-c(item, talker_gender)) %>%
-  group_by(talker_gender_first, block) %>%
-  
-  view()
-```
- 
-  mutate(
         filename = paste(talker_gender, item, sep = "-"),
         rep = 1,
         block = ifelse(talker_gender == talker_gender_first, block, block + 2)) %>%
     select(-c(item, talker_gender)) %>%
     group_by(talker_gender_first, block) %>%
     group_map(.f = ~ write_csv(.x, file = paste0("temp/List-Test-FirstTalkerGender-", .y$talker_gender_first, "_Block-", .y$block, ".csv")))
+```
+
+# File Renaming
+
+## Critical Items
+```{r Critical Rename}
+
+## Left: Female S Unambiguous; Right: Male Sh Unambiguous
+Critical.Item_F.S.L.U <- list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Critical_Pairs/Stereo/F.S_M.Sh/F.S_M.Sh", pattern = ".wav", full.names = TRUE)
+
+## Left: Female S Ambiguous; Right: Male Sh Ambiguous
+Critical.Item_F.S.L.A <-
+list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Critical_Pairs/Stereo/F.S_M.Sh/F.Xs_M.Xsh", pattern = ".wav", full.names = TRUE)
+
+## Left: Female Sh Unambiguous; Right: Male S Unambiguous
+Critical.Item_F.Sh.L.U <-
+list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Critical_Pairs/Stereo/F.Sh_M.S/F.Sh_M.S", pattern = ".wav", full.names = TRUE)
+
+## Left: Female Sh Ambiguous; Right: Male S Ambiguous
+Critical.Item_F.Sh.A <-
+list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Critical_Pairs/Stereo/F.Sh_M.S/F.Sh_M.S", pattern = ".wav", full.names = TRUE)
+
+## Left: Male S Unambiguous; Right: Female Sh Unambiguous
+Critical.Item_M.S.U <-
+list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Critical_Pairs/Stereo/M.S_F.Sh/M.S_F.Sh", pattern = ".wav", full.names = TRUE)
+
+## Left: Male S Ambiguous; Right: Female Sh Ambiguous
+Critical.Item_M.S.A <-
+list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Critical_Pairs/Stereo/M.S_F.Sh/M.Xs_F.Xsh", pattern = ".wav", full.names = TRUE)
+
+## Left: Male Sh Unambiguous; Right: Female S Unambiguous
+Critical.Item_M.Sh.U <-
+list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Critical_Pairs/Stereo/M.Sh_F.S/M.Sh_F.S", pattern = ".wav", full.names = TRUE)
+
+## Left: Male Sh Ambiguous; Right: Female S Ambiguous
+Critical.Item_M.Sh.A <-
+list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Critical_Pairs/Stereo/M.Sh_F.S/M.Sh_F.S", pattern = ".wav", full.names = TRUE)
+```
+
+## Filler Items
+```{r Filler Rename}
+
+## Set A
+### Version 1: Left = Female Nonword; Right = Male Word
+Filler.Item_SA.V1 <-
+list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Filler_Pairs/Stereo/A/Version 1", pattern = ".wav", full.names = TRUE)
+
+### Version 2: Left = Female Word; Right = Male Nonword
+Filler.Item_SA.V2 <-
+list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Filler_Pairs/Stereo/A/Version 2", pattern = ".wav", full.names = TRUE)
+
+### Version 3: Left = Male Nonword; Right = Female Word
+Filler.Item_SA.V3 <-
+list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Filler_Pairs/Stereo/A/Version 3", pattern = ".wav", full.names = TRUE)
+  
+### Version 4: Left = Male Word; Right = Female Nonword
+Filler.Item_SA.V4 <-
+list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Filler_Pairs/Stereo/A/Version 4", pattern = ".wav", full.names = TRUE)
 
 
+## Set B
+### Version 1: Left = Female Nonword; Right = Male Word
+Filler.Item_SA.V1 <-
+list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Filler_Pairs/Stereo/B/Version 1", pattern = ".wav", full.names = TRUE)
+
+### Version 2: Left = Female Word; Right = Male Nonword
+Filler.Item_SA.V2 <-
+list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Filler_Pairs/Stereo/B/Version 2", pattern = ".wav", full.names = TRUE)
+
+### Version 3: Left = Male Nonword; Right = Female Word
+Filler.Item_SA.V3 <-
+list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Filler_Pairs/Stereo/B/Version 3", pattern = ".wav", full.names = TRUE)
+  
+### Version 4: Left = Male Word; Right = Female Nonword
+Filler.Item_SA.V4 <-
+list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Filler_Pairs/Stereo/B/Version 4", pattern = ".wav", full.names = TRUE)
 
 
+## Set C
+### Version 1: Left = Female Nonword; Right = Male Word
+Filler.Item_SA.V1 <-
+list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Filler_Pairs/Stereo/C/Version 1", pattern = ".wav", full.names = TRUE)
+
+### Version 2: Left = Female Word; Right = Male Nonword
+Filler.Item_SA.V2 <-
+list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Filler_Pairs/Stereo/C/Version 2", pattern = ".wav", full.names = TRUE)
+
+### Version 3: Left = Male Nonword; Right = Female Word
+Filler.Item_SA.V3 <-
+list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Filler_Pairs/Stereo/C/Version 3", pattern = ".wav", full.names = TRUE)
+  
+### Version 4: Left = Male Word; Right = Female Nonword
+Filler.Item_SA.V4 <-
+list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Filler_Pairs/Stereo/C/Version 4", pattern = ".wav", full.names = TRUE)
+
+```
+
+## Test Items
+```{r Test Rename}
+
+## Female Test Continuum
+Test.Item_Female <- list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Test_Continuum/Original/Female", pattern = ".wav", full.names = TRUE)
+
+## Male Test Continuum
+Test.Item_Male <- list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Test_Continuum/Original/Male", pattern = ".wav", full.names = TRUE)
+
+```
+
+# CSV File (Concat?)
+```{r}
+...%>%
+select(-c(item, talker_gender)) %>%
+group_by(talker_gender_first, block) %>%
+group_map(.f = ~ write_csv(.x, file = paste0("temp/List-Test-FirstTalkerGender-", .y$talker_gender_first, "_Block-",
+.y$block, ".csv")))
+```

@@ -170,16 +170,16 @@ tibble(
   ### Which Talker is Attended to is dependent on instructions
   crossing(
     Shift = c(
-      "Shifted (S)",
-      "Unshifted (U)"
+      "Shifted",
+      "Unshifted"
     ),    
     Talker.A_Gender = c(
-      "Female (F)", 
-      "Male (M)"
+      "Female", 
+      "Male"
     ),
     Talker.A_Ear = c(
-      "Left (L)", 
-      "Right (R)"
+      "Left", 
+      "Right"
     )
 ) %>%
 
@@ -187,18 +187,41 @@ tibble(
   mutate(
       Talker.B_Gender =
         case_when( 
-         Talker.A_Gender == "Female (F)"
-          ~ "Male (M)", 
-          T ~ "Female (F)"
+         Talker.A_Gender == "Female"
+          ~ "Male", 
+          T ~ "Female"
         )) %>%
  
  mutate(
     Talker.B_Ear =
       case_when(
-        Talker.A_Ear == "Left (L)"
-        ~ "Right (R)",
-        T ~ "Left (L)"
+        Talker.A_Ear == "Left"
+        ~ "Right",
+        T ~ "Left"
       )) %>%
+
+# Add Column for matching to Filler Items
+  mutate(
+    Filler.Match = 
+      case_when(
+        Talker.A_Gender == "Female" &
+        Talker.A_Ear == "Left"
+        ~ "1.2",
+        
+        Talker.B_Gender == "Female" &
+        Talker.B_Ear == "Left"
+        ~ "2.1",
+        
+        Talker.A_Gender == "Male" &
+        Talker.A_Ear == "Left"
+        ~ "3.4",
+        
+        Talker.B_Gender == "Male" &
+        Talker.B_Ear == "Left"
+        ~ "4.3"
+      )
+  ) %>%
+
 
 # Changing file names
   mutate(
@@ -211,9 +234,9 @@ tibble(
      
         ### Shift
         case_when(
-          Shift == "Shifted (S)" 
+          Shift == "Shifted" 
           ~ paste0("S", sep = "."),
-          Shift == "Unshifted (U)" 
+          Shift == "Unshifted" 
           ~ paste0("U", sep = "."),
           ),
   
@@ -222,14 +245,14 @@ tibble(
   
         ### Gender Assignment
         case_when(
-          Talker.A_Gender == "Female (F)" 
+          Talker.A_Gender == "Female" 
           ~ paste0(sep = ".", "F"), 
           T ~ paste0(sep = ".", "M")
         ),
           
         ### Ear Assignment
         case_when(
-          Talker.A_Ear == "Left (L)" 
+          Talker.A_Ear == "Left" 
           ~ paste0(sep = ".", "L"), 
           T ~ paste0(sep = ".", "R")
         ),
@@ -240,9 +263,9 @@ tibble(
         
         ### Shift
         case_when(
-          Shift == "Shifted (S)" 
+          Shift == "Shifted" 
           ~ paste0("S", sep = "."),
-          Shift == "Unshifted (U)" 
+          Shift == "Unshifted" 
           ~ paste0("U", sep = "."),
           ),
   
@@ -251,14 +274,14 @@ tibble(
   
           ### Gender Assignment
           case_when(
-            Talker.B_Gender == "Female (F)" 
+            Talker.B_Gender == "Female" 
             ~ paste0(sep = ".", "F"), 
             T ~ paste0(sep = ".", "M")
           ),
           
           ### Ear Assignment
           case_when(
-            Talker.B_Ear == "Left (L)" 
+            Talker.B_Ear == "Left" 
             ~ paste0(sep = ".", "L"), 
             T ~ paste0(sep = ".", "R")
           )
@@ -270,9 +293,9 @@ tibble(
 select(-c(Critical.Item_Num, Talker.A, Talker.B, Talker.B_Ear, Talker.B_Gender))  %>%
   
 ## Group files
-group_by(Shift, Talker.A_Gender, Talker.A_Ear) %>%
+group_by(Shift, Talker.A_Gender, Talker.A_Ear, Filler.Match) %>%
 
-group_map(.f = ~ write_csv(.x, file = paste0("C:Stimuli/Experiment_1/Lists/Exposure_Phase/Critical_Lists/Critical_Talker.A_", .y$Talker.A_Gender, "_", .y$Talker.A_Ear, "_", .y$Shift, ".csv")
+group_map(.f = ~ write_csv(.x, file = paste0("C:Stimuli/Experiment_1/Lists/Exposure_Phase/Critical_Lists/Critical_", .y$Filler.Match, "_Talker.A_", .y$Talker.A_Gender, "_", .y$Talker.A_Ear, "_", .y$Shift, ".csv")
 ))
 ```
 
@@ -459,49 +482,49 @@ tibble(
   
   crossing(
     Talker.A_Gender = c(
-      "Female (F)", 
-      "Male (M)"
+      "Female", 
+      "Male"
     ),
     Talker.A_Ear = c(
-      "Left (L)", 
-      "Right (R)"
+      "Left", 
+      "Right"
     )) %>%
   
   ## Adds in column noting Gender + Ear Assignment for Talker B
   mutate(
       Talker.B_Gender =
         case_when( 
-         Talker.A_Gender == "Female (F)"
-          ~ "Male (M)", 
-          T ~ "Female (F)"
+         Talker.A_Gender == "Female"
+          ~ "Male", 
+          T ~ "Female"
         )) %>%
  
  mutate(
     Talker.B_Ear =
       case_when(
-        Talker.A_Ear == "Left (L)"
-        ~ "Right (R)",
-        T ~ "Left (L)"
+        Talker.A_Ear == "Left"
+        ~ "Right",
+        T ~ "Left"
       )) %>%
   
   ## Adds Version
   mutate(
       Set.Version =
         case_when( 
-           Talker.A_Gender == "Male (M)" &
-           Talker.A_Ear == "Right (R)"
+           Talker.A_Gender == "Male" &
+           Talker.A_Ear == "Right"
             ~ "1", 
           
-           Talker.A_Gender == "Female (F)" &
-           Talker.A_Ear == "Left (L)"
+           Talker.A_Gender == "Female" &
+           Talker.A_Ear == "Left"
             ~ "2", 
            
-           Talker.A_Gender == "Female (F)" &
-           Talker.A_Ear == "Right (R)" 
+           Talker.A_Gender == "Female" &
+           Talker.A_Ear == "Right" 
             ~ "3", 
            
-           Talker.A_Gender == "Male (M)" &
-           Talker.A_Ear == "Left (L)" 
+           Talker.A_Gender == "Male" &
+           Talker.A_Ear == "Left" 
             ~ "4"
         )) %>%
   
@@ -562,6 +585,27 @@ tibble(
             ~ "4"
         )) %>%
 
+# Attended Talker
+  mutate( 
+    Attended.Talker = 
+    case_when(
+      Set.Combo == "1" |
+      Set.Combo == "3"
+      ~ "Female",
+      T ~ "Male"
+    )
+  ) %>%
+  
+# Attended Ear
+  mutate( 
+    Attended.Ear = 
+    case_when(
+      Set.Combo == "1" |
+      Set.Combo == "4"
+      ~ "Left",
+      T ~ "Right"
+    )
+  ) %>%
 
 # Changing file names
   mutate(
@@ -580,14 +624,14 @@ tibble(
           
         ### Gender Assignment
         case_when(
-          Talker.A_Gender == "Female (F)" 
+          Talker.A_Gender == "Female" 
           ~ paste0(sep = ".", "F"), 
           T ~ paste0(sep = ".", "M")
         ),
           
         ### Ear Assignment
         case_when(
-          Talker.A_Ear == "Left (L)" 
+          Talker.A_Ear == "Left" 
           ~ paste0(sep = ".", "L"), 
           T ~ paste0(sep = ".", "R")
         ),
@@ -604,14 +648,14 @@ tibble(
   
           ### Gender Assignment
           case_when(
-            Talker.B_Gender == "Female (F)" 
+            Talker.B_Gender == "Female" 
             ~ paste0(sep = ".", "F"), 
             T ~ paste0(sep = ".", "M")
           ),
           
           ### Ear Assignment
           case_when(
-            Talker.B_Ear == "Left (L)" 
+            Talker.B_Ear == "Left" 
             ~ paste0(sep = ".", "L"), 
             T ~ paste0(sep = ".", "R")
           )
@@ -623,9 +667,9 @@ tibble(
 select(-c(Set, Filler.Item_Num, Talker.A_Word, Talker.B_Nonword, Set.Version, Talker.A_Gender, Talker.A_Ear, Talker.B_Gender, Talker.B_Ear)) %>%
 
 ## Group         
-group_by(Set.Combo) %>%  
+group_by(Set.Combo, Attended.Talker, Attended.Ear) %>%  
   
-group_map(.f = ~ write_csv(.x, file = paste0("C:Stimuli/Experiment_1/Lists/Exposure_Phase/Filler_Lists/Filler.", .y$Set.Combo, ".csv")
+group_map(.f = ~ write_csv(.x, file = paste0("C:Stimuli/Experiment_1/Lists/Exposure_Phase/Filler_Lists/Filler_", .y$Set.Combo, "_Attended.Talker_", .y$Attended.Talker, "_", .y$Attended.Ear, ".csv")
 ))
 ```
 
@@ -649,8 +693,8 @@ tibble(
 ### Attended Talker x First Talker
 crossing(
   Talker_Gender = c(
-    "Female (F)", 
-    "Male (M)"
+    "Female", 
+    "Male"
     ),
   
   Block = 1:12
@@ -660,35 +704,35 @@ crossing(
   mutate(
     First_Talker = case_when( 
       abs(Block %% 4) == 1 &
-      Talker_Gender == "Male (M)"
+      Talker_Gender == "Male"
       ~ "Male",
       
       abs(Block %% 4) == 2 &
-      Talker_Gender == "Male (M)"
+      Talker_Gender == "Male"
       ~ "Male",
       
       abs(Block %% 4) == 3 &
-      Talker_Gender == "Female (F)"
+      Talker_Gender == "Female"
       ~ "Male",      
             
       abs(Block %% 4) == 0 &
-      Talker_Gender == "Female (F)"
+      Talker_Gender == "Female"
       ~ "Male",  
       
       abs(Block %% 4) == 1 &
-      Talker_Gender == "Female (F)"
+      Talker_Gender == "Female"
       ~ "Female",
       
       abs(Block %% 4) == 2 &
-      Talker_Gender == "Female (F)"
+      Talker_Gender == "Female"
       ~ "Female",
       
       abs(Block %% 4) == 3 &
-      Talker_Gender == "Male (M)"
+      Talker_Gender == "Male"
       ~ "Female",
       
       abs(Block %% 4) == 0 &
-      Talker_Gender == "Male (M)"
+      Talker_Gender == "Male"
       ~ "Female"
       ),
 
@@ -715,7 +759,7 @@ mutate(
    
    sep = "_",
       case_when(
-     Talker_Gender == "Female (F)"
+     Talker_Gender == "Female"
      ~ paste0("F", sep = "."), 
      T ~ paste0("M", sep = ".")
    ),
@@ -843,6 +887,7 @@ Test.Item_Male <- list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.
 ```
 
 # CSV File (Concat?)
+## This is not going too well :/
 ```{r}
 #Specify the input and output paths
 folder_path <- "C:Stimuli/Experiment_1/Lists/Exposure_Phase/Filler_Lists" #File path to the folder with the *.csv files

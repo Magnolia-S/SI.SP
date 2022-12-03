@@ -164,6 +164,14 @@ tibble(
   Critical.Item_Num = 1:20,
   Talker.A = c(Materials.A_Sh.Words, Materials.B_S.Words),
   Talker.B = c(Materials.A_S.Words, Materials.B_Sh.Words),
+  Talker.A_Sound = c(
+    rep("sh", 10),
+    rep("s", 10)
+  ),
+  Talker.B_Sound = c(
+    rep("s", 10),
+    rep("sh", 10)
+  )
 ) %>% 
   
 ## Possible Assignments (Shift x Gender x Ear)
@@ -182,6 +190,16 @@ tibble(
       "Right"
     )
 ) %>%
+  
+## Add column for shift --> labeling the list
+  mutate(
+    Is.Shifted =
+      case_when(
+        Shift == "Shifted"
+        ~ "Yes",
+        T ~ "No"
+      )
+  ) %>%
 
 ## Adds in column noting Gender + Ear Assignment for Talker B
   mutate(
@@ -200,27 +218,48 @@ tibble(
         T ~ "Left"
       )) %>%
 
-# Add Column for matching to Filler Items
+## Add Column for matching to Filler Items
   mutate(
     Filler.Match = 
       case_when(
         Talker.A_Gender == "Female" &
         Talker.A_Ear == "Left"
-        ~ "1.2",
+        ~ "1-2",
         
         Talker.B_Gender == "Female" &
         Talker.B_Ear == "Left"
-        ~ "2.1",
+        ~ "2-1",
         
         Talker.A_Gender == "Male" &
         Talker.A_Ear == "Left"
-        ~ "3.4",
+        ~ "3-4",
         
         Talker.B_Gender == "Male" &
         Talker.B_Ear == "Left"
-        ~ "4.3"
+        ~ "4-3"
       )
   ) %>%
+  
+  ## Defining Talker A
+    ### Talker A Gender
+    mutate(
+      Talker.A_G = 
+        case_when(
+          Talker.A_Gender == "Female"
+          ~ "Female",
+          T ~ "Male"
+        )
+    ) %>%
+  
+    ### Talker A Ear
+    mutate(
+      Talker.A_E = 
+        case_when(
+          Talker.A_Ear == "Left"
+          ~ "Left",
+          T ~ "Right"
+        )
+    ) %>%
 
 
 # Changing file names
@@ -235,13 +274,21 @@ tibble(
         ### Shift
         case_when(
           Shift == "Shifted" 
-          ~ paste0("S", sep = "."),
+          ~ paste0("Xs"),
           Shift == "Unshifted" 
-          ~ paste0("U", sep = "."),
+          ~ paste0("S"),
           ),
   
+        ### Sound
+        case_when(
+          Talker.A_Sound == "s"
+          ~ paste0("", sep = "."),
+          Talker.A_Sound == "sh"
+          ~ paste0("h", sep = ".")
+        ),
+  
         ### Talker A Word 
-        substr(Talker.A, 1, 5),
+        paste0(Talker.A),
   
         ### Gender Assignment
         case_when(
@@ -264,13 +311,21 @@ tibble(
         ### Shift
         case_when(
           Shift == "Shifted" 
-          ~ paste0("S", sep = "."),
+          ~ paste0("Xs"),
           Shift == "Unshifted" 
-          ~ paste0("U", sep = "."),
+          ~ paste0("S"),
           ),
   
+        ### Sound
+        case_when(
+          Talker.B_Sound == "s"
+          ~ paste0("", sep = "."),
+          Talker.B_Sound == "sh"
+          ~ paste0("h", sep = ".")
+        ),
+  
           ### Talker B Word
-          substr(Talker.B, 1, 5),
+          paste0(Talker.B),
   
           ### Gender Assignment
           case_when(
@@ -290,12 +345,12 @@ tibble(
 # CSV Files
 
 ## Remove all columns but file names
-select(-c(Critical.Item_Num, Talker.A, Talker.B, Talker.B_Ear, Talker.B_Gender))  %>%
+select(-c())  %>%
   
 ## Group files
-group_by(Shift, Talker.A_Gender, Talker.A_Ear, Filler.Match) %>%
+group_by(Shift, Filler.Match, Talker.A_G, Talker.A_E) %>%
 
-group_map(.f = ~ write_csv(.x, file = paste0("C:Stimuli/Experiment_1/Lists/Exposure_Phase/Critical_Lists/Critical_", .y$Filler.Match, "_Talker.A_", .y$Talker.A_Gender, "_", .y$Talker.A_Ear, "_", .y$Shift, ".csv")
+group_map(.f = ~ write_csv(.x, file = paste0("C:Stimuli/Experiment_1/Lists/Exposure_Phase/Critical_Lists/Critical.",  .y$Filler.Match,"_", .y$Shift, "_Talker.A_", .y$Talker.A_G, "_", .y$Talker.A_E, ".csv")
 ))
 ```
 
@@ -318,141 +373,141 @@ Embed this table into table of who is the attended talker?
 
 ## Word List
 Set.A_Word = c(
-  "ameri",
-  "blueb",
-  "camer",
-  "direc",
-  "dynam",
-  "garde",
-  "hambu",
-  "hurdl",
-  "inhab",
-  "keybo",
-  "lengt",
-  "linge",
-  "melan",
-  "napki",
-  "ornam",
-  "pinea",
-  "purga",
-  "thera",
-  "tutor",
-  "wealt"
+  "America",
+  "Blueberry",
+  "Camera",
+  "Directory",
+  "Dynamic",
+  "Gardenia",
+  "Hamburger",
+  "Hurdle",
+  "Inhabit",
+  "Keyboard",
+  "Lengthen",
+  "Lingering",
+  "Melancholy",
+  "Napkin",
+  "Ornament",
+  "Pineapple",
+  "Purgatory",
+  "Therapeutic",
+  "Tutorial",
+  "Wealthy"
 )
 
 Set.B_Word = c(
-  "baker",
-  "bully",
-  "conti",
-  "docum",
-  "eight",
-  "gramm",
-  "ident",
-  "inter",
-  "knowi",
-  "letha",
-  "lobby",
-  "membe",
-  "negat",
-  "outnu",
-  "parak",
-  "plato",
-  "tacti",
-  "titan",
-  "umbre",
-  "world"
+  "Bakery",
+  "Bullying",
+  "Continuum",
+  "Document",
+  "Eighty",
+  "Grammatical",
+  "Identical",
+  "Interior",
+  "Knowiingly",
+  "Lethal",
+  "Lobbying",
+  "Membrane",
+  "Negative",
+  "Outnumber",
+  "Parakeet",
+  "Platonic",
+  "Tactical",
+  "Titanium",
+  "Umbrella",
+  "Worldly"
 )
 
 Set.C_Word = c(
-  "balle",
-  "burgl",
-  "domin",
-  "embod",
-  "gulli",
-  "honey",
-  "illum",
-  "ironi",
-  "lamin",
-  "liabi",
-  "marin",
-  "metir",
-  "night",
-  "panic",
-  "pilgr",
-  "predi",
-  "termi",
-  "turbu",
-  "under",
-  "wink"
+  "Ballerina",
+  "Burglary",
+  "Domineering",
+  "Embody",
+  "Gullible",
+  "Honeymoon",
+  "Illuminate",
+  "Ironic",
+  "Laminate",
+  "Liability",
+  "Marina",
+  "Metirical",
+  "Nightmare",
+  "Panicking",
+  "Pilgrim",
+  "Predict",
+  "Terminal",
+  "Turbulent",
+  "Undermine",
+  "Winkle"
 )
 
 Set.A_NonWord = c(
-  "womin",
-  "ungel",
-  "tileg",
-  "rimke",
-  "rakil",
-  "perku",
-  "nomer",
-  "namue",
-  "logel",
-  "lened",
-  "kelab",
-  "inpak",
-  "hinta",
-  "gondi",
-  "gaire",
-  "bikan",
-  "balib",
-  "amala",
-  "ailou",
-  "acomi"
+  "Wominid",
+  "Ungelnin",
+  "Tilegkalo",
+  "Rimkeluwar",
+  "Rakil",
+  "Perkum",
+  "Nomerae",
+  "Namuary",
+  "Logelai", 
+  "Lenediaw", 
+  "Kelabidel",
+  "Inpaki",
+  "Hintarber",
+  "Gardimuallay",
+  "Gairelom",
+  "Bikanian",
+  "Baliber",
+  "Amalar",
+  "Ailounam",
+  "Acomining"
 )
 
 Set.B_Nonword = c(
-  "woyal",
-  "touna",
-  "rylig",
-  "rawam",
-  "ploup",
-  "omper",
-  "nempr",
-  "mibge",
-  "meidn",
-  "kermi",
-  "itemp",
-  "aknid",
-  "ibira",
-  "halke",
-  "ganla",
-  "dadig",
-  "bamte",
-  "aneme",
-  "lilgr",
-  "admun"
+  "Wojalto",
+  "Tounamplem",
+  "Ryligal",
+  "Rawamtee",
+  "Ploupelai",
+  "Omperoge",
+  "Nempring",
+  "Mibgem", 
+  "Meidnow",
+  "Kermimer",
+  "Itempider",
+  "Aknid",
+  "Ibirak",
+  "Halken",
+  "Ganla",
+  "Dadigal",
+  "Bamtell",
+  "Anemer",
+  "Lilgrai",
+  "Admunker"
 )
 
 Set.C_Nonword = c(
-  "youmg",
-  "tymol",
-  "tamic",
-  "rengi",
-  "pouri",
-  "oumik",
-  "nirit",
-  "mikid",
-  "kalde",
-  "imdai",
-  "kloum",
-  "halom",
-  "gerbu",
-  "galli",
-  "emhou",
-  "dilku",
-  "bawes",
-  "anoli",
-  "alnad",
-  "aigi"
+  "Youmgel",
+  "Tymolape",
+  "Tamical",
+  "Rengime",
+  "Pourilar",
+  "Almikquary",
+  "Niritaly",
+  "Makid",
+  "Kaldemia",
+  "Imdalier",
+  "Kloumidiger",
+  "Halomimoc",
+  "Gerbualo",
+  "Galliwinou",
+  "Emhoutic",
+  "Dilkuaund",
+  "Bowidai",
+  "Anolipa",
+  "Alnadiro",
+  "Aigi"
 )
 
 ## Table
@@ -664,12 +719,12 @@ tibble(
 # CSV Files
   
 ## Remove columns in CSV File -> only need file names
-select(-c(Set, Filler.Item_Num, Talker.A_Word, Talker.B_Nonword, Set.Version, Talker.A_Gender, Talker.A_Ear, Talker.B_Gender, Talker.B_Ear)) %>%
+select(-c()) %>%
 
 ## Group         
 group_by(Set.Combo, Attended.Talker, Attended.Ear) %>%  
   
-group_map(.f = ~ write_csv(.x, file = paste0("C:Stimuli/Experiment_1/Lists/Exposure_Phase/Filler_Lists/Filler_", .y$Set.Combo, "_Attended.Talker_", .y$Attended.Talker, "_", .y$Attended.Ear, ".csv")
+group_map(.f = ~ write_csv(.x, file = paste0("C:Stimuli/Experiment_1/Lists/Exposure_Phase/Filler_Lists/Filler.", .y$Set.Combo, "_Attended.Talker_", .y$Attended.Talker, "_", .y$Attended.Ear, ".csv")
 ))
 ```
 
@@ -771,14 +826,25 @@ mutate(
 # CSV Files
 
 ## Remove file columns <- all but file names
-select(-c(Test.Items, Test.Item_Num, First_Talker)) %>%
+select(-c()) %>%
 
 ## Group files into list 
-group_by(Test_Version, Block, Talker_Gender) %>%
+group_by(Test_Version, Block) %>%
 
-group_map(.f = ~ write_csv(.x, file = paste0("C:Stimuli/Experiment_1/Lists/Test_Phase/Test.", .y$Test_Version,"_Block.", .y$Block, "_", .y$Talker_Gender, ".csv")
+group_map(.f = ~ write_csv(.x, file = paste0("C:Stimuli/Experiment_1/Lists/Test_Phase/Test.", .y$Test_Version,"_Block.", .y$Block, ".csv")
 ))
 ```
+
+Example 12.01.2022
+```{r}
+for (f in list.files(path = "Stimuli/Experiment_1/Items_Critical/F.S_M.Sh/Ambiguous/")) {
+  f.new = gsub("^200ms\\_", "", f)
+  f.left = gsub("^([^_]+)_.*$", "\\1", f.new)
+  print(f.left)
+  
+}
+```
+_______
 
 # File Renaming
 
@@ -786,6 +852,13 @@ group_map(.f = ~ write_csv(.x, file = paste0("C:Stimuli/Experiment_1/Lists/Test_
 ```{r Critical Rename}
 
 ## Left: Female S Unambiguous; Right: Male Sh Unambiguous
+```{r}
+for (f in list.files(path = "Stimuli/Original_Stims/Critical_Pairs/Stereo/F.S_M.Sh/F.S_M.Sh")) {
+  f.new = gsub("^200ms\\_", "", f)
+  f.left = gsub("^([^_]+)_.*$", "\\1", f.new)
+  print(f.left)
+  
+}
 Critical.Item_F.S.L.U <- list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Critical_Pairs/Stereo/F.S_M.Sh/F.S_M.Sh", pattern = ".wav", full.names = TRUE)
 
 ## Left: Female S Ambiguous; Right: Male Sh Ambiguous

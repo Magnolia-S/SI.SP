@@ -190,16 +190,6 @@ tibble(
       "Right"
     )
 ) %>%
-  
-## Add column for shift --> labeling the list
-  mutate(
-    Is.Shifted =
-      case_when(
-        Shift == "Shifted"
-        ~ "Yes",
-        T ~ "No"
-      )
-  ) %>%
 
 ## Adds in column noting Gender + Ear Assignment for Talker B
   mutate(
@@ -217,6 +207,16 @@ tibble(
         ~ "Right",
         T ~ "Left"
       )) %>%
+
+  ## Add column for shift --> labeling the list
+  mutate(
+    Is.Shifted =
+      case_when(
+        Shift == "Shifted"
+        ~ "Yes",
+        T ~ "No"
+      )
+  ) %>%
 
 ## Add Column for matching to Filler Items
   mutate(
@@ -274,7 +274,7 @@ tibble(
         ### Shift
         case_when(
           Shift == "Shifted" 
-          ~ paste0("Xs"),
+          ~ paste0("As"),
           Shift == "Unshifted" 
           ~ paste0("S"),
           ),
@@ -311,7 +311,7 @@ tibble(
         ### Shift
         case_when(
           Shift == "Shifted" 
-          ~ paste0("Xs"),
+          ~ paste0("As"),
           Shift == "Unshifted" 
           ~ paste0("S"),
           ),
@@ -341,6 +341,11 @@ tibble(
             T ~ paste0(sep = ".", "R")
           )
       )) %>% 
+  
+  ## Repetition of File within List
+  mutate(
+    rep = 1
+  ) %>%
 
 # CSV Files
 
@@ -640,27 +645,35 @@ tibble(
             ~ "4"
         )) %>%
 
-# Attended Talker
+## Adds Attended Talker
+  
+  ### Attended Gender
   mutate( 
     Attended.Talker = 
-    case_when(
-      Set.Combo == "1" |
-      Set.Combo == "3"
-      ~ "Female",
-      T ~ "Male"
-    )
-  ) %>%
+      case_when(
+        Set.Combo == "1" |
+        Set.Combo == "3"
+        ~ "Female",
+        T ~ "Male"
+     )
+    ) %>%
   
-# Attended Ear
+  ### Attended Ear
   mutate( 
     Attended.Ear = 
-    case_when(
-      Set.Combo == "1" |
-      Set.Combo == "4"
-      ~ "Left",
-      T ~ "Right"
-    )
+      case_when(
+        Set.Combo == "1" |
+        Set.Combo == "4"
+        ~ "Left",
+        T ~ "Right"
+      )
   ) %>%
+  
+  ## Repetition of File within List
+  mutate(
+    rep = 1
+  ) %>%
+
 
 # Changing file names
   mutate(
@@ -731,7 +744,7 @@ group_map(.f = ~ write_csv(.x, file = paste0("C:Stimuli/Experiment_1/Lists/Expos
 # Test Phase
 ```{r Test Phase}
 
-## Table
+# Table
 tibble(
   Test.Items = c(
   "ashi.25",
@@ -745,7 +758,7 @@ tibble(
   Test.Item_Num = 1:6
 )%>%
 
-### Attended Talker x First Talker
+## Attended Talker x First Talker
 crossing(
   Talker_Gender = c(
     "Female", 
@@ -798,7 +811,13 @@ crossing(
       T ~ "B"
     )) %>%
   
-### File name
+### Repetition of File within List
+  mutate(
+    rep = 1
+  ) %>%
+
+  
+# File name
 mutate(
  Filename = paste0(
    "Test",
@@ -841,7 +860,6 @@ for (f in list.files(path = "Stimuli/Experiment_1/Items_Critical/F.S_M.Sh/Ambigu
   f.new = gsub("^200ms\\_", "", f)
   f.left = gsub("^([^_]+)_.*$", "\\1", f.new)
   print(f.left)
-  
 }
 ```
 _______
@@ -852,13 +870,14 @@ _______
 ```{r Critical Rename}
 
 ## Left: Female S Unambiguous; Right: Male Sh Unambiguous
-```{r}
 for (f in list.files(path = "Stimuli/Original_Stims/Critical_Pairs/Stereo/F.S_M.Sh/F.S_M.Sh")) {
   f.new = gsub("^200ms\\_", "", f)
   f.left = gsub("^([^_]+)_.*$", "\\1", f.new)
-  print(f.left)
   
+  print(f.left)
 }
+
+```
 Critical.Item_F.S.L.U <- list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Critical_Pairs/Stereo/F.S_M.Sh/F.S_M.Sh", pattern = ".wav", full.names = TRUE)
 
 ## Left: Female S Ambiguous; Right: Male Sh Ambiguous

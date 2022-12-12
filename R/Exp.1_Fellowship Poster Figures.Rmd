@@ -339,3 +339,49 @@ d.vot %>%
   scale_y_continuous('Proportion of "Sh" responses') +
   ggtitle("Figure 1C: If No Adaptation Occurs")
 ```
+
+## Example Distributions
+```{r Condition Curves}
+
+### Mean and SD --> Based on other example figures; change later
+mean_s <- 14
+mean_sh <- 72
+
+sd_s <- sqrt(60)
+sd_sh <- sqrt(210)
+
+d.energy <- tibble(energy = seq(-10, 120, 10))
+d.energy %>%
+    ggplot(aes(x = energy)) +
+
+### No shift  
+  stat_function(
+    fun = function(x) dnorm(x, mean_s, sd_s), 
+    color = "gray", size = 1.1) +
+  stat_function(
+    fun = function(x) dnorm(x, mean_sh, sd_sh),
+    color = "gray", size = 1.1) 
+```
+
+   
+### Talker A ?Sh Shift  
+  stat_function(
+    fun = function(x) dnorm(x, (mean_s + 15), sd_s),
+    color = "orange", size = 1.1) +
+  stat_function(
+    fun = function(x) dnorm(x, mean_sh, sd_sh),
+    color = "orange", size = 1.1) +
+
+### Talker B ?S shift
+  stat_function(
+    fun = function(x) dnorm(x, mean_s, sd_s),
+    color = "lightskyblue", size = 1.1) +
+  stat_function(
+    fun = function(x) dnorm(x, (mean_sh - 15), sd_sh),
+    color = "lightskyblue", size = 1.1) +
+  
+  scale_x_continuous('Percentage of "S" Energy') +
+  scale_y_continuous('Posterior Probability of "S"') +
+  ggtitle("S-Sh Shifted Distributions") +
+  theme(legend.position = "top") 
+```

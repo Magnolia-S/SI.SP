@@ -1,0 +1,29 @@
+spectral mean --> average acoustic energy; s has less/is higher spectral center of gravity, she has more/is lower spectral center of gravity
+
+Lack of invariance problem --> the s/sh spectral mean average overlap a lot
+
+Make a graph of the shift in the production of s/sh for both talkers
+
+luthra et al., 2021  exp.4 --> only showing one (shifted) category
+
+Average across the entire S-shaped curve to see the difference
+
+
+
+Causal Ambiguity --> Why the atypical sound was produced (pen or not)
+
+Kraljic et al., 2008: atypical + pen --> normal = no adpatation
+Kraljic & Samuel, 2011: normal + pen --> atpical = learning
+
+If the variation seems characteristic or is incidental (caused) = ignored (Kraljic, Brennan, & Samuel, 2008)
+
+Kraljic & Samuel, 2011 --> instead, episodic memory with pen is stored as a separate episode than those without the pen. Episodes are groupd and then retrieved differently.
+
+Lui & Jaeger 2018 --> store casually ambigous information
+
+Uncertainty maintenance --> how long do we remember ambiguous information (that of the pen)
+
+What obstructions result in an equivalence class --> how do instances get lumped together (does utility and heightened attention increase the specificity of classes --> tends to in perception of details; contrast)
+
+
+*Causal reasoning in perception*

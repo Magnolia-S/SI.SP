@@ -10,9 +10,9 @@ form Insert silence
 comment Specify duration of silence (in milliseconds) to be added to the beginning of sound files
 positive duration_of_silence 200
 comment Specify directory of sound files (don't forget final slash)
-sentence inputDir C:\Users\Rachel\Documents\Social.Influence_Speech.Perception\SI.SP\Stims\Critical\Stereo\
+sentence inputDir C:\Users\Rachel\Documents\Social.Influence_Speech.Perception\SI.SP\R\Stimuli\Original_Stims\Test_Continuum\Original\Female\
 comment Specify directory where you want to save the finished files (don't forget final slash)
-sentence saveDir C:\Users\Rachel\Documents\Social.Influence_Speech.Perception\SI.SP\Stims\Critical_Stereo_Silence\
+sentence saveDir C:\Users\Rachel\Documents\Social.Influence_Speech.Perception\SI.SP\R\Stimuli\Experiment_1\Items_Test\Version_A\
 comment Give an optional prefix for all filenames: 
 sentence prefix
 endform

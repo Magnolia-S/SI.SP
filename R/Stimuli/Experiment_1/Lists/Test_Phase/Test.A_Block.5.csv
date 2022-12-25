@@ -1,7 +1,7 @@
-Test.Items,Test.Item_Num,Talker_Gender,First_Talker,Filename,rep
-ashi.25,1,Female,Female,Test_A.05_F.1.ashi.25,1
-ashi.30,2,Female,Female,Test_A.05_F.2.ashi.30,1
-ashi.40,3,Female,Female,Test_A.05_F.3.ashi.40,1
-ashi.45,4,Female,Female,Test_A.05_F.4.ashi.45,1
-ashi.50,5,Female,Female,Test_A.05_F.5.ashi.50,1
-ashi.70,6,Female,Female,Test_A.05_F.6.ashi.70,1
+Test.Items,Test.Item_Num,Talker_Gender,First_Talker,rep,Filename
+ashi.25,1,Female,Female,1,Test_A.05_F.1.ashi.25.wav
+ashi.30,2,Female,Female,1,Test_A.05_F.2.ashi.30.wav
+ashi.40,3,Female,Female,1,Test_A.05_F.3.ashi.40.wav
+ashi.45,4,Female,Female,1,Test_A.05_F.4.ashi.45.wav
+ashi.50,5,Female,Female,1,Test_A.05_F.5.ashi.50.wav
+ashi.70,6,Female,Female,1,Test_A.05_F.6.ashi.70.wav

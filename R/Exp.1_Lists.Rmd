@@ -339,13 +339,18 @@ tibble(
             Talker.B_Ear == "Left" 
             ~ paste0(sep = ".", "L"), 
             T ~ paste0(sep = ".", "R")
-          )
+          ),
+  
+          ### File Suffix
+          paste0(".wav")
       )) %>% 
   
   ## Repetition of File within List
   mutate(
     rep = 1
   ) %>%
+  
+  view() %>%
 
 # CSV Files
 
@@ -382,7 +387,7 @@ Set.A_Word = c(
   "Blueberry",
   "Camera",
   "Directory",
-  "Dynamic",
+  "Dynamite",
   "Gardenia",
   "Hamburger",
   "Hurdle",
@@ -403,17 +408,17 @@ Set.A_Word = c(
 Set.B_Word = c(
   "Bakery",
   "Bullying",
-  "Continuum",
+  "Continually",
   "Document",
   "Eighty",
   "Grammatical",
   "Identical",
   "Interior",
-  "Knowiingly",
+  "Knowingly",
   "Lethal",
   "Lobbying",
   "Membrane",
-  "Negative",
+  "Negate",
   "Outnumber",
   "Parakeet",
   "Platonic",
@@ -435,7 +440,7 @@ Set.C_Word = c(
   "Laminate",
   "Liability",
   "Marina",
-  "Metirical",
+  "Metrical",
   "Nightmare",
   "Panicking",
   "Pilgrim",
@@ -443,7 +448,7 @@ Set.C_Word = c(
   "Terminal",
   "Turbulent",
   "Undermine",
-  "Winkle"
+  "Wrinkle"
 )
 
 Set.A_NonWord = c(
@@ -681,6 +686,29 @@ tibble(
       paste0(
         "Filler", 
         sep = "_",
+  
+  ## Set
+  case_when(
+    Set == "A"
+    ~ paste0("A", sep = "."),
+    Set == "B"
+    ~ paste0("B", sep = "."),
+    Set == "C"
+    ~ paste0("C", sep = ".")
+  ),
+  
+  ## Version
+  case_when(
+    Set.Version == "1"
+    ~ paste0("01", sep = "_"),
+    Set.Version == "2"
+    ~ paste0("02", sep = "_"),
+    Set.Version == "3"
+    ~ paste0("03", sep = "_"),
+    Set.Version == "4"
+    ~ paste0("04", sep = "_")
+  ),
+  
         
   ## Talker A 
      
@@ -726,8 +754,13 @@ tibble(
             Talker.B_Ear == "Left" 
             ~ paste0(sep = ".", "L"), 
             T ~ paste0(sep = ".", "R")
-          )
+          ),
+    
+          ### File Suffix
+          paste0(".wav")
       )) %>% 
+  
+  view() %>%
 
 # CSV Files
   
@@ -832,15 +865,18 @@ mutate(
    ),
    
    sep = "_",
-      case_when(
+    case_when(
      Talker_Gender == "Female"
      ~ paste0("F", sep = "."), 
      T ~ paste0("M", sep = ".")
    ),
    Test.Item_Num,
    sep = ".",   
-   Test.Items
+   Test.Items,
+  paste0(".wav")
 )) %>%
+
+    view() %>%
   
 # CSV Files
 
@@ -854,129 +890,112 @@ group_map(.f = ~ write_csv(.x, file = paste0("C:Stimuli/Experiment_1/Lists/Test_
 ))
 ```
 
-Example 12.01.2022
-```{r}
-for (f in list.files(path = "Stimuli/Experiment_1/Items_Critical/F.S_M.Sh/Ambiguous/")) {
-  f.new = gsub("^200ms\\_", "", f)
-  f.left = gsub("^([^_]+)_.*$", "\\1", f.new)
-  print(f.left)
-}
-```
 _______
 
 # File Renaming
 
 ## Critical Items
-```{r Critical Rename}
 
+### I want to rename the files and copy them into this folder: C:\Users\Rachel\Documents\Social.Influence_Speech.Perception\SI.SP\R\Stimuli\Experiment_1\Items_Critical
+
+```{r Critical Rename_S.F.L}
 ## Left: Female S Unambiguous; Right: Male Sh Unambiguous
-for (f in list.files(path = "Stimuli/Original_Stims/Critical_Pairs/Stereo/F.S_M.Sh/F.S_M.Sh")) {
-  f.new = gsub("^200ms\\_", "", f)
-  f.left = gsub("^([^_]+)_.*$", "\\1", f.new)
+for (f in list.files(path = "Stimuli/Experiment_1/Items_Critical/F.S_M.Sh/Nonambiguous")) {
+f.Category = gsub("^200ms", "Critical", f)
+  f.left_Shift = gsub("F.S", "S", f.Category)
+  f.left_Gender.Ear = gsub("_M.", ".F.L_", f.left_Shift)
+  f.right_Shift = gsub("Sh", "Sh", f.left_Gender.Ear)
+  f.right_Gender.Ear = gsub(".wav", ".M.R.wav", f.right_Shift)
   
-  print(f.left)
+  write(f.right_Gender.Ear, "Stimuli/Experiment_1/Items_Critical")
 }
-
-```
-Critical.Item_F.S.L.U <- list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Critical_Pairs/Stereo/F.S_M.Sh/F.S_M.Sh", pattern = ".wav", full.names = TRUE)
-
-## Left: Female S Ambiguous; Right: Male Sh Ambiguous
-Critical.Item_F.S.L.A <-
-list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Critical_Pairs/Stereo/F.S_M.Sh/F.Xs_M.Xsh", pattern = ".wav", full.names = TRUE)
-
-## Left: Female Sh Unambiguous; Right: Male S Unambiguous
-Critical.Item_F.Sh.L.U <-
-list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Critical_Pairs/Stereo/F.Sh_M.S/F.Sh_M.S", pattern = ".wav", full.names = TRUE)
-
-## Left: Female Sh Ambiguous; Right: Male S Ambiguous
-Critical.Item_F.Sh.A <-
-list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Critical_Pairs/Stereo/F.Sh_M.S/F.Sh_M.S", pattern = ".wav", full.names = TRUE)
-
-## Left: Male S Unambiguous; Right: Female Sh Unambiguous
-Critical.Item_M.S.U <-
-list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Critical_Pairs/Stereo/M.S_F.Sh/M.S_F.Sh", pattern = ".wav", full.names = TRUE)
-
-## Left: Male S Ambiguous; Right: Female Sh Ambiguous
-Critical.Item_M.S.A <-
-list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Critical_Pairs/Stereo/M.S_F.Sh/M.Xs_F.Xsh", pattern = ".wav", full.names = TRUE)
-
-## Left: Male Sh Unambiguous; Right: Female S Unambiguous
-Critical.Item_M.Sh.U <-
-list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Critical_Pairs/Stereo/M.Sh_F.S/M.Sh_F.S", pattern = ".wav", full.names = TRUE)
-
-## Left: Male Sh Ambiguous; Right: Female S Ambiguous
-Critical.Item_M.Sh.A <-
-list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Critical_Pairs/Stereo/M.Sh_F.S/M.Sh_F.S", pattern = ".wav", full.names = TRUE)
 ```
 
-## Filler Items
-```{r Filler Rename}
-
-## Set A
-### Version 1: Left = Female Nonword; Right = Male Word
-Filler.Item_SA.V1 <-
-list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Filler_Pairs/Stereo/A/Version 1", pattern = ".wav", full.names = TRUE)
-
-### Version 2: Left = Female Word; Right = Male Nonword
-Filler.Item_SA.V2 <-
-list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Filler_Pairs/Stereo/A/Version 2", pattern = ".wav", full.names = TRUE)
-
-### Version 3: Left = Male Nonword; Right = Female Word
-Filler.Item_SA.V3 <-
-list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Filler_Pairs/Stereo/A/Version 3", pattern = ".wav", full.names = TRUE)
+```{r Critical Rename_As.F.L}
+for (f in list.files(path = "Stimuli/Experiment_1/Items_Critical/F.S_M.Sh/Ambiguous/")) {
+  f.Category = gsub("^200ms", "Critical", f)
+  f.left_Shift = gsub("F.Xs", "As", f.Category)
+  f.left_Gender.Ear = gsub("_M.", ".F.L_", f.left_Shift)
+  f.right_Shift = gsub("Xsh", "As", f.left_Gender.Ear)
+  f.right_Gender.Ear = gsub(".wav", ".M.R.wav", f.right_Shift)
   
-### Version 4: Left = Male Word; Right = Female Nonword
-Filler.Item_SA.V4 <-
-list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Filler_Pairs/Stereo/A/Version 4", pattern = ".wav", full.names = TRUE)
-
-
-## Set B
-### Version 1: Left = Female Nonword; Right = Male Word
-Filler.Item_SA.V1 <-
-list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Filler_Pairs/Stereo/B/Version 1", pattern = ".wav", full.names = TRUE)
-
-### Version 2: Left = Female Word; Right = Male Nonword
-Filler.Item_SA.V2 <-
-list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Filler_Pairs/Stereo/B/Version 2", pattern = ".wav", full.names = TRUE)
-
-### Version 3: Left = Male Nonword; Right = Female Word
-Filler.Item_SA.V3 <-
-list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Filler_Pairs/Stereo/B/Version 3", pattern = ".wav", full.names = TRUE)
-  
-### Version 4: Left = Male Word; Right = Female Nonword
-Filler.Item_SA.V4 <-
-list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Filler_Pairs/Stereo/B/Version 4", pattern = ".wav", full.names = TRUE)
-
-
-## Set C
-### Version 1: Left = Female Nonword; Right = Male Word
-Filler.Item_SA.V1 <-
-list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Filler_Pairs/Stereo/C/Version 1", pattern = ".wav", full.names = TRUE)
-
-### Version 2: Left = Female Word; Right = Male Nonword
-Filler.Item_SA.V2 <-
-list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Filler_Pairs/Stereo/C/Version 2", pattern = ".wav", full.names = TRUE)
-
-### Version 3: Left = Male Nonword; Right = Female Word
-Filler.Item_SA.V3 <-
-list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Filler_Pairs/Stereo/C/Version 3", pattern = ".wav", full.names = TRUE)
-  
-### Version 4: Left = Male Word; Right = Female Nonword
-Filler.Item_SA.V4 <-
-list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Filler_Pairs/Stereo/C/Version 4", pattern = ".wav", full.names = TRUE)
-
+  print_csv(f.right_Gender.Ear)
+}
 ```
 
-## Test Items
-```{r Test Rename}
-
-## Female Test Continuum
-Test.Item_Female <- list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Test_Continuum/Original/Female", pattern = ".wav", full.names = TRUE)
-
-## Male Test Continuum
-Test.Item_Male <- list.files("C:/Users/Rachel/Documents/Social.Influence_Speech.Perception/SI.SP/Stimuli/Original_Stims/Test_Continuum/Original/Male", pattern = ".wav", full.names = TRUE)
-
+```{r Critical Rename_Sh.F.L}
+for (f in list.files(path = "Stimuli/Experiment_1/Items_Critical/F.Sh_M.S/Nonambiguous/")) {
+  f.Category = gsub("^200ms", "Critical", f)
+  f.left_Shift = gsub("F.Sh", "Sh", f.Category)
+  f.left_Gender.Ear = gsub("_M.", ".F.L_", f.left_Shift)
+  f.right_Shift = gsub("s", "S", f.left_Gender.Ear)
+  f.right_Gender.Ear = gsub(".wav", ".M.R.wav", f.right_Shift)
+  
+  print(f.right_Gender.Ear)
+}
 ```
+
+```{r Critical Rename_Ash.F.L}
+for (f in list.files(path = "Stimuli/Experiment_1/Items_Critical/F.Sh_M.S/ambiguous/")) {
+  f.Category = gsub("^200ms", "Critical", f)
+  f.left_Shift = gsub("F.Xsh", "Ash", f.Category)
+  f.left_Gender.Ear = gsub("_M.", ".F.L_", f.left_Shift)
+  f.right_Shift = gsub("Xs", "As", f.left_Gender.Ear)
+  f.right_Gender.Ear = gsub(".wav", ".M.R.wav", f.right_Shift)
+  
+  print(f.right_Gender.Ear)
+}
+```
+
+```{r Critical Rename_S.M.L}
+for (f in list.files(path = "Stimuli/Experiment_1/Items_Critical/M.S_F.Sh/Nonambiguous/")) {
+  f.Category = gsub("^200ms", "Critical", f)
+  f.left_Shift = gsub("M.S", "Ash", f.Category)
+  f.left_Gender.Ear = gsub("_F.", ".M.L_", f.left_Shift)
+  f.right_Shift = gsub("Sh", "", f.left_Gender.Ear)
+  f.right_Gender.Ear = gsub(".wav", ".F.R.wav", f.right_Shift)
+  
+  print(f.right_Gender.Ear)
+}
+```
+
+```{r Critical Rename_As.M.L}
+for (f in list.files(path = "Stimuli/Experiment_1/Items_Critical/M.S_F.Sh/Ambiguous/")) {
+  f.Category = gsub("^200ms", "Critical", f)
+  f.left_Shift = gsub("M.Xs", "As", f.Category)
+  f.left_Gender.Ear = gsub("_F.", ".M.L_", f.left_Shift)
+  f.right_Shift = gsub("Xsh", "Ash", f.left_Gender.Ear)
+  f.right_Gender.Ear = gsub(".wav", ".F.R.wav", f.right_Shift)
+  
+  print(f.right_Gender.Ear)
+}
+```
+
+```{r Critical Rename_Sh.M.L}
+for (f in list.files(path = "Stimuli/Experiment_1/Items_Critical/M.Sh_F.S/Nonambiguous/")) {
+  f.Category = gsub("^200ms", "Critical", f)
+  f.left_Shift = gsub("M.Sh", "Sh", f.Category)
+  f.left_Gender.Ear = gsub("_F.", ".M.L_", f.left_Shift)
+  f.right_Shift = gsub("S", "S", f.left_Gender.Ear)
+  f.right_Gender.Ear = gsub(".wav", ".F.R.wav", f.right_Shift)
+  
+  print(f.right_Gender.Ear)
+}
+```
+
+```{r Critical Rename_Ash.M.L}
+for (f in list.files(path = "Stimuli/Experiment_1/Items_Critical/M.Sh_F.S/Nonambiguous/")) {
+  f.Category = gsub("^200ms", "Critical", f)
+  f.left_Shift = gsub("M.Xsh", "Ash", f.Category)
+  f.left_Gender.Ear = gsub("_F.", ".M.L_", f.left_Shift)
+  f.right_Shift = gsub("Xs", "As", f.left_Gender.Ear)
+  f.right_Gender.Ear = gsub(".wav", ".F.R.wav", f.right_Shift)
+  
+  print(f.right_Gender.Ear)
+}
+```
+
+-----
 
 # CSV File (Concat?)
 ## This is not going too well :/

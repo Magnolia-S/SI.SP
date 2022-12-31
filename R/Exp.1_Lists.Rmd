@@ -98,6 +98,8 @@ options(width = 110)
 theme_set(theme_bw())
 ```
 
+---
+
 # Exposure Phase   
 ## Critical Items     
 ```{r Ciritcal Items}

@@ -164,15 +164,28 @@ Materials.B_Sh.Words= c(
 ## Items
 tibble(
   Critical.Item_Num = 1:20,
+  
   Talker.A = c(Materials.A_Sh.Words, Materials.B_S.Words),
+  
   Talker.B = c(Materials.A_S.Words, Materials.B_Sh.Words),
+  
+
+  
   Talker.A_Sound = c(
-    rep("sh", 10),
-    rep("s", 10)
+    rep("Sh", 10),
+    rep("S", 10)
   ),
+  
   Talker.B_Sound = c(
-    rep("s", 10),
-    rep("sh", 10)
+    rep("S", 10),
+    rep("Sh", 10)
+  ),
+  
+  Materials = c(
+    rep("A", 5),
+    rep("B", 5),
+    rep("A", 5),
+    rep("B", 5)
   )
 ) %>% 
   
@@ -192,6 +205,7 @@ tibble(
       "Right"
     )
 ) %>%
+  
 
 ## Adds in column noting Gender + Ear Assignment for Talker B
   mutate(
@@ -209,16 +223,18 @@ tibble(
         ~ "Right",
         T ~ "Left"
       )) %>%
+  
+   
+  ## Talker 1 
+    mutate(
+      Talker = 
+        case_when(
+          Talker.A_Ear == "Left"
+          ~ "1",
+          T ~ "2"
+        )
+    ) %>%
 
-  ## Add column for shift --> labeling the list
-  mutate(
-    Is.Shifted =
-      case_when(
-        Shift == "Shifted"
-        ~ "Yes",
-        T ~ "No"
-      )
-  ) %>%
 
 ## Add Column for matching to Filler Items
   mutate(
@@ -242,50 +258,134 @@ tibble(
       )
   ) %>%
   
-  ## Defining Talker A
-    ### Talker A Gender
-    mutate(
-      Talker.A_G = 
-        case_when(
-          Talker.A_Gender == "Female"
-          ~ "Female",
-          T ~ "Male"
-        )
-    ) %>%
+  ### List
   
-    ### Talker A Ear
-    mutate(
-      Talker.A_E = 
-        case_when(
-          Talker.A_Ear == "Left"
-          ~ "Left",
-          T ~ "Right"
-        )
-    ) %>%
-
-
-# Changing file names
   mutate(
-    filename = 
-      paste0(
-        "Critical", 
-        sep = "_",
+    List = 
+       case_when(
+     ### 01
+        Materials == "A" &
+        Shift == "Unshifted" &
+        Talker.A_Sound == "S" & 
+        Talker.A_Gender == "Female" 
+        ~ "01",
         
-  ## Talker A 
+        Materials == "B" &
+        Shift == "Shifted" &
+        Talker.A_Sound == "S" & 
+        Talker.A_Gender == "Female"
+        ~ "01",
+      
+      ### 02 
+        Materials == "A" &
+        Shift == "Shifted" &
+        Talker.A_Sound == "S" & 
+        Talker.A_Gender == "Female"
+        ~ "02",
+        
+        Materials == "B" &
+        Shift == "Unshifted" &
+        Talker.A_Sound == "S" & 
+        Talker.A_Gender == "Female"
+        ~ "02",
      
+      ### 03  
+        Materials == "A" &
+        Shift == "Unshifted" &
+        Talker.A_Sound == "Sh" & 
+        Talker.A_Gender == "Female"
+        ~ "03",
+        
+        Materials == "B" &
+        Shift == "Shifted" &
+        Talker.A_Sound == "Sh" & 
+        Talker.A_Gender == "Female" 
+        ~ "03",
+    
+      ### 04    
+        Materials == "A" &
+        Shift == "Shifted" &
+        Talker.A_Sound == "Sh" & 
+        Talker.A_Gender == "Female"
+        ~ "04",
+        
+        Materials == "B" &
+        Shift == "Unshifted" &
+        Talker.A_Sound == "Sh" & 
+        Talker.A_Gender == "Female" 
+        ~ "04",
+      
+      ### 05
+        Materials == "A" &
+        Shift == "Unshifted" &
+        Talker.A_Sound == "S" & 
+        Talker.A_Gender == "Male" 
+        ~ "05",
+        
+        Materials == "B" &
+        Shift == "Shifted" &
+        Talker.A_Sound == "S" & 
+        Talker.A_Gender == "Male" 
+        ~ "05",
+      
+      ### 06 
+        Materials == "A" &
+        Shift == "Shifted" &
+        Talker.A_Sound == "S" & 
+        Talker.A_Gender == "Male" 
+        ~ "06",
+        
+        Materials == "B" &
+        Shift == "Unshifted" &
+        Talker.A_Sound == "S" & 
+        Talker.A_Gender == "Male" 
+        ~ "06",
+     
+      ### 07  
+        Materials == "A" &
+        Shift == "Unshifted" &
+        Talker.A_Sound == "Sh" & 
+        Talker.A_Gender == "Male" 
+        ~ "07",
+        
+        Materials == "B" &
+        Shift == "Shifted" &
+        Talker.A_Sound == "Sh" & 
+        Talker.A_Gender == "Male" 
+        ~ "07",
+    
+      ### 08    
+        Materials == "A" &
+        Shift == "Shifted" &
+        Talker.A_Sound == "Sh" & 
+        Talker.A_Gender == "Male" 
+        ~ "08",
+        
+        Materials == "B" &
+        Shift == "Unshifted" &
+        Talker.A_Sound == "Sh" & 
+        Talker.A_Gender == "Male" 
+        ~ "08"
+    )
+  ) %>%
+  
+   ## Talker A 
+    mutate(
+      A = 
+        paste0(
         ### Shift
         case_when(
           Shift == "Shifted" 
           ~ paste0("As"),
           Shift == "Unshifted" 
-          ~ paste0("S"),
+          ~ paste0("S")
           ),
   
         ### Sound
         case_when(
-          Talker.A_Sound == "s"
+          Talker.A_Sound == "S"
           ~ paste0("", sep = "."),
-          Talker.A_Sound == "sh"
+          Talker.A_Sound == "Sh"
           ~ paste0("h", sep = ".")
         ),
   
@@ -298,31 +398,35 @@ tibble(
           ~ paste0(sep = ".", "F"), 
           T ~ paste0(sep = ".", "M")
         ),
-          
+        
         ### Ear Assignment
         case_when(
           Talker.A_Ear == "Left" 
           ~ paste0(sep = ".", "L"), 
           T ~ paste0(sep = ".", "R")
-        ),
+        )
         
-      sep = "_",
-        
+    )) %>%
+  view() %>%
+
   ## Talker B
+  mutate(
+    B = 
+      paste0(
         
-        ### Shift
+      ### Shift
         case_when(
           Shift == "Shifted" 
           ~ paste0("As"),
           Shift == "Unshifted" 
-          ~ paste0("S"),
+          ~ paste0("S")
           ),
   
         ### Sound
         case_when(
-          Talker.B_Sound == "s"
+          Talker.B_Sound == "S"
           ~ paste0("", sep = "."),
-          Talker.B_Sound == "sh"
+          Talker.B_Sound == "Sh"
           ~ paste0("h", sep = ".")
         ),
   
@@ -335,16 +439,43 @@ tibble(
             ~ paste0(sep = ".", "F"), 
             T ~ paste0(sep = ".", "M")
           ),
-          
-          ### Ear Assignment
-          case_when(
-            Talker.B_Ear == "Left" 
-            ~ paste0(sep = ".", "L"), 
-            T ~ paste0(sep = ".", "R")
+        
+        ### Ear Assignment
+        case_when(
+          Talker.A_Ear == "Left" 
+          ~ paste0(sep = ".", "R"), 
+          T ~ paste0(sep = ".", "L")
+        )
+      )) %>%
+  view() %>%
+
+# Changing file names
+  mutate(
+    filename = 
+      paste0(
+        "Critical", 
+        sep = "_",
+        
+  ## List
+  paste0(List, sep =  "."),  
+ 
+   ## Materials
+        case_when(
+          Materials == "A" 
+          ~ paste0("A", sep = "_"),
+          Materials == "B" 
+          ~ paste0("B", sep = "_")
           ),
   
-          ### File Suffix
-          paste0(".wav")
+    ## Order
+        case_when(
+        Talker == "1"
+        ~ paste0(A, sep = "_", B),
+        T ~ paste0(B, sep = "_", A)
+        ),
+
+      ### file suffix  
+        paste0(".wav")   
       )) %>% 
   
   ## Repetition of File within List
@@ -352,33 +483,19 @@ tibble(
     rep = 1
   ) %>%
   
-  view() %>%
-
+view() %>%
+  
 # CSV Files
 
 ## Remove all columns but file names
-select(-c())  %>%
+select(-c(A, B, Talker, Filler.Match))  %>%
   
 ## Group files
-group_by(Shift, Filler.Match, Talker.A_G, Talker.A_E) %>%
+group_by(List) %>%
 
-group_map(.f = ~ write_csv(.x, file = paste0("C:Stimuli/Experiment_1/Lists/Exposure_Phase/Critical_Lists/Critical.",  .y$Filler.Match,"_", .y$Shift, "_Talker.A_", .y$Talker.A_G, "_", .y$Talker.A_E, ".csv")
-))
+group_map(.f = ~ write_csv(.x, file = paste0("C:Stimuli/Experiment_1/Lists/Exposure_Phase/Critical_Lists/Critical_",  .y$List, ".csv")))
 ```
 
-
-## Key for File Names
-
-Symbol | Meaning
-------------------------------
- A.  | Attended Talker
- U.  | Unattended Talker
-.M   | Male Gender
-.F   | Female Gender
-.L   | Left Ear
-.R   | Right Ear    
-
-Embed this table into table of who is the attended talker?
 
 ## Filler Items   
 ```{r Filler Items}
@@ -1082,6 +1199,26 @@ for (f in Files) {
 ```
 
 -----
+
+```{r Critical List/Materials}
+
+Files <- list.files(path = "Stimuli/Experiment_1/Items_Critical/8B/")
+
+for (f in Files) {
+  
+  old.files <- paste0(
+    "Stimuli/Experiment_1/Items_Critical/8B/",
+    f) 
+
+  f.list = gsub("Critical", "Critical_08.X", f)
+  f.materials = gsub(".X", ".B", f.list)
+
+  new.files <- paste0("Stimuli/Experiment_1/Items_Critical/8/", f.materials)
+  
+  file.rename(old.files, new.files)
+}
+```
+------
 
 # CSV File (Concat?)
 ## This is not going too well :/

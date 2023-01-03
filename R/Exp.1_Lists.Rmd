@@ -898,102 +898,186 @@ _______
 
 ## Critical Items
 
-### I want to rename the files and copy them into this folder: C:\Users\Rachel\Documents\Social.Influence_Speech.Perception\SI.SP\R\Stimuli\Experiment_1\Items_Critical
-
 ```{r Critical Rename_S.F.L}
 ## Left: Female S Unambiguous; Right: Male Sh Unambiguous
-for (f in list.files(path = "Stimuli/Experiment_1/Items_Critical/F.S_M.Sh/Nonambiguous")) {
-f.Category = gsub("^200ms", "Critical", f)
+
+Files <- list.files(path = "Stimuli/Experiment_1/Items_Critical/F.S_M.Sh/Nonambiguous/")
+
+
+for (f in Files) {
+print(f)  
+  
+  old.files <- paste0(
+    "Stimuli/Experiment_1/Items_Critical/F.S_M.Sh/Nonambiguous/", 
+    f) 
+  
+  f.Category = gsub("^200ms", "Critical", f)
   f.left_Shift = gsub("F.S", "S", f.Category)
   f.left_Gender.Ear = gsub("_M.", ".F.L_", f.left_Shift)
   f.right_Shift = gsub("Sh", "Sh", f.left_Gender.Ear)
   f.right_Gender.Ear = gsub(".wav", ".M.R.wav", f.right_Shift)
   
-  write(f.right_Gender.Ear, "Stimuli/Experiment_1/Items_Critical")
+  new.files <- paste0("Stimuli/Experiment_1/Items_Critical/1/", f.right_Gender.Ear)
+  
+  file.rename(old.files, new.files)
 }
 ```
 
+
 ```{r Critical Rename_As.F.L}
-for (f in list.files(path = "Stimuli/Experiment_1/Items_Critical/F.S_M.Sh/Ambiguous/")) {
+## Left: Female S Ambiguous; Right: Male Sh Ambiguous
+
+Files <- list.files(path = "Stimuli/Experiment_1/Items_Critical/F.S_M.Sh/Ambiguous/")
+
+for (f in Files) {
+
+  
+  old.files <- paste0(
+    "Stimuli/Experiment_1/Items_Critical/F.S_M.Sh/Ambiguous/", 
+    f) 
+
   f.Category = gsub("^200ms", "Critical", f)
+
   f.left_Shift = gsub("F.Xs", "As", f.Category)
   f.left_Gender.Ear = gsub("_M.", ".F.L_", f.left_Shift)
-  f.right_Shift = gsub("Xsh", "As", f.left_Gender.Ear)
+  f.right_Shift = gsub("Xsh", "Ash", f.left_Gender.Ear)
   f.right_Gender.Ear = gsub(".wav", ".M.R.wav", f.right_Shift)
   
-  print_csv(f.right_Gender.Ear)
+  new.files <- paste0("Stimuli/Experiment_1/Items_Critical/2/", f.right_Gender.Ear)
+  
+  file.rename(old.files, new.files)
 }
 ```
 
 ```{r Critical Rename_Sh.F.L}
-for (f in list.files(path = "Stimuli/Experiment_1/Items_Critical/F.Sh_M.S/Nonambiguous/")) {
+## Left: Female Sh Unambiguous; Right: Male S Unambiguous
+Files <- list.files(path = "Stimuli/Experiment_1/Items_Critical/F.Sh_M.S/Nonambiguous/")
+
+for (f in Files) {
+  
+  old.files <- paste0(
+    "Stimuli/Experiment_1/Items_Critical/F.Sh_M.S/Nonambiguous/", 
+    f) 
+
   f.Category = gsub("^200ms", "Critical", f)
   f.left_Shift = gsub("F.Sh", "Sh", f.Category)
   f.left_Gender.Ear = gsub("_M.", ".F.L_", f.left_Shift)
-  f.right_Shift = gsub("s", "S", f.left_Gender.Ear)
+  f.right_Shift = gsub("_s", "_S", f.left_Gender.Ear)
   f.right_Gender.Ear = gsub(".wav", ".M.R.wav", f.right_Shift)
+
+  new.files <- paste0("Stimuli/Experiment_1/Items_Critical/3/", f.right_Gender.Ear)
   
-  print(f.right_Gender.Ear)
+  file.rename(old.files, new.files)
 }
 ```
 
 ```{r Critical Rename_Ash.F.L}
-for (f in list.files(path = "Stimuli/Experiment_1/Items_Critical/F.Sh_M.S/ambiguous/")) {
+## Left: Female Sh Ambiguous; Right: Male S Ambiguous
+Files <- list.files(path = "Stimuli/Experiment_1/Items_Critical/F.Sh_M.S/Ambiguous/")
+
+for (f in Files) {
+  
+  old.files <- paste0(
+    "Stimuli/Experiment_1/Items_Critical/F.Sh_M.S/Ambiguous/", 
+    f) 
+
   f.Category = gsub("^200ms", "Critical", f)
   f.left_Shift = gsub("F.Xsh", "Ash", f.Category)
   f.left_Gender.Ear = gsub("_M.", ".F.L_", f.left_Shift)
   f.right_Shift = gsub("Xs", "As", f.left_Gender.Ear)
   f.right_Gender.Ear = gsub(".wav", ".M.R.wav", f.right_Shift)
+
+  new.files <- paste0("Stimuli/Experiment_1/Items_Critical/4/", f.right_Gender.Ear)
   
-  print(f.right_Gender.Ear)
+  file.rename(old.files, new.files)
 }
 ```
 
 ```{r Critical Rename_S.M.L}
-for (f in list.files(path = "Stimuli/Experiment_1/Items_Critical/M.S_F.Sh/Nonambiguous/")) {
-  f.Category = gsub("^200ms", "Critical", f)
-  f.left_Shift = gsub("M.S", "Ash", f.Category)
-  f.left_Gender.Ear = gsub("_F.", ".M.L_", f.left_Shift)
-  f.right_Shift = gsub("Sh", "", f.left_Gender.Ear)
-  f.right_Gender.Ear = gsub(".wav", ".F.R.wav", f.right_Shift)
+## Left: Male S Unambiguous; Right: Female Sh Unambiguous
+Files <- list.files(path = "Stimuli/Experiment_1/Items_Critical/M.S_F.Sh/Nonambiguous/")
+
+for (f in Files) {
   
-  print(f.right_Gender.Ear)
+  old.files <- paste0(
+    "Stimuli/Experiment_1/Items_Critical/M.S_F.Sh/Nonambiguous/", 
+    f) 
+
+  f.Category = gsub("^200ms", "Critical", f)
+  f.left_Shift = gsub("M.S.", "S.", f.Category)
+  f.left_Gender.Ear = gsub("_F.", ".M.L_", f.left_Shift)
+  f.right_Shift = gsub("L_Sh.", "L_Sh.", f.left_Gender.Ear)
+  f.right_Gender.Ear = gsub(".wav", ".F.R.wav", f.right_Shift)
+
+  new.files <- paste0("Stimuli/Experiment_1/Items_Critical/5/", f.right_Gender.Ear)
+  
+  file.rename(old.files, new.files)
 }
 ```
 
 ```{r Critical Rename_As.M.L}
-for (f in list.files(path = "Stimuli/Experiment_1/Items_Critical/M.S_F.Sh/Ambiguous/")) {
+## Left: Male S Ambiguous; Right: Female Sh Ambiguous
+Files <- list.files(path = "Stimuli/Experiment_1/Items_Critical/M.S_F.Sh/Ambiguous/")
+
+for (f in Files) {
+  
+  old.files <- paste0(
+    "Stimuli/Experiment_1/Items_Critical/M.S_F.Sh/Ambiguous/",
+    f) 
+
   f.Category = gsub("^200ms", "Critical", f)
   f.left_Shift = gsub("M.Xs", "As", f.Category)
   f.left_Gender.Ear = gsub("_F.", ".M.L_", f.left_Shift)
   f.right_Shift = gsub("Xsh", "Ash", f.left_Gender.Ear)
   f.right_Gender.Ear = gsub(".wav", ".F.R.wav", f.right_Shift)
+
+  new.files <- paste0("Stimuli/Experiment_1/Items_Critical/6/", f.right_Gender.Ear)
   
-  print(f.right_Gender.Ear)
+  file.rename(old.files, new.files)
 }
 ```
 
 ```{r Critical Rename_Sh.M.L}
-for (f in list.files(path = "Stimuli/Experiment_1/Items_Critical/M.Sh_F.S/Nonambiguous/")) {
+## Left: Male Sh Unambiguous; Right: Female S Unambiguous
+Files <- list.files(path = "Stimuli/Experiment_1/Items_Critical/M.Sh_F.S/Nonambiguous/")
+
+for (f in Files) {
+  
+  old.files <- paste0(
+    "Stimuli/Experiment_1/Items_Critical/M.Sh_F.S/Nonambiguous/", 
+    f) 
+
   f.Category = gsub("^200ms", "Critical", f)
   f.left_Shift = gsub("M.Sh", "Sh", f.Category)
   f.left_Gender.Ear = gsub("_F.", ".M.L_", f.left_Shift)
   f.right_Shift = gsub("S", "S", f.left_Gender.Ear)
   f.right_Gender.Ear = gsub(".wav", ".F.R.wav", f.right_Shift)
+
+  new.files <- paste0("Stimuli/Experiment_1/Items_Critical/7/", f.right_Gender.Ear)
   
-  print(f.right_Gender.Ear)
+  file.rename(old.files, new.files)
 }
 ```
 
 ```{r Critical Rename_Ash.M.L}
-for (f in list.files(path = "Stimuli/Experiment_1/Items_Critical/M.Sh_F.S/Nonambiguous/")) {
+## Left: Male Sh Ambiguous; Right: Female S Ambiguous
+Files <- list.files(path = "Stimuli/Experiment_1/Items_Critical/M.Sh_F.S/Ambiguous/")
+
+for (f in Files) {
+  
+  old.files <- paste0(
+    "Stimuli/Experiment_1/Items_Critical/M.Sh_F.S/Ambiguous/",
+    f) 
+
   f.Category = gsub("^200ms", "Critical", f)
   f.left_Shift = gsub("M.Xsh", "Ash", f.Category)
   f.left_Gender.Ear = gsub("_F.", ".M.L_", f.left_Shift)
   f.right_Shift = gsub("Xs", "As", f.left_Gender.Ear)
   f.right_Gender.Ear = gsub(".wav", ".F.R.wav", f.right_Shift)
+
+  new.files <- paste0("Stimuli/Experiment_1/Items_Critical/8/", f.right_Gender.Ear)
   
-  print(f.right_Gender.Ear)
+  file.rename(old.files, new.files)
 }
 ```
 

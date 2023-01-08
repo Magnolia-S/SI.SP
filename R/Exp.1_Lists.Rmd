@@ -100,10 +100,11 @@ options(width = 110)
 theme_set(theme_bw())
 ```
 
----
+_____
 
-# Exposure Phase   
-## Critical Items     
+# Lists  
+## Exposure Phase    
+### Critical Items     
 ```{r Ciritcal Items}
 # Table with the information on how the stims should be paired: Materials x Accent x Gender x Ear Assignment
 
@@ -165,16 +166,29 @@ Materials.B_Sh.Words= c(
 
 ## Items
 tibble(
-  Critical.Item_Num = 1:20,
   
+  Phase = c(
+  rep("Exposure", 20)
+  ),
+
+  Item.Type = c(
+    rep("Critical", 20)
+  ),
+    
+  Block = c(
+    rep("1", 20)
+  ),
+  
+  Item.Number = 1:20,
+
   Talker.A = c(
     Materials.A_Sh.Words, 
     Materials.B_S.Words
   ),
   
   Talker.A_Materials = c(
-    rep("A", 10),
-    rep("B", 10)
+    rep("Materials A", 10),
+    rep("Materials B", 10)
   ),
   
   Talker.A_Sound = c(
@@ -188,8 +202,8 @@ tibble(
   ),
   
   Talker.B_Materials = c(
-    rep("B", 10),
-    rep("A", 10)
+    rep("Materials B", 10),
+    rep("Materials A", 10)
   ),
   
   Talker.B_Sound = c(
@@ -201,7 +215,7 @@ tibble(
   ## Possible Assignments (Shift x Gender x Ear)
   ### Which Talker is Attended to is dependent on instructions
   crossing(
-    Shift = c(
+    Version = c(
       "Shifted",
       "Unshifted"
     ),    
@@ -248,105 +262,105 @@ tibble(
       case_when(
         
         ### 01
-        Talker.A_Materials == "A" &
-          Shift == "Unshifted" &
+        Talker.A_Materials == "Materials A" &
+          Version == "Unshifted" &
           Talker.A_Gender == "Female" &
           Talker.A_Ear == "Left"
         ~ "01",
         
-        Talker.A_Materials == "B" &
-          Shift == "Shifted" &
+        Talker.A_Materials == "Materials B" &
+          Version == "Shifted" &
           Talker.A_Gender == "Female"  &
           Talker.A_Ear == "Left"
         ~ "01",
         
         ### 02 
-        Talker.A_Materials == "B" &
-          Shift == "Unshifted" &
+        Talker.A_Materials == "Materials B" &
+          Version == "Unshifted" &
           Talker.A_Gender == "Female" &
           Talker.A_Ear == "Left"
         ~ "02",
         
-        Talker.A_Materials == "A" &
-          Shift == "Shifted" &
+        Talker.A_Materials == "Materials A" &
+          Version == "Shifted" &
           Talker.A_Gender == "Female"  &
           Talker.A_Ear == "Left"
         ~ "02",
         
         ### 03 
-        Talker.A_Materials == "A" &
-          Shift == "Unshifted" &
+        Talker.A_Materials == "Materials A" &
+          Version == "Unshifted" &
           Talker.A_Gender == "Male"  &
           Talker.A_Ear == "Right"
         ~ "03",
         
-        Talker.A_Materials == "B" &
-          Shift == "Shifted" &
+        Talker.A_Materials == "Materials B" &
+          Version == "Shifted" &
           Talker.A_Gender == "Male"  &
           Talker.A_Ear == "Right"
         ~ "03",
         
         ### 04    
-        Talker.A_Materials == "B" &
-          Shift == "Unshifted" &
+        Talker.A_Materials == "Materials B" &
+          Version == "Unshifted" &
           Talker.A_Gender == "Male"  &
           Talker.A_Ear == "Right"
         ~ "04",
         
-        Talker.A_Materials == "A" &
-          Shift == "Shifted" &
+        Talker.A_Materials == "Materials A" &
+          Version == "Shifted" &
           Talker.A_Gender == "Male"  &
           Talker.A_Ear == "Right"
         ~ "04",  
         
         ### 05 
-        Talker.A_Materials == "A" &
-          Shift == "Unshifted" &
+        Talker.A_Materials == "Materials A" &
+          Version == "Unshifted" &
           Talker.A_Gender == "Female" &
           Talker.A_Ear == "Right"
         ~ "05",
         
-        Talker.A_Materials == "B" &
-          Shift == "Shifted" &
+        Talker.A_Materials == "Materials B" &
+          Version == "Shifted" &
           Talker.A_Gender == "Female" &
           Talker.A_Ear == "Right"
         ~ "05",
         
         ### 06  
-        Talker.A_Materials == "B" &
-          Shift == "Unshifted" &
+        Talker.A_Materials == "Materials B" &
+          Version == "Unshifted" &
           Talker.A_Gender == "Female" &
           Talker.A_Ear == "Right"
         ~ "06",
         
-        Talker.A_Materials == "A" &
-          Shift == "Shifted" &
+        Talker.A_Materials == "Materials A" &
+          Version == "Shifted" &
           Talker.A_Gender == "Female"  &
           Talker.A_Ear == "Right"
         ~ "06",
         
         ### 07    
-        Talker.A_Materials == "A" &
-          Shift == "Unshifted" &
+        Talker.A_Materials == "Materials A" &
+          Version == "Unshifted" &
           Talker.A_Gender == "Male" &
           Talker.A_Ear == "Left"
         ~ "07",
         
-        Talker.A_Materials == "B" &
-          Shift == "Shifted" &
+        Talker.A_Materials == "Materials B" &
+          Version == "Shifted" &
           Talker.A_Gender == "Male"  &
           Talker.A_Ear == "Left"
         ~ "07",
         
         ### 08
-        Talker.A_Materials == "B" &
-          Shift == "Unshifted" &
+        Talker.A_Materials == "Materials B" &
+          Version == "Unshifted" &
           Talker.A_Gender == "Male"  &
           Talker.A_Ear == "Left"
         ~ "08",
         
-        Talker.A_Materials == "A" &
-          Shift == "Shifted" &
+        Talker.A_Materials == "Materials A" &
+          Version == "Shifted" &
           Talker.A_Gender == "Male"  &
           Talker.A_Ear == "Left"
         ~ "08",
@@ -361,17 +375,17 @@ tibble(
         
         ## Materials
         case_when(
-          Talker.A_Materials == "A" 
+          Talker.A_Materials == "Materials A" 
           ~ paste0("A", sep = "_"),
-          Talker.A_Materials == "B" 
+          Talker.A_Materials == "Materials B" 
           ~ paste0("B", sep = "_")
         ),
         
         ### Shift
         case_when(
-          Shift == "Shifted" 
+          Version == "Shifted" 
           ~ paste0("As"),
-          Shift == "Unshifted" 
+          Version == "Unshifted" 
           ~ paste0("S")
         ),
         
@@ -410,7 +424,7 @@ tibble(
         
         ## Materials
         case_when(
-          Talker.B_Materials == "A" 
+          Talker.B_Materials == "Materials A" 
           ~ paste0("A", sep = "_"),
           Talker.B_Materials == "B" 
           ~ paste0("B", sep = "_")
@@ -418,9 +432,9 @@ tibble(
         
         ### Shift
         case_when(
-          Shift == "Shifted" 
+          Version == "Shifted" 
           ~ paste0("As"),
-          Shift == "Unshifted" 
+          Version == "Unshifted" 
           ~ paste0("S")
         ),
         
@@ -473,6 +487,11 @@ tibble(
       )
   ) %>%
   
+  # Repetition of File within List
+  mutate(
+    rep = 1
+  ) %>%
+  
   # Changing file names
   mutate(
     filename = 
@@ -494,11 +513,6 @@ tibble(
         paste0(".wav")   
       )) %>% 
   
-  # Repetition of File within List
-  mutate(
-    rep = 1
-  ) %>%
-  
   view() %>%
   
   # CSV Files
@@ -513,7 +527,7 @@ tibble(
 ```
 
 
-## Filler Items   
+### Filler Items   
 ```{r Filler Items}
 
 # Word List
@@ -657,26 +671,53 @@ Set.C_Nonword = c(
 
 # Table
 tibble(
-  Set = c(
-    rep("A", 20),
-    rep("B", 20),
-    rep("C", 20)
-  ), 
+
+  Phase = c(
+   rep("Exposure", 60) 
+  ),
   
-  Filler.Item_Num = c(
+  Item.Type = c(
+    rep("Filler", 60)
+  ),
+  
+  Block = c(
+    rep("1", 60)
+  ),  
+  
+  Item.Number = c(
     rep(1:20,3) 
   ),
   
-  Talker.A_Word = c(
+  Talker.A = c(
     Set.A_Word,
     Set.B_Word,
     Set.C_Word
   ),
   
-  Talker.B_Nonword = c(
+   Talker.A_Materials = c(
+    rep("Set A", 20),
+    rep("Set B", 20),
+    rep("Set C", 20)
+  ),  
+  
+  Talker.A_Sound = c(
+    rep("Word", 60)
+  ),
+  
+  Talker.B = c(
     Set.A_NonWord,
     Set.B_Nonword,
     Set.C_Nonword
+  ),
+  
+    Talker.B_Materials = c(
+    rep("Set A", 20),
+    rep("Set B", 20),
+    rep("Set C", 20)
+  ),
+  
+  Talker.B_Sound = c(
+    rep("Nonword", 60)
   )
 ) %>%
   
@@ -709,7 +750,7 @@ tibble(
   
   ## Adds Version
   mutate(
-    Set.Version =
+    Version =
       case_when( 
         Talker.A_Gender == "Male" &
           Talker.A_Ear == "Right"
@@ -734,54 +775,54 @@ tibble(
       case_when( 
         
         ## Set A    
-        Set == "A" &
-          Set.Version == "03"
+        Talker.A_Materials == "Set A" &
+          Version == "03"
         ~ "1", 
         
-        Set == "A" &
-          Set.Version == "01"
+        Talker.A_Materials == "Set A" &
+          Version == "01"
         ~ "2",
         
-        Set == "A" &
-          Set.Version == "02"
+        Talker.A_Materials == "Set A" &
+          Version == "02"
         ~ "3",
         
-        Set == "A" &
-          Set.Version == "04"
+        Talker.A_Materials == "Set A" &
+          Version == "04"
         ~ "4",
         
         ## Set B    
-        Set == "B" &
-          Set.Version == "04"
+        Talker.A_Materials == "Set B" &
+          Version == "04"
         ~ "1", 
         
-        Set == "B" &
-          Set.Version == "02"
+        Talker.A_Materials == "Set B" &
+          Version == "02"
         ~ "2",
         
-        Set == "B" &
-          Set.Version == "01"
+        Talker.A_Materials == "Set B" &
+          Version == "01"
         ~ "3",
         
-        Set == "B" &
-          Set.Version == "03"
+        Talker.A_Materials == "Set B" &
+          Version == "03"
         ~ "4",
         
         ## Set C    
-        Set == "C" &
-          Set.Version == "01"
+        Talker.A_Materials == "Set C" &
+          Version == "01"
         ~ "1", 
         
-        Set == "C" &
-          Set.Version == "03"
+        Talker.A_Materials == "Set C" &
+          Version == "03"
         ~ "2",
         
-        Set == "C" &
-          Set.Version == "04"
+        Talker.A_Materials == "Set C" &
+          Version == "04"
         ~ "3",
         
-        Set == "C" &
-          Set.Version == "02"
+        Talker.A_Materials == "Set C" &
+          Version == "02"
         ~ "4"
       )) %>%
   
@@ -825,7 +866,6 @@ tibble(
     rep = 1
   ) %>%
   
-  
   # Changing file names
   mutate(
     filename = 
@@ -835,23 +875,23 @@ tibble(
         
         ## Set
         case_when(
-          Set == "A"
+          Talker.A_Materials == "Set A"
           ~ paste0("A", sep = "."),
-          Set == "B"
+          Talker.A_Materials == "Set B"
           ~ paste0("B", sep = "."),
-          Set == "C"
+          Talker.A_Materials == "Set C"
           ~ paste0("C", sep = ".")
         ),
         
         ## Version
         case_when(
-          Set.Version == "01"
+          Version == "01"
           ~ paste0("01", sep = "_"),
-          Set.Version == "02"
+          Version == "02"
           ~ paste0("02", sep = "_"),
-          Set.Version == "03"
+          Version == "03"
           ~ paste0("03", sep = "_"),
-          Set.Version == "04"
+          Version == "04"
           ~ paste0("04", sep = "_")
         ),
         
@@ -861,7 +901,7 @@ tibble(
         paste0("W", sep = "."),
         
         ### Talker A Word 
-        paste0(Talker.A_Word),
+        paste0(Talker.A),
         
         ### Gender Assignment
         case_when(
@@ -885,7 +925,7 @@ tibble(
         paste0("N", sep = "."),
         
         ### Talker B Word
-        paste0(Talker.B_Nonword),
+        paste0(Talker.B),
         
         ### Gender Assignment
         case_when(
@@ -919,12 +959,21 @@ tibble(
   ))
 ```
 
-# Test Phase
+## Test Phase  
+### Test Items  
 ```{r Test Phase}
-
 # Table
 tibble(
-  Test.Items = c(
+
+  Phase = c(
+  rep("Test", 6)
+  ),
+  
+  Item.Type = c(
+    rep("Test", 6)
+  ),  
+  
+  Talker.A = c(
     "ashi.25",
     "ashi.30",
     "ashi.40",
@@ -932,13 +981,18 @@ tibble(
     "ashi.50",
     "ashi.70"
   ),
+
+  Talker.B = c(
+    rep("NA", 6)
+  ),
   
-  Test.Item_Num = 1:6
+  Item.Number = 1:6
+
 )%>%
   
   ## Attended Talker x First Talker
   crossing(
-    Talker_Gender = c(
+    Talker.A_Gender = c(
       "Female", 
       "Male"
     ),
@@ -950,35 +1004,35 @@ tibble(
   mutate(
     First_Talker = case_when( 
       abs(Block %% 4) == 1 &
-        Talker_Gender == "Male"
+        Talker.A_Gender == "Male"
       ~ "Male",
       
       abs(Block %% 4) == 2 &
-        Talker_Gender == "Male"
+        Talker.A_Gender == "Male"
       ~ "Male",
       
       abs(Block %% 4) == 3 &
-        Talker_Gender == "Female"
+        Talker.A_Gender == "Female"
       ~ "Male",      
       
       abs(Block %% 4) == 0 &
-        Talker_Gender == "Female"
+        Talker.A_Gender == "Female"
       ~ "Male",  
       
       abs(Block %% 4) == 1 &
-        Talker_Gender == "Female"
+        Talker.A_Gender == "Female"
       ~ "Female",
       
       abs(Block %% 4) == 2 &
-        Talker_Gender == "Female"
+        Talker.A_Gender == "Female"
       ~ "Female",
       
       abs(Block %% 4) == 3 &
-        Talker_Gender == "Male"
+        Talker.A_Gender == "Male"
       ~ "Female",
       
       abs(Block %% 4) == 0 &
-        Talker_Gender == "Male"
+        Talker.A_Gender == "Male"
       ~ "Female"
     ),
     
@@ -994,10 +1048,9 @@ tibble(
     rep = 1
   ) %>%
   
-  
   # File name
   mutate(
-    Filename = paste0(
+    filename = paste0(
       "Test",
       sep = "_",
       Test_Version,
@@ -1011,13 +1064,13 @@ tibble(
       
       sep = "_",
       case_when(
-        Talker_Gender == "Female"
+        Talker.A_Gender == "Female"
         ~ paste0("F", sep = "."), 
         T ~ paste0("M", sep = ".")
       ),
-      Test.Item_Num,
+      Item.Number,
       sep = ".",   
-      Test.Items,
+      Talker.A,
       paste0(".wav")
     )) %>%
   
@@ -1026,14 +1079,172 @@ tibble(
   # CSV Files
   
   ## Remove file columns <- all but file names
-  select(-c()) %>%
+  select(-c(First_Talker)) %>%
   
   ## Group files into list 
   group_by(Test_Version) %>%
   
-  group_map(.f = ~ write_csv(.x, file = paste0("C:Stimuli/Experiment_1/Lists/Test_Phase/Test.", .y$Test_Version, ".csv")
+  group_map(.f = ~ write_csv(.x, file = paste0("C:Stimuli/Experiment_1/Lists/Test.", .y$Test_Version, ".csv")
   ))
 ```
+
+# Concatenate CSV files  
+```{r Concate}
+
+# Origin
+setwd("Stimuli/Experiment_1/Lists/")
+
+# Destination
+folder <- paste0("Stimuli/Experiment_1/Lists/Total/")
+
+# Individual Lists
+## Critical Lists 
+C1 <- fread("Critical.01_Y.csv")
+C2 <- fread("Critical.02_Y.csv")
+C3 <- fread("Critical.03_Y.csv")
+C4 <- fread("Critical.04_Y.csv")
+C5 <- fread("Critical.05_X.csv")
+C6 <- fread("Critical.06_X.csv")
+C7 <- fread("Critical.07_X.csv")
+C8 <- fread("Critical.08_X.csv")
+
+## Filler Lists
+F1 <- fread("Filler.01_X.Attended.Female.Right.csv")
+F2 <- fread("Filler.02_Y.Attended.Male.Right.csv")
+F3 <- fread("Filler.03_Y.Attended.Female.Left.csv")
+F4 <- fread("Filler.04_X.Attended.Male.Left.csv")
+
+## Test Lists
+TA <- fread("Test.A.csv")
+TB <- fread("Test.B.csv")
+
+# Total Lists
+L01 <- rbind(C1, F2, TA, fill=TRUE) 
+L02 <- rbind(C1, F2, TB, fill=TRUE)
+L03 <- rbind(C1, F3, TA, fill=TRUE)
+L04 <- rbind(C1, F3, TB, fill=TRUE)
+
+L05 <- rbind(C2, F2, TA, fill=TRUE)
+L06 <- rbind(C2, F2, TB, fill=TRUE)
+L07 <- rbind(C2, F3, TA, fill=TRUE)
+L08 <- rbind(C2, F3, TB, fill=TRUE)
+
+L09 <- rbind(C3, F2, TA, fill=TRUE)
+L10 <- rbind(C3, F2, TB, fill=TRUE)
+L11 <- rbind(C3, F3, TA, fill=TRUE)
+L12 <- rbind(C3, F3, TB, fill=TRUE)
+
+L13 <- rbind(C4, F2, TA, fill=TRUE)
+L14 <- rbind(C4, F2, TB, fill=TRUE)
+L15 <- rbind(C4, F3, TA, fill=TRUE)
+L16 <- rbind(C4, F3, TB, fill=TRUE)
+
+L17 <- rbind(C5, F1, TA, fill=TRUE)
+L18 <- rbind(C5, F1, TB, fill=TRUE)
+L19 <- rbind(C5, F4, TA, fill=TRUE)
+L20 <- rbind(C5, F4, TB, fill=TRUE)
+
+L21 <- rbind(C6, F1, TA, fill=TRUE)
+L22 <- rbind(C6, F1, TB, fill=TRUE)
+L23 <- rbind(C6, F4, TA, fill=TRUE)
+L24 <- rbind(C6, F4, TB, fill=TRUE)
+
+L25 <- rbind(C7, F1, TA, fill=TRUE)
+L26 <- rbind(C7, F1, TB, fill=TRUE)
+L27 <- rbind(C7, F4, TA, fill=TRUE)
+L28 <- rbind(C7, F4, TB, fill=TRUE)
+
+L29 <- rbind(C8, F1, TA, fill=TRUE)
+L30 <- rbind(C8, F1, TB, fill=TRUE)
+L31 <- rbind(C8, F4, TA, fill=TRUE)
+L32 <- rbind(C8, F4, TB, fill=TRUE)
+### (There was probably a more efficient way to do this, possibly using the table I was trying to create)
+
+# Write CSV Files
+write.csv(L01, "List_01.csv")
+write.csv(L02, "List_02.csv")
+write.csv(L03, "List_03.csv")
+write.csv(L04, "List_04.csv")
+write.csv(L05, "List_05.csv")
+write.csv(L06, "List_06.csv")
+write.csv(L07, "List_07.csv")
+write.csv(L08, "List_08.csv")
+write.csv(L09, "List_09.csv")
+write.csv(L10, "List_10.csv")
+write.csv(L11, "List_11.csv")
+write.csv(L12, "List_12.csv")
+write.csv(L13, "List_13.csv")
+write.csv(L14, "List_14.csv")
+write.csv(L15, "List_15.csv")
+write.csv(L16, "List_16.csv")
+write.csv(L17, "List_17.csv")
+write.csv(L18, "List_18.csv")
+write.csv(L19, "List_19.csv")
+write.csv(L20, "List_20.csv")
+write.csv(L21, "List_21.csv")
+write.csv(L22, "List_22.csv")
+write.csv(L23, "List_23.csv")
+write.csv(L24, "List_24.csv")
+write.csv(L25, "List_25.csv")
+write.csv(L26, "List_26.sv")
+write.csv(L27, "List_27.csv")
+write.csv(L28, "List_28.csv")
+write.csv(L29, "List_29.csv")
+write.csv(L30, "List_30.csv")
+write.csv(L31, "List_31.csv")
+write.csv(L32, "List_32.csv")
+
+# For Loop
+#for(L in L01:L32){
+#  write.csv( L, "List_", 01:32, ".csv" )
+#}
+### Trying to write a for loop below to write the csv files but one problem at a time
+```
+
+```{r Concate Table}
+# Here we are generating the CSV files for each list. There are a total of *32* lists (described in Exp.1_Master file under writeups)
+
+## How Lists are combined
+tibble(
+  Critical = c(
+    'C1',
+    'C2',
+    'C3',
+    'C4',
+    'C5',
+    'C6',
+    'C7',
+    'C8'
+  )
+) %>%
+  
+  crossing(
+    if (
+      Critical == 'C1'| 
+      Critical == 'C2'|
+      Critical == 'C3'|
+      Critical == 'C4'
+    ){
+      Filler = c(
+        'F2',
+        'F3')
+      
+    } else {
+      
+      Filler = c(
+        'F1',
+        'F4')
+    },
+    ### Below I was trying to cross F2 & F3 with C1:C4, and F1 & F4 with C5:C8. The Filler List assignment is dependent on the Gender x Ear assignment in the Critical Lists!
+    
+    Test = c(
+      'TA',
+      'TB'
+    )
+  ) %>%
+  view()
+```
+
 
 _______
 
@@ -1244,130 +1455,3 @@ for (f in Files) {
 }
 ```
 ________
-
-# Concatenate CSV files  
-```{r Concate}
-
-# Origin
-setwd("Stimuli/Experiment_1/Lists/")
-
-# Destination
-folder <- paste0("Stimuli/Experiment_1/Lists/Total/")
-
-# Individual Lists
-## Critical Lists 
-C1 <- fread("Critical.01_Y.csv")
-C2 <- fread("Critical.02_Y.csv")
-C3 <- fread("Critical.03_Y.csv")
-C4 <- fread("Critical.04_Y.csv")
-C5 <- fread("Critical.05_X.csv")
-C6 <- fread("Critical.06_X.csv")
-C7 <- fread("Critical.07_X.csv")
-C8 <- fread("Critical.08_X.csv")
-
-## Filler Lists
-F1 <- fread("Filler.01_X.Attended.Female.Right.csv")
-F2 <- fread("Filler.02_Y.Attended.Male.Right.csv")
-F3 <- fread("Filler.03_Y.Attended.Female.Left.csv")
-F4 <- fread("Filler.04_X.Attended.Male.Left.csv")
-
-## Test Lists
-TA <- fread("Test.A.csv")
-TB <- fread("Test.B.csv")
-
-# Total Lists
-L01 <- cbind(C1, F2, TA)
-L02 <- cbind(C1, F2, TB)
-L03 <- cbind(C1, F3, TA)
-L04 <- cbind(C1, F3, TB)
-
-L05 <- cbind(C2, F2, TA)
-L06 <- cbind(C2, F2, TB)
-L07 <- cbind(C2, F3, TA)
-L08 <- cbind(C2, F3, TB)
-
-L09 <- cbind(C3, F2, TA)
-L10 <- cbind(C3, F2, TB)
-L11 <- cbind(C3, F3, TA)
-L12 <- cbind(C3, F3, TB)
-
-L13 <- cbind(C4, F2, TA)
-L14 <- cbind(C4, F2, TB)
-L15 <- cbind(C4, F3, TA)
-L16 <- cbind(C4, F3, TB)
-
-L17 <- cbind(C5, F1, TA)
-L18 <- cbind(C5, F1, TB)
-L19 <- cbind(C5, F4, TA)
-L20 <- cbind(C5, F4, TB)
-
-L21 <- cbind(C6, F1, TA)
-L22 <- cbind(C6, F1, TB)
-L23 <- cbind(C6, F4, TA)
-L24 <- cbind(C6, F4, TB)
-
-L25 <- cbind(C7, F1, TA)
-L26 <- cbind(C7, F1, TB)
-L27 <- cbind(C7, F4, TA)
-L28 <- cbind(C7, F4, TB)
-
-L29 <- cbind(C8, F1, TA)
-L30 <- cbind(C8, F1, TB)
-L31 <- cbind(C8, F4, TA)
-L32 <- cbind(C8, F4, TB)
-### (There was probably a more efficient way to do this, possibly using the table I was trying to create)
-
-write.csv(L01, "List_01.csv")
-### For cbind() (column bind), data frames are connected vertically. When I try to use rbind (rowb bind), I have issues because the columns are not the same across data frames. However, cbind then duplicates the rows in each column so they are equal across data frames, which doesn't seem to be what I want either
-
-for(L in 1:32){
-  write.csv(folder, L, ".csv" )
-}
-### Also, I am trying to write a for loop below to write the csv files but one problem at a time
-```
-
-```{r Concate Table}
-# Here we are generating the CSV files for each list. There are a total of *32* lists (described in Exp.1_Master file under writeups)
-
-## How Lists are combined
-tibble(
-  Critical = c(
-    'C1',
-    'C2',
-    'C3',
-    'C4',
-    'C5',
-    'C6',
-    'C7',
-    'C8'
-  )
-) %>%
-  
-  crossing(
-    if (
-      Critical == 'C1'| 
-      Critical == 'C2'|
-      Critical == 'C3'|
-      Critical == 'C4'
-    ){
-      Filler = c(
-        'F2',
-        'F3')
-      
-    } else {
-      
-      Filler = c(
-        'F1',
-        'F4')
-    },
-    ### Below I was trying to cross F2 & F3 with C1:C4, and F1 & F4 with C5:C8. The Filler List assignment is dependent on the Gender x Ear assignment in the Critical Lists!
-    
-    Test = c(
-      'TA',
-      'TB'
-    )
-  ) %>%
-  view()
-```
-
-

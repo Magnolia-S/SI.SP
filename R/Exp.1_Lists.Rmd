@@ -373,14 +373,6 @@ tibble(
     A = 
       paste0(
         
-        ## Materials
-        case_when(
-          Talker.A_Materials == "Materials A" 
-          ~ paste0("A", sep = "_"),
-          Talker.A_Materials == "Materials B" 
-          ~ paste0("B", sep = "_")
-        ),
-        
         ### Shift
         case_when(
           Version == "Shifted" 
@@ -421,14 +413,6 @@ tibble(
   mutate(
     B = 
       paste0(
-        
-        ## Materials
-        case_when(
-          Talker.B_Materials == "Materials A" 
-          ~ paste0("A", sep = "_"),
-          Talker.B_Materials == "B" 
-          ~ paste0("B", sep = "_")
-        ),
         
         ### Shift
         case_when(
@@ -500,7 +484,15 @@ tibble(
         sep = "_",
         
         ## List
-        paste0(List, sep =  "."),  
+        paste0(List, sep =  "_"),  
+        
+        ## Materials
+        case_when(
+          Talker.A_Materials == "Materials A" 
+          ~ paste0("A", sep = "_"),
+          Talker.A_Materials == "Materials B" 
+          ~ paste0("B", sep = "_")
+        ),
         
         ## Order
         case_when(
@@ -871,6 +863,8 @@ tibble(
     filename = 
       paste0(
         "Filler", 
+        sep = "_0",
+        Set.Combo,
         sep = "_",
         
         ## Set
@@ -886,13 +880,13 @@ tibble(
         ## Version
         case_when(
           Version == "01"
-          ~ paste0("01", sep = "_"),
+          ~ paste0("1", sep = "_"),
           Version == "02"
-          ~ paste0("02", sep = "_"),
+          ~ paste0("2", sep = "_"),
           Version == "03"
-          ~ paste0("03", sep = "_"),
+          ~ paste0("3", sep = "_"),
           Version == "04"
-          ~ paste0("04", sep = "_")
+          ~ paste0("4", sep = "_")
         ),
         
         ## Talker A 
@@ -1069,7 +1063,7 @@ tibble(
         T ~ paste0("M", sep = ".")
       ),
       Item.Number,
-      sep = ".",   
+      sep = "_",   
       Talker.A,
       paste0(".wav")
     )) %>%
@@ -1161,38 +1155,38 @@ L32 <- rbind(C8, F4, TB, fill=TRUE)
 ### (There was probably a more efficient way to do this, possibly using the table I was trying to create)
 
 # Write CSV Files
-write.csv(L01, "List_01_Attended.Male.csv")
-write.csv(L02, "List_02_Attended.Male.csv")
-write.csv(L03, "List_03_Attended.Female.csv")
-write.csv(L04, "List_04_Attended.Female.csv")
-write.csv(L05, "List_05_Attended.Male.csv")
-write.csv(L06, "List_06_Attended.Male.csv")
-write.csv(L07, "List_07_Attended.Female.csv")
-write.csv(L08, "List_08_Attended.Female.csv")
-write.csv(L09, "List_09_Attended.Male.csv")
-write.csv(L10, "List_10_Attended.Male.csv")
-write.csv(L11, "List_11_Attended.Female.csv")
-write.csv(L12, "List_12_Attended.Female.csv")
-write.csv(L13, "List_13_Attended.Male.csv")
-write.csv(L14, "List_14_Attended.Male.csv")
-write.csv(L15, "List_15_Attended.Female.csv")
-write.csv(L16, "List_16_Attended.Female.csv")
-write.csv(L17, "List_17_Attended.Female.csv")
-write.csv(L18, "List_18_Attended.Female.csv")
-write.csv(L19, "List_19_Attended.Male.csv")
-write.csv(L20, "List_20_Attended.Male.csv")
-write.csv(L21, "List_21_Attended.Female.csv")
-write.csv(L22, "List_22_Attended.Female.csv")
-write.csv(L23, "List_23_Attended.Male.csv")
-write.csv(L24, "List_24_Attended.Male.csv")
-write.csv(L25, "List_25_Attended.Female.csv")
-write.csv(L26, "List_26_Attended.Female.csv")
-write.csv(L27, "List_27_Attended.Male.csv")
-write.csv(L28, "List_28_Attended.Male.csv")
-write.csv(L29, "List_29_Attended.Female.csv")
-write.csv(L30, "List_30_Attended.Female.csv")
-write.csv(L31, "List_31_Attended.Male.csv")
-write.csv(L32, "List_32_Attended.Male.csv")
+write.csv(L01, "List.01_Attended.Male.csv")
+write.csv(L02, "List.02_Attended.Male.csv")
+write.csv(L03, "List.03_Attended.Female.csv")
+write.csv(L04, "List.04_Attended.Female.csv")
+write.csv(L05, "List.05_Attended.Male.csv")
+write.csv(L06, "List.06_Attended.Male.csv")
+write.csv(L07, "List.07_Attended.Female.csv")
+write.csv(L08, "List.08_Attended.Female.csv")
+write.csv(L09, "List.09_Attended.Male.csv")
+write.csv(L10, "List.10_Attended.Male.csv")
+write.csv(L11, "List.11_Attended.Female.csv")
+write.csv(L12, "List.12_Attended.Female.csv")
+write.csv(L13, "List.13_Attended.Male.csv")
+write.csv(L14, "List.14_Attended.Male.csv")
+write.csv(L15, "List.15_Attended.Female.csv")
+write.csv(L16, "List.16_Attended.Female.csv")
+write.csv(L17, "List.17_Attended.Female.csv")
+write.csv(L18, "List.18_Attended.Female.csv")
+write.csv(L19, "List.19_Attended.Male.csv")
+write.csv(L20, "List.20_Attended.Male.csv")
+write.csv(L21, "List.21_Attended.Female.csv")
+write.csv(L22, "List.22_Attended.Female.csv")
+write.csv(L23, "List.23_Attended.Male.csv")
+write.csv(L24, "List.24_Attended.Male.csv")
+write.csv(L25, "List.25_Attended.Female.csv")
+write.csv(L26, "List.26_Attended.Female.csv")
+write.csv(L27, "List.27_Attended.Male.csv")
+write.csv(L28, "List.28_Attended.Male.csv")
+write.csv(L29, "List.29_Attended.Female.csv")
+write.csv(L30, "List.30_Attended.Female.csv")
+write.csv(L31, "List.31_Attended.Male.csv")
+write.csv(L32, "List.32_Attended.Male.csv")
 
 # For Loop
 #for(L in L01:L32){
@@ -1450,6 +1444,25 @@ for (f in Files) {
   f.materials = gsub(".X", ".B", f.list)
   
   new.files <- paste0("Stimuli/Experiment_1/Items_Critical/8/", f.materials)
+  
+  file.rename(old.files, new.files)
+}
+```
+________
+
+```{r Filler Rename}
+
+Files <- list.files(path = "Stimuli/Experiment_1/Items_Filler/B/Version_2/")
+
+for (f in Files) {
+  
+  old.files <- paste0(
+    "Stimuli/Experiment_1/Items_Filler/B/Version_2/",
+    f) 
+  
+  f.new = gsub("Filler_", "Filler_02_", f)
+ 
+  new.files <- paste0("Stimuli/Experiment_1/Items_Filler/B/Version_2/", f.new)
   
   file.rename(old.files, new.files)
 }

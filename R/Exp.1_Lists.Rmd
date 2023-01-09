@@ -471,9 +471,14 @@ tibble(
       )
   ) %>%
   
-  # Repetition of File within List
+  # repetition of File within List
   mutate(
-    rep = 1
+    reps = 1
+  ) %>%
+  
+  # feedback
+  mutate(
+    feedback = FALSE
   ) %>%
   
   # Changing file names
@@ -853,9 +858,14 @@ tibble(
       )
   ) %>%
   
-  ## Repetition of File within List
+  ## repetition of File within List
   mutate(
-    rep = 1
+    reps = 1
+  ) %>%
+  
+   # feedback
+  mutate(
+    feedback = FALSE
   ) %>%
   
   # Changing file names
@@ -937,7 +947,7 @@ tibble(
         
         ### File Suffix
         paste0(".wav")
-      )) %>% 
+      )) %>%
   
   view() %>%
   
@@ -1037,9 +1047,14 @@ tibble(
       T ~ "B"
     )) %>%
   
-  ### Repetition of File within List
+  ### repetition of File within List
   mutate(
-    rep = 1
+    reps = 1
+  ) %>%
+  
+   # feedback
+  mutate(
+    feedback = FALSE
   ) %>%
   
   # File name
@@ -1082,6 +1097,86 @@ tibble(
   ))
 ```
 
+```{r Attended Talker}
+# Table
+
+  tibble(
+  Attended.Talker = c(
+    rep("Female", 80),
+    rep("NA", 72)
+  ),
+  
+  Expected.Response = c(
+    rep("Word", 20),
+    
+      "Word",
+    "Nonword",
+    "Nonword",
+      "Word",
+    "Nonword",
+    "Nonword",
+      "Word",
+    "Nonword",
+    "Nonword",
+      "Word",
+    "Nonword",
+    "Nonword",
+      "Word",
+    "Nonword",
+    "Nonword",
+      "Word",
+    "Nonword",
+    "Nonword",
+      "Word",
+    "Nonword",
+    "Nonword",
+      "Word",
+    "Nonword",
+    "Nonword",
+      "Word",
+    "Nonword",
+    "Nonword",
+     "Word",
+    "Nonword",
+    "Nonword",
+      "Word",
+    "Nonword",
+    "Nonword",
+      "Word",
+    "Nonword",
+    "Nonword", 
+      "Word",
+    "Nonword",
+    "Nonword",
+       "Word",
+    "Nonword",
+    "Nonword",
+       "Word",
+    "Nonword",
+    "Nonword",
+       "Word",
+    "Nonword",
+    "Nonword",
+       "Word",
+    "Nonword",
+    "Nonword",
+       "Word",
+    "Nonword",
+    "Nonword",
+       "Word",
+    "Nonword",
+    "Nonword",
+       "Word",
+    "Nonword",
+    "Nonword",
+    
+    rep("NA", 72)
+  )
+  ) %>%
+  
+  write_csv(file = paste0("C:Stimuli/Experiment_1/Lists/Attend.Female.csv"))
+```
+
 # Concatenate CSV files  
 ```{r Concate}
 
@@ -1111,6 +1206,10 @@ F4 <- fread("Filler.04.csv")
 ## Test Lists
 TA <- fread("Test.A.csv")
 TB <- fread("Test.B.csv")
+
+##Attended Talker + Expected Responses
+AM <- fread("Attend.Male.csv")
+AF <- fread("Attend.Female.csv")
 
 # Total Lists
 L01 <- rbind(C1, F2, TA, fill=TRUE) 
@@ -1154,39 +1253,81 @@ L31 <- rbind(C8, F4, TA, fill=TRUE)
 L32 <- rbind(C8, F4, TB, fill=TRUE)
 ### (There was probably a more efficient way to do this, possibly using the table I was trying to create)
 
+# Attended Talker + Expected Response
+L01M <- cbind(AM, L01) 
+L02M <- cbind(AM, L02)
+L03F <- cbind(AF, L03)
+L04F <- cbind(AF, L04)
+
+L05M <- cbind(AM, L05)
+L06M <- cbind(AM, L06)
+L07F <- cbind(AF, L07)
+L08F <- cbind(AF, L08)
+
+L09M <- cbind(AM, L09)
+L10M <- cbind(AM, L10)
+L11F <- cbind(AF, L11)
+L12F <- cbind(AF, L12)
+
+L13M <- cbind(AM, L13)
+L14M <- cbind(AM, L14)
+L15F <- cbind(AF, L15)
+L16F <- cbind(AF, L16)
+
+L17F <- cbind(AF, L17)
+L18F <- cbind(AF, L18)
+L19M <- cbind(AM, L19)
+L20M <- cbind(AM, L20)
+
+L21F <- cbind(AF, L21)
+L22F <- cbind(AF, L22)
+L23M <- cbind(AM, L23)
+L24M <- cbind(AM, L24)
+
+L25F <- cbind(AF, L25)
+L26F <- cbind(AF, L26)
+L27M <- cbind(AM, L27)
+L28M <- cbind(AM, L28)
+
+L29F <- cbind(AF, L29)
+L30F <- cbind(AF, L30)
+L31M <- cbind(AM, L31)
+L32M <- cbind(AM, L32)
+
+
 # Write CSV Files
-write.csv(L01, "List.01_Attended.Male.csv")
-write.csv(L02, "List.02_Attended.Male.csv")
-write.csv(L03, "List.03_Attended.Female.csv")
-write.csv(L04, "List.04_Attended.Female.csv")
-write.csv(L05, "List.05_Attended.Male.csv")
-write.csv(L06, "List.06_Attended.Male.csv")
-write.csv(L07, "List.07_Attended.Female.csv")
-write.csv(L08, "List.08_Attended.Female.csv")
-write.csv(L09, "List.09_Attended.Male.csv")
-write.csv(L10, "List.10_Attended.Male.csv")
-write.csv(L11, "List.11_Attended.Female.csv")
-write.csv(L12, "List.12_Attended.Female.csv")
-write.csv(L13, "List.13_Attended.Male.csv")
-write.csv(L14, "List.14_Attended.Male.csv")
-write.csv(L15, "List.15_Attended.Female.csv")
-write.csv(L16, "List.16_Attended.Female.csv")
-write.csv(L17, "List.17_Attended.Female.csv")
-write.csv(L18, "List.18_Attended.Female.csv")
-write.csv(L19, "List.19_Attended.Male.csv")
-write.csv(L20, "List.20_Attended.Male.csv")
-write.csv(L21, "List.21_Attended.Female.csv")
-write.csv(L22, "List.22_Attended.Female.csv")
-write.csv(L23, "List.23_Attended.Male.csv")
-write.csv(L24, "List.24_Attended.Male.csv")
-write.csv(L25, "List.25_Attended.Female.csv")
-write.csv(L26, "List.26_Attended.Female.csv")
-write.csv(L27, "List.27_Attended.Male.csv")
-write.csv(L28, "List.28_Attended.Male.csv")
-write.csv(L29, "List.29_Attended.Female.csv")
-write.csv(L30, "List.30_Attended.Female.csv")
-write.csv(L31, "List.31_Attended.Male.csv")
-write.csv(L32, "List.32_Attended.Male.csv")
+write.csv(L01M, "List.01.csv")
+write.csv(L02M, "List.02.csv")
+write.csv(L03F, "List.03.csv")
+write.csv(L04F, "List.04.csv")
+write.csv(L05M, "List.05.csv")
+write.csv(L06M, "List.06.csv")
+write.csv(L07F, "List.07.csv")
+write.csv(L08F, "List.08.csv")
+write.csv(L09M, "List.09.csv")
+write.csv(L10M, "List.10.csv")
+write.csv(L11F, "List.11.csv")
+write.csv(L12F, "List.12.csv")
+write.csv(L13M, "List.13.csv")
+write.csv(L14M, "List.14.csv")
+write.csv(L15F, "List.15.csv")
+write.csv(L16F, "List.16.csv")
+write.csv(L17F, "List.17.csv")
+write.csv(L18F, "List.18.csv")
+write.csv(L19M, "List.19.csv")
+write.csv(L20M, "List.20.csv")
+write.csv(L21F, "List.21.csv")
+write.csv(L22F, "List.22.csv")
+write.csv(L23M, "List.23.csv")
+write.csv(L24M, "List.24.csv")
+write.csv(L25F, "List.25.csv")
+write.csv(L26F, "List.26.csv")
+write.csv(L27M, "List.27.csv")
+write.csv(L28M, "List.28.csv")
+write.csv(L29F, "List.29.csv")
+write.csv(L30F, "List.30.csv")
+write.csv(L31M, "List.31.csv")
+write.csv(L32M, "List.32.csv")
 
 # For Loop
 #for(L in L01:L32){

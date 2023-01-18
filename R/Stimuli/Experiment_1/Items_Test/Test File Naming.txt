@@ -1,7 +1,0 @@
-Test Items are named:
-
-Stimuli type: Test_ 
-Test version: A./B. -- A begins with female talker; B begins with male talker
-Block: 01_ to 12_ -- 12 blocks total
-Gender: F./M. -- Female or Male
-Continuum item: 1. to 6. -- 6 continuum steps (labeled in rest of name)

@@ -116,7 +116,7 @@ Materials.A_S.Words = c(
   "Obscene",
   "Medicine",
   "Tennessee",
-  "Penninsula",
+  "Peninsula",
   "Hallucinate",
   "Arkansas",
   "Compensate",
@@ -449,28 +449,6 @@ tibble(
       )) %>%
   view() %>%
   
-  ## Gender/Ear Position
-  mutate(
-    G.E = 
-      case_when(
-        Talker.A_Gender == "Female" &
-          Talker.A_Ear == "Left"
-        ~ "Y",
-        
-        Talker.B_Gender == "Female" &
-          Talker.B_Ear == "Left"
-        ~ "Y",
-        
-        Talker.A_Gender == "Female" &
-          Talker.A_Ear == "Right"
-        ~ "X",
-        
-        Talker.B_Gender == "Female" &
-          Talker.B_Ear == "Right"
-        ~ "X",
-      )
-  ) %>%
-  
   # repetition of File within List
   mutate(
     reps = 1
@@ -488,17 +466,6 @@ tibble(
         "Critical", 
         sep = "_",
         
-        ## List
-        paste0(List, sep =  "_"),  
-        
-        ## Materials
-        case_when(
-          Talker.A_Materials == "Materials A" 
-          ~ paste0("A", sep = "_"),
-          Talker.A_Materials == "Materials B" 
-          ~ paste0("B", sep = "_")
-        ),
-        
         ## Order
         case_when(
           Talker == "1"
@@ -515,7 +482,7 @@ tibble(
   # CSV Files
   
   ## Remove all columns but file names
-  select(-c(A, B, Talker, G.E))  %>%
+  select(-c(A, B, Talker))  %>%
   
   ## Group files
   group_by(List) %>%
@@ -726,7 +693,8 @@ tibble(
     Talker.A_Ear = c(
       "Left", 
       "Right"
-    )) %>%
+    )
+    ) %>%
   
   ## Adds in column noting Gender + Ear Assignment for Talker B
   mutate(
@@ -735,7 +703,8 @@ tibble(
         Talker.A_Gender == "Female"
         ~ "Male", 
         T ~ "Female"
-      )) %>%
+      )
+    ) %>%
   
   mutate(
     Talker.B_Ear =
@@ -743,7 +712,8 @@ tibble(
         Talker.A_Ear == "Left"
         ~ "Right",
         T ~ "Left"
-      )) %>%
+      )
+    ) %>%
   
   ## Adds Version
   mutate(
@@ -764,7 +734,8 @@ tibble(
         Talker.A_Gender == "Male" &
           Talker.A_Ear == "Right"
         ~ "04", 
-      )) %>%
+      )
+    ) %>%
   
   ## Adds Combo
   mutate(
@@ -821,7 +792,8 @@ tibble(
         Talker.A_Materials == "Set C" &
           Version == "02"
         ~ "4"
-      )) %>%
+      )
+    ) %>%
   
   ## Critical Pairing
   mutate(
@@ -858,51 +830,13 @@ tibble(
       )
   ) %>%
   
-  ## repetition of File within List
+  ## Talker A 
   mutate(
-    reps = 1
-  ) %>%
-  
-   # feedback
-  mutate(
-    feedback = FALSE
-  ) %>%
-  
-  # Changing file names
-  mutate(
-    filename = 
+    A = 
       paste0(
-        "Filler", 
-        sep = "_0",
-        Set.Combo,
-        sep = "_",
         
-        ## Set
-        case_when(
-          Talker.A_Materials == "Set A"
-          ~ paste0("A", sep = "."),
-          Talker.A_Materials == "Set B"
-          ~ paste0("B", sep = "."),
-          Talker.A_Materials == "Set C"
-          ~ paste0("C", sep = ".")
-        ),
-        
-        ## Version
-        case_when(
-          Version == "01"
-          ~ paste0("1", sep = "_"),
-          Version == "02"
-          ~ paste0("2", sep = "_"),
-          Version == "03"
-          ~ paste0("3", sep = "_"),
-          Version == "04"
-          ~ paste0("4", sep = "_")
-        ),
-        
-        ## Talker A 
-        
-        ### Word
-        paste0("W", sep = "."),
+        ### Talker A Sound
+        paste0("W."),
         
         ### Talker A Word 
         paste0(Talker.A),
@@ -919,15 +853,19 @@ tibble(
           Talker.A_Ear == "Left" 
           ~ paste0(sep = ".", "L"), 
           T ~ paste0(sep = ".", "R")
-        ),
+        )
         
-        sep = "_",
+      )
+    ) %>%
+  
+  ## Talker B
+  mutate(
+    B = 
+      paste0(
         
-        ## Talker B
-        
-        ### Nonword
-        paste0("N", sep = "."),
-        
+        ### Talker B Sound
+        paste0("N."),
+
         ### Talker B Word
         paste0(Talker.B),
         
@@ -940,15 +878,52 @@ tibble(
         
         ### Ear Assignment
         case_when(
-          Talker.B_Ear == "Left" 
-          ~ paste0(sep = ".", "L"), 
-          T ~ paste0(sep = ".", "R")
+          Talker.B_Ear == "Right" 
+          ~ paste0(sep = ".", "R"), 
+          T ~ paste0(sep = ".", "L")
+        )
+      )
+    ) %>%
+  
+  ## Talker 1 
+  mutate(
+    Talker = 
+      case_when(
+        Talker.A_Ear == "Left"
+        ~ "1",
+        T ~ "2"
+      )
+  ) %>%
+  
+  ## repetition of File within List
+  mutate(
+    reps = 1
+  ) %>%
+  
+   # feedback
+  mutate(
+    feedback = FALSE
+  ) %>%
+  
+
+# Changing file names
+  mutate(
+    filename = 
+      paste0(
+        "Critical", 
+        sep = "_",
+        
+        ## Order
+        case_when(
+          Talker == "1"
+          ~ paste0(A, sep = "_", B),
+          T ~ paste0(B, sep = "_", A)
         ),
         
-        ### File Suffix
-        paste0(".wav")
-      )) %>%
-  
+        ## file suffix  
+        paste0(".wav")   
+      )) %>% 
+        
   view() %>%
   
   # CSV Files
@@ -1061,16 +1036,6 @@ tibble(
   mutate(
     filename = paste0(
       "Test",
-      sep = "_",
-      Test_Version,
-      sep = ".",
-      
-      case_when(
-        Block < 10
-        ~ paste0("0", Block),
-        T ~ paste0(Block)
-      ),
-      
       sep = "_",
       case_when(
         Talker.A_Gender == "Female"

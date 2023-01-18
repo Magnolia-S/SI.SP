@@ -168,19 +168,19 @@ Materials.B_Sh.Words= c(
 tibble(
   
   Phase = c(
-  rep("Exposure", 20)
+    rep("Exposure", 20)
   ),
-
+  
   Item.Type = c(
     rep("Critical", 20)
   ),
-    
+  
   Block = c(
     rep("1", 20)
   ),
   
   Item.Number = 1:20,
-
+  
   Talker.A = c(
     Materials.A_Sh.Words, 
     Materials.B_S.Words
@@ -202,8 +202,8 @@ tibble(
   ),
   
   Talker.B_Materials = c(
-    rep("Materials B", 10),
-    rep("Materials A", 10)
+    rep("Materials A", 10),
+    rep("Materials B", 10)
   ),
   
   Talker.B_Sound = c(
@@ -215,6 +215,10 @@ tibble(
   ## Possible Assignments (Shift x Gender x Ear)
   ### Which Talker is Attended to is dependent on instructions
   crossing(
+    Attend.To = c(
+      "Talker A",
+      "Talker B"
+    ),
     Version = c(
       "Shifted",
       "Unshifted"
@@ -236,7 +240,8 @@ tibble(
         Talker.A_Gender == "Female"
         ~ "Male", 
         T ~ "Female"
-      )) %>%
+      )
+    ) %>%
   
   mutate(
     Talker.B_Ear =
@@ -244,9 +249,110 @@ tibble(
         Talker.A_Ear == "Left"
         ~ "Right",
         T ~ "Left"
-      )) %>%
+      )
+    ) %>%
   
-  ## Talker 1 
+# In context of Attended Talker
+  ## Talker
+  mutate(
+    Attended.Talker = 
+      case_when(
+      Attend.To == "Talker A"
+      ~ Talker.A,
+      T ~ Talker.B
+      )
+  ) %>%
+  
+  ## Talker Materials 
+   mutate(
+    Attended.Talker_Materials = 
+      case_when(
+      Attend.To == "Talker A"
+      ~ Talker.A_Materials,
+      T ~ Talker.B_Materials
+      )
+  ) %>%
+  ## Sound
+  mutate(
+    Attended.Talker_Sound = 
+      case_when(
+      Attend.To == "Talker A"
+      ~ Talker.A_Sound,
+      T ~ Talker.B_Sound
+      )
+  ) %>%
+  
+  ## Gender
+  mutate(
+    Attended.Talker_Gender = 
+      case_when(
+      Attend.To == "Talker A"
+      ~ Talker.A_Gender,
+      T ~ Talker.B_Gender
+      )
+  ) %>%
+  
+  ## Ear
+  mutate(
+    Attended.Talker_Ear = 
+      case_when(
+      Attend.To == "Talker A"
+      ~ Talker.A_Ear,
+      T ~ Talker.B_Ear
+      )
+  ) %>%
+  
+  # In context of Unattended Talker
+  ## Talker
+  mutate(
+    Unattended.Talker = 
+      case_when(
+      Attend.To == "Talker B"
+      ~ Talker.A,
+      T ~ Talker.B
+      )
+  ) %>%
+  
+  ## Talker Materials 
+   mutate(
+    Unattended.Talker_Materials = 
+      case_when(
+      Attend.To == "Talker B"
+      ~ Talker.A_Materials,
+      T ~ Talker.B_Materials
+      )
+  ) %>%
+  ## Sound
+  mutate(
+    Unattended.Talker_Sound = 
+      case_when(
+      Attend.To == "Talker B"
+      ~ Talker.A_Sound,
+      T ~ Talker.B_Sound
+      )
+  ) %>%
+  
+  ## Gender
+  mutate(
+    Unattended.Talker_Gender = 
+      case_when(
+      Attend.To == "Talker B"
+      ~ Talker.A_Gender,
+      T ~ Talker.B_Gender
+      )
+  ) %>%
+  
+  ## Ear
+  mutate(
+    Unattended.Talker_Ear = 
+      case_when(
+      Attend.To == "Talker B"
+      ~ Talker.A_Ear,
+      T ~ Talker.B_Ear
+      )
+  ) %>%
+  
+# Talker 1 
   mutate(
     Talker = 
       case_when(
@@ -262,108 +368,244 @@ tibble(
       case_when(
         
         ### 01
-        Talker.A_Materials == "Materials A" &
+        Attend.To == "Talker A" &
+          Talker.A_Materials == "Materials A" &
           Version == "Unshifted" &
           Talker.A_Gender == "Female" &
           Talker.A_Ear == "Left"
         ~ "01",
         
-        Talker.A_Materials == "Materials B" &
+        Attend.To == "Talker A" &
+          Talker.A_Materials == "Materials B" &
           Version == "Shifted" &
           Talker.A_Gender == "Female"  &
           Talker.A_Ear == "Left"
         ~ "01",
         
-        ### 02 
-        Talker.A_Materials == "Materials B" &
+        ### 02
+        Attend.To == "Talker A" &
+          Talker.A_Materials == "Materials B" &
           Version == "Unshifted" &
           Talker.A_Gender == "Female" &
           Talker.A_Ear == "Left"
         ~ "02",
         
-        Talker.A_Materials == "Materials A" &
+        Attend.To == "Talker A" &
+          Talker.A_Materials == "Materials A" &
           Version == "Shifted" &
           Talker.A_Gender == "Female"  &
           Talker.A_Ear == "Left"
         ~ "02",
         
         ### 03 
-        Talker.A_Materials == "Materials A" &
+        Attend.To == "Talker A" &
+          Talker.A_Materials == "Materials A" &
           Version == "Unshifted" &
           Talker.A_Gender == "Male"  &
           Talker.A_Ear == "Right"
         ~ "03",
         
-        Talker.A_Materials == "Materials B" &
+        Attend.To == "Talker A" &
+          Talker.A_Materials == "Materials B" &
           Version == "Shifted" &
           Talker.A_Gender == "Male"  &
           Talker.A_Ear == "Right"
         ~ "03",
         
-        ### 04    
-        Talker.A_Materials == "Materials B" &
+        ### 04  
+        Attend.To == "Talker A" &
+          Talker.A_Materials == "Materials B" &
           Version == "Unshifted" &
           Talker.A_Gender == "Male"  &
           Talker.A_Ear == "Right"
         ~ "04",
         
-        Talker.A_Materials == "Materials A" &
+        Attend.To == "Talker A" &
+          Talker.A_Materials == "Materials A" &
           Version == "Shifted" &
           Talker.A_Gender == "Male"  &
           Talker.A_Ear == "Right"
         ~ "04",  
         
         ### 05 
-        Talker.A_Materials == "Materials A" &
+        Attend.To == "Talker A" &
+          Talker.A_Materials == "Materials A" &
           Version == "Unshifted" &
           Talker.A_Gender == "Female" &
           Talker.A_Ear == "Right"
         ~ "05",
         
-        Talker.A_Materials == "Materials B" &
+        Attend.To == "Talker A" &
+          Talker.A_Materials == "Materials B" &
           Version == "Shifted" &
           Talker.A_Gender == "Female" &
           Talker.A_Ear == "Right"
         ~ "05",
         
-        ### 06  
-        Talker.A_Materials == "Materials B" &
+        ### 06 
+        Attend.To == "Talker A" &
+          Talker.A_Materials == "Materials B" &
           Version == "Unshifted" &
           Talker.A_Gender == "Female" &
           Talker.A_Ear == "Right"
         ~ "06",
         
-        Talker.A_Materials == "Materials A" &
+        Attend.To == "Talker A" &
+          Talker.A_Materials == "Materials A" &
           Version == "Shifted" &
           Talker.A_Gender == "Female"  &
           Talker.A_Ear == "Right"
         ~ "06",
         
-        ### 07    
-        Talker.A_Materials == "Materials A" &
+        ### 07 
+        Attend.To == "Talker A" &
+          Talker.A_Materials == "Materials A" &
           Version == "Unshifted" &
           Talker.A_Gender == "Male" &
           Talker.A_Ear == "Left"
         ~ "07",
         
-        Talker.A_Materials == "Materials B" &
+        Attend.To == "Talker A" &
+          Talker.A_Materials == "Materials B" &
           Version == "Shifted" &
           Talker.A_Gender == "Male"  &
           Talker.A_Ear == "Left"
         ~ "07",
         
         ### 08
-        Talker.A_Materials == "Materials B" &
+        Attend.To == "Talker A" &
+          Talker.A_Materials == "Materials B" &
           Version == "Unshifted" &
           Talker.A_Gender == "Male"  &
           Talker.A_Ear == "Left"
         ~ "08",
         
-        Talker.A_Materials == "Materials A" &
+        Attend.To == "Talker A" &
+          Talker.A_Materials == "Materials A" &
           Version == "Shifted" &
           Talker.A_Gender == "Male"  &
           Talker.A_Ear == "Left"
         ~ "08",
+        
+        ### 09
+        Attend.To == "Talker B" &
+          Talker.B_Materials == "Materials A" &
+          Version == "Unshifted" &
+          Talker.B_Gender == "Male" &
+          Talker.B_Ear == "Right"
+        ~ "09",
+        
+        Attend.To == "Talker B" &
+          Talker.B_Materials == "Materials B" &
+          Version == "Shifted" &
+          Talker.B_Gender == "Male"  &
+          Talker.B_Ear == "Right"
+        ~ "09",
+        
+        ### 10
+        Attend.To == "Talker B" &
+          Talker.A_Materials == "Materials B" &
+          Version == "Unshifted" &
+          Talker.A_Gender == "Female" &
+          Talker.A_Ear == "Left"
+        ~ "10",
+        
+        Attend.To == "Talker B" &
+          Talker.A_Materials == "Materials A" &
+          Version == "Shifted" &
+          Talker.A_Gender == "Female"  &
+          Talker.A_Ear == "Left"
+        ~ "10",
+        
+        ### 11
+        Attend.To == "Talker B" &
+          Talker.A_Materials == "Materials A" &
+          Version == "Unshifted" &
+          Talker.A_Gender == "Male"  &
+          Talker.A_Ear == "Right"
+        ~ "11",
+        
+        Attend.To == "Talker B" &
+          Talker.A_Materials == "Materials B" &
+          Version == "Shifted" &
+          Talker.A_Gender == "Male"  &
+          Talker.A_Ear == "Right"
+        ~ "11",
+        
+        ### 12  
+        Attend.To == "Talker B" &
+          Talker.A_Materials == "Materials B" &
+          Version == "Unshifted" &
+          Talker.A_Gender == "Male"  &
+          Talker.A_Ear == "Right"
+        ~ "12",
+        
+        Attend.To == "Talker B" &
+          Talker.A_Materials == "Materials A" &
+          Version == "Shifted" &
+          Talker.A_Gender == "Male"  &
+          Talker.A_Ear == "Right"
+        ~ "12",  
+        
+        ### 13 
+        Attend.To == "Talker B" &
+          Talker.A_Materials == "Materials A" &
+          Version == "Unshifted" &
+          Talker.A_Gender == "Female" &
+          Talker.A_Ear == "Right"
+        ~ "13",
+        
+        Attend.To == "Talker B" &
+          Talker.A_Materials == "Materials B" &
+          Version == "Shifted" &
+          Talker.A_Gender == "Female" &
+          Talker.A_Ear == "Right"
+        ~ "13",
+        
+        ### 14 
+        Attend.To == "Talker B" &
+          Talker.A_Materials == "Materials B" &
+          Version == "Unshifted" &
+          Talker.A_Gender == "Female" &
+          Talker.A_Ear == "Right"
+        ~ "14",
+        
+        Attend.To == "Talker B" &
+          Talker.A_Materials == "Materials A" &
+          Version == "Shifted" &
+          Talker.A_Gender == "Female"  &
+          Talker.A_Ear == "Right"
+        ~ "14",
+        
+        ### 15 
+        Attend.To == "Talker B" &
+          Talker.A_Materials == "Materials A" &
+          Version == "Unshifted" &
+          Talker.A_Gender == "Male" &
+          Talker.A_Ear == "Left"
+        ~ "15",
+        
+        Attend.To == "Talker B" &
+          Talker.A_Materials == "Materials B" &
+          Version == "Shifted" &
+          Talker.A_Gender == "Male"  &
+          Talker.A_Ear == "Left"
+        ~ "15",
+        
+        ### 16
+        Attend.To == "Talker B" &
+          Talker.A_Materials == "Materials B" &
+          Version == "Unshifted" &
+          Talker.A_Gender == "Male"  &
+          Talker.A_Ear == "Left"
+        ~ "16",
+        
+        Attend.To == "Talker B" &
+          Talker.A_Materials == "Materials A" &
+          Version == "Shifted" &
+          Talker.A_Gender == "Male"  &
+          Talker.A_Ear == "Left"
+        ~ "16",
         
       )
   ) %>%
@@ -405,8 +647,9 @@ tibble(
           ~ paste0(sep = ".", "L"), 
           T ~ paste0(sep = ".", "R")
         )
-        
-      )) %>%
+      )
+    ) %>%
+  
   view() %>%
   
   ## Talker B
@@ -446,7 +689,9 @@ tibble(
           ~ paste0(sep = ".", "R"), 
           T ~ paste0(sep = ".", "L")
         )
-      )) %>%
+      )
+    ) %>%
+  
   view() %>%
   
   # repetition of File within List
@@ -458,7 +703,7 @@ tibble(
   mutate(
     feedback = FALSE
   ) %>%
-  
+
   # Changing file names
   mutate(
     filename = 
@@ -475,10 +720,30 @@ tibble(
         
         ## file suffix  
         paste0(".wav")   
-      )) %>% 
+      )
+    ) %>%
+  
+## Remove Columns
+  select(
+      -c(
+      Talker.A, 
+      Talker.A_Materials, 
+      Talker.A_Sound, 
+      Talker.A_Gender, 
+      Talker.A_Ear, 
+      
+      Talker.B, 
+      Talker.B_Materials, 
+      Talker.B_Sound, 
+      Talker.B_Gender, 
+      Talker.B_Ear,
+      
+      Attend.To
+      )
+  ) %>%
   
   view() %>%
-  
+
   # CSV Files
   
   ## Remove all columns but file names
@@ -635,9 +900,9 @@ Set.C_Nonword = c(
 
 # Table
 tibble(
-
+  
   Phase = c(
-   rep("Exposure", 60) 
+    rep("Exposure", 60) 
   ),
   
   Item.Type = c(
@@ -658,7 +923,7 @@ tibble(
     Set.C_Word
   ),
   
-   Talker.A_Materials = c(
+  Talker.A_Materials = c(
     rep("Set A", 20),
     rep("Set B", 20),
     rep("Set C", 20)
@@ -674,7 +939,7 @@ tibble(
     Set.C_Nonword
   ),
   
-    Talker.B_Materials = c(
+  Talker.B_Materials = c(
     rep("Set A", 20),
     rep("Set B", 20),
     rep("Set C", 20)
@@ -686,6 +951,10 @@ tibble(
 ) %>%
   
   crossing(
+    Attend.To = c(
+      "Talker A",
+      "Talker B"
+    ),
     Talker.A_Gender = c(
       "Female", 
       "Male"
@@ -694,7 +963,7 @@ tibble(
       "Left", 
       "Right"
     )
-    ) %>%
+  ) %>%
   
   ## Adds in column noting Gender + Ear Assignment for Talker B
   mutate(
@@ -704,7 +973,7 @@ tibble(
         ~ "Male", 
         T ~ "Female"
       )
-    ) %>%
+  ) %>%
   
   mutate(
     Talker.B_Ear =
@@ -713,7 +982,7 @@ tibble(
         ~ "Right",
         T ~ "Left"
       )
-    ) %>%
+  ) %>%
   
   ## Adds Version
   mutate(
@@ -735,7 +1004,7 @@ tibble(
           Talker.A_Ear == "Right"
         ~ "04", 
       )
-    ) %>%
+  ) %>%
   
   ## Adds Combo
   mutate(
@@ -793,7 +1062,7 @@ tibble(
           Version == "02"
         ~ "4"
       )
-    ) %>%
+  ) %>%
   
   ## Critical Pairing
   mutate(
@@ -806,11 +1075,11 @@ tibble(
       )
   ) %>%
   
-  ## Adds Attended Talker
+  ## Filter
   
   ### Attended Gender
   mutate( 
-    Attended.Talker = 
+    A.Gender = 
       case_when(
         Set.Combo == "1" |
           Set.Combo == "3"
@@ -821,12 +1090,13 @@ tibble(
   
   ### Attended Ear
   mutate( 
-    Attended.Ear = 
+    A.Ear = 
       case_when(
-        Set.Combo == "3" |
-          Set.Combo == "4"
-        ~ "Left",
-        T ~ "Right"
+        Set.Combo == "2" |
+        Set.Combo == "3"
+        ~ "Right",
+        
+        T ~ "Left"
       )
   ) %>%
   
@@ -856,7 +1126,7 @@ tibble(
         )
         
       )
-    ) %>%
+  ) %>%
   
   ## Talker B
   mutate(
@@ -865,7 +1135,7 @@ tibble(
         
         ### Talker B Sound
         paste0("N."),
-
+        
         ### Talker B Word
         paste0(Talker.B),
         
@@ -883,7 +1153,117 @@ tibble(
           T ~ paste0(sep = ".", "L")
         )
       )
-    ) %>%
+  ) %>%
+  
+  # In context of Attended Talker
+  ## Talker
+  mutate(
+    Attended.Talker = 
+      case_when(
+      Attend.To == "Talker A"
+      ~ Talker.A,
+      T ~ Talker.B
+      )
+  ) %>%
+  
+  ## Talker Materials 
+   mutate(
+    Attended.Talker_Materials = 
+      case_when(
+      Attend.To == "Talker A"
+      ~ Talker.A_Materials,
+      T ~ Talker.B_Materials
+      )
+  ) %>%
+  ## Sound
+  mutate(
+    Attended.Talker_Sound = 
+      case_when(
+      Attend.To == "Talker A"
+      ~ Talker.A_Sound,
+      T ~ Talker.B_Sound
+      )
+  ) %>%
+  
+  ## Gender
+  mutate(
+    Attended.Talker_Gender = 
+      case_when(
+      Attend.To == "Talker A"
+      ~ Talker.A_Gender,
+      T ~ Talker.B_Gender
+      )
+  ) %>%
+  
+  ## Ear
+  mutate(
+    Attended.Talker_Ear = 
+      case_when(
+      Attend.To == "Talker A"
+      ~ Talker.A_Ear,
+      T ~ Talker.B_Ear
+      )
+  ) %>%
+  
+  # In context of Unattended Talker
+  ## Talker
+  mutate(
+    Unattended.Talker = 
+      case_when(
+      Attend.To == "Talker B"
+      ~ Talker.A,
+      T ~ Talker.B
+      )
+  ) %>%
+  
+  ## Talker Materials 
+   mutate(
+    Unattended.Talker_Materials = 
+      case_when(
+      Attend.To == "Talker B"
+      ~ Talker.A_Materials,
+      T ~ Talker.B_Materials
+      )
+  ) %>%
+  ## Sound
+  mutate(
+    Unattended.Talker_Sound = 
+      case_when(
+      Attend.To == "Talker B"
+      ~ Talker.A_Sound,
+      T ~ Talker.B_Sound
+      )
+  ) %>%
+  
+  ## Gender
+  mutate(
+    Unattended.Talker_Gender = 
+      case_when(
+      Attend.To == "Talker B"
+      ~ Talker.A_Gender,
+      T ~ Talker.B_Gender
+      )
+  ) %>%
+  
+  ## Ear
+  mutate(
+    Unattended.Talker_Ear = 
+      case_when(
+      Attend.To == "Talker B"
+      ~ Talker.A_Ear,
+      T ~ Talker.B_Ear
+      )
+  ) %>%
+  
+  ## Filter column (again)
+  mutate(
+    Type = 
+      case_when(
+        Attended.Talker_Gender == "Female"
+        ~ "Female",
+        T ~ "Male"
+      )
+  ) %>%
   
   ## Talker 1 
   mutate(
@@ -900,13 +1280,32 @@ tibble(
     reps = 1
   ) %>%
   
-   # feedback
+  # feedback
   mutate(
     feedback = FALSE
   ) %>%
   
-
-# Changing file names
+  # Remove files
+  mutate(
+    Remove = 
+    case_when(
+      Attended.Talker_Materials == "Set A" &
+      Attended.Talker_Sound == "Nonword"
+      ~ "TRUE",
+      
+      Attended.Talker_Materials == "Set B" &
+      Attended.Talker_Sound == "Word"
+      ~ "TRUE",
+      
+      Attended.Talker_Materials == "Set C" &
+      Attended.Talker_Sound == "Word"
+      ~ "TRUE",
+      
+      T ~ "FALSE"
+    )
+  ) %>%
+  
+  # Changing file names
   mutate(
     filename = 
       paste0(
@@ -922,19 +1321,43 @@ tibble(
         
         ## file suffix  
         paste0(".wav")   
-      )) %>% 
-        
+      )
+    ) %>% 
+  
+  ## Remove Columns
+  select(
+      -c(
+      Talker.A, 
+      Talker.A_Materials, 
+      Talker.A_Sound, 
+      Talker.A_Gender, 
+      Talker.A_Ear, 
+      
+      Talker.B, 
+      Talker.B_Materials, 
+      Talker.B_Sound, 
+      Talker.B_Gender, 
+      Talker.B_Ear,
+      
+      Attend.To
+      )
+  ) %>%
+  
+filter(
+  Remove == "FALSE"
+  ) %>%
+  
   view() %>%
   
   # CSV Files
   
   ## Remove columns in CSV File -> only need file names
-  select(-c()) %>%
+  select(-c(A, B, Talker, Remove)) %>%
   
   ## Group         
-  group_by(Set.Combo, Critical.Pair, Attended.Talker, Attended.Ear) %>%  
+  group_by(Set.Combo, Critical.Pair, A.Gender, A.Ear, Type) %>%  
   
-  group_map(.f = ~ write_csv(.x, file = paste0("C:Stimuli/Experiment_1/Lists/Filler.0", .y$Set.Combo,".csv")
+  group_map(.f = ~ write_csv(.x, file = paste0("C:Stimuli/Experiment_1/Lists/Filler.0", .y$Set.Combo, "_", .y$A.Gender, "_", .y$A.Ear, ".csv")
   ))
 ```
 
@@ -943,9 +1366,9 @@ tibble(
 ```{r Test Phase}
 # Table
 tibble(
-
+  
   Phase = c(
-  rep("Test", 6)
+    rep("Test", 6)
   ),
   
   Item.Type = c(
@@ -960,13 +1383,13 @@ tibble(
     "ashi.50",
     "ashi.70"
   ),
-
+  
   Talker.B = c(
     rep("NA", 6)
   ),
   
   Item.Number = 1:6
-
+  
 )%>%
   
   ## Attended Talker x First Talker
@@ -1020,14 +1443,15 @@ tibble(
       First_Talker == "Female"
       ~ "A",
       T ~ "B"
-    )) %>%
+    )
+  ) %>%
   
   ### repetition of File within List
   mutate(
     reps = 1
   ) %>%
   
-   # feedback
+  # feedback
   mutate(
     feedback = FALSE
   ) %>%
@@ -1037,16 +1461,19 @@ tibble(
     filename = paste0(
       "Test",
       sep = "_",
+      
       case_when(
         Talker.A_Gender == "Female"
         ~ paste0("F", sep = "."), 
         T ~ paste0("M", sep = ".")
       ),
+      
       Item.Number,
       sep = "_",   
       Talker.A,
       paste0(".wav")
-    )) %>%
+    )
+  ) %>%
   
   view() %>%
   
@@ -1060,86 +1487,6 @@ tibble(
   
   group_map(.f = ~ write_csv(.x, file = paste0("C:Stimuli/Experiment_1/Lists/Test.", .y$Test_Version, ".csv")
   ))
-```
-
-```{r Attended Talker}
-# Table
-
-  tibble(
-  Attended.Talker = c(
-    rep("Female", 80),
-    rep("NA", 72)
-  ),
-  
-  Expected.Response = c(
-    rep("Word", 20),
-    
-      "Word",
-    "Nonword",
-    "Nonword",
-      "Word",
-    "Nonword",
-    "Nonword",
-      "Word",
-    "Nonword",
-    "Nonword",
-      "Word",
-    "Nonword",
-    "Nonword",
-      "Word",
-    "Nonword",
-    "Nonword",
-      "Word",
-    "Nonword",
-    "Nonword",
-      "Word",
-    "Nonword",
-    "Nonword",
-      "Word",
-    "Nonword",
-    "Nonword",
-      "Word",
-    "Nonword",
-    "Nonword",
-     "Word",
-    "Nonword",
-    "Nonword",
-      "Word",
-    "Nonword",
-    "Nonword",
-      "Word",
-    "Nonword",
-    "Nonword", 
-      "Word",
-    "Nonword",
-    "Nonword",
-       "Word",
-    "Nonword",
-    "Nonword",
-       "Word",
-    "Nonword",
-    "Nonword",
-       "Word",
-    "Nonword",
-    "Nonword",
-       "Word",
-    "Nonword",
-    "Nonword",
-       "Word",
-    "Nonword",
-    "Nonword",
-       "Word",
-    "Nonword",
-    "Nonword",
-       "Word",
-    "Nonword",
-    "Nonword",
-    
-    rep("NA", 72)
-  )
-  ) %>%
-  
-  write_csv(file = paste0("C:Stimuli/Experiment_1/Lists/Attend.Female.csv"))
 ```
 
 # Concatenate CSV files  
@@ -1162,137 +1509,118 @@ C6 <- fread("Critical.06.csv")
 C7 <- fread("Critical.07.csv")
 C8 <- fread("Critical.08.csv")
 
+C9 <- fread("Critical.09.csv")
+C10 <- fread("Critical.10.csv")
+C11 <- fread("Critical.11.csv")
+C12 <- fread("Critical.12.csv")
+C13 <- fread("Critical.13.csv")
+C14 <- fread("Critical.14.csv")
+C15 <- fread("Critical.15.csv")
+C16 <- fread("Critical.16.csv")
+
 ## Filler Lists
-F1 <- fread("Filler.01.csv")
-F2 <- fread("Filler.02.csv")
-F3 <- fread("Filler.03.csv")
-F4 <- fread("Filler.04.csv")
+F1 <- fread("Filler.01_Female_Left.csv")
+F2 <- fread("Filler.02_Male_Right.csv")
+F3 <- fread("Filler.03_Female_Right.csv")
+F4 <- fread("Filler.04_Male_Left.csv")
 
 ## Test Lists
 TA <- fread("Test.A.csv")
 TB <- fread("Test.B.csv")
 
-##Attended Talker + Expected Responses
-AM <- fread("Attend.Male.csv")
-AF <- fread("Attend.Female.csv")
 
 # Total Lists
-L01 <- rbind(C1, F2, TA, fill=TRUE) 
-L02 <- rbind(C1, F2, TB, fill=TRUE)
-L03 <- rbind(C1, F1, TA, fill=TRUE)
-L04 <- rbind(C1, F1, TB, fill=TRUE)
+L01 <- rbind(C1, F1, TA, fill=TRUE) 
+L02 <- rbind(C1, F1, TB, fill=TRUE)
+L03 <- rbind(C2, F1, TA, fill=TRUE)
+L04 <- rbind(C2, F1, TB, fill=TRUE)
 
-L05 <- rbind(C2, F2, TA, fill=TRUE)
-L06 <- rbind(C2, F2, TB, fill=TRUE)
-L07 <- rbind(C2, F1, TA, fill=TRUE)
-L08 <- rbind(C2, F1, TB, fill=TRUE)
+L05 <- rbind(C11, F1, TA, fill=TRUE)
+L06 <- rbind(C11, F1, TB, fill=TRUE)
+L07 <- rbind(C12, F1, TA, fill=TRUE)
+L08 <- rbind(C12, F1, TB, fill=TRUE)
 
 L09 <- rbind(C3, F2, TA, fill=TRUE)
 L10 <- rbind(C3, F2, TB, fill=TRUE)
-L11 <- rbind(C3, F1, TA, fill=TRUE)
-L12 <- rbind(C3, F1, TB, fill=TRUE)
+L11 <- rbind(C4, F2, TA, fill=TRUE)
+L12 <- rbind(C4, F2, TB, fill=TRUE)
 
-L13 <- rbind(C4, F2, TA, fill=TRUE)
-L14 <- rbind(C4, F2, TB, fill=TRUE)
-L15 <- rbind(C4, F1, TA, fill=TRUE)
-L16 <- rbind(C4, F1, TB, fill=TRUE)
+L13 <- rbind(C9, F2, TA, fill=TRUE)
+L14 <- rbind(C9, F2, TB, fill=TRUE)
+L15 <- rbind(C10, F2, TA, fill=TRUE)
+L16 <- rbind(C10, F2, TB, fill=TRUE)
 
 L17 <- rbind(C5, F3, TA, fill=TRUE)
 L18 <- rbind(C5, F3, TB, fill=TRUE)
-L19 <- rbind(C5, F4, TA, fill=TRUE)
-L20 <- rbind(C5, F4, TB, fill=TRUE)
+L19 <- rbind(C6, F3, TA, fill=TRUE)
+L20 <- rbind(C6, F3, TB, fill=TRUE)
 
-L21 <- rbind(C6, F3, TA, fill=TRUE)
-L22 <- rbind(C6, F3, TB, fill=TRUE)
-L23 <- rbind(C6, F4, TA, fill=TRUE)
-L24 <- rbind(C6, F4, TB, fill=TRUE)
+L21 <- rbind(C15, F3, TA, fill=TRUE)
+L22 <- rbind(C15, F3, TB, fill=TRUE)
+L23 <- rbind(C16, F3, TA, fill=TRUE)
+L24 <- rbind(C16, F3, TB, fill=TRUE)
 
-L25 <- rbind(C7, F3, TA, fill=TRUE)
-L26 <- rbind(C7, F3, TB, fill=TRUE)
-L27 <- rbind(C7, F4, TA, fill=TRUE)
-L28 <- rbind(C7, F4, TB, fill=TRUE)
+L25 <- rbind(C7, F4, TA, fill=TRUE)
+L26 <- rbind(C7, F4, TB, fill=TRUE)
+L27 <- rbind(C8, F4, TA, fill=TRUE)
+L28 <- rbind(C8, F4, TB, fill=TRUE)
 
-L29 <- rbind(C8, F3, TA, fill=TRUE)
-L30 <- rbind(C8, F3, TB, fill=TRUE)
-L31 <- rbind(C8, F4, TA, fill=TRUE)
-L32 <- rbind(C8, F4, TB, fill=TRUE)
+L29 <- rbind(C13, F4, TA, fill=TRUE)
+L30 <- rbind(C13, F4, TB, fill=TRUE)
+L31 <- rbind(C14, F4, TA, fill=TRUE)
+L32 <- rbind(C14, F4, TB, fill=TRUE)
 ### (There was probably a more efficient way to do this, possibly using the table I was trying to create)
 
-# Attended Talker + Expected Response
-L01M <- cbind(AM, L01) 
-L02M <- cbind(AM, L02)
-L03F <- cbind(AF, L03)
-L04F <- cbind(AF, L04)
-
-L05M <- cbind(AM, L05)
-L06M <- cbind(AM, L06)
-L07F <- cbind(AF, L07)
-L08F <- cbind(AF, L08)
-
-L09M <- cbind(AM, L09)
-L10M <- cbind(AM, L10)
-L11F <- cbind(AF, L11)
-L12F <- cbind(AF, L12)
-
-L13M <- cbind(AM, L13)
-L14M <- cbind(AM, L14)
-L15F <- cbind(AF, L15)
-L16F <- cbind(AF, L16)
-
-L17F <- cbind(AF, L17)
-L18F <- cbind(AF, L18)
-L19M <- cbind(AM, L19)
-L20M <- cbind(AM, L20)
-
-L21F <- cbind(AF, L21)
-L22F <- cbind(AF, L22)
-L23M <- cbind(AM, L23)
-L24M <- cbind(AM, L24)
-
-L25F <- cbind(AF, L25)
-L26F <- cbind(AF, L26)
-L27M <- cbind(AM, L27)
-L28M <- cbind(AM, L28)
-
-L29F <- cbind(AF, L29)
-L30F <- cbind(AF, L30)
-L31M <- cbind(AM, L31)
-L32M <- cbind(AM, L32)
-
-
 # Write CSV Files
-write.csv(L01M, "List.01.csv")
-write.csv(L02M, "List.02.csv")
-write.csv(L03F, "List.03.csv")
-write.csv(L04F, "List.04.csv")
-write.csv(L05M, "List.05.csv")
-write.csv(L06M, "List.06.csv")
-write.csv(L07F, "List.07.csv")
-write.csv(L08F, "List.08.csv")
-write.csv(L09M, "List.09.csv")
-write.csv(L10M, "List.10.csv")
-write.csv(L11F, "List.11.csv")
-write.csv(L12F, "List.12.csv")
-write.csv(L13M, "List.13.csv")
-write.csv(L14M, "List.14.csv")
-write.csv(L15F, "List.15.csv")
-write.csv(L16F, "List.16.csv")
-write.csv(L17F, "List.17.csv")
-write.csv(L18F, "List.18.csv")
-write.csv(L19M, "List.19.csv")
-write.csv(L20M, "List.20.csv")
-write.csv(L21F, "List.21.csv")
-write.csv(L22F, "List.22.csv")
-write.csv(L23M, "List.23.csv")
-write.csv(L24M, "List.24.csv")
-write.csv(L25F, "List.25.csv")
-write.csv(L26F, "List.26.csv")
-write.csv(L27M, "List.27.csv")
-write.csv(L28M, "List.28.csv")
-write.csv(L29F, "List.29.csv")
-write.csv(L30F, "List.30.csv")
-write.csv(L31M, "List.31.csv")
-write.csv(L32M, "List.32.csv")
+
+## C1
+write.csv(L01, "Materials.B_Shift.S_Gender.F_Ear.L_Test.A.csv")
+write.csv(L02, "Materials.B_Shift.S_Gender.F_Ear.L_Test.B.csv")
+## C2
+write.csv(L03, "Materials.A_Shift.Sh_Gender.F_Ear.L_Test.A.csv")
+write.csv(L04, "Materials.A_Shift.Sh_Gender.F_Ear.L_Test.B.csv")
+## C11
+write.csv(L05, "Materials.B_Shift.Sh_Gender.F_Ear.L_Test.A.csv")
+write.csv(L06, "Materials.B_Shift.Sh_Gender.F_Ear.L_Test.B.csv")
+## C12
+write.csv(L07, "Materials.A_Shift.S_Gender.F_Ear.L_Test.A.csv")
+write.csv(L08, "Materials.A_Shift.S_Gender.F_Ear.L_Test.B.csv")
+## C3
+write.csv(L09, "Materials.B_Shift.S_Gender.M_Ear.R_Test.A.csv")
+write.csv(L10, "Materials.B_Shift.S_Gender.M_Ear.R_Test.B.csv")
+## C4
+write.csv(L11, "Materials.A_Shift.Sh_Gender.M_Ear.R_Test.A.csv")
+write.csv(L12, "Materials.A_Shift.Sh_Gender.M_Ear.R_Test.B.csv")
+## C9
+write.csv(L13, "Materials.B_Shift.Sh_Gender.M_Ear.R_Test.A.csv")
+write.csv(L14, "Materials.B_Shift.Sh_Gender.M_Ear.R_Test.B.csv")
+## C10
+write.csv(L15, "Materials.A_Shift.S_Gender.M_Ear.R_Test.A.csv")
+write.csv(L16, "Materials.A_Shift.S_Gender.M_Ear.R_Test.B.csv")
+## C5
+write.csv(L17, "Materials.B_Shift.S_Gender.F_Ear.R_Test.A.csv")
+write.csv(L18, "Materials.B_Shift.S_Gender.F_Ear.R_Test.B.csv")
+## C6
+write.csv(L19, "Materials.A_Shift.Sh_Gender.F_Ear.R_Test.A.csv")
+write.csv(L20, "Materials.A_Shift.Sh_Gender.F_Ear.R_Test.B.csv")
+## C15
+write.csv(L21, "Materials.B_Shift.Sh_Gender.F_Ear.R_Test.A.csv")
+write.csv(L22, "Materials.B_Shift.Sh_Gender.F_Ear.R_Test.B.csv")
+## C16
+write.csv(L23, "Materials.A_Shift.S_Gender.F_Ear.R_Test.A.csv")
+write.csv(L24, "Materials.A_Shift.S_Gender.F_Ear.R_Test.B.csv")
+## C7
+write.csv(L25, "Materials.B_Shift.S_Gender.M_Ear.L_Test.A.csv")
+write.csv(L26, "Materials.B_Shift.S_Gender.M_Ear.L_Test.B.csv")
+## C8
+write.csv(L27, "Materials.A_Shift.Sh_Gender.M_Ear.L_Test.A.csv")
+write.csv(L28, "Materials.A_Shift.Sh_Gender.M_Ear.L_Test.B.csv")
+## C13
+write.csv(L29, "Materials.B_Shift.Sh_Gender.M_Ear.L_Test.A.csv")
+write.csv(L30, "Materials.B_Shift.Sh_Gender.M_Ear.L_Test.B.csv")
+## C14
+write.csv(L31, "Materials.A_Shift.S_Gender.M_Ear.L_Test.A.csv")
+write.csv(L32, "Materials.A_Shift.S_Gender.M_Ear.L_Test.B.csv")
 
 # For Loop
 #for(L in L01:L32){
@@ -1567,7 +1895,7 @@ for (f in Files) {
     f) 
   
   f.new = gsub("Filler_", "Filler_02_", f)
- 
+  
   new.files <- paste0("Stimuli/Experiment_1/Items_Filler/B/Version_2/", f.new)
   
   file.rename(old.files, new.files)

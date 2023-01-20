@@ -54,7 +54,7 @@ $(document).ready(function() {
   e.init();
 
   // Define srucure of experimentsblock_type = ['exposure', 'exposure', 'exposure', 'exposure', 'exposure', 'exposure', 'test', 'test', 'test', 'test'];
-  block_type = Array(10).fill('Exposure').concat(Array(12).fill('Test'));
+  block_type = Array(10).fill('exposure').concat(Array(12).fill('test'));
 
   ////////////////////////////////////////////////////////////////////////
   // Parse relevant URL parameters -- DEBUG MODE
@@ -415,7 +415,7 @@ $(document).ready(function() {
     for (let i = 0; i < block_type.length; i++) {
       throwMessage("Preparing block " + (i + 1) + " of type " + block_type[i]);
 
-      if (block_type[i] === 'Exposure') {
+      if (block_type[i] === 'exposure') {
         ////////////////////////////////////////////////////////////////////////
         // Create and add EXPOSURE stimuli filename
         ////////////////////////////////////////////////////////////////////////
@@ -426,7 +426,7 @@ $(document).ready(function() {
                 AttendedTalkerLabel + '-Order' +
                 ExposureOrder + '-Block' +
                 (i + 1) + '.csv';
-      } else if (block_type[i] === 'Test') {
+      } else if (block_type[i] === 'test') {
         ////////////////////////////////////////////////////////////////////////
         // Create and add TEST stimuli filename
         ////////////////////////////////////////////////////////////////////////

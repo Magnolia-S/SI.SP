@@ -1361,6 +1361,8 @@ filter(
   ))
 ```
 
+____
+
 ## Test Phase  
 ### Test Items  
 ```{r Test Phase}
@@ -1375,7 +1377,7 @@ tibble(
     rep("Test", 6)
   ),  
   
-  Talker.A = c(
+  Attended.Talker = c(
     "ashi.25",
     "ashi.30",
     "ashi.40",
@@ -1384,7 +1386,7 @@ tibble(
     "ashi.70"
   ),
   
-  Talker.B = c(
+  Unattended.Talker = c(
     rep("NA", 6)
   ),
   
@@ -1394,47 +1396,47 @@ tibble(
   
   ## Attended Talker x First Talker
   crossing(
-    Talker.A_Gender = c(
+    Attended.Talker_Gender = c(
       "Female", 
       "Male"
     ),
     
-    Block = 1:12
+    Block = 11:22
   ) %>%
   
   ### Group every 2 blocks
   mutate(
     First_Talker = case_when( 
       abs(Block %% 4) == 1 &
-        Talker.A_Gender == "Male"
+        Attended.Talker_Gender == "Male"
       ~ "Male",
       
       abs(Block %% 4) == 2 &
-        Talker.A_Gender == "Male"
+        Attended.Talker_Gender == "Male"
       ~ "Male",
       
       abs(Block %% 4) == 3 &
-        Talker.A_Gender == "Female"
+        Attended.Talker_Gender == "Female"
       ~ "Male",      
       
       abs(Block %% 4) == 0 &
-        Talker.A_Gender == "Female"
+        Attended.Talker_Gender == "Female"
       ~ "Male",  
       
       abs(Block %% 4) == 1 &
-        Talker.A_Gender == "Female"
+        Attended.Talker_Gender == "Female"
       ~ "Female",
       
       abs(Block %% 4) == 2 &
-        Talker.A_Gender == "Female"
+        Attended.Talker_Gender == "Female"
       ~ "Female",
       
       abs(Block %% 4) == 3 &
-        Talker.A_Gender == "Male"
+        Attended.Talker_Gender == "Male"
       ~ "Female",
       
       abs(Block %% 4) == 0 &
-        Talker.A_Gender == "Male"
+        Attended.Talker_Gender == "Male"
       ~ "Female"
     ),
     
@@ -1463,14 +1465,14 @@ tibble(
       sep = "_",
       
       case_when(
-        Talker.A_Gender == "Female"
+        Attended.Talker_Gender == "Female"
         ~ paste0("F", sep = "."), 
         T ~ paste0("M", sep = ".")
       ),
       
       Item.Number,
       sep = "_",   
-      Talker.A,
+      Attended.Talker,
       paste0(".wav")
     )
   ) %>%
@@ -1483,20 +1485,22 @@ tibble(
   select(-c(First_Talker)) %>%
   
   ## Group files into list 
-  group_by(Test_Version) %>%
+  group_by(Test_Version, Block) %>%
   
-  group_map(.f = ~ write_csv(.x, file = paste0("C:Stimuli/Experiment_1/Lists/Test.", .y$Test_Version, ".csv")
+  group_map(.f = ~ write_csv(.x, file = paste0("C:/Users/Rachel/Documents/SI.SP/lists/test/Test-Order", .y$Test_Version, "-Block", .y$Block, ".csv")
   ))
 ```
 
-# Concatenate CSV files  
+____
+
+# Concatenate CSV files for *total*   
 ```{r Concate}
 
 # Origin
-setwd("Stimuli/Experiment_1/Lists/")
+setwd("C:/Users/Rachel/Documents/SI.SP/lists/")
 
 # Destination
-folder <- paste0("Stimuli/Experiment_1/Lists/Total/")
+folder <- paste0("C:/Users/Rachel/Documents/SI.SP/lists/")
 
 # Individual Lists
 ## Critical Lists 
@@ -1525,8 +1529,8 @@ F3 <- fread("Filler.03_Female_Right.csv")
 F4 <- fread("Filler.04_Male_Left.csv")
 
 ## Test Lists
-TA <- fread("Test.A.csv")
-TB <- fread("Test.B.csv")
+TA <- fread("Test-A.csv")
+TB <- fread("Test-B.csv")
 
 
 # Total Lists
@@ -1621,14 +1625,141 @@ write.csv(L30, "Materials.B_Shift.Sh_Gender.M_Ear.L_Test.B.csv")
 ## C14
 write.csv(L31, "Materials.A_Shift.S_Gender.M_Ear.L_Test.A.csv")
 write.csv(L32, "Materials.A_Shift.S_Gender.M_Ear.L_Test.B.csv")
-
-# For Loop
-#for(L in L01:L32){
-#  write.csv( L, "List_", 01:32, ".csv" )
-#}
-### Trying to write a for loop below to write the csv files but one problem at a time
 ```
 
+______
+
+# Concat for *Exposure*
+# Concatenate CSV files for *total*   
+```{r Concate}
+
+# Origin
+setwd("C:/Users/Rachel/Documents/SI.SP/lists/")
+
+# Destination
+folder <- paste0("C:/Users/Rachel/Documents/SI.SP/lists/")
+
+# Individual Lists
+## Critical Lists 
+C01 <- fread("Critical.01.csv")
+C02 <- fread("Critical.02.csv")
+C03 <- fread("Critical.03.csv")
+C04 <- fread("Critical.04.csv")
+C05 <- fread("Critical.05.csv")
+C06 <- fread("Critical.06.csv")
+C07 <- fread("Critical.07.csv")
+C08 <- fread("Critical.08.csv")
+
+C09 <- fread("Critical.09.csv")
+C10 <- fread("Critical.10.csv")
+C11 <- fread("Critical.11.csv")
+C12 <- fread("Critical.12.csv")
+C13 <- fread("Critical.13.csv")
+C14 <- fread("Critical.14.csv")
+C15 <- fread("Critical.15.csv")
+C16 <- fread("Critical.16.csv")
+
+## Filler Lists
+F1 <- fread("Filler.01_Female_Left.csv")
+F2 <- fread("Filler.02_Male_Right.csv")
+F3 <- fread("Filler.03_Female_Right.csv")
+F4 <- fread("Filler.04_Male_Left.csv")
+
+
+# Total Lists
+L01 <- rbind(C01, F1, fill=TRUE) 
+L02 <- rbind(C01, F1, fill=TRUE)
+L03 <- rbind(C02, F1, fill=TRUE)
+L04 <- rbind(C02, F1, fill=TRUE)
+
+L05 <- rbind(C11, F1, fill=TRUE)
+L06 <- rbind(C11, F1, fill=TRUE)
+L07 <- rbind(C12, F1, fill=TRUE)
+L08 <- rbind(C12, F1, fill=TRUE)
+
+L09 <- rbind(C03, F2, fill=TRUE)
+L10 <- rbind(C03, F2, fill=TRUE)
+L11 <- rbind(C04, F2, fill=TRUE)
+L12 <- rbind(C04, F2, fill=TRUE)
+
+L13 <- rbind(C09, F2, fill=TRUE)
+L14 <- rbind(C09, F2, fill=TRUE)
+L15 <- rbind(C10, F2, fill=TRUE)
+L16 <- rbind(C10, F2, fill=TRUE)
+L17 <- rbind(C05, F3, fill=TRUE)
+L18 <- rbind(C05, F3, fill=TRUE)
+L19 <- rbind(C06, F3, fill=TRUE)
+L20 <- rbind(C06, F3, fill=TRUE)
+
+L21 <- rbind(C15, F3, fill=TRUE)
+L22 <- rbind(C15, F3, fill=TRUE)
+L23 <- rbind(C16, F3, fill=TRUE)
+L24 <- rbind(C16, F3, fill=TRUE)
+
+L25 <- rbind(C07, F4, fill=TRUE)
+L26 <- rbind(C07, F4, fill=TRUE)
+L27 <- rbind(C08, F4, fill=TRUE)
+L28 <- rbind(C08, F4, fill=TRUE)
+L29 <- rbind(C13, F4, fill=TRUE)
+L30 <- rbind(C13, F4, fill=TRUE)
+L31 <- rbind(C14, F4, fill=TRUE)
+L32 <- rbind(C14, F4, fill=TRUE)
+### (There was probably a more efficient way to do this, possibly using the table I was trying to create)
+
+# Write CSV Files
+
+## C1
+write.csv(L01, "Materials.B_Shift.S_Gender.F_Ear.L_Test.A.csv")
+write.csv(L02, "Materials.B_Shift.S_Gender.F_Ear.L_Test.B.csv")
+## C2
+write.csv(L03, "Materials.A_Shift.Sh_Gender.F_Ear.L_Test.A.csv")
+write.csv(L04, "Materials.A_Shift.Sh_Gender.F_Ear.L_Test.B.csv")
+## C11
+write.csv(L05, "Materials.B_Shift.Sh_Gender.F_Ear.L_Test.A.csv")
+write.csv(L06, "Materials.B_Shift.Sh_Gender.F_Ear.L_Test.B.csv")
+## C12
+write.csv(L07, "Materials.A_Shift.S_Gender.F_Ear.L_Test.A.csv")
+write.csv(L08, "Materials.A_Shift.S_Gender.F_Ear.L_Test.B.csv")
+## C3
+write.csv(L09, "Materials.B_Shift.S_Gender.M_Ear.R_Test.A.csv")
+write.csv(L10, "Materials.B_Shift.S_Gender.M_Ear.R_Test.B.csv")
+## C4
+write.csv(L11, "Materials.A_Shift.Sh_Gender.M_Ear.R_Test.A.csv")
+write.csv(L12, "Materials.A_Shift.Sh_Gender.M_Ear.R_Test.B.csv")
+## C9
+write.csv(L13, "Materials.B_Shift.Sh_Gender.M_Ear.R_Test.A.csv")
+write.csv(L14, "Materials.B_Shift.Sh_Gender.M_Ear.R_Test.B.csv")
+## C10
+write.csv(L15, "Materials.A_Shift.S_Gender.M_Ear.R_Test.A.csv")
+write.csv(L16, "Materials.A_Shift.S_Gender.M_Ear.R_Test.B.csv")
+## C5
+write.csv(L17, "Materials.B_Shift.S_Gender.F_Ear.R_Test.A.csv")
+write.csv(L18, "Materials.B_Shift.S_Gender.F_Ear.R_Test.B.csv")
+## C6
+write.csv(L19, "Materials.A_Shift.Sh_Gender.F_Ear.R_Test.A.csv")
+write.csv(L20, "Materials.A_Shift.Sh_Gender.F_Ear.R_Test.B.csv")
+## C15
+write.csv(L21, "Materials.B_Shift.Sh_Gender.F_Ear.R_Test.A.csv")
+write.csv(L22, "Materials.B_Shift.Sh_Gender.F_Ear.R_Test.B.csv")
+## C16
+write.csv(L23, "Materials.A_Shift.S_Gender.F_Ear.R_Test.A.csv")
+write.csv(L24, "Materials.A_Shift.S_Gender.F_Ear.R_Test.B.csv")
+## C7
+write.csv(L25, "Materials.B_Shift.S_Gender.M_Ear.L_Test.A.csv")
+write.csv(L26, "Materials.B_Shift.S_Gender.M_Ear.L_Test.B.csv")
+## C8
+write.csv(L27, "Materials.A_Shift.Sh_Gender.M_Ear.L_Test.A.csv")
+write.csv(L28, "Materials.A_Shift.Sh_Gender.M_Ear.L_Test.B.csv")
+## C13
+write.csv(L29, "Materials.B_Shift.Sh_Gender.M_Ear.L_Test.A.csv")
+write.csv(L30, "Materials.B_Shift.Sh_Gender.M_Ear.L_Test.B.csv")
+## C14
+write.csv(L31, "Materials.A_Shift.S_Gender.M_Ear.L_Test.A.csv")
+write.csv(L32, "Materials.A_Shift.S_Gender.M_Ear.L_Test.B.csv")
+```
+
+
+______
 ```{r Concate Table}
 # Here we are generating the CSV files for each list. There are a total of *32* lists (described in Exp.1_Master file under writeups)
 
@@ -1673,230 +1804,22 @@ tibble(
   view()
 ```
 
+______
 
-_______
+# File Rename   
+```{r File Rename}
 
-# File Renaming
-
-## Critical Items
-```{r Critical Rename_S.F.L}
-## Left: Female S Unambiguous; Right: Male Sh Unambiguous
-
-Files <- list.files(path = "Stimuli/Experiment_1/Items_Critical/F.S_M.Sh/Nonambiguous/")
-
-
-for (f in Files) {
-  print(f)  
-  
-  old.files <- paste0(
-    "Stimuli/Experiment_1/Items_Critical/F.S_M.Sh/Nonambiguous/", 
-    f) 
-  
-  f.Category = gsub("^200ms", "Critical", f)
-  f.left_Shift = gsub("F.S", "S", f.Category)
-  f.left_Gender.Ear = gsub("_M.", ".F.L_", f.left_Shift)
-  f.right_Shift = gsub("Sh", "Sh", f.left_Gender.Ear)
-  f.right_Gender.Ear = gsub(".wav", ".M.R.wav", f.right_Shift)
-  
-  new.files <- paste0("Stimuli/Experiment_1/Items_Critical/1/", f.right_Gender.Ear)
-  
-  file.rename(old.files, new.files)
-}
-```
-
-
-```{r Critical Rename_As.F.L}
-## Left: Female S Ambiguous; Right: Male Sh Ambiguous
-
-Files <- list.files(path = "Stimuli/Experiment_1/Items_Critical/F.S_M.Sh/Ambiguous/")
-
-for (f in Files) {
-  
-  
-  old.files <- paste0(
-    "Stimuli/Experiment_1/Items_Critical/F.S_M.Sh/Ambiguous/", 
-    f) 
-  
-  f.Category = gsub("^200ms", "Critical", f)
-  
-  f.left_Shift = gsub("F.Xs", "As", f.Category)
-  f.left_Gender.Ear = gsub("_M.", ".F.L_", f.left_Shift)
-  f.right_Shift = gsub("Xsh", "Ash", f.left_Gender.Ear)
-  f.right_Gender.Ear = gsub(".wav", ".M.R.wav", f.right_Shift)
-  
-  new.files <- paste0("Stimuli/Experiment_1/Items_Critical/2/", f.right_Gender.Ear)
-  
-  file.rename(old.files, new.files)
-}
-```
-
-```{r Critical Rename_Sh.F.L}
-## Left: Female Sh Unambiguous; Right: Male S Unambiguous
-Files <- list.files(path = "Stimuli/Experiment_1/Items_Critical/F.Sh_M.S/Nonambiguous/")
+Files <- list.files(path = "C:/Users/Rachel/Documents/SI.SP/lists/exposure")
 
 for (f in Files) {
   
   old.files <- paste0(
-    "Stimuli/Experiment_1/Items_Critical/F.Sh_M.S/Nonambiguous/", 
+    "C:/Users/Rachel/Documents/SI.SP/lists/exposure",
     f) 
   
-  f.Category = gsub("^200ms", "Critical", f)
-  f.left_Shift = gsub("F.Sh", "Sh", f.Category)
-  f.left_Gender.Ear = gsub("_M.", ".F.L_", f.left_Shift)
-  f.right_Shift = gsub("_s", "_S", f.left_Gender.Ear)
-  f.right_Gender.Ear = gsub(".wav", ".M.R.wav", f.right_Shift)
+  f.new = gsub("Critical_", "Filler_02_", f)
   
-  new.files <- paste0("Stimuli/Experiment_1/Items_Critical/3/", f.right_Gender.Ear)
-  
-  file.rename(old.files, new.files)
-}
-```
-
-```{r Critical Rename_Ash.F.L}
-## Left: Female Sh Ambiguous; Right: Male S Ambiguous
-Files <- list.files(path = "Stimuli/Experiment_1/Items_Critical/F.Sh_M.S/Ambiguous/")
-
-for (f in Files) {
-  
-  old.files <- paste0(
-    "Stimuli/Experiment_1/Items_Critical/F.Sh_M.S/Ambiguous/", 
-    f) 
-  
-  f.Category = gsub("^200ms", "Critical", f)
-  f.left_Shift = gsub("F.Xsh", "Ash", f.Category)
-  f.left_Gender.Ear = gsub("_M.", ".F.L_", f.left_Shift)
-  f.right_Shift = gsub("Xs", "As", f.left_Gender.Ear)
-  f.right_Gender.Ear = gsub(".wav", ".M.R.wav", f.right_Shift)
-  
-  new.files <- paste0("Stimuli/Experiment_1/Items_Critical/4/", f.right_Gender.Ear)
-  
-  file.rename(old.files, new.files)
-}
-```
-
-```{r Critical Rename_S.M.L}
-## Left: Male S Unambiguous; Right: Female Sh Unambiguous
-Files <- list.files(path = "Stimuli/Experiment_1/Items_Critical/M.S_F.Sh/Nonambiguous/")
-
-for (f in Files) {
-  
-  old.files <- paste0(
-    "Stimuli/Experiment_1/Items_Critical/M.S_F.Sh/Nonambiguous/", 
-    f) 
-  
-  f.Category = gsub("^200ms", "Critical", f)
-  f.left_Shift = gsub("M.S.", "S.", f.Category)
-  f.left_Gender.Ear = gsub("_F.", ".M.L_", f.left_Shift)
-  f.right_Shift = gsub("L_Sh.", "L_Sh.", f.left_Gender.Ear)
-  f.right_Gender.Ear = gsub(".wav", ".F.R.wav", f.right_Shift)
-  
-  new.files <- paste0("Stimuli/Experiment_1/Items_Critical/5/", f.right_Gender.Ear)
-  
-  file.rename(old.files, new.files)
-}
-```
-
-```{r Critical Rename_As.M.L}
-## Left: Male S Ambiguous; Right: Female Sh Ambiguous
-Files <- list.files(path = "Stimuli/Experiment_1/Items_Critical/M.S_F.Sh/Ambiguous/")
-
-for (f in Files) {
-  
-  old.files <- paste0(
-    "Stimuli/Experiment_1/Items_Critical/M.S_F.Sh/Ambiguous/",
-    f) 
-  
-  f.Category = gsub("^200ms", "Critical", f)
-  f.left_Shift = gsub("M.Xs", "As", f.Category)
-  f.left_Gender.Ear = gsub("_F.", ".M.L_", f.left_Shift)
-  f.right_Shift = gsub("Xsh", "Ash", f.left_Gender.Ear)
-  f.right_Gender.Ear = gsub(".wav", ".F.R.wav", f.right_Shift)
-  
-  new.files <- paste0("Stimuli/Experiment_1/Items_Critical/6/", f.right_Gender.Ear)
-  
-  file.rename(old.files, new.files)
-}
-```
-
-```{r Critical Rename_Sh.M.L}
-## Left: Male Sh Unambiguous; Right: Female S Unambiguous
-Files <- list.files(path = "Stimuli/Experiment_1/Items_Critical/M.Sh_F.S/Nonambiguous/")
-
-for (f in Files) {
-  
-  old.files <- paste0(
-    "Stimuli/Experiment_1/Items_Critical/M.Sh_F.S/Nonambiguous/", 
-    f) 
-  
-  f.Category = gsub("^200ms", "Critical", f)
-  f.left_Shift = gsub("M.Sh", "Sh", f.Category)
-  f.left_Gender.Ear = gsub("_F.", ".M.L_", f.left_Shift)
-  f.right_Shift = gsub("S", "S", f.left_Gender.Ear)
-  f.right_Gender.Ear = gsub(".wav", ".F.R.wav", f.right_Shift)
-  
-  new.files <- paste0("Stimuli/Experiment_1/Items_Critical/7/", f.right_Gender.Ear)
-  
-  file.rename(old.files, new.files)
-}
-```
-
-```{r Critical Rename_Ash.M.L}
-## Left: Male Sh Ambiguous; Right: Female S Ambiguous
-Files <- list.files(path = "Stimuli/Experiment_1/Items_Critical/M.Sh_F.S/Ambiguous/")
-
-for (f in Files) {
-  
-  old.files <- paste0(
-    "Stimuli/Experiment_1/Items_Critical/M.Sh_F.S/Ambiguous/",
-    f) 
-  
-  f.Category = gsub("^200ms", "Critical", f)
-  f.left_Shift = gsub("M.Xsh", "Ash", f.Category)
-  f.left_Gender.Ear = gsub("_F.", ".M.L_", f.left_Shift)
-  f.right_Shift = gsub("Xs", "As", f.left_Gender.Ear)
-  f.right_Gender.Ear = gsub(".wav", ".F.R.wav", f.right_Shift)
-  
-  new.files <- paste0("Stimuli/Experiment_1/Items_Critical/8/", f.right_Gender.Ear)
-  
-  file.rename(old.files, new.files)
-}
-```
-
-_____
-
-```{r Critical List/Materials}
-
-Files <- list.files(path = "Stimuli/Experiment_1/Items_Critical/8B/")
-
-for (f in Files) {
-  
-  old.files <- paste0(
-    "Stimuli/Experiment_1/Items_Critical/8B/",
-    f) 
-  
-  f.list = gsub("Critical", "Critical_08.X", f)
-  f.materials = gsub(".X", ".B", f.list)
-  
-  new.files <- paste0("Stimuli/Experiment_1/Items_Critical/8/", f.materials)
-  
-  file.rename(old.files, new.files)
-}
-```
-________
-
-```{r Filler Rename}
-
-Files <- list.files(path = "Stimuli/Experiment_1/Items_Filler/B/Version_2/")
-
-for (f in Files) {
-  
-  old.files <- paste0(
-    "Stimuli/Experiment_1/Items_Filler/B/Version_2/",
-    f) 
-  
-  f.new = gsub("Filler_", "Filler_02_", f)
-  
-  new.files <- paste0("Stimuli/Experiment_1/Items_Filler/B/Version_2/", f.new)
+  new.files <- paste0("C:/Users/Rachel/Documents/SI.SP/lists/exposure", f.new)
   
   file.rename(old.files, new.files)
 }

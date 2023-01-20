@@ -33,7 +33,7 @@
 var _curBlock;
 var vidSuffix, audSuffix;
 var RESP_DELIM = ';';
-
+var e;
 
 $(document).ready(function() {
   ////////////////////////////////////////////////////////////////////////
@@ -43,7 +43,7 @@ $(document).ready(function() {
   ////////////////////////////////////////////////////////////////////////
   // Create experiment
   ////////////////////////////////////////////////////////////////////////
-  var e = new Experiment({
+  e = new Experiment({
       platform: 'prolific',
       rsrbProtocolNumber: 'RSRB00045955',
       rsrbConsentFormURL: 'https://www.hlp.rochester.edu/experiments/consent/RSRB45955_Consent_2024-01-12.pdf',
@@ -276,11 +276,11 @@ $(document).ready(function() {
   var blocks_already_read_in = 0;
   var stimulus_list = [];
   var all_audio_filenames = [];
-  var continue_experiment = function(block, filenames) {
+  var continue_experiment = function(block, stimlist) {
     blocks_already_read_in++;
     throwMessage("Adding stimuli from block " + (block + 1) + " to overall stimulus list.");
     // Add stimuli to those that need to be preloaded and add path prefix to all filenames
-    all_audio_filenames = all_audio_filenames.concat(filenames);
+    all_audio_filenames = all_audio_filenames.concat(stimlist.filenames.map(f => stimlist.prefix + f));
     throwMessage('Updated list of all stimuli: ' + all_audio_filenames);
 
     // When last block has been constructed
@@ -311,8 +311,7 @@ $(document).ready(function() {
           "we will pre-load some of the audio files now so they don't cause interruptions " +
           "during the rest of the experiment.</p>" +
           '<p>This will also give you an idea of your connection speed to our server. ' +
-          'If for some reason the files are loading very slowly, you can return this HIT and move on, ' +
-          'without wasting your time on the rest of the experiment.</p>',
+          'If for some reason the files are loading very slowly, you can return this HIT/experiment.</p>',
           onPreview: false
         });
       } // end of preloading block
@@ -344,13 +343,16 @@ $(document).ready(function() {
         throwMessage("Adding " + stimulus_list_length[i] + " stimuli to overall stim length");
         all_stims_length += stimulus_list_length[i];
       }
+
+      // Make one progressbar for exposure and one for test
       for (let i = 0; i < block_type.length; i++) {
-        if (i === 0) {
-          block_progressBarStartProportion[i] = 0;
+        if (i < 10) {
+          block_progressBarStartProportion[i] = i * 8 / 80;
+          block_progressBarEndProportion[i] = block_progressBarStartProportion[i] + 8 / 80;
         } else {
-          block_progressBarStartProportion[i] = block_progressBarEndProportion[i - 1];
+          block_progressBarStartProportion[i] = (i - 10) * 6 / 72;
+          block_progressBarEndProportion[i] = block_progressBarStartProportion[i] + 6 / 72;
         }
-        block_progressBarEndProportion[i] = block_progressBarStartProportion[i] + stimulus_list_length[i] / all_stims_length;
         throwMessage("Block " + (i + 1) + " progress bar start set to " + block_progressBarStartProportion[i] + "; end set to " + block_progressBarEndProportion[i]);
       }
 
@@ -385,10 +387,9 @@ $(document).ready(function() {
             stimOrderMethod: "dont_randomize",
             stimOrderMethod: 'shuffle_across_blocks',
             blockOrderMethod: 'shuffle_blocks',
-            progressBarStartProportion: block_progressBarStartProportion[i],
-            progressBarEndProportion: block_progressBarEndProportion[i],
-            namespace: block_type[i] + (i + 1),
-            debugMode: e.debugMode
+//            progressBarStartProportion: block_progressBarStartProportion[i],
+//            progressBarEndProportion: block_progressBarEndProportion[i],
+            namespace: block_type[i] + (i + 1)
           });
 
           e.addBlock({
@@ -450,7 +451,8 @@ $(document).ready(function() {
               reps: getFromPapa(list, 'reps')
             });
             throwMessage("Done parsing " + block_type[i] + " list for block " + (i + 1));
-            continue_experiment(i, stimulus_list[i].filenames);
+
+            continue_experiment(i, stimulus_list[i]);
           }
         }); // end of papa parse
       } // end of for loop

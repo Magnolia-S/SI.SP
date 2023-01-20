@@ -752,7 +752,7 @@ tibble(
   ## Group files
   group_by(List) %>%
   
-  group_map(.f = ~ write_csv(.x, file = paste0("C:Stimuli/Experiment_1/Lists/Critical.",  .y$List, ".csv")))
+  group_map(.f = ~ write_csv(.x, file = paste0("C:/Users/Rachel/Documents/SI.SP/lists/exposure/critical/Critical.",  .y$List, ".csv")))
 ```
 
 

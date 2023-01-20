@@ -1,153 +1,153 @@
-"","Phase","Item.Type","Block","Item.Number","Version","Attended.Talker","Attended.Talker_Materials","Attended.Talker_Sound","Attended.Talker_Gender","Attended.Talker_Ear","Unattended.Talker","Unattended.Talker_Materials","Unattended.Talker_Sound","Unattended.Talker_Gender","Unattended.Talker_Ear","reps","feedback","filename","Talker.A","Talker.B","Talker.A_Gender"
-"1","Exposure","Critical",1,1,"Unshifted","Ambition","Materials A","Sh","Female","Right","Parasite","Materials A","S","Male","Left",1,FALSE,"Critical_S.Parasite.M.L_Sh.Ambition.F.R.wav",NA,NA,NA
-"2","Exposure","Critical",1,2,"Unshifted","Machinery","Materials A","Sh","Female","Right","Obscene","Materials A","S","Male","Left",1,FALSE,"Critical_S.Obscene.M.L_Sh.Machinery.F.R.wav",NA,NA,NA
-"3","Exposure","Critical",1,3,"Unshifted","Brochure","Materials A","Sh","Female","Right","Medicine","Materials A","S","Male","Left",1,FALSE,"Critical_S.Medicine.M.L_Sh.Brochure.F.R.wav",NA,NA,NA
-"4","Exposure","Critical",1,4,"Unshifted","Official","Materials A","Sh","Female","Right","Tennessee","Materials A","S","Male","Left",1,FALSE,"Critical_S.Tennessee.M.L_Sh.Official.F.R.wav",NA,NA,NA
-"5","Exposure","Critical",1,5,"Unshifted","Crucial","Materials A","Sh","Female","Right","Peninsula","Materials A","S","Male","Left",1,FALSE,"Critical_S.Peninsula.M.L_Sh.Crucial.F.R.wav",NA,NA,NA
-"6","Exposure","Critical",1,6,"Unshifted","Pediatrician","Materials A","Sh","Female","Right","Hallucinate","Materials A","S","Male","Left",1,FALSE,"Critical_S.Hallucinate.M.L_Sh.Pediatrician.F.R.wav",NA,NA,NA
-"7","Exposure","Critical",1,7,"Unshifted","Flourishing","Materials A","Sh","Female","Right","Arkansas","Materials A","S","Male","Left",1,FALSE,"Critical_S.Arkansas.M.L_Sh.Flourishing.F.R.wav",NA,NA,NA
-"8","Exposure","Critical",1,8,"Unshifted","Reassure","Materials A","Sh","Female","Right","Compensate","Materials A","S","Male","Left",1,FALSE,"Critical_S.Compensate.M.L_Sh.Reassure.F.R.wav",NA,NA,NA
-"9","Exposure","Critical",1,9,"Unshifted","Graduation","Materials A","Sh","Female","Right","Dinosaur","Materials A","S","Male","Left",1,FALSE,"Critical_S.Dinosaur.M.L_Sh.Graduation.F.R.wav",NA,NA,NA
-"10","Exposure","Critical",1,10,"Unshifted","Vacation","Materials A","Sh","Female","Right","Rehearsal","Materials A","S","Male","Left",1,FALSE,"Critical_S.Rehearsal.M.L_Sh.Vacation.F.R.wav",NA,NA,NA
-"11","Exposure","Critical",1,11,"Shifted","Pregnancy","Materials B","S","Female","Right","Initial","Materials B","Sh","Male","Left",1,FALSE,"Critical_Ash.Initial.M.L_As.Pregnancy.F.R.wav",NA,NA,NA
-"12","Exposure","Critical",1,12,"Shifted","Democracy","Materials B","S","Female","Right","Beneficial","Materials B","Sh","Male","Left",1,FALSE,"Critical_Ash.Beneficial.M.L_As.Democracy.F.R.wav",NA,NA,NA
-"13","Exposure","Critical",1,13,"Shifted","Embassy","Materials B","S","Female","Right","Negotiate","Materials B","Sh","Male","Left",1,FALSE,"Critical_Ash.Negotiate.M.L_As.Embassy.F.R.wav",NA,NA,NA
-"14","Exposure","Critical",1,14,"Shifted","Legacy","Materials B","S","Female","Right","Commercial","Materials B","Sh","Male","Left",1,FALSE,"Critical_Ash.Commercial.M.L_As.Legacy.F.R.wav",NA,NA,NA
-"15","Exposure","Critical",1,15,"Shifted","Reconcile","Materials B","S","Female","Right","Parachute","Materials B","Sh","Male","Left",1,FALSE,"Critical_Ash.Parachute.M.L_As.Reconcile.F.R.wav",NA,NA,NA
-"16","Exposure","Critical",1,16,"Shifted","Personal","Materials B","S","Female","Right","Efficient","Materials B","Sh","Male","Left",1,FALSE,"Critical_Ash.Efficient.M.L_As.Personal.F.R.wav",NA,NA,NA
-"17","Exposure","Critical",1,17,"Shifted","Eraser","Materials B","S","Female","Right","Publisher","Materials B","Sh","Male","Left",1,FALSE,"Critical_Ash.Publisher.M.L_As.Eraser.F.R.wav",NA,NA,NA
-"18","Exposure","Critical",1,18,"Shifted","Episode","Materials B","S","Female","Right","Glacier","Materials B","Sh","Male","Left",1,FALSE,"Critical_Ash.Glacier.M.L_As.Episode.F.R.wav",NA,NA,NA
-"19","Exposure","Critical",1,19,"Shifted","Literacy","Materials B","S","Female","Right","Refreshing","Materials B","Sh","Male","Left",1,FALSE,"Critical_Ash.Refreshing.M.L_As.Literacy.F.R.wav",NA,NA,NA
-"20","Exposure","Critical",1,20,"Shifted","Coliseum","Materials B","S","Female","Right","Impatient","Materials B","Sh","Male","Left",1,FALSE,"Critical_Ash.Impatient.M.L_As.Coliseum.F.R.wav",NA,NA,NA
-"21","Exposure","Filler",1,1,"2","America","Set A","Word","Female","Left","Wominid","Set A","Nonword","Male","Right",1,FALSE,"Critical_W.America.F.L_N.Wominid.M.R.wav",NA,NA,NA
-"22","Exposure","Filler",1,1,"1","Wojalto","Set B","Nonword","Female","Right","Bakery","Set B","Word","Male","Left",1,FALSE,"Critical_W.Bakery.M.L_N.Wojalto.F.R.wav",NA,NA,NA
-"23","Exposure","Filler",1,1,"4","Youmgel","Set C","Nonword","Female","Left","Ballerina","Set C","Word","Male","Right",1,FALSE,"Critical_N.Youmgel.F.L_W.Ballerina.M.R.wav",NA,NA,NA
-"24","Exposure","Filler",1,2,"2","Blueberry","Set A","Word","Female","Left","Ungelnin","Set A","Nonword","Male","Right",1,FALSE,"Critical_W.Blueberry.F.L_N.Ungelnin.M.R.wav",NA,NA,NA
-"25","Exposure","Filler",1,2,"1","Tounamplem","Set B","Nonword","Female","Right","Bullying","Set B","Word","Male","Left",1,FALSE,"Critical_W.Bullying.M.L_N.Tounamplem.F.R.wav",NA,NA,NA
-"26","Exposure","Filler",1,2,"4","Tymolape","Set C","Nonword","Female","Left","Burglary","Set C","Word","Male","Right",1,FALSE,"Critical_N.Tymolape.F.L_W.Burglary.M.R.wav",NA,NA,NA
-"27","Exposure","Filler",1,3,"2","Camera","Set A","Word","Female","Left","Tilegkalo","Set A","Nonword","Male","Right",1,FALSE,"Critical_W.Camera.F.L_N.Tilegkalo.M.R.wav",NA,NA,NA
-"28","Exposure","Filler",1,3,"1","Ryligal","Set B","Nonword","Female","Right","Continually","Set B","Word","Male","Left",1,FALSE,"Critical_W.Continually.M.L_N.Ryligal.F.R.wav",NA,NA,NA
-"29","Exposure","Filler",1,3,"4","Tamical","Set C","Nonword","Female","Left","Domineering","Set C","Word","Male","Right",1,FALSE,"Critical_N.Tamical.F.L_W.Domineering.M.R.wav",NA,NA,NA
-"30","Exposure","Filler",1,4,"2","Directory","Set A","Word","Female","Left","Rimkeluwar","Set A","Nonword","Male","Right",1,FALSE,"Critical_W.Directory.F.L_N.Rimkeluwar.M.R.wav",NA,NA,NA
-"31","Exposure","Filler",1,4,"1","Rawamtee","Set B","Nonword","Female","Right","Document","Set B","Word","Male","Left",1,FALSE,"Critical_W.Document.M.L_N.Rawamtee.F.R.wav",NA,NA,NA
-"32","Exposure","Filler",1,4,"4","Rengime","Set C","Nonword","Female","Left","Embody","Set C","Word","Male","Right",1,FALSE,"Critical_N.Rengime.F.L_W.Embody.M.R.wav",NA,NA,NA
-"33","Exposure","Filler",1,5,"2","Dynamite","Set A","Word","Female","Left","Rakil","Set A","Nonword","Male","Right",1,FALSE,"Critical_W.Dynamite.F.L_N.Rakil.M.R.wav",NA,NA,NA
-"34","Exposure","Filler",1,5,"1","Ploupelai","Set B","Nonword","Female","Right","Eighty","Set B","Word","Male","Left",1,FALSE,"Critical_W.Eighty.M.L_N.Ploupelai.F.R.wav",NA,NA,NA
-"35","Exposure","Filler",1,5,"4","Pourilar","Set C","Nonword","Female","Left","Gullible","Set C","Word","Male","Right",1,FALSE,"Critical_N.Pourilar.F.L_W.Gullible.M.R.wav",NA,NA,NA
-"36","Exposure","Filler",1,6,"2","Gardenia","Set A","Word","Female","Left","Perkum","Set A","Nonword","Male","Right",1,FALSE,"Critical_W.Gardenia.F.L_N.Perkum.M.R.wav",NA,NA,NA
-"37","Exposure","Filler",1,6,"1","Omperoge","Set B","Nonword","Female","Right","Grammatical","Set B","Word","Male","Left",1,FALSE,"Critical_W.Grammatical.M.L_N.Omperoge.F.R.wav",NA,NA,NA
-"38","Exposure","Filler",1,6,"4","Almikquary","Set C","Nonword","Female","Left","Honeymoon","Set C","Word","Male","Right",1,FALSE,"Critical_N.Almikquary.F.L_W.Honeymoon.M.R.wav",NA,NA,NA
-"39","Exposure","Filler",1,7,"2","Hamburger","Set A","Word","Female","Left","Nomerae","Set A","Nonword","Male","Right",1,FALSE,"Critical_W.Hamburger.F.L_N.Nomerae.M.R.wav",NA,NA,NA
-"40","Exposure","Filler",1,7,"1","Nempring","Set B","Nonword","Female","Right","Identical","Set B","Word","Male","Left",1,FALSE,"Critical_W.Identical.M.L_N.Nempring.F.R.wav",NA,NA,NA
-"41","Exposure","Filler",1,7,"4","Niritaly","Set C","Nonword","Female","Left","Illuminate","Set C","Word","Male","Right",1,FALSE,"Critical_N.Niritaly.F.L_W.Illuminate.M.R.wav",NA,NA,NA
-"42","Exposure","Filler",1,8,"2","Hurdle","Set A","Word","Female","Left","Namuary","Set A","Nonword","Male","Right",1,FALSE,"Critical_W.Hurdle.F.L_N.Namuary.M.R.wav",NA,NA,NA
-"43","Exposure","Filler",1,8,"1","Mibgem","Set B","Nonword","Female","Right","Interior","Set B","Word","Male","Left",1,FALSE,"Critical_W.Interior.M.L_N.Mibgem.F.R.wav",NA,NA,NA
-"44","Exposure","Filler",1,8,"4","Makid","Set C","Nonword","Female","Left","Ironic","Set C","Word","Male","Right",1,FALSE,"Critical_N.Makid.F.L_W.Ironic.M.R.wav",NA,NA,NA
-"45","Exposure","Filler",1,9,"2","Inhabit","Set A","Word","Female","Left","Logelai","Set A","Nonword","Male","Right",1,FALSE,"Critical_W.Inhabit.F.L_N.Logelai.M.R.wav",NA,NA,NA
-"46","Exposure","Filler",1,9,"1","Meidnow","Set B","Nonword","Female","Right","Knowingly","Set B","Word","Male","Left",1,FALSE,"Critical_W.Knowingly.M.L_N.Meidnow.F.R.wav",NA,NA,NA
-"47","Exposure","Filler",1,9,"4","Kaldemia","Set C","Nonword","Female","Left","Laminate","Set C","Word","Male","Right",1,FALSE,"Critical_N.Kaldemia.F.L_W.Laminate.M.R.wav",NA,NA,NA
-"48","Exposure","Filler",1,10,"2","Keyboard","Set A","Word","Female","Left","Lenediaw","Set A","Nonword","Male","Right",1,FALSE,"Critical_W.Keyboard.F.L_N.Lenediaw.M.R.wav",NA,NA,NA
-"49","Exposure","Filler",1,10,"1","Kermimer","Set B","Nonword","Female","Right","Lethal","Set B","Word","Male","Left",1,FALSE,"Critical_W.Lethal.M.L_N.Kermimer.F.R.wav",NA,NA,NA
-"50","Exposure","Filler",1,10,"4","Imdalier","Set C","Nonword","Female","Left","Liability","Set C","Word","Male","Right",1,FALSE,"Critical_N.Imdalier.F.L_W.Liability.M.R.wav",NA,NA,NA
-"51","Exposure","Filler",1,11,"2","Lengthen","Set A","Word","Female","Left","Kelabidel","Set A","Nonword","Male","Right",1,FALSE,"Critical_W.Lengthen.F.L_N.Kelabidel.M.R.wav",NA,NA,NA
-"52","Exposure","Filler",1,11,"1","Itempider","Set B","Nonword","Female","Right","Lobbying","Set B","Word","Male","Left",1,FALSE,"Critical_W.Lobbying.M.L_N.Itempider.F.R.wav",NA,NA,NA
-"53","Exposure","Filler",1,11,"4","Kloumidiger","Set C","Nonword","Female","Left","Marina","Set C","Word","Male","Right",1,FALSE,"Critical_N.Kloumidiger.F.L_W.Marina.M.R.wav",NA,NA,NA
-"54","Exposure","Filler",1,12,"2","Lingering","Set A","Word","Female","Left","Inpaki","Set A","Nonword","Male","Right",1,FALSE,"Critical_W.Lingering.F.L_N.Inpaki.M.R.wav",NA,NA,NA
-"55","Exposure","Filler",1,12,"1","Aknid","Set B","Nonword","Female","Right","Membrane","Set B","Word","Male","Left",1,FALSE,"Critical_W.Membrane.M.L_N.Aknid.F.R.wav",NA,NA,NA
-"56","Exposure","Filler",1,12,"4","Halomimoc","Set C","Nonword","Female","Left","Metrical","Set C","Word","Male","Right",1,FALSE,"Critical_N.Halomimoc.F.L_W.Metrical.M.R.wav",NA,NA,NA
-"57","Exposure","Filler",1,13,"2","Melancholy","Set A","Word","Female","Left","Hintarber","Set A","Nonword","Male","Right",1,FALSE,"Critical_W.Melancholy.F.L_N.Hintarber.M.R.wav",NA,NA,NA
-"58","Exposure","Filler",1,13,"1","Ibirak","Set B","Nonword","Female","Right","Negate","Set B","Word","Male","Left",1,FALSE,"Critical_W.Negate.M.L_N.Ibirak.F.R.wav",NA,NA,NA
-"59","Exposure","Filler",1,13,"4","Gerbualo","Set C","Nonword","Female","Left","Nightmare","Set C","Word","Male","Right",1,FALSE,"Critical_N.Gerbualo.F.L_W.Nightmare.M.R.wav",NA,NA,NA
-"60","Exposure","Filler",1,14,"2","Napkin","Set A","Word","Female","Left","Gardimuallay","Set A","Nonword","Male","Right",1,FALSE,"Critical_W.Napkin.F.L_N.Gardimuallay.M.R.wav",NA,NA,NA
-"61","Exposure","Filler",1,14,"1","Halken","Set B","Nonword","Female","Right","Outnumber","Set B","Word","Male","Left",1,FALSE,"Critical_W.Outnumber.M.L_N.Halken.F.R.wav",NA,NA,NA
-"62","Exposure","Filler",1,14,"4","Galliwinou","Set C","Nonword","Female","Left","Panicking","Set C","Word","Male","Right",1,FALSE,"Critical_N.Galliwinou.F.L_W.Panicking.M.R.wav",NA,NA,NA
-"63","Exposure","Filler",1,15,"2","Ornament","Set A","Word","Female","Left","Gairelom","Set A","Nonword","Male","Right",1,FALSE,"Critical_W.Ornament.F.L_N.Gairelom.M.R.wav",NA,NA,NA
-"64","Exposure","Filler",1,15,"1","Ganla","Set B","Nonword","Female","Right","Parakeet","Set B","Word","Male","Left",1,FALSE,"Critical_W.Parakeet.M.L_N.Ganla.F.R.wav",NA,NA,NA
-"65","Exposure","Filler",1,15,"4","Emhoutic","Set C","Nonword","Female","Left","Pilgrim","Set C","Word","Male","Right",1,FALSE,"Critical_N.Emhoutic.F.L_W.Pilgrim.M.R.wav",NA,NA,NA
-"66","Exposure","Filler",1,16,"2","Pineapple","Set A","Word","Female","Left","Bikanian","Set A","Nonword","Male","Right",1,FALSE,"Critical_W.Pineapple.F.L_N.Bikanian.M.R.wav",NA,NA,NA
-"67","Exposure","Filler",1,16,"1","Dadigal","Set B","Nonword","Female","Right","Platonic","Set B","Word","Male","Left",1,FALSE,"Critical_W.Platonic.M.L_N.Dadigal.F.R.wav",NA,NA,NA
-"68","Exposure","Filler",1,16,"4","Dilkuaund","Set C","Nonword","Female","Left","Predict","Set C","Word","Male","Right",1,FALSE,"Critical_N.Dilkuaund.F.L_W.Predict.M.R.wav",NA,NA,NA
-"69","Exposure","Filler",1,17,"2","Purgatory","Set A","Word","Female","Left","Baliber","Set A","Nonword","Male","Right",1,FALSE,"Critical_W.Purgatory.F.L_N.Baliber.M.R.wav",NA,NA,NA
-"70","Exposure","Filler",1,17,"1","Bamtell","Set B","Nonword","Female","Right","Tactical","Set B","Word","Male","Left",1,FALSE,"Critical_W.Tactical.M.L_N.Bamtell.F.R.wav",NA,NA,NA
-"71","Exposure","Filler",1,17,"4","Bowidai","Set C","Nonword","Female","Left","Terminal","Set C","Word","Male","Right",1,FALSE,"Critical_N.Bowidai.F.L_W.Terminal.M.R.wav",NA,NA,NA
-"72","Exposure","Filler",1,18,"2","Therapeutic","Set A","Word","Female","Left","Amalar","Set A","Nonword","Male","Right",1,FALSE,"Critical_W.Therapeutic.F.L_N.Amalar.M.R.wav",NA,NA,NA
-"73","Exposure","Filler",1,18,"1","Anemer","Set B","Nonword","Female","Right","Titanium","Set B","Word","Male","Left",1,FALSE,"Critical_W.Titanium.M.L_N.Anemer.F.R.wav",NA,NA,NA
-"74","Exposure","Filler",1,18,"4","Anolipa","Set C","Nonword","Female","Left","Turbulent","Set C","Word","Male","Right",1,FALSE,"Critical_N.Anolipa.F.L_W.Turbulent.M.R.wav",NA,NA,NA
-"75","Exposure","Filler",1,19,"2","Tutorial","Set A","Word","Female","Left","Ailounam","Set A","Nonword","Male","Right",1,FALSE,"Critical_W.Tutorial.F.L_N.Ailounam.M.R.wav",NA,NA,NA
-"76","Exposure","Filler",1,19,"1","Lilgrai","Set B","Nonword","Female","Right","Umbrella","Set B","Word","Male","Left",1,FALSE,"Critical_W.Umbrella.M.L_N.Lilgrai.F.R.wav",NA,NA,NA
-"77","Exposure","Filler",1,19,"4","Alnadiro","Set C","Nonword","Female","Left","Undermine","Set C","Word","Male","Right",1,FALSE,"Critical_N.Alnadiro.F.L_W.Undermine.M.R.wav",NA,NA,NA
-"78","Exposure","Filler",1,20,"2","Wealthy","Set A","Word","Female","Left","Acomining","Set A","Nonword","Male","Right",1,FALSE,"Critical_W.Wealthy.F.L_N.Acomining.M.R.wav",NA,NA,NA
-"79","Exposure","Filler",1,20,"1","Admunker","Set B","Nonword","Female","Right","Worldly","Set B","Word","Male","Left",1,FALSE,"Critical_W.Worldly.M.L_N.Admunker.F.R.wav",NA,NA,NA
-"80","Exposure","Filler",1,20,"4","Aigi","Set C","Nonword","Female","Left","Wrinkle","Set C","Word","Male","Right",1,FALSE,"Critical_N.Aigi.F.L_W.Wrinkle.M.R.wav",NA,NA,NA
-"81","Test","Test",1,1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.1_ashi.25.wav","ashi.25",NA,"Female"
-"82","Test","Test",2,1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.1_ashi.25.wav","ashi.25",NA,"Female"
-"83","Test","Test",5,1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.1_ashi.25.wav","ashi.25",NA,"Female"
-"84","Test","Test",6,1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.1_ashi.25.wav","ashi.25",NA,"Female"
-"85","Test","Test",9,1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.1_ashi.25.wav","ashi.25",NA,"Female"
-"86","Test","Test",10,1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.1_ashi.25.wav","ashi.25",NA,"Female"
-"87","Test","Test",3,1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.1_ashi.25.wav","ashi.25",NA,"Male"
-"88","Test","Test",4,1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.1_ashi.25.wav","ashi.25",NA,"Male"
-"89","Test","Test",7,1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.1_ashi.25.wav","ashi.25",NA,"Male"
-"90","Test","Test",8,1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.1_ashi.25.wav","ashi.25",NA,"Male"
-"91","Test","Test",11,1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.1_ashi.25.wav","ashi.25",NA,"Male"
-"92","Test","Test",12,1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.1_ashi.25.wav","ashi.25",NA,"Male"
-"93","Test","Test",1,2,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.2_ashi.30.wav","ashi.30",NA,"Female"
-"94","Test","Test",2,2,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.2_ashi.30.wav","ashi.30",NA,"Female"
-"95","Test","Test",5,2,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.2_ashi.30.wav","ashi.30",NA,"Female"
-"96","Test","Test",6,2,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.2_ashi.30.wav","ashi.30",NA,"Female"
-"97","Test","Test",9,2,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.2_ashi.30.wav","ashi.30",NA,"Female"
-"98","Test","Test",10,2,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.2_ashi.30.wav","ashi.30",NA,"Female"
-"99","Test","Test",3,2,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.2_ashi.30.wav","ashi.30",NA,"Male"
-"100","Test","Test",4,2,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.2_ashi.30.wav","ashi.30",NA,"Male"
-"101","Test","Test",7,2,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.2_ashi.30.wav","ashi.30",NA,"Male"
-"102","Test","Test",8,2,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.2_ashi.30.wav","ashi.30",NA,"Male"
-"103","Test","Test",11,2,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.2_ashi.30.wav","ashi.30",NA,"Male"
-"104","Test","Test",12,2,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.2_ashi.30.wav","ashi.30",NA,"Male"
-"105","Test","Test",1,3,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.3_ashi.40.wav","ashi.40",NA,"Female"
-"106","Test","Test",2,3,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.3_ashi.40.wav","ashi.40",NA,"Female"
-"107","Test","Test",5,3,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.3_ashi.40.wav","ashi.40",NA,"Female"
-"108","Test","Test",6,3,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.3_ashi.40.wav","ashi.40",NA,"Female"
-"109","Test","Test",9,3,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.3_ashi.40.wav","ashi.40",NA,"Female"
-"110","Test","Test",10,3,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.3_ashi.40.wav","ashi.40",NA,"Female"
-"111","Test","Test",3,3,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.3_ashi.40.wav","ashi.40",NA,"Male"
-"112","Test","Test",4,3,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.3_ashi.40.wav","ashi.40",NA,"Male"
-"113","Test","Test",7,3,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.3_ashi.40.wav","ashi.40",NA,"Male"
-"114","Test","Test",8,3,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.3_ashi.40.wav","ashi.40",NA,"Male"
-"115","Test","Test",11,3,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.3_ashi.40.wav","ashi.40",NA,"Male"
-"116","Test","Test",12,3,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.3_ashi.40.wav","ashi.40",NA,"Male"
-"117","Test","Test",1,4,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.4_ashi.45.wav","ashi.45",NA,"Female"
-"118","Test","Test",2,4,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.4_ashi.45.wav","ashi.45",NA,"Female"
-"119","Test","Test",5,4,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.4_ashi.45.wav","ashi.45",NA,"Female"
-"120","Test","Test",6,4,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.4_ashi.45.wav","ashi.45",NA,"Female"
-"121","Test","Test",9,4,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.4_ashi.45.wav","ashi.45",NA,"Female"
-"122","Test","Test",10,4,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.4_ashi.45.wav","ashi.45",NA,"Female"
-"123","Test","Test",3,4,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.4_ashi.45.wav","ashi.45",NA,"Male"
-"124","Test","Test",4,4,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.4_ashi.45.wav","ashi.45",NA,"Male"
-"125","Test","Test",7,4,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.4_ashi.45.wav","ashi.45",NA,"Male"
-"126","Test","Test",8,4,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.4_ashi.45.wav","ashi.45",NA,"Male"
-"127","Test","Test",11,4,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.4_ashi.45.wav","ashi.45",NA,"Male"
-"128","Test","Test",12,4,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.4_ashi.45.wav","ashi.45",NA,"Male"
-"129","Test","Test",1,5,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.5_ashi.50.wav","ashi.50",NA,"Female"
-"130","Test","Test",2,5,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.5_ashi.50.wav","ashi.50",NA,"Female"
-"131","Test","Test",5,5,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.5_ashi.50.wav","ashi.50",NA,"Female"
-"132","Test","Test",6,5,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.5_ashi.50.wav","ashi.50",NA,"Female"
-"133","Test","Test",9,5,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.5_ashi.50.wav","ashi.50",NA,"Female"
-"134","Test","Test",10,5,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.5_ashi.50.wav","ashi.50",NA,"Female"
-"135","Test","Test",3,5,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.5_ashi.50.wav","ashi.50",NA,"Male"
-"136","Test","Test",4,5,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.5_ashi.50.wav","ashi.50",NA,"Male"
-"137","Test","Test",7,5,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.5_ashi.50.wav","ashi.50",NA,"Male"
-"138","Test","Test",8,5,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.5_ashi.50.wav","ashi.50",NA,"Male"
-"139","Test","Test",11,5,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.5_ashi.50.wav","ashi.50",NA,"Male"
-"140","Test","Test",12,5,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.5_ashi.50.wav","ashi.50",NA,"Male"
-"141","Test","Test",1,6,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.6_ashi.70.wav","ashi.70",NA,"Female"
-"142","Test","Test",2,6,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.6_ashi.70.wav","ashi.70",NA,"Female"
-"143","Test","Test",5,6,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.6_ashi.70.wav","ashi.70",NA,"Female"
-"144","Test","Test",6,6,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.6_ashi.70.wav","ashi.70",NA,"Female"
-"145","Test","Test",9,6,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.6_ashi.70.wav","ashi.70",NA,"Female"
-"146","Test","Test",10,6,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.6_ashi.70.wav","ashi.70",NA,"Female"
-"147","Test","Test",3,6,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.6_ashi.70.wav","ashi.70",NA,"Male"
-"148","Test","Test",4,6,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.6_ashi.70.wav","ashi.70",NA,"Male"
-"149","Test","Test",7,6,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.6_ashi.70.wav","ashi.70",NA,"Male"
-"150","Test","Test",8,6,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.6_ashi.70.wav","ashi.70",NA,"Male"
-"151","Test","Test",11,6,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.6_ashi.70.wav","ashi.70",NA,"Male"
-"152","Test","Test",12,6,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.6_ashi.70.wav","ashi.70",NA,"Male"
+"","Phase","Item.Type","Block","Item.Number","Version","Attended.Talker","Attended.Talker_Materials","Attended.Talker_Sound","Attended.Talker_Gender","Attended.Talker_Ear","Unattended.Talker","Unattended.Talker_Materials","Unattended.Talker_Sound","Unattended.Talker_Gender","Unattended.Talker_Ear","reps","feedback","filename"
+"1","Exposure","Critical",1,1,"Unshifted","Ambition","Materials A","Sh","Female","Right","Parasite","Materials A","S","Male","Left",1,FALSE,"Critical_S.Parasite.M.L_Sh.Ambition.F.R.wav"
+"2","Exposure","Critical",1,2,"Unshifted","Machinery","Materials A","Sh","Female","Right","Obscene","Materials A","S","Male","Left",1,FALSE,"Critical_S.Obscene.M.L_Sh.Machinery.F.R.wav"
+"3","Exposure","Critical",1,3,"Unshifted","Brochure","Materials A","Sh","Female","Right","Medicine","Materials A","S","Male","Left",1,FALSE,"Critical_S.Medicine.M.L_Sh.Brochure.F.R.wav"
+"4","Exposure","Critical",1,4,"Unshifted","Official","Materials A","Sh","Female","Right","Tennessee","Materials A","S","Male","Left",1,FALSE,"Critical_S.Tennessee.M.L_Sh.Official.F.R.wav"
+"5","Exposure","Critical",1,5,"Unshifted","Crucial","Materials A","Sh","Female","Right","Peninsula","Materials A","S","Male","Left",1,FALSE,"Critical_S.Peninsula.M.L_Sh.Crucial.F.R.wav"
+"6","Exposure","Critical",1,6,"Unshifted","Pediatrician","Materials A","Sh","Female","Right","Hallucinate","Materials A","S","Male","Left",1,FALSE,"Critical_S.Hallucinate.M.L_Sh.Pediatrician.F.R.wav"
+"7","Exposure","Critical",1,7,"Unshifted","Flourishing","Materials A","Sh","Female","Right","Arkansas","Materials A","S","Male","Left",1,FALSE,"Critical_S.Arkansas.M.L_Sh.Flourishing.F.R.wav"
+"8","Exposure","Critical",1,8,"Unshifted","Reassure","Materials A","Sh","Female","Right","Compensate","Materials A","S","Male","Left",1,FALSE,"Critical_S.Compensate.M.L_Sh.Reassure.F.R.wav"
+"9","Exposure","Critical",1,9,"Unshifted","Graduation","Materials A","Sh","Female","Right","Dinosaur","Materials A","S","Male","Left",1,FALSE,"Critical_S.Dinosaur.M.L_Sh.Graduation.F.R.wav"
+"10","Exposure","Critical",1,10,"Unshifted","Vacation","Materials A","Sh","Female","Right","Rehearsal","Materials A","S","Male","Left",1,FALSE,"Critical_S.Rehearsal.M.L_Sh.Vacation.F.R.wav"
+"11","Exposure","Critical",1,11,"Shifted","Pregnancy","Materials B","S","Female","Right","Initial","Materials B","Sh","Male","Left",1,FALSE,"Critical_Ash.Initial.M.L_As.Pregnancy.F.R.wav"
+"12","Exposure","Critical",1,12,"Shifted","Democracy","Materials B","S","Female","Right","Beneficial","Materials B","Sh","Male","Left",1,FALSE,"Critical_Ash.Beneficial.M.L_As.Democracy.F.R.wav"
+"13","Exposure","Critical",1,13,"Shifted","Embassy","Materials B","S","Female","Right","Negotiate","Materials B","Sh","Male","Left",1,FALSE,"Critical_Ash.Negotiate.M.L_As.Embassy.F.R.wav"
+"14","Exposure","Critical",1,14,"Shifted","Legacy","Materials B","S","Female","Right","Commercial","Materials B","Sh","Male","Left",1,FALSE,"Critical_Ash.Commercial.M.L_As.Legacy.F.R.wav"
+"15","Exposure","Critical",1,15,"Shifted","Reconcile","Materials B","S","Female","Right","Parachute","Materials B","Sh","Male","Left",1,FALSE,"Critical_Ash.Parachute.M.L_As.Reconcile.F.R.wav"
+"16","Exposure","Critical",1,16,"Shifted","Personal","Materials B","S","Female","Right","Efficient","Materials B","Sh","Male","Left",1,FALSE,"Critical_Ash.Efficient.M.L_As.Personal.F.R.wav"
+"17","Exposure","Critical",1,17,"Shifted","Eraser","Materials B","S","Female","Right","Publisher","Materials B","Sh","Male","Left",1,FALSE,"Critical_Ash.Publisher.M.L_As.Eraser.F.R.wav"
+"18","Exposure","Critical",1,18,"Shifted","Episode","Materials B","S","Female","Right","Glacier","Materials B","Sh","Male","Left",1,FALSE,"Critical_Ash.Glacier.M.L_As.Episode.F.R.wav"
+"19","Exposure","Critical",1,19,"Shifted","Literacy","Materials B","S","Female","Right","Refreshing","Materials B","Sh","Male","Left",1,FALSE,"Critical_Ash.Refreshing.M.L_As.Literacy.F.R.wav"
+"20","Exposure","Critical",1,20,"Shifted","Coliseum","Materials B","S","Female","Right","Impatient","Materials B","Sh","Male","Left",1,FALSE,"Critical_Ash.Impatient.M.L_As.Coliseum.F.R.wav"
+"21","Exposure","Filler",1,1,"2","America","Set A","Word","Female","Left","Wominid","Set A","Nonword","Male","Right",1,FALSE,"Critical_W.America.F.L_N.Wominid.M.R.wav"
+"22","Exposure","Filler",1,1,"1","Wojalto","Set B","Nonword","Female","Right","Bakery","Set B","Word","Male","Left",1,FALSE,"Critical_W.Bakery.M.L_N.Wojalto.F.R.wav"
+"23","Exposure","Filler",1,1,"4","Youmgel","Set C","Nonword","Female","Left","Ballerina","Set C","Word","Male","Right",1,FALSE,"Critical_N.Youmgel.F.L_W.Ballerina.M.R.wav"
+"24","Exposure","Filler",1,2,"2","Blueberry","Set A","Word","Female","Left","Ungelnin","Set A","Nonword","Male","Right",1,FALSE,"Critical_W.Blueberry.F.L_N.Ungelnin.M.R.wav"
+"25","Exposure","Filler",1,2,"1","Tounamplem","Set B","Nonword","Female","Right","Bullying","Set B","Word","Male","Left",1,FALSE,"Critical_W.Bullying.M.L_N.Tounamplem.F.R.wav"
+"26","Exposure","Filler",1,2,"4","Tymolape","Set C","Nonword","Female","Left","Burglary","Set C","Word","Male","Right",1,FALSE,"Critical_N.Tymolape.F.L_W.Burglary.M.R.wav"
+"27","Exposure","Filler",1,3,"2","Camera","Set A","Word","Female","Left","Tilegkalo","Set A","Nonword","Male","Right",1,FALSE,"Critical_W.Camera.F.L_N.Tilegkalo.M.R.wav"
+"28","Exposure","Filler",1,3,"1","Ryligal","Set B","Nonword","Female","Right","Continually","Set B","Word","Male","Left",1,FALSE,"Critical_W.Continually.M.L_N.Ryligal.F.R.wav"
+"29","Exposure","Filler",1,3,"4","Tamical","Set C","Nonword","Female","Left","Domineering","Set C","Word","Male","Right",1,FALSE,"Critical_N.Tamical.F.L_W.Domineering.M.R.wav"
+"30","Exposure","Filler",1,4,"2","Directory","Set A","Word","Female","Left","Rimkeluwar","Set A","Nonword","Male","Right",1,FALSE,"Critical_W.Directory.F.L_N.Rimkeluwar.M.R.wav"
+"31","Exposure","Filler",1,4,"1","Rawamtee","Set B","Nonword","Female","Right","Document","Set B","Word","Male","Left",1,FALSE,"Critical_W.Document.M.L_N.Rawamtee.F.R.wav"
+"32","Exposure","Filler",1,4,"4","Rengime","Set C","Nonword","Female","Left","Embody","Set C","Word","Male","Right",1,FALSE,"Critical_N.Rengime.F.L_W.Embody.M.R.wav"
+"33","Exposure","Filler",1,5,"2","Dynamite","Set A","Word","Female","Left","Rakil","Set A","Nonword","Male","Right",1,FALSE,"Critical_W.Dynamite.F.L_N.Rakil.M.R.wav"
+"34","Exposure","Filler",1,5,"1","Ploupelai","Set B","Nonword","Female","Right","Eighty","Set B","Word","Male","Left",1,FALSE,"Critical_W.Eighty.M.L_N.Ploupelai.F.R.wav"
+"35","Exposure","Filler",1,5,"4","Pourilar","Set C","Nonword","Female","Left","Gullible","Set C","Word","Male","Right",1,FALSE,"Critical_N.Pourilar.F.L_W.Gullible.M.R.wav"
+"36","Exposure","Filler",1,6,"2","Gardenia","Set A","Word","Female","Left","Perkum","Set A","Nonword","Male","Right",1,FALSE,"Critical_W.Gardenia.F.L_N.Perkum.M.R.wav"
+"37","Exposure","Filler",1,6,"1","Omperoge","Set B","Nonword","Female","Right","Grammatical","Set B","Word","Male","Left",1,FALSE,"Critical_W.Grammatical.M.L_N.Omperoge.F.R.wav"
+"38","Exposure","Filler",1,6,"4","Almikquary","Set C","Nonword","Female","Left","Honeymoon","Set C","Word","Male","Right",1,FALSE,"Critical_N.Almikquary.F.L_W.Honeymoon.M.R.wav"
+"39","Exposure","Filler",1,7,"2","Hamburger","Set A","Word","Female","Left","Nomerae","Set A","Nonword","Male","Right",1,FALSE,"Critical_W.Hamburger.F.L_N.Nomerae.M.R.wav"
+"40","Exposure","Filler",1,7,"1","Nempring","Set B","Nonword","Female","Right","Identical","Set B","Word","Male","Left",1,FALSE,"Critical_W.Identical.M.L_N.Nempring.F.R.wav"
+"41","Exposure","Filler",1,7,"4","Niritaly","Set C","Nonword","Female","Left","Illuminate","Set C","Word","Male","Right",1,FALSE,"Critical_N.Niritaly.F.L_W.Illuminate.M.R.wav"
+"42","Exposure","Filler",1,8,"2","Hurdle","Set A","Word","Female","Left","Namuary","Set A","Nonword","Male","Right",1,FALSE,"Critical_W.Hurdle.F.L_N.Namuary.M.R.wav"
+"43","Exposure","Filler",1,8,"1","Mibgem","Set B","Nonword","Female","Right","Interior","Set B","Word","Male","Left",1,FALSE,"Critical_W.Interior.M.L_N.Mibgem.F.R.wav"
+"44","Exposure","Filler",1,8,"4","Makid","Set C","Nonword","Female","Left","Ironic","Set C","Word","Male","Right",1,FALSE,"Critical_N.Makid.F.L_W.Ironic.M.R.wav"
+"45","Exposure","Filler",1,9,"2","Inhabit","Set A","Word","Female","Left","Logelai","Set A","Nonword","Male","Right",1,FALSE,"Critical_W.Inhabit.F.L_N.Logelai.M.R.wav"
+"46","Exposure","Filler",1,9,"1","Meidnow","Set B","Nonword","Female","Right","Knowingly","Set B","Word","Male","Left",1,FALSE,"Critical_W.Knowingly.M.L_N.Meidnow.F.R.wav"
+"47","Exposure","Filler",1,9,"4","Kaldemia","Set C","Nonword","Female","Left","Laminate","Set C","Word","Male","Right",1,FALSE,"Critical_N.Kaldemia.F.L_W.Laminate.M.R.wav"
+"48","Exposure","Filler",1,10,"2","Keyboard","Set A","Word","Female","Left","Lenediaw","Set A","Nonword","Male","Right",1,FALSE,"Critical_W.Keyboard.F.L_N.Lenediaw.M.R.wav"
+"49","Exposure","Filler",1,10,"1","Kermimer","Set B","Nonword","Female","Right","Lethal","Set B","Word","Male","Left",1,FALSE,"Critical_W.Lethal.M.L_N.Kermimer.F.R.wav"
+"50","Exposure","Filler",1,10,"4","Imdalier","Set C","Nonword","Female","Left","Liability","Set C","Word","Male","Right",1,FALSE,"Critical_N.Imdalier.F.L_W.Liability.M.R.wav"
+"51","Exposure","Filler",1,11,"2","Lengthen","Set A","Word","Female","Left","Kelabidel","Set A","Nonword","Male","Right",1,FALSE,"Critical_W.Lengthen.F.L_N.Kelabidel.M.R.wav"
+"52","Exposure","Filler",1,11,"1","Itempider","Set B","Nonword","Female","Right","Lobbying","Set B","Word","Male","Left",1,FALSE,"Critical_W.Lobbying.M.L_N.Itempider.F.R.wav"
+"53","Exposure","Filler",1,11,"4","Kloumidiger","Set C","Nonword","Female","Left","Marina","Set C","Word","Male","Right",1,FALSE,"Critical_N.Kloumidiger.F.L_W.Marina.M.R.wav"
+"54","Exposure","Filler",1,12,"2","Lingering","Set A","Word","Female","Left","Inpaki","Set A","Nonword","Male","Right",1,FALSE,"Critical_W.Lingering.F.L_N.Inpaki.M.R.wav"
+"55","Exposure","Filler",1,12,"1","Aknid","Set B","Nonword","Female","Right","Membrane","Set B","Word","Male","Left",1,FALSE,"Critical_W.Membrane.M.L_N.Aknid.F.R.wav"
+"56","Exposure","Filler",1,12,"4","Halomimoc","Set C","Nonword","Female","Left","Metrical","Set C","Word","Male","Right",1,FALSE,"Critical_N.Halomimoc.F.L_W.Metrical.M.R.wav"
+"57","Exposure","Filler",1,13,"2","Melancholy","Set A","Word","Female","Left","Hintarber","Set A","Nonword","Male","Right",1,FALSE,"Critical_W.Melancholy.F.L_N.Hintarber.M.R.wav"
+"58","Exposure","Filler",1,13,"1","Ibirak","Set B","Nonword","Female","Right","Negate","Set B","Word","Male","Left",1,FALSE,"Critical_W.Negate.M.L_N.Ibirak.F.R.wav"
+"59","Exposure","Filler",1,13,"4","Gerbualo","Set C","Nonword","Female","Left","Nightmare","Set C","Word","Male","Right",1,FALSE,"Critical_N.Gerbualo.F.L_W.Nightmare.M.R.wav"
+"60","Exposure","Filler",1,14,"2","Napkin","Set A","Word","Female","Left","Gardimuallay","Set A","Nonword","Male","Right",1,FALSE,"Critical_W.Napkin.F.L_N.Gardimuallay.M.R.wav"
+"61","Exposure","Filler",1,14,"1","Halken","Set B","Nonword","Female","Right","Outnumber","Set B","Word","Male","Left",1,FALSE,"Critical_W.Outnumber.M.L_N.Halken.F.R.wav"
+"62","Exposure","Filler",1,14,"4","Galliwinou","Set C","Nonword","Female","Left","Panicking","Set C","Word","Male","Right",1,FALSE,"Critical_N.Galliwinou.F.L_W.Panicking.M.R.wav"
+"63","Exposure","Filler",1,15,"2","Ornament","Set A","Word","Female","Left","Gairelom","Set A","Nonword","Male","Right",1,FALSE,"Critical_W.Ornament.F.L_N.Gairelom.M.R.wav"
+"64","Exposure","Filler",1,15,"1","Ganla","Set B","Nonword","Female","Right","Parakeet","Set B","Word","Male","Left",1,FALSE,"Critical_W.Parakeet.M.L_N.Ganla.F.R.wav"
+"65","Exposure","Filler",1,15,"4","Emhoutic","Set C","Nonword","Female","Left","Pilgrim","Set C","Word","Male","Right",1,FALSE,"Critical_N.Emhoutic.F.L_W.Pilgrim.M.R.wav"
+"66","Exposure","Filler",1,16,"2","Pineapple","Set A","Word","Female","Left","Bikanian","Set A","Nonword","Male","Right",1,FALSE,"Critical_W.Pineapple.F.L_N.Bikanian.M.R.wav"
+"67","Exposure","Filler",1,16,"1","Dadigal","Set B","Nonword","Female","Right","Platonic","Set B","Word","Male","Left",1,FALSE,"Critical_W.Platonic.M.L_N.Dadigal.F.R.wav"
+"68","Exposure","Filler",1,16,"4","Dilkuaund","Set C","Nonword","Female","Left","Predict","Set C","Word","Male","Right",1,FALSE,"Critical_N.Dilkuaund.F.L_W.Predict.M.R.wav"
+"69","Exposure","Filler",1,17,"2","Purgatory","Set A","Word","Female","Left","Baliber","Set A","Nonword","Male","Right",1,FALSE,"Critical_W.Purgatory.F.L_N.Baliber.M.R.wav"
+"70","Exposure","Filler",1,17,"1","Bamtell","Set B","Nonword","Female","Right","Tactical","Set B","Word","Male","Left",1,FALSE,"Critical_W.Tactical.M.L_N.Bamtell.F.R.wav"
+"71","Exposure","Filler",1,17,"4","Bowidai","Set C","Nonword","Female","Left","Terminal","Set C","Word","Male","Right",1,FALSE,"Critical_N.Bowidai.F.L_W.Terminal.M.R.wav"
+"72","Exposure","Filler",1,18,"2","Therapeutic","Set A","Word","Female","Left","Amalar","Set A","Nonword","Male","Right",1,FALSE,"Critical_W.Therapeutic.F.L_N.Amalar.M.R.wav"
+"73","Exposure","Filler",1,18,"1","Anemer","Set B","Nonword","Female","Right","Titanium","Set B","Word","Male","Left",1,FALSE,"Critical_W.Titanium.M.L_N.Anemer.F.R.wav"
+"74","Exposure","Filler",1,18,"4","Anolipa","Set C","Nonword","Female","Left","Turbulent","Set C","Word","Male","Right",1,FALSE,"Critical_N.Anolipa.F.L_W.Turbulent.M.R.wav"
+"75","Exposure","Filler",1,19,"2","Tutorial","Set A","Word","Female","Left","Ailounam","Set A","Nonword","Male","Right",1,FALSE,"Critical_W.Tutorial.F.L_N.Ailounam.M.R.wav"
+"76","Exposure","Filler",1,19,"1","Lilgrai","Set B","Nonword","Female","Right","Umbrella","Set B","Word","Male","Left",1,FALSE,"Critical_W.Umbrella.M.L_N.Lilgrai.F.R.wav"
+"77","Exposure","Filler",1,19,"4","Alnadiro","Set C","Nonword","Female","Left","Undermine","Set C","Word","Male","Right",1,FALSE,"Critical_N.Alnadiro.F.L_W.Undermine.M.R.wav"
+"78","Exposure","Filler",1,20,"2","Wealthy","Set A","Word","Female","Left","Acomining","Set A","Nonword","Male","Right",1,FALSE,"Critical_W.Wealthy.F.L_N.Acomining.M.R.wav"
+"79","Exposure","Filler",1,20,"1","Admunker","Set B","Nonword","Female","Right","Worldly","Set B","Word","Male","Left",1,FALSE,"Critical_W.Worldly.M.L_N.Admunker.F.R.wav"
+"80","Exposure","Filler",1,20,"4","Aigi","Set C","Nonword","Female","Left","Wrinkle","Set C","Word","Male","Right",1,FALSE,"Critical_N.Aigi.F.L_W.Wrinkle.M.R.wav"
+"81","Test","Test",13,1,NA,"ashi.25",NA,NA,"Female",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.1_ashi.25.wav"
+"82","Test","Test",14,1,NA,"ashi.25",NA,NA,"Female",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.1_ashi.25.wav"
+"83","Test","Test",17,1,NA,"ashi.25",NA,NA,"Female",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.1_ashi.25.wav"
+"84","Test","Test",18,1,NA,"ashi.25",NA,NA,"Female",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.1_ashi.25.wav"
+"85","Test","Test",21,1,NA,"ashi.25",NA,NA,"Female",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.1_ashi.25.wav"
+"86","Test","Test",22,1,NA,"ashi.25",NA,NA,"Female",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.1_ashi.25.wav"
+"87","Test","Test",11,1,NA,"ashi.25",NA,NA,"Male",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.1_ashi.25.wav"
+"88","Test","Test",12,1,NA,"ashi.25",NA,NA,"Male",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.1_ashi.25.wav"
+"89","Test","Test",15,1,NA,"ashi.25",NA,NA,"Male",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.1_ashi.25.wav"
+"90","Test","Test",16,1,NA,"ashi.25",NA,NA,"Male",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.1_ashi.25.wav"
+"91","Test","Test",19,1,NA,"ashi.25",NA,NA,"Male",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.1_ashi.25.wav"
+"92","Test","Test",20,1,NA,"ashi.25",NA,NA,"Male",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.1_ashi.25.wav"
+"93","Test","Test",13,2,NA,"ashi.30",NA,NA,"Female",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.2_ashi.30.wav"
+"94","Test","Test",14,2,NA,"ashi.30",NA,NA,"Female",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.2_ashi.30.wav"
+"95","Test","Test",17,2,NA,"ashi.30",NA,NA,"Female",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.2_ashi.30.wav"
+"96","Test","Test",18,2,NA,"ashi.30",NA,NA,"Female",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.2_ashi.30.wav"
+"97","Test","Test",21,2,NA,"ashi.30",NA,NA,"Female",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.2_ashi.30.wav"
+"98","Test","Test",22,2,NA,"ashi.30",NA,NA,"Female",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.2_ashi.30.wav"
+"99","Test","Test",11,2,NA,"ashi.30",NA,NA,"Male",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.2_ashi.30.wav"
+"100","Test","Test",12,2,NA,"ashi.30",NA,NA,"Male",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.2_ashi.30.wav"
+"101","Test","Test",15,2,NA,"ashi.30",NA,NA,"Male",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.2_ashi.30.wav"
+"102","Test","Test",16,2,NA,"ashi.30",NA,NA,"Male",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.2_ashi.30.wav"
+"103","Test","Test",19,2,NA,"ashi.30",NA,NA,"Male",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.2_ashi.30.wav"
+"104","Test","Test",20,2,NA,"ashi.30",NA,NA,"Male",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.2_ashi.30.wav"
+"105","Test","Test",13,3,NA,"ashi.40",NA,NA,"Female",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.3_ashi.40.wav"
+"106","Test","Test",14,3,NA,"ashi.40",NA,NA,"Female",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.3_ashi.40.wav"
+"107","Test","Test",17,3,NA,"ashi.40",NA,NA,"Female",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.3_ashi.40.wav"
+"108","Test","Test",18,3,NA,"ashi.40",NA,NA,"Female",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.3_ashi.40.wav"
+"109","Test","Test",21,3,NA,"ashi.40",NA,NA,"Female",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.3_ashi.40.wav"
+"110","Test","Test",22,3,NA,"ashi.40",NA,NA,"Female",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.3_ashi.40.wav"
+"111","Test","Test",11,3,NA,"ashi.40",NA,NA,"Male",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.3_ashi.40.wav"
+"112","Test","Test",12,3,NA,"ashi.40",NA,NA,"Male",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.3_ashi.40.wav"
+"113","Test","Test",15,3,NA,"ashi.40",NA,NA,"Male",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.3_ashi.40.wav"
+"114","Test","Test",16,3,NA,"ashi.40",NA,NA,"Male",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.3_ashi.40.wav"
+"115","Test","Test",19,3,NA,"ashi.40",NA,NA,"Male",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.3_ashi.40.wav"
+"116","Test","Test",20,3,NA,"ashi.40",NA,NA,"Male",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.3_ashi.40.wav"
+"117","Test","Test",13,4,NA,"ashi.45",NA,NA,"Female",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.4_ashi.45.wav"
+"118","Test","Test",14,4,NA,"ashi.45",NA,NA,"Female",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.4_ashi.45.wav"
+"119","Test","Test",17,4,NA,"ashi.45",NA,NA,"Female",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.4_ashi.45.wav"
+"120","Test","Test",18,4,NA,"ashi.45",NA,NA,"Female",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.4_ashi.45.wav"
+"121","Test","Test",21,4,NA,"ashi.45",NA,NA,"Female",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.4_ashi.45.wav"
+"122","Test","Test",22,4,NA,"ashi.45",NA,NA,"Female",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.4_ashi.45.wav"
+"123","Test","Test",11,4,NA,"ashi.45",NA,NA,"Male",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.4_ashi.45.wav"
+"124","Test","Test",12,4,NA,"ashi.45",NA,NA,"Male",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.4_ashi.45.wav"
+"125","Test","Test",15,4,NA,"ashi.45",NA,NA,"Male",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.4_ashi.45.wav"
+"126","Test","Test",16,4,NA,"ashi.45",NA,NA,"Male",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.4_ashi.45.wav"
+"127","Test","Test",19,4,NA,"ashi.45",NA,NA,"Male",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.4_ashi.45.wav"
+"128","Test","Test",20,4,NA,"ashi.45",NA,NA,"Male",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.4_ashi.45.wav"
+"129","Test","Test",13,5,NA,"ashi.50",NA,NA,"Female",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.5_ashi.50.wav"
+"130","Test","Test",14,5,NA,"ashi.50",NA,NA,"Female",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.5_ashi.50.wav"
+"131","Test","Test",17,5,NA,"ashi.50",NA,NA,"Female",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.5_ashi.50.wav"
+"132","Test","Test",18,5,NA,"ashi.50",NA,NA,"Female",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.5_ashi.50.wav"
+"133","Test","Test",21,5,NA,"ashi.50",NA,NA,"Female",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.5_ashi.50.wav"
+"134","Test","Test",22,5,NA,"ashi.50",NA,NA,"Female",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.5_ashi.50.wav"
+"135","Test","Test",11,5,NA,"ashi.50",NA,NA,"Male",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.5_ashi.50.wav"
+"136","Test","Test",12,5,NA,"ashi.50",NA,NA,"Male",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.5_ashi.50.wav"
+"137","Test","Test",15,5,NA,"ashi.50",NA,NA,"Male",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.5_ashi.50.wav"
+"138","Test","Test",16,5,NA,"ashi.50",NA,NA,"Male",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.5_ashi.50.wav"
+"139","Test","Test",19,5,NA,"ashi.50",NA,NA,"Male",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.5_ashi.50.wav"
+"140","Test","Test",20,5,NA,"ashi.50",NA,NA,"Male",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.5_ashi.50.wav"
+"141","Test","Test",13,6,NA,"ashi.70",NA,NA,"Female",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.6_ashi.70.wav"
+"142","Test","Test",14,6,NA,"ashi.70",NA,NA,"Female",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.6_ashi.70.wav"
+"143","Test","Test",17,6,NA,"ashi.70",NA,NA,"Female",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.6_ashi.70.wav"
+"144","Test","Test",18,6,NA,"ashi.70",NA,NA,"Female",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.6_ashi.70.wav"
+"145","Test","Test",21,6,NA,"ashi.70",NA,NA,"Female",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.6_ashi.70.wav"
+"146","Test","Test",22,6,NA,"ashi.70",NA,NA,"Female",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_F.6_ashi.70.wav"
+"147","Test","Test",11,6,NA,"ashi.70",NA,NA,"Male",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.6_ashi.70.wav"
+"148","Test","Test",12,6,NA,"ashi.70",NA,NA,"Male",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.6_ashi.70.wav"
+"149","Test","Test",15,6,NA,"ashi.70",NA,NA,"Male",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.6_ashi.70.wav"
+"150","Test","Test",16,6,NA,"ashi.70",NA,NA,"Male",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.6_ashi.70.wav"
+"151","Test","Test",19,6,NA,"ashi.70",NA,NA,"Male",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.6_ashi.70.wav"
+"152","Test","Test",20,6,NA,"ashi.70",NA,NA,"Male",NA,NA,NA,NA,NA,NA,1,FALSE,"Test_M.6_ashi.70.wav"

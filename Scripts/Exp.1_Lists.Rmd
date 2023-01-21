@@ -752,7 +752,7 @@ tibble(
   ## Group files
   group_by(List) %>%
   
-  group_map(.f = ~ write_csv(.x, file = paste0("C:Stimuli/Experiment_1/Lists/Critical.",  .y$List, ".csv")))
+  group_map(.f = ~ write_csv(.x, file = paste0("C:/Users/Rachel/Documents/SI.SP/lists/exposure/critical/Critical.",  .y$List, ".csv")))
 ```
 
 
@@ -1309,7 +1309,7 @@ tibble(
   mutate(
     filename = 
       paste0(
-        "Critical", 
+        "Filler", 
         sep = "_",
         
         ## Order
@@ -1357,7 +1357,7 @@ filter(
   ## Group         
   group_by(Set.Combo, Critical.Pair, A.Gender, A.Ear, Type) %>%  
   
-  group_map(.f = ~ write_csv(.x, file = paste0("C:Stimuli/Experiment_1/Lists/Filler.0", .y$Set.Combo, "_", .y$A.Gender, "_", .y$A.Ear, ".csv")
+  group_map(.f = ~ write_csv(.x, file = paste0("C:/Users/Rachel/Documents/SI.SP/lists/exposure/Filler.0", .y$Set.Combo, "_", .y$A.Gender, "_", .y$A.Ear, ".csv")
   ))
 ```
 
@@ -1487,7 +1487,7 @@ tibble(
   ## Group files into list 
   group_by(Test_Version, Block) %>%
   
-  group_map(.f = ~ write_csv(.x, file = paste0("C:/Users/Rachel/Documents/SI.SP/lists/test/Test-Order", .y$Test_Version, "-Block", .y$Block, ".csv")
+  group_map(.f = ~ write_csv(.x, file = paste0("C:/Users/Rachel/Documents/SI.SP/lists/test/test-Order", .y$Test_Version, "-Block", .y$Block, ".csv")
   ))
 ```
 
@@ -1629,15 +1629,14 @@ write.csv(L32, "Materials.A_Shift.S_Gender.M_Ear.L_Test.B.csv")
 
 ______
 
-# Concat for *Exposure*
-# Concatenate CSV files for *total*   
+# Concat for *Exposure*  
 ```{r Concate}
 
 # Origin
-setwd("C:/Users/Rachel/Documents/SI.SP/lists/")
+setwd("C:/Users/Rachel/Documents/SI.SP/lists/exposure/")
 
 # Destination
-folder <- paste0("C:/Users/Rachel/Documents/SI.SP/lists/")
+folder <- paste0("C:/Users/Rachel/Documents/SI.SP/lists/exposure/")
 
 # Individual Lists
 ## Critical Lists 
@@ -1667,98 +1666,80 @@ F4 <- fread("Filler.04_Male_Left.csv")
 
 
 # Total Lists
-L01 <- rbind(C01, F1, fill=TRUE) 
-L02 <- rbind(C01, F1, fill=TRUE)
-L03 <- rbind(C02, F1, fill=TRUE)
-L04 <- rbind(C02, F1, fill=TRUE)
 
-L05 <- rbind(C11, F1, fill=TRUE)
-L06 <- rbind(C11, F1, fill=TRUE)
-L07 <- rbind(C12, F1, fill=TRUE)
-L08 <- rbind(C12, F1, fill=TRUE)
+L01 <- rbind(C12, F1, fill=TRUE)
+L02 <- rbind(C02, F1, fill=TRUE) 
+L03 <- rbind(C01, F1, fill=TRUE)
+L04 <- rbind(C11, F1, fill=TRUE)
 
-L09 <- rbind(C03, F2, fill=TRUE)
-L10 <- rbind(C03, F2, fill=TRUE)
-L11 <- rbind(C04, F2, fill=TRUE)
-L12 <- rbind(C04, F2, fill=TRUE)
+L05 <- rbind(C16, F3, fill=TRUE)
+L06 <- rbind(C06, F3, fill=TRUE)
+L07 <- rbind(C05, F3, fill=TRUE)
+L08 <- rbind(C15, F3, fill=TRUE)
 
-L13 <- rbind(C09, F2, fill=TRUE)
-L14 <- rbind(C09, F2, fill=TRUE)
-L15 <- rbind(C10, F2, fill=TRUE)
-L16 <- rbind(C10, F2, fill=TRUE)
-L17 <- rbind(C05, F3, fill=TRUE)
-L18 <- rbind(C05, F3, fill=TRUE)
-L19 <- rbind(C06, F3, fill=TRUE)
-L20 <- rbind(C06, F3, fill=TRUE)
+L09 <- rbind(C14, F4, fill=TRUE)
+L10 <- rbind(C08, F4, fill=TRUE)
+L11 <- rbind(C07, F4, fill=TRUE)
+L12 <- rbind(C13, F4, fill=TRUE)
 
-L21 <- rbind(C15, F3, fill=TRUE)
-L22 <- rbind(C15, F3, fill=TRUE)
-L23 <- rbind(C16, F3, fill=TRUE)
-L24 <- rbind(C16, F3, fill=TRUE)
-
-L25 <- rbind(C07, F4, fill=TRUE)
-L26 <- rbind(C07, F4, fill=TRUE)
-L27 <- rbind(C08, F4, fill=TRUE)
-L28 <- rbind(C08, F4, fill=TRUE)
-L29 <- rbind(C13, F4, fill=TRUE)
-L30 <- rbind(C13, F4, fill=TRUE)
-L31 <- rbind(C14, F4, fill=TRUE)
-L32 <- rbind(C14, F4, fill=TRUE)
+L13 <- rbind(C10, F2, fill=TRUE)
+L14 <- rbind(C04, F2, fill=TRUE)
+L15 <- rbind(C03, F2, fill=TRUE)
+L16 <- rbind(C09, F2, fill=TRUE)
 ### (There was probably a more efficient way to do this, possibly using the table I was trying to create)
 
 # Write CSV Files
 
-## C1
-write.csv(L01, "Materials.B_Shift.S_Gender.F_Ear.L_Test.A.csv")
-write.csv(L02, "Materials.B_Shift.S_Gender.F_Ear.L_Test.B.csv")
-## C2
-write.csv(L03, "Materials.A_Shift.Sh_Gender.F_Ear.L_Test.A.csv")
-write.csv(L04, "Materials.A_Shift.Sh_Gender.F_Ear.L_Test.B.csv")
-## C11
-write.csv(L05, "Materials.B_Shift.Sh_Gender.F_Ear.L_Test.A.csv")
-write.csv(L06, "Materials.B_Shift.Sh_Gender.F_Ear.L_Test.B.csv")
-## C12
-write.csv(L07, "Materials.A_Shift.S_Gender.F_Ear.L_Test.A.csv")
-write.csv(L08, "Materials.A_Shift.S_Gender.F_Ear.L_Test.B.csv")
-## C3
-write.csv(L09, "Materials.B_Shift.S_Gender.M_Ear.R_Test.A.csv")
-write.csv(L10, "Materials.B_Shift.S_Gender.M_Ear.R_Test.B.csv")
-## C4
-write.csv(L11, "Materials.A_Shift.Sh_Gender.M_Ear.R_Test.A.csv")
-write.csv(L12, "Materials.A_Shift.Sh_Gender.M_Ear.R_Test.B.csv")
-## C9
-write.csv(L13, "Materials.B_Shift.Sh_Gender.M_Ear.R_Test.A.csv")
-write.csv(L14, "Materials.B_Shift.Sh_Gender.M_Ear.R_Test.B.csv")
-## C10
-write.csv(L15, "Materials.A_Shift.S_Gender.M_Ear.R_Test.A.csv")
-write.csv(L16, "Materials.A_Shift.S_Gender.M_Ear.R_Test.B.csv")
-## C5
-write.csv(L17, "Materials.B_Shift.S_Gender.F_Ear.R_Test.A.csv")
-write.csv(L18, "Materials.B_Shift.S_Gender.F_Ear.R_Test.B.csv")
-## C6
-write.csv(L19, "Materials.A_Shift.Sh_Gender.F_Ear.R_Test.A.csv")
-write.csv(L20, "Materials.A_Shift.Sh_Gender.F_Ear.R_Test.B.csv")
-## C15
-write.csv(L21, "Materials.B_Shift.Sh_Gender.F_Ear.R_Test.A.csv")
-write.csv(L22, "Materials.B_Shift.Sh_Gender.F_Ear.R_Test.B.csv")
-## C16
-write.csv(L23, "Materials.A_Shift.S_Gender.F_Ear.R_Test.A.csv")
-write.csv(L24, "Materials.A_Shift.S_Gender.F_Ear.R_Test.B.csv")
-## C7
-write.csv(L25, "Materials.B_Shift.S_Gender.M_Ear.L_Test.A.csv")
-write.csv(L26, "Materials.B_Shift.S_Gender.M_Ear.L_Test.B.csv")
-## C8
-write.csv(L27, "Materials.A_Shift.Sh_Gender.M_Ear.L_Test.A.csv")
-write.csv(L28, "Materials.A_Shift.Sh_Gender.M_Ear.L_Test.B.csv")
-## C13
-write.csv(L29, "Materials.B_Shift.Sh_Gender.M_Ear.L_Test.A.csv")
-write.csv(L30, "Materials.B_Shift.Sh_Gender.M_Ear.L_Test.B.csv")
-## C14
-write.csv(L31, "Materials.A_Shift.S_Gender.M_Ear.L_Test.A.csv")
-write.csv(L32, "Materials.A_Shift.S_Gender.M_Ear.L_Test.B.csv")
+## Female Left
+### A
+write.csv(L01, "exposure-F-L-A-S.csv")
+write.csv(L02, "exposure-F-L-A-Sh.csv")
+### B
+write.csv(L03, "exposure-F-L-B-S.csv")
+write.csv(L04, "exposure-F-L-B-Sh.csv")
+
+## Female Right
+### A
+write.csv(L05, "exposure-F-R-A-S.csv")
+write.csv(L06, "exposure-F-R-A-Sh.csv")
+### B
+write.csv(L07, "exposure-F-R-B-S.csv")
+write.csv(L08, "exposure-F-R-B-Sh.csv")
+
+## Male Left
+### A
+write.csv(L09, "exposure-M-L-A-S.csv")
+write.csv(L10, "exposure-M-L-A-Sh.csv")
+### B
+write.csv(L11, "exposure-M-L-B-S.csv")
+write.csv(L12, "exposure-M-L-B-Sh.csv")
+
+## Male Right
+### A
+write.csv(L13, "exposure-M-R-A-S.csv")
+write.csv(L14, "exposure-M-R-A-Sh.csv")
+### B
+write.csv(L15, "exposure-M-R-B-S.csv")
+write.csv(L16, "exposure-M-R-B-Sh.csv")
 ```
+``` {r exposure files }
 
+read.csv("C:/Users/Rachel/Documents/SI.SP/lists/exposure/exposure-F-L-A-S.csv") %>%
 
+select(-c(Block)) %>%
+
+mutate(
+  Block = (Item.Number %% 10) + 1
+) %>%
+  
+mutate(
+  block = (Item.Number %% 10) + 1
+) %>%
+  
+group_by(block) %>%
+  
+group_map(.f = ~ write_csv(.x, file = paste0("C:/Users/Rachel/Documents/SI.SP/lists/x/exposure-F-L-A-S-OrderA-Block", .y$block, ".csv")))
+```
 ______
 ```{r Concate Table}
 # Here we are generating the CSV files for each list. There are a total of *32* lists (described in Exp.1_Master file under writeups)

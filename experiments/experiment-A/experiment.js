@@ -387,8 +387,8 @@ $(document).ready(function() {
             stimOrderMethod: "dont_randomize",
             stimOrderMethod: 'shuffle_across_blocks',
             blockOrderMethod: 'shuffle_blocks',
-//            progressBarStartProportion: block_progressBarStartProportion[i],
-//            progressBarEndProportion: block_progressBarEndProportion[i],
+            progressBarStartProportion: block_progressBarStartProportion[i],
+            progressBarEndProportion: block_progressBarEndProportion[i],
             namespace: block_type[i] + (i + 1)
           });
 

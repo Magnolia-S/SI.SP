@@ -121,7 +121,7 @@ Materials.A_S.Words = c(
   "Arkansas",
   "Compensate",
   "Dinosaur",
-  "Rehearsal"
+  "Rehersal"
 )
 
 Materials.A_Sh.Words = c(
@@ -1631,7 +1631,6 @@ ______
 
 # Concat for *Exposure*  
 ```{r Concate}
-
 # Origin
 setwd("C:/Users/Rachel/Documents/SI.SP/lists/exposure/")
 
@@ -1806,3 +1805,59 @@ for (f in Files) {
 }
 ```
 ________
+
+# check file names  
+```{r Check.Exposure}
+
+# Call CSV files
+file.list <- list.files("C:/Users/Rachel/Documents/SI.SP/lists/exposure", full.names = TRUE, pattern = ".csv")
+
+for (f in file.list) {
+  # Read each CSV file
+  List <- read_csv(f)
+  #  Create a column File.Exists 
+  ## If the information in the filename column matches a file in the materials folder (.wav files), return TRUE
+ List$File.Exists <- 
+   List$filename %in% 
+   list.files("C:/Users/Rachel/Documents/SI.SP/materials",pattern = ".wav")
+ 
+  # Do all filenames exist as .wav files?
+ print(list)
+}
+```
+ # Do all filenames exist as .wav files?
+ case_when(
+   List$File.Exists == FALSE
+   ~ print(List$filename),
+   T ~ print("All Files Found")
+  )
+}
+```
+
+```{r Check.Test}
+
+# Call CSV files
+file.list <- list.files("C:/Users/Rachel/Documents/SI.SP/lists/test", full.names = TRUE, pattern = ".csv")
+
+for (f in file.list) {
+  # Read each CSV file
+  List <- 
+    read_csv(f)
+  #  Create a column File.Exists 
+  ## If the information in the filename column matches a file in the materials folder (.wav files), return TRUE
+ List$File.Exists <- 
+   List$filename %in% 
+   list.files("C:/Users/Rachel/Documents/SI.SP/materials", pattern = ".wav")
+ 
+ # Do all filenames exist as .wav files?
+ case_when(
+   List$File.Exists == "FALSE"
+   ~ print(List$filename),
+   F ~ print("All Files Found")
+ )
+
+} 
+
+
+```
+```

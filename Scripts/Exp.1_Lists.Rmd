@@ -241,7 +241,7 @@ tibble(
         ~ "Male", 
         T ~ "Female"
       )
-    ) %>%
+  ) %>%
   
   mutate(
     Talker.B_Ear =
@@ -250,35 +250,35 @@ tibble(
         ~ "Right",
         T ~ "Left"
       )
-    ) %>%
+  ) %>%
   
-# In context of Attended Talker
+  # In context of Attended Talker
   ## Talker
   mutate(
     Attended.Talker = 
       case_when(
-      Attend.To == "Talker A"
-      ~ Talker.A,
-      T ~ Talker.B
+        Attend.To == "Talker A"
+        ~ Talker.A,
+        T ~ Talker.B
       )
   ) %>%
   
   ## Talker Materials 
-   mutate(
+  mutate(
     Attended.Talker_Materials = 
       case_when(
-      Attend.To == "Talker A"
-      ~ Talker.A_Materials,
-      T ~ Talker.B_Materials
+        Attend.To == "Talker A"
+        ~ Talker.A_Materials,
+        T ~ Talker.B_Materials
       )
   ) %>%
   ## Sound
   mutate(
     Attended.Talker_Sound = 
       case_when(
-      Attend.To == "Talker A"
-      ~ Talker.A_Sound,
-      T ~ Talker.B_Sound
+        Attend.To == "Talker A"
+        ~ Talker.A_Sound,
+        T ~ Talker.B_Sound
       )
   ) %>%
   
@@ -286,9 +286,9 @@ tibble(
   mutate(
     Attended.Talker_Gender = 
       case_when(
-      Attend.To == "Talker A"
-      ~ Talker.A_Gender,
-      T ~ Talker.B_Gender
+        Attend.To == "Talker A"
+        ~ Talker.A_Gender,
+        T ~ Talker.B_Gender
       )
   ) %>%
   
@@ -296,9 +296,9 @@ tibble(
   mutate(
     Attended.Talker_Ear = 
       case_when(
-      Attend.To == "Talker A"
-      ~ Talker.A_Ear,
-      T ~ Talker.B_Ear
+        Attend.To == "Talker A"
+        ~ Talker.A_Ear,
+        T ~ Talker.B_Ear
       )
   ) %>%
   
@@ -307,28 +307,28 @@ tibble(
   mutate(
     Unattended.Talker = 
       case_when(
-      Attend.To == "Talker B"
-      ~ Talker.A,
-      T ~ Talker.B
+        Attend.To == "Talker B"
+        ~ Talker.A,
+        T ~ Talker.B
       )
   ) %>%
   
   ## Talker Materials 
-   mutate(
+  mutate(
     Unattended.Talker_Materials = 
       case_when(
-      Attend.To == "Talker B"
-      ~ Talker.A_Materials,
-      T ~ Talker.B_Materials
+        Attend.To == "Talker B"
+        ~ Talker.A_Materials,
+        T ~ Talker.B_Materials
       )
   ) %>%
   ## Sound
   mutate(
     Unattended.Talker_Sound = 
       case_when(
-      Attend.To == "Talker B"
-      ~ Talker.A_Sound,
-      T ~ Talker.B_Sound
+        Attend.To == "Talker B"
+        ~ Talker.A_Sound,
+        T ~ Talker.B_Sound
       )
   ) %>%
   
@@ -336,9 +336,9 @@ tibble(
   mutate(
     Unattended.Talker_Gender = 
       case_when(
-      Attend.To == "Talker B"
-      ~ Talker.A_Gender,
-      T ~ Talker.B_Gender
+        Attend.To == "Talker B"
+        ~ Talker.A_Gender,
+        T ~ Talker.B_Gender
       )
   ) %>%
   
@@ -346,13 +346,13 @@ tibble(
   mutate(
     Unattended.Talker_Ear = 
       case_when(
-      Attend.To == "Talker B"
-      ~ Talker.A_Ear,
-      T ~ Talker.B_Ear
+        Attend.To == "Talker B"
+        ~ Talker.A_Ear,
+        T ~ Talker.B_Ear
       )
   ) %>%
   
-# Talker 1 
+  # Talker 1 
   mutate(
     Talker = 
       case_when(
@@ -648,7 +648,7 @@ tibble(
           T ~ paste0(sep = ".", "R")
         )
       )
-    ) %>%
+  ) %>%
   
   view() %>%
   
@@ -690,7 +690,7 @@ tibble(
           T ~ paste0(sep = ".", "L")
         )
       )
-    ) %>%
+  ) %>%
   
   view() %>%
   
@@ -703,7 +703,7 @@ tibble(
   mutate(
     feedback = FALSE
   ) %>%
-
+  
   # Changing file names
   mutate(
     filename = 
@@ -721,11 +721,11 @@ tibble(
         ## file suffix  
         paste0(".wav")   
       )
-    ) %>%
+  ) %>%
   
-## Remove Columns
+  ## Remove Columns
   select(
-      -c(
+    -c(
       Talker.A, 
       Talker.A_Materials, 
       Talker.A_Sound, 
@@ -739,11 +739,11 @@ tibble(
       Talker.B_Ear,
       
       Attend.To
-      )
+    )
   ) %>%
   
   view() %>%
-
+  
   # CSV Files
   
   ## Remove all columns but file names
@@ -1093,7 +1093,7 @@ tibble(
     A.Ear = 
       case_when(
         Set.Combo == "2" |
-        Set.Combo == "3"
+          Set.Combo == "3"
         ~ "Right",
         
         T ~ "Left"
@@ -1160,28 +1160,28 @@ tibble(
   mutate(
     Attended.Talker = 
       case_when(
-      Attend.To == "Talker A"
-      ~ Talker.A,
-      T ~ Talker.B
+        Attend.To == "Talker A"
+        ~ Talker.A,
+        T ~ Talker.B
       )
   ) %>%
   
   ## Talker Materials 
-   mutate(
+  mutate(
     Attended.Talker_Materials = 
       case_when(
-      Attend.To == "Talker A"
-      ~ Talker.A_Materials,
-      T ~ Talker.B_Materials
+        Attend.To == "Talker A"
+        ~ Talker.A_Materials,
+        T ~ Talker.B_Materials
       )
   ) %>%
   ## Sound
   mutate(
     Attended.Talker_Sound = 
       case_when(
-      Attend.To == "Talker A"
-      ~ Talker.A_Sound,
-      T ~ Talker.B_Sound
+        Attend.To == "Talker A"
+        ~ Talker.A_Sound,
+        T ~ Talker.B_Sound
       )
   ) %>%
   
@@ -1189,9 +1189,9 @@ tibble(
   mutate(
     Attended.Talker_Gender = 
       case_when(
-      Attend.To == "Talker A"
-      ~ Talker.A_Gender,
-      T ~ Talker.B_Gender
+        Attend.To == "Talker A"
+        ~ Talker.A_Gender,
+        T ~ Talker.B_Gender
       )
   ) %>%
   
@@ -1199,9 +1199,9 @@ tibble(
   mutate(
     Attended.Talker_Ear = 
       case_when(
-      Attend.To == "Talker A"
-      ~ Talker.A_Ear,
-      T ~ Talker.B_Ear
+        Attend.To == "Talker A"
+        ~ Talker.A_Ear,
+        T ~ Talker.B_Ear
       )
   ) %>%
   
@@ -1210,28 +1210,28 @@ tibble(
   mutate(
     Unattended.Talker = 
       case_when(
-      Attend.To == "Talker B"
-      ~ Talker.A,
-      T ~ Talker.B
+        Attend.To == "Talker B"
+        ~ Talker.A,
+        T ~ Talker.B
       )
   ) %>%
   
   ## Talker Materials 
-   mutate(
+  mutate(
     Unattended.Talker_Materials = 
       case_when(
-      Attend.To == "Talker B"
-      ~ Talker.A_Materials,
-      T ~ Talker.B_Materials
+        Attend.To == "Talker B"
+        ~ Talker.A_Materials,
+        T ~ Talker.B_Materials
       )
   ) %>%
   ## Sound
   mutate(
     Unattended.Talker_Sound = 
       case_when(
-      Attend.To == "Talker B"
-      ~ Talker.A_Sound,
-      T ~ Talker.B_Sound
+        Attend.To == "Talker B"
+        ~ Talker.A_Sound,
+        T ~ Talker.B_Sound
       )
   ) %>%
   
@@ -1239,9 +1239,9 @@ tibble(
   mutate(
     Unattended.Talker_Gender = 
       case_when(
-      Attend.To == "Talker B"
-      ~ Talker.A_Gender,
-      T ~ Talker.B_Gender
+        Attend.To == "Talker B"
+        ~ Talker.A_Gender,
+        T ~ Talker.B_Gender
       )
   ) %>%
   
@@ -1249,9 +1249,9 @@ tibble(
   mutate(
     Unattended.Talker_Ear = 
       case_when(
-      Attend.To == "Talker B"
-      ~ Talker.A_Ear,
-      T ~ Talker.B_Ear
+        Attend.To == "Talker B"
+        ~ Talker.A_Ear,
+        T ~ Talker.B_Ear
       )
   ) %>%
   
@@ -1288,21 +1288,21 @@ tibble(
   # Remove files
   mutate(
     Remove = 
-    case_when(
-      Attended.Talker_Materials == "Set A" &
-      Attended.Talker_Sound == "Nonword"
-      ~ "TRUE",
-      
-      Attended.Talker_Materials == "Set B" &
-      Attended.Talker_Sound == "Word"
-      ~ "TRUE",
-      
-      Attended.Talker_Materials == "Set C" &
-      Attended.Talker_Sound == "Word"
-      ~ "TRUE",
-      
-      T ~ "FALSE"
-    )
+      case_when(
+        Attended.Talker_Materials == "Set A" &
+          Attended.Talker_Sound == "Nonword"
+        ~ "TRUE",
+        
+        Attended.Talker_Materials == "Set B" &
+          Attended.Talker_Sound == "Word"
+        ~ "TRUE",
+        
+        Attended.Talker_Materials == "Set C" &
+          Attended.Talker_Sound == "Word"
+        ~ "TRUE",
+        
+        T ~ "FALSE"
+      )
   ) %>%
   
   # Changing file names
@@ -1322,11 +1322,11 @@ tibble(
         ## file suffix  
         paste0(".wav")   
       )
-    ) %>% 
+  ) %>% 
   
   ## Remove Columns
   select(
-      -c(
+    -c(
       Talker.A, 
       Talker.A_Materials, 
       Talker.A_Sound, 
@@ -1340,11 +1340,11 @@ tibble(
       Talker.B_Ear,
       
       Attend.To
-      )
+    )
   ) %>%
   
-filter(
-  Remove == "FALSE"
+  filter(
+    Remove == "FALSE"
   ) %>%
   
   view() %>%
@@ -1724,20 +1724,20 @@ write.csv(L16, "exposure-M-R-B-Sh.csv")
 ``` {r exposure files }
 
 read.csv("C:/Users/Rachel/Documents/SI.SP/lists/exposure/exposure-F-L-A-S.csv") %>%
-
-select(-c(Block)) %>%
-
-mutate(
-  Block = (Item.Number %% 10) + 1
-) %>%
   
-mutate(
-  block = (Item.Number %% 10) + 1
-) %>%
+  select(-c(Block)) %>%
   
-group_by(block) %>%
+  mutate(
+    Block = (Item.Number %% 10) + 1
+  ) %>%
   
-group_map(.f = ~ write_csv(.x, file = paste0("C:/Users/Rachel/Documents/SI.SP/lists/x/exposure-F-L-A-S-OrderA-Block", .y$block, ".csv")))
+  mutate(
+    block = (Item.Number %% 10) + 1
+  ) %>%
+  
+  group_by(block) %>%
+  
+  group_map(.f = ~ write_csv(.x, file = paste0("C:/Users/Rachel/Documents/SI.SP/lists/x/exposure-F-L-A-S-OrderA-Block", .y$block, ".csv")))
 ```
 ______
 ```{r Concate Table}
@@ -1807,57 +1807,44 @@ for (f in Files) {
 ________
 
 # check file names  
+## Exposure  
 ```{r Check.Exposure}
 
 # Call CSV files
 file.list <- list.files("C:/Users/Rachel/Documents/SI.SP/lists/exposure", full.names = TRUE, pattern = ".csv")
 
 for (f in file.list) {
+  
   # Read each CSV file
-  List <- read_csv(f)
+  List <- read_csv(f, show_col_types = FALSE)
+  
   #  Create a column File.Exists 
   ## If the information in the filename column matches a file in the materials folder (.wav files), return TRUE
- List$File.Exists <- 
-   List$filename %in% 
-   list.files("C:/Users/Rachel/Documents/SI.SP/materials",pattern = ".wav")
- 
+  List$File.Exists <- 
+    List$filename %in% 
+    list.files("C:/Users/Rachel/Documents/SI.SP/materials",pattern = ".wav")
+  
   # Do all filenames exist as .wav files?
- print(list)
+  ifelse(List$File.Exists, NA , print(filter(List, File.Exists == "FALSE")))
 }
 ```
- # Do all filenames exist as .wav files?
- case_when(
-   List$File.Exists == FALSE
-   ~ print(List$filename),
-   T ~ print("All Files Found")
-  )
-}
-```
-
+## Test  
 ```{r Check.Test}
-
 # Call CSV files
 file.list <- list.files("C:/Users/Rachel/Documents/SI.SP/lists/test", full.names = TRUE, pattern = ".csv")
 
 for (f in file.list) {
   # Read each CSV file
   List <- 
-    read_csv(f)
+    read_csv(f, show_col_types = FALSE)
   #  Create a column File.Exists 
   ## If the information in the filename column matches a file in the materials folder (.wav files), return TRUE
- List$File.Exists <- 
-   List$filename %in% 
-   list.files("C:/Users/Rachel/Documents/SI.SP/materials", pattern = ".wav")
- 
- # Do all filenames exist as .wav files?
- case_when(
-   List$File.Exists == "FALSE"
-   ~ print(List$filename),
-   F ~ print("All Files Found")
- )
-
+  List$File.Exists <- 
+    List$filename %in% 
+    list.files("C:/Users/Rachel/Documents/SI.SP/materials", pattern = ".wav")
+  
+  # Do all filenames exist as .wav files?
+  ifelse(List$File.Exists, NA, print(filter(List, File.Exists == "FALSE")))
 } 
-
-
 ```
-```
+

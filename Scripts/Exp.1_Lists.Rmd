@@ -1,5 +1,5 @@
 ---
-title: "Experiment 1 List Design"
+title: "Experiment A List Design"
 author: "Rachel"
 date: /today
 geometry: margin = 2cm
@@ -36,9 +36,10 @@ editor_options:
 ---   
 ***
 # Housekeeping   
-The purpose of this file is to create the lists for Experiment 1.
-*Color file here: http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf*
-*crtl + I for reformat*  
+The purpose of this file is to create the lists for Experiment 1.  
+_Goal:_ To create csv files that contain the .wav filenames to be called for every possible block in Experiment A.  
+*Color file here: http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf*  
+*crtl + I for reformat*   
 
 ## Knitting    
 ```{r Knitting, include=F}
@@ -95,17 +96,15 @@ library(ggpubr)
 library(data.table)
 ```
 
-```{r, include=F}
+```{r, Format, include=F}
 options(width = 110)
 theme_set(theme_bw())
 ```
-
 _____
 
-# Lists  
+# Items  
 ## Exposure Phase    
-### Critical Items     
-```{r Ciritcal Items}
+```{r Ciritcal.Items}
 # Table with the information on how the stims should be paired: Materials x Accent x Gender x Ear Assignment
 
 ## Word list -> removes reliance on order
@@ -755,9 +754,7 @@ tibble(
   group_map(.f = ~ write_csv(.x, file = paste0("C:/Users/Rachel/Documents/SI.SP/lists/exposure/critical/Critical.",  .y$List, ".csv")))
 ```
 
-
-### Filler Items   
-```{r Filler Items}
+```{r Filler.Items}
 
 # Word List
 Set.A_Word = c(
@@ -1076,7 +1073,6 @@ tibble(
   ) %>%
   
   ## Filter
-  
   ### Attended Gender
   mutate( 
     A.Gender = 
@@ -1360,12 +1356,10 @@ tibble(
   group_map(.f = ~ write_csv(.x, file = paste0("C:/Users/Rachel/Documents/SI.SP/lists/exposure/Filler.0", .y$Set.Combo, "_", .y$A.Gender, "_", .y$A.Ear, ".csv")
   ))
 ```
-
-____
+_____
 
 ## Test Phase  
-### Test Items  
-```{r Test Phase}
+```{r Test.Items}
 # Table
 tibble(
   
@@ -1490,147 +1484,55 @@ tibble(
   group_map(.f = ~ write_csv(.x, file = paste0("C:/Users/Rachel/Documents/SI.SP/lists/test/test-Order", .y$Test_Version, "-Block", .y$Block, ".csv")
   ))
 ```
+_____
 
-____
+```{r Total.Table - IGNORE, include=F}
+#Combining the .csv files for each list. There are a total of *32* lists (described in Exp.1_Master file under writeups)
 
-# Concatenate CSV files for *total*   
-```{r Concate}
-
-# Origin
-setwd("C:/Users/Rachel/Documents/SI.SP/lists/")
-
-# Destination
-folder <- paste0("C:/Users/Rachel/Documents/SI.SP/lists/")
-
-# Individual Lists
-## Critical Lists 
-C1 <- fread("Critical.01.csv")
-C2 <- fread("Critical.02.csv")
-C3 <- fread("Critical.03.csv")
-C4 <- fread("Critical.04.csv")
-C5 <- fread("Critical.05.csv")
-C6 <- fread("Critical.06.csv")
-C7 <- fread("Critical.07.csv")
-C8 <- fread("Critical.08.csv")
-
-C9 <- fread("Critical.09.csv")
-C10 <- fread("Critical.10.csv")
-C11 <- fread("Critical.11.csv")
-C12 <- fread("Critical.12.csv")
-C13 <- fread("Critical.13.csv")
-C14 <- fread("Critical.14.csv")
-C15 <- fread("Critical.15.csv")
-C16 <- fread("Critical.16.csv")
-
-## Filler Lists
-F1 <- fread("Filler.01_Female_Left.csv")
-F2 <- fread("Filler.02_Male_Right.csv")
-F3 <- fread("Filler.03_Female_Right.csv")
-F4 <- fread("Filler.04_Male_Left.csv")
-
-## Test Lists
-TA <- fread("Test-A.csv")
-TB <- fread("Test-B.csv")
-
-
-# Total Lists
-L01 <- rbind(C1, F1, TA, fill=TRUE) 
-L02 <- rbind(C1, F1, TB, fill=TRUE)
-L03 <- rbind(C2, F1, TA, fill=TRUE)
-L04 <- rbind(C2, F1, TB, fill=TRUE)
-
-L05 <- rbind(C11, F1, TA, fill=TRUE)
-L06 <- rbind(C11, F1, TB, fill=TRUE)
-L07 <- rbind(C12, F1, TA, fill=TRUE)
-L08 <- rbind(C12, F1, TB, fill=TRUE)
-
-L09 <- rbind(C3, F2, TA, fill=TRUE)
-L10 <- rbind(C3, F2, TB, fill=TRUE)
-L11 <- rbind(C4, F2, TA, fill=TRUE)
-L12 <- rbind(C4, F2, TB, fill=TRUE)
-
-L13 <- rbind(C9, F2, TA, fill=TRUE)
-L14 <- rbind(C9, F2, TB, fill=TRUE)
-L15 <- rbind(C10, F2, TA, fill=TRUE)
-L16 <- rbind(C10, F2, TB, fill=TRUE)
-
-L17 <- rbind(C5, F3, TA, fill=TRUE)
-L18 <- rbind(C5, F3, TB, fill=TRUE)
-L19 <- rbind(C6, F3, TA, fill=TRUE)
-L20 <- rbind(C6, F3, TB, fill=TRUE)
-
-L21 <- rbind(C15, F3, TA, fill=TRUE)
-L22 <- rbind(C15, F3, TB, fill=TRUE)
-L23 <- rbind(C16, F3, TA, fill=TRUE)
-L24 <- rbind(C16, F3, TB, fill=TRUE)
-
-L25 <- rbind(C7, F4, TA, fill=TRUE)
-L26 <- rbind(C7, F4, TB, fill=TRUE)
-L27 <- rbind(C8, F4, TA, fill=TRUE)
-L28 <- rbind(C8, F4, TB, fill=TRUE)
-
-L29 <- rbind(C13, F4, TA, fill=TRUE)
-L30 <- rbind(C13, F4, TB, fill=TRUE)
-L31 <- rbind(C14, F4, TA, fill=TRUE)
-L32 <- rbind(C14, F4, TB, fill=TRUE)
-### (There was probably a more efficient way to do this, possibly using the table I was trying to create)
-
-# Write CSV Files
-
-## C1
-write.csv(L01, "Materials.B_Shift.S_Gender.F_Ear.L_Test.A.csv")
-write.csv(L02, "Materials.B_Shift.S_Gender.F_Ear.L_Test.B.csv")
-## C2
-write.csv(L03, "Materials.A_Shift.Sh_Gender.F_Ear.L_Test.A.csv")
-write.csv(L04, "Materials.A_Shift.Sh_Gender.F_Ear.L_Test.B.csv")
-## C11
-write.csv(L05, "Materials.B_Shift.Sh_Gender.F_Ear.L_Test.A.csv")
-write.csv(L06, "Materials.B_Shift.Sh_Gender.F_Ear.L_Test.B.csv")
-## C12
-write.csv(L07, "Materials.A_Shift.S_Gender.F_Ear.L_Test.A.csv")
-write.csv(L08, "Materials.A_Shift.S_Gender.F_Ear.L_Test.B.csv")
-## C3
-write.csv(L09, "Materials.B_Shift.S_Gender.M_Ear.R_Test.A.csv")
-write.csv(L10, "Materials.B_Shift.S_Gender.M_Ear.R_Test.B.csv")
-## C4
-write.csv(L11, "Materials.A_Shift.Sh_Gender.M_Ear.R_Test.A.csv")
-write.csv(L12, "Materials.A_Shift.Sh_Gender.M_Ear.R_Test.B.csv")
-## C9
-write.csv(L13, "Materials.B_Shift.Sh_Gender.M_Ear.R_Test.A.csv")
-write.csv(L14, "Materials.B_Shift.Sh_Gender.M_Ear.R_Test.B.csv")
-## C10
-write.csv(L15, "Materials.A_Shift.S_Gender.M_Ear.R_Test.A.csv")
-write.csv(L16, "Materials.A_Shift.S_Gender.M_Ear.R_Test.B.csv")
-## C5
-write.csv(L17, "Materials.B_Shift.S_Gender.F_Ear.R_Test.A.csv")
-write.csv(L18, "Materials.B_Shift.S_Gender.F_Ear.R_Test.B.csv")
-## C6
-write.csv(L19, "Materials.A_Shift.Sh_Gender.F_Ear.R_Test.A.csv")
-write.csv(L20, "Materials.A_Shift.Sh_Gender.F_Ear.R_Test.B.csv")
-## C15
-write.csv(L21, "Materials.B_Shift.Sh_Gender.F_Ear.R_Test.A.csv")
-write.csv(L22, "Materials.B_Shift.Sh_Gender.F_Ear.R_Test.B.csv")
-## C16
-write.csv(L23, "Materials.A_Shift.S_Gender.F_Ear.R_Test.A.csv")
-write.csv(L24, "Materials.A_Shift.S_Gender.F_Ear.R_Test.B.csv")
-## C7
-write.csv(L25, "Materials.B_Shift.S_Gender.M_Ear.L_Test.A.csv")
-write.csv(L26, "Materials.B_Shift.S_Gender.M_Ear.L_Test.B.csv")
-## C8
-write.csv(L27, "Materials.A_Shift.Sh_Gender.M_Ear.L_Test.A.csv")
-write.csv(L28, "Materials.A_Shift.Sh_Gender.M_Ear.L_Test.B.csv")
-## C13
-write.csv(L29, "Materials.B_Shift.Sh_Gender.M_Ear.L_Test.A.csv")
-write.csv(L30, "Materials.B_Shift.Sh_Gender.M_Ear.L_Test.B.csv")
-## C14
-write.csv(L31, "Materials.A_Shift.S_Gender.M_Ear.L_Test.A.csv")
-write.csv(L32, "Materials.A_Shift.S_Gender.M_Ear.L_Test.B.csv")
+## How Lists are combined
+tibble(
+  Critical = c(
+    'C1',
+    'C2',
+    'C3',
+    'C4',
+    'C5',
+    'C6',
+    'C7',
+    'C8'
+  )
+) %>%
+  
+  crossing(
+    if (
+      Critical == 'C1'| 
+      Critical == 'C2'|
+      Critical == 'C3'|
+      Critical == 'C4'
+    ){
+      Filler = c(
+        'F2',
+        'F3')
+      
+    } else {
+      
+      Filler = c(
+        'F1',
+        'F4')
+    },
+    
+    ### Below I was trying to cross F2 & F3 with C1:C4, and F1 & F4 with C5:C8. The Filler List assignment is dependent on the Gender x Ear assignment in the Critical Lists!
+    Test = c(
+      'TA',
+      'TB'
+    )
+  ) %>%
+  view()
 ```
+_____
 
-______
-
-# Concat for *Exposure*  
-```{r Concate}
+# Concatenate .csv files for Exposure Phase  
+```{r Exposure.Concat}
 # Origin
 setwd("C:/Users/Rachel/Documents/SI.SP/lists/exposure/")
 
@@ -1721,93 +1623,45 @@ write.csv(L14, "exposure-M-R-A-Sh.csv")
 write.csv(L15, "exposure-M-R-B-S.csv")
 write.csv(L16, "exposure-M-R-B-Sh.csv")
 ```
-``` {r exposure files }
+_____
 
-read.csv("C:/Users/Rachel/Documents/SI.SP/lists/exposure/exposure-F-L-A-S.csv") %>%
-  
-  select(-c(Block)) %>%
-  
-  mutate(
-    Block = (Item.Number %% 10) + 1
-  ) %>%
-  
-  mutate(
-    block = (Item.Number %% 10) + 1
-  ) %>%
-  
-  group_by(block) %>%
-  
-  group_map(.f = ~ write_csv(.x, file = paste0("C:/Users/Rachel/Documents/SI.SP/lists/x/exposure-F-L-A-S-OrderA-Block", .y$block, ".csv")))
-```
-______
-```{r Concate Table}
-# Here we are generating the CSV files for each list. There are a total of *32* lists (described in Exp.1_Master file under writeups)
+# Exposure Order Blocks .csv  
+```{r Exposure.Order }
 
-## How Lists are combined
-tibble(
-  Critical = c(
-    'C1',
-    'C2',
-    'C3',
-    'C4',
-    'C5',
-    'C6',
-    'C7',
-    'C8'
-  )
-) %>%
+# Call CSV files
+file.list <- list.files("C:/Users/Rachel/Documents/SI.SP/lists/y/x/", full.names = TRUE, pattern = ".csv")
+
+for (f in file.list) {
   
-  crossing(
-    if (
-      Critical == 'C1'| 
-      Critical == 'C2'|
-      Critical == 'C3'|
-      Critical == 'C4'
-    ){
-      Filler = c(
-        'F2',
-        'F3')
-      
-    } else {
-      
-      Filler = c(
-        'F1',
-        'F4')
-    },
-    ### Below I was trying to cross F2 & F3 with C1:C4, and F1 & F4 with C5:C8. The Filler List assignment is dependent on the Gender x Ear assignment in the Critical Lists!
+  # Read each CSV file
+  List <- read_csv(f, show_col_types = FALSE) %>%
     
-    Test = c(
-      'TA',
-      'TB'
-    )
-  ) %>%
-  view()
-```
-
-______
-
-# File Rename   
-```{r File Rename}
-
-Files <- list.files(path = "C:/Users/Rachel/Documents/SI.SP/lists/exposure")
-
-for (f in Files) {
-  
-  old.files <- paste0(
-    "C:/Users/Rachel/Documents/SI.SP/lists/exposure",
-    f) 
-  
-  f.new = gsub("Critical_", "Filler_02_", f)
-  
-  new.files <- paste0("C:/Users/Rachel/Documents/SI.SP/lists/exposure", f.new)
-  
-  file.rename(old.files, new.files)
+    # Change Block column 
+    ## For each Order, change the + #
+   
+    ### Remove old Block column
+    select(-c(Block)) %>%    
+    
+    ### Create new Block column
+    mutate(
+      Block = ((Item.Number + 9) %% 10) + 1
+    ) %>%
+    
+    ### Create block column == Block; used to cut/sort .csv files
+    mutate(
+      block = ((Item.Number + 9)%% 10) + 1
+    ) %>%
+    
+    # Create new .csv
+    group_by(block) %>%
+    
+    ## For each Order, Change -Order*
+    group_map(.f = ~ write_csv(.x, file = paste0(sub(".csv", "", f), "-Order10", "-Block", .y$block, ".csv")))
 }
 ```
-________
+_____
 
-# check file names  
-## Exposure  
+# Check .wav exist  
 ```{r Check.Exposure}
 
 # Call CSV files
@@ -1828,7 +1682,7 @@ for (f in file.list) {
   ifelse(List$File.Exists, NA , print(filter(List, File.Exists == "FALSE")))
 }
 ```
-## Test  
+ 
 ```{r Check.Test}
 # Call CSV files
 file.list <- list.files("C:/Users/Rachel/Documents/SI.SP/lists/test", full.names = TRUE, pattern = ".csv")
@@ -1847,4 +1701,23 @@ for (f in file.list) {
   ifelse(List$File.Exists, NA, print(filter(List, File.Exists == "FALSE")))
 } 
 ```
+_____
 
+# File Rename   
+```{r File.Rename}
+
+Files <- list.files(path = "C:/Users/Rachel/Documents/SI.SP/lists/y/")
+
+for (f in Files) {
+  
+  old.files <- paste0(
+    "C:/Users/Rachel/Documents/SI.SP/lists/y/",
+    f) 
+  
+  f.new = gsub("OrderI", "Order09", f)
+  
+  new.files <- paste0("C:/Users/Rachel/Documents/SI.SP/lists/y/", f.new)
+  
+  file.rename(old.files, new.files)
+}
+```

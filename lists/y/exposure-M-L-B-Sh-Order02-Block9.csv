@@ -1,0 +1,9 @@
+...1,Phase,Item.Type,Item.Number,Version,Attended.Talker,Attended.Talker_Materials,Attended.Talker_Sound,Attended.Talker_Gender,Attended.Talker_Ear,Unattended.Talker,Unattended.Talker_Materials,Unattended.Talker_Sound,Unattended.Talker_Gender,Unattended.Talker_Ear,reps,feedback,filename,Block
+7,Exposure,Critical,7,Unshifted,Arkansas,Materials A,S,Male,Left,Flourishing,Materials A,Sh,Female,Right,1,FALSE,Critical_S.Arkansas.M.L_Sh.Flourishing.F.R.wav,9
+17,Exposure,Critical,17,Shifted,Publisher,Materials B,Sh,Male,Left,Eraser,Materials B,S,Female,Right,1,FALSE,Critical_Ash.Publisher.M.L_As.Eraser.F.R.wav,9
+39,Exposure,Filler,7,4,Hamburger,Set A,Word,Male,Right,Nomerae,Set A,Nonword,Female,Left,1,FALSE,Filler_N.Nomerae.F.L_W.Hamburger.M.R.wav,9
+40,Exposure,Filler,7,3,Nempring,Set B,Nonword,Male,Left,Identical,Set B,Word,Female,Right,1,FALSE,Filler_N.Nempring.M.L_W.Identical.F.R.wav,9
+41,Exposure,Filler,7,2,Niritaly,Set C,Nonword,Male,Right,Illuminate,Set C,Word,Female,Left,1,FALSE,Filler_W.Illuminate.F.L_N.Niritaly.M.R.wav,9
+69,Exposure,Filler,17,4,Purgatory,Set A,Word,Male,Right,Baliber,Set A,Nonword,Female,Left,1,FALSE,Filler_N.Baliber.F.L_W.Purgatory.M.R.wav,9
+70,Exposure,Filler,17,3,Bamtell,Set B,Nonword,Male,Left,Tactical,Set B,Word,Female,Right,1,FALSE,Filler_N.Bamtell.M.L_W.Tactical.F.R.wav,9
+71,Exposure,Filler,17,2,Bowidai,Set C,Nonword,Male,Right,Terminal,Set C,Word,Female,Left,1,FALSE,Filler_W.Terminal.F.L_N.Bowidai.M.R.wav,9

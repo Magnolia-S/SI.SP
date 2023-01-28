@@ -1,0 +1,9 @@
+...1,Phase,Item.Type,Item.Number,Version,Attended.Talker,Attended.Talker_Materials,Attended.Talker_Sound,Attended.Talker_Gender,Attended.Talker_Ear,Unattended.Talker,Unattended.Talker_Materials,Unattended.Talker_Sound,Unattended.Talker_Gender,Unattended.Talker_Ear,reps,feedback,filename,Block
+1,Exposure,Critical,1,Shifted,Ambition,Materials A,Sh,Male,Right,Parasite,Materials A,S,Female,Left,1,FALSE,Critical_As.Parasite.F.L_Ash.Ambition.M.R.wav,1
+11,Exposure,Critical,11,Unshifted,Pregnancy,Materials B,S,Male,Right,Initial,Materials B,Sh,Female,Left,1,FALSE,Critical_Sh.Initial.F.L_S.Pregnancy.M.R.wav,1
+21,Exposure,Filler,1,1,America,Set A,Word,Male,Left,Wominid,Set A,Nonword,Female,Right,1,FALSE,Filler_W.America.M.L_N.Wominid.F.R.wav,1
+22,Exposure,Filler,1,2,Wojalto,Set B,Nonword,Male,Right,Bakery,Set B,Word,Female,Left,1,FALSE,Filler_W.Bakery.F.L_N.Wojalto.M.R.wav,1
+23,Exposure,Filler,1,3,Youmgel,Set C,Nonword,Male,Left,Ballerina,Set C,Word,Female,Right,1,FALSE,Filler_N.Youmgel.M.L_W.Ballerina.F.R.wav,1
+51,Exposure,Filler,11,1,Lengthen,Set A,Word,Male,Left,Kelabidel,Set A,Nonword,Female,Right,1,FALSE,Filler_W.Lengthen.M.L_N.Kelabidel.F.R.wav,1
+52,Exposure,Filler,11,2,Itempider,Set B,Nonword,Male,Right,Lobbying,Set B,Word,Female,Left,1,FALSE,Filler_W.Lobbying.F.L_N.Itempider.M.R.wav,1
+53,Exposure,Filler,11,3,Kloumidiger,Set C,Nonword,Male,Left,Marina,Set C,Word,Female,Right,1,FALSE,Filler_N.Kloumidiger.M.L_W.Marina.F.R.wav,1

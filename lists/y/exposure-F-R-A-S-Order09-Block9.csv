@@ -1,0 +1,9 @@
+...1,Phase,Item.Type,Item.Number,Version,Attended.Talker,Attended.Talker_Materials,Attended.Talker_Sound,Attended.Talker_Gender,Attended.Talker_Ear,Unattended.Talker,Unattended.Talker_Materials,Unattended.Talker_Sound,Unattended.Talker_Gender,Unattended.Talker_Ear,reps,feedback,filename,Block
+10,Exposure,Critical,10,Shifted,Rehearsal,Materials A,S,Female,Right,Vacation,Materials A,Sh,Male,Left,1,FALSE,Critical_Ash.Vacation.M.L_As.Rehearsal.F.R.wav,9
+20,Exposure,Critical,20,Unshifted,Impatient,Materials B,Sh,Female,Right,Coliseum,Materials B,S,Male,Left,1,FALSE,Critical_S.Coliseum.M.L_Sh.Impatient.F.R.wav,9
+48,Exposure,Filler,10,2,Keyboard,Set A,Word,Female,Left,Lenediaw,Set A,Nonword,Male,Right,1,FALSE,Filler_W.Keyboard.F.L_N.Lenediaw.M.R.wav,9
+49,Exposure,Filler,10,1,Kermimer,Set B,Nonword,Female,Right,Lethal,Set B,Word,Male,Left,1,FALSE,Filler_W.Lethal.M.L_N.Kermimer.F.R.wav,9
+50,Exposure,Filler,10,4,Imdalier,Set C,Nonword,Female,Left,Liability,Set C,Word,Male,Right,1,FALSE,Filler_N.Imdalier.F.L_W.Liability.M.R.wav,9
+78,Exposure,Filler,20,2,Wealthy,Set A,Word,Female,Left,Acomining,Set A,Nonword,Male,Right,1,FALSE,Filler_W.Wealthy.F.L_N.Acomining.M.R.wav,9
+79,Exposure,Filler,20,1,Admunker,Set B,Nonword,Female,Right,Worldly,Set B,Word,Male,Left,1,FALSE,Filler_W.Worldly.M.L_N.Admunker.F.R.wav,9
+80,Exposure,Filler,20,4,Aigi,Set C,Nonword,Female,Left,Wrinkle,Set C,Word,Male,Right,1,FALSE,Filler_N.Aigi.F.L_W.Wrinkle.M.R.wav,9

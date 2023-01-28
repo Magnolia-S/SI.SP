@@ -1,0 +1,9 @@
+...1,Phase,Item.Type,Item.Number,Version,Attended.Talker,Attended.Talker_Materials,Attended.Talker_Sound,Attended.Talker_Gender,Attended.Talker_Ear,Unattended.Talker,Unattended.Talker_Materials,Unattended.Talker_Sound,Unattended.Talker_Gender,Unattended.Talker_Ear,reps,feedback,filename,Block
+6,Exposure,Critical,6,Unshifted,Pediatrician,Materials A,Sh,Female,Right,Hallucinate,Materials A,S,Male,Left,1,FALSE,Critical_S.Hallucinate.M.L_Sh.Pediatrician.F.R.wav,7
+16,Exposure,Critical,16,Shifted,Personal,Materials B,S,Female,Right,Efficient,Materials B,Sh,Male,Left,1,FALSE,Critical_Ash.Efficient.M.L_As.Personal.F.R.wav,7
+36,Exposure,Filler,6,2,Gardenia,Set A,Word,Female,Left,Perkum,Set A,Nonword,Male,Right,1,FALSE,Filler_W.Gardenia.F.L_N.Perkum.M.R.wav,7
+37,Exposure,Filler,6,1,Omperoge,Set B,Nonword,Female,Right,Grammatical,Set B,Word,Male,Left,1,FALSE,Filler_W.Grammatical.M.L_N.Omperoge.F.R.wav,7
+38,Exposure,Filler,6,4,Almikquary,Set C,Nonword,Female,Left,Honeymoon,Set C,Word,Male,Right,1,FALSE,Filler_N.Almikquary.F.L_W.Honeymoon.M.R.wav,7
+66,Exposure,Filler,16,2,Pineapple,Set A,Word,Female,Left,Bikanian,Set A,Nonword,Male,Right,1,FALSE,Filler_W.Pineapple.F.L_N.Bikanian.M.R.wav,7
+67,Exposure,Filler,16,1,Dadigal,Set B,Nonword,Female,Right,Platonic,Set B,Word,Male,Left,1,FALSE,Filler_W.Platonic.M.L_N.Dadigal.F.R.wav,7
+68,Exposure,Filler,16,4,Dilkuaund,Set C,Nonword,Female,Left,Predict,Set C,Word,Male,Right,1,FALSE,Filler_N.Dilkuaund.F.L_W.Predict.M.R.wav,7

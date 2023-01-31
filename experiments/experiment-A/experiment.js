@@ -82,6 +82,8 @@ $(document).ready(function() {
   var AttendedTalkerGender = e.urlparams['AttendedTalkerGender'];
   throwMessage('AttendedTalkerGender set to: '.concat(AttendedTalkerGender));
   if ($.inArray(AttendedTalkerGender, ['M', 'F']) < 0) throwError('Unrecognized AttendedTalkerGender.');
+  var instruction_talker =  AttendedTalkerGender == 'M' ? 'male' : 'female';
+
 
   var AttendedTalkerEar = e.urlparams['AttendedTalkerEar'];
   throwMessage('AttendedTalkerEar set to: '.concat(AttendedTalkerEar));
@@ -93,7 +95,7 @@ $(document).ready(function() {
 
   var ExposureOrder = e.urlparams['ExposureOrder'];
   throwMessage('ExposureOrder set to: '.concat(ExposureOrder));
-  if ($.inArray(ExposureOrder, ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']) < 0) throwError('Unrecognized ExposureOrder.');
+  if ($.inArray(ExposureOrder, ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10']) < 0) throwError('Unrecognized ExposureOrder.');
 
   var TestOrder = e.urlparams['TestOrder'];
   throwMessage('TestOrder set to: '.concat(TestOrder));
@@ -137,16 +139,20 @@ $(document).ready(function() {
   // Create and add instructions based on experimental condition (based on whether there is an exposure phase or not)
   ////////////////////////////////////////////////////////////////////////
   var instruction_payment, instruction_experiment, instruction_exposure, instruction_test;
-  instruction_payment = 'The experiment takes 15-20 minutes to complete and you will be paid $2.00.';
-  instruction_experiment = 'This experiment has two parts. In the first part, you will see and hear a female speaker saying words and non-words. ' +
-                       'You will have to determine whether each word she produces is a word or a non-word. In the second part, you will hear words ' +
-                       'from the same speaker and determine whether these words contain an "s" or an "sh" sound. The "s" sound is like the sound at ' +
-                       'the beginning of the words "sat" and "sofa". The "sh" sound is like the sound at the beginning of the words "shine" and "sheep".';
-  instruction_exposure = 'That was the end of the practice phase. Now it\'s time to start! <strong>Remember to press the corresponding key on your keyboard to identify ' +
-                  'whether the speaker is saying a word of English or not</strong>.<br><br>' +
-                  'Listen and watch carefully, and answer as quickly and accurately as possible.<BR><BR>' +
-                  'It is OK to make a few errors---that\'s human! We will only ever reject work when somebody is <em>clearly</em> gaming the ' +
-                  'system by pressing random keys, reloading this page, or repeatedly taking this experiment. ';
+  instruction_payment = 'The experiment takes 15-20 minutes to complete and you will be paid $3.20.';
+  instruction_experiment = 'The purpose of this experiment is to investigate listeners\’ ability to pay attention to a ' +
+      'specific talker when there are multiple talkers speaking at once. <br><br>' +
+      'The experiment has two parts. In the first part, you will recordings of a female and a male talker speaking at the same time. ' +
+      'Your task is to <strong>focus only on the ' + instruction_talker + ' talker</strong>. For each recording, you have to determine ' +
+      'whether the ' + instruction_talker + ' talker produced a word or a non-word. This can be a difficult task. <br><br>' +
+      'In the second part, you will again hear recordings from the same two talkers. But this time, each recording will only contain ' +
+      'one talker at a time.';
+  instruction_exposure = 'That was the end of the practice phase. Now it\'s time to start the experiment!<br><br>' +
+      '<h3>Part 1</h3><p>Remember to press the corresponding key on your keyboard to <strong>identify whether the ' +
+      instruction_talker + ' talker is saying a word of English or not</strong>.<br><br>' +
+      'Listen carefully, and answer as quickly and accurately as possible.<BR><BR>' +
+      'It is OK to make a few errors---that\'s human! We will only ever reject work when somebody is <em>clearly</em> gaming the ' +
+      'system by pressing random keys, reloading this page, or repeatedly taking this experiment.</p> ';
   // Only show this part of the instruction if feedback was given on every trial during practice
   if (practFeedback === true) {
     instruction_exposure = instruction_exposure +
@@ -155,9 +161,12 @@ $(document).ready(function() {
     instruction_exposure = instruction_exposure + '</p>';
   }
 
-  instruction_test = '<h3>Phase 2</h3><p>Next, you will see and hear the same speaker as during the preceding parts of the experiment. <strong>' +
-  'This time, your task is to decide whether the speaker is saying "asi" or a "ashi".</strong> Please answer as quickly and ' +
-  'accurately as possible, without rushing. You may hear similar sounds several times.<br><br></p>';
+  instruction_test = '<h3>Part 2</h3><p>Next, you will hear the same two talkers as during the first part of the experiment. ' +
+  'This time, however, each recording will either be from the male or the female talker. For each recording, <strong>your task '
+  'is to decide whether the talker is saying "asi" or a "ashi".</strong> To make this task as easy as possible, you will hear ' +
+  'chunks of 12 recordings from the same talker in a row. Then you will hear 12 recordings from the other talker, etc. for a ' +
+  'total of 72 recordings.<br><br>' +
+  'Please answer as quickly and accurately as possible, without rushing. You may hear similar sounds several times.<br><br></p>';
 
   ////////////////////////////////////////////////////////////////////////
   // Create and add instructions
@@ -168,12 +177,12 @@ $(document).ready(function() {
     var instructions = new InstructionsSubsectionsBlock(
         {
             logoImg: 'JSEXP/img/logo.png',
-            title: 'Listen and click',
+            title: 'Attentional effects on listening',
             mainInstructions: ['Thank you for your interest in our study!  This is a psychology experiment about how people understand speech. ' +
                                'You will listen to recorded speech, and press a button on the keyboard to tell us what you heard.',
                                '<span style="font-weight:bold;">Please read through each of the following requirements. ' +
-                               'If you do not meet all requirements, please do not take this experiment.</span> You can click the names below to expand ' +
-                               'or close each section.'],
+                               'If you do not meet all requirements, please do not take this experiment.</span> ' +
+                               'You can click the names below to expand or close each section.'],
             subsections: [
                 {
                     title: 'Experiment length',
@@ -193,17 +202,13 @@ $(document).ready(function() {
                     checkboxText: 'I am in a quiet room and will complete this experiment in one sitting.'
                 },
                 {
-                    title: 'Hardware requirements (mouse + headphones)',
+                    title: 'Hardware requirements (headphones)',
                     content: [{
-                      subtitle: 'Mouse',
-                      content: 'This experiment requires a mouse.',
-                    },
-                    {
                       subtitle: 'Headphones',
                       content: "<font color='red'><strong>It is essential that you wear headphones for this experiment.</strong></font> Otherwise we will NOT " +
                                "be able to use your data.<img id='audiopic' src='JSEXP/img/audiotypes.png' width='600'/>"
                     }],
-                    checkboxText: 'I am wearing headphones and I am using a mouse.'
+                    checkboxText: 'I am wearing headphones.'
                 },
                 {
                   title: 'Headphone check',
@@ -230,7 +235,7 @@ $(document).ready(function() {
                 },
                 {
                     title: 'Reasons work can be rejected',
-                    content: ['If you pay attention to the instructions and <span style="font-weight:bold;">do not click randomly </span> your work will be approved. ' +
+                    content: ['If you pay attention to the instructions and <span style="font-weight:bold;">do not respond randomly </span> your work will be approved. ' +
                               '<span style="color:red;"><strong>Please do NOT reload this page, even if you think you made a mistake.</strong></span> ' +
                               'We will not be able to use your data for scientific purposes, and you will not be able to finish the experiment. ' +
                               "We anticipate some mistakes will be made, but those will NOT affect the approval of your work. ",
@@ -321,7 +326,41 @@ $(document).ready(function() {
       ////////////////////////////////////////////////////////////////////////
       if ($.inArray(skipTo, ['s'].concat(Array.from(Array(22).keys()).toString())) < 0) {
         throwMessage("Starting practice block.");
-        throwError("... practice block not yet implemented");
+
+        // var filenames_practice = AttendedTalkerMaterial === 'A' ? ['Filler_W.Parakeet.F.L_N.Ganla.M.R.wav', ] : [];
+        var filenames_practice = [
+          'Filler_W.Umbrella.M.L_N.Lilgrai.F.R',
+          'Filler_N.Galliwinou.F.L_W.Panicking.M.R',
+          'Filler_W.Parakeet.F.L_N.Ganla.M.R',
+          'Filler_N.Acomining.M.L_W.Wealthy.F.R'
+        ];
+        var correct_practice = AttendedTalkerGender === 'M' ? ['word', 'word', 'non-word', 'non-word'] : ['non-word', 'non-word', 'word', 'word'];
+        var mapping_practice = {
+          filenames_practice[1] : correct_practice[1],
+          filenames_practice[2] : correct_practice[2],
+          filenames_practice[3] : correct_practice[3],
+          filenames_practice[4] : correct_practice[4]
+        };
+
+        throwMessage("Mapping from filenames to expected response in practice: " + mapping_practice.flatten(););
+        var stimuli_practice = new StimuliFileList({
+            prefix: 'stimuli/exposure/',
+            mediaType: 'audio',
+            filenames: filenames_practice,
+            // Hash that maps filenames to expected response. required if the block uses provideFeedback = true
+            mappingStimulusToCorrectResponse: mapping_practice
+        });
+        var block_practice = new IdentificationBlock({
+            stimuli: stimuli_practice,
+            respKeys: keys_exp,
+            catchTrialInstruction: 'Remember to focus on the ' + instruction_talker + ' talker.',
+            catchEventDescription: undefined,
+            provideFeedback: true, // if true, provides feedback about correct (expected) response when participants make mistakes
+            enforcePerfection: true, // if true, forces reset (repeat) of block every time a mistake is made.
+            stimOrderMethod: "shuffle_across_blocks",
+            namespace: 'practice'
+        });
+
       } // end of practice block
 
       ////////////////////////////////////////////////////////////////////////
@@ -362,12 +401,15 @@ $(document).ready(function() {
         const starting_block = $.inArray(skipTo, Array.from(Array(22).keys()).toString()) < 0 ? 0 : parseInt(skipTo) - 1;
         for (let i = starting_block; i < block_type.length; i++) {
           // Before which blocks should what instructions (if any) be shown?
-          if (i === 0) {
-            current_instructions = instruction_exposure;
-          } else if (i === 10) {
-            current_instructions = instruction_test;
+          if (i >= 0) {
+            if (i === 0) { current_instructions = instruction_exposure; }
+            current_catchTrialInstruction = 'Remember to focus on the ' + instruction_talker + ' talker.';
+          } else if (i >= 10) {
+            if (i === 10) { current_instructions = instruction_test; }
+            current_catchTrialInstruction = '';
           } else {
             current_instructions = undefined;
+            current_catchTrialInstruction = undefined;
           }
 
           // What is the key mapping for the current block?
@@ -383,6 +425,7 @@ $(document).ready(function() {
           var current_block = new IdentificationBlock({
             stimuli: stimulus_list[i],
             instructions: current_instructions,
+            catchTrialInstruction: current_catchTrialInstruction,
             respKeys: current_key_assignment,
             stimOrderMethod: "dont_randomize",
             stimOrderMethod: 'shuffle_across_blocks',

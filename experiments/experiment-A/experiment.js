@@ -334,26 +334,26 @@ $(document).ready(function() {
         throwMessage("Starting practice block.");
 
         var filenames_practice = [
-          'Filler_W.Umbrella.M.L_N.Lilgrai.F.R',
-          'Filler_N.Galliwinou.F.L_W.Panicking.M.R',
-          'Filler_W.Parakeet.F.L_N.Ganla.M.R',
-          'Filler_N.Acomining.M.L_W.Wealthy.F.R'
+          'Filler_W.Corridor.M.L_N.Nawinow.F.R',
+          'Filler_N.Kerkrun.F.L_W.Parable.M.R',
+          'Filler_W.Heroine.F.L_M.Neramgory.M.R',
+          'Filler_N.Rikmaral.M.L_W.Younger.F.R'
         ];
         var mapping_practice = AttendedTalkerGender === 'M' ? {
-          'Filler_W.Umbrella.M.L_N.Lilgrai.F.R'  : 'word',
-          'Filler_N.Galliwinou.F.L_W.Panicking.M.R' : 'word',
-          'Filler_W.Parakeet.F.L_N.Ganla.M.R' : 'non-word',
-          'Filler_N.Acomining.M.L_W.Wealthy.F.R' : 'non-word'
+          'Filler_W.Corridor.M.L_N.Nawinow.F.R' : 'word',
+          'Filler_N.Kerkrun.F.L_W.Parable.M.R' : 'word',
+          'Filler_W.Heroine.F.L_M.Neramgory.M.R' : 'non-word',
+          'Filler_N.Rikmaral.M.L_W.Younger.F.R' : 'non-word'
         } : {
-          'Filler_W.Umbrella.M.L_N.Lilgrai.F.R'  : 'non-word',
-          'Filler_N.Galliwinou.F.L_W.Panicking.M.R' : 'non-word',
-          'Filler_W.Parakeet.F.L_N.Ganla.M.R' : 'word',
-          'Filler_N.Acomining.M.L_W.Wealthy.F.R' : 'word'
+          'Filler_W.Corridor.M.L_N.Nawinow.F.R' : 'non-word',
+          'Filler_N.Kerkrun.F.L_W.Parable.M.R' : 'non-word',
+          'Filler_W.Heroine.F.L_M.Neramgory.M.R' : 'word',
+          'Filler_N.Rikmaral.M.L_W.Younger.F.R' : 'word'
         };
 
         throwMessage("Filenames for practice: " + filenames_practice.flat());
         var stimuli_practice = new StimuliFileList({
-            prefix: 'stimuli/exposure/',
+            prefix: 'stimuli/practice/',
             mediaType: 'audio',
             filenames: filenames_practice,
             // Hash that maps filenames to expected response. required if the block uses provideFeedback = true

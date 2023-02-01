@@ -138,21 +138,27 @@ $(document).ready(function() {
   ////////////////////////////////////////////////////////////////////////
   // Create and add instructions based on experimental condition (based on whether there is an exposure phase or not)
   ////////////////////////////////////////////////////////////////////////
-  var instruction_payment, instruction_experiment, instruction_exposure, instruction_test;
+  var instruction_payment, instruction_experiment, instruction_pracice, instruction_exposure, instruction_test;
   instruction_payment = 'The experiment takes 15-20 minutes to complete and you will be paid $3.20.';
   instruction_experiment = 'The purpose of this experiment is to investigate listeners\’ ability to pay attention to a ' +
       'specific talker when there are multiple talkers speaking at once. <br><br>' +
-      'The experiment has two parts. In the first part, you will recordings of a female and a male talker speaking at the same time. ' +
+      'The experiment has two parts. In the first part, you will hear recordings of a female and a male talker speaking at the same time. ' +
       'Your task is to <strong>focus only on the ' + instruction_talker + ' talker</strong>. For each recording, you have to determine ' +
       'whether the ' + instruction_talker + ' talker produced a word or a non-word. This can be a difficult task. <br><br>' +
       'In the second part, you will again hear recordings from the same two talkers. But this time, each recording will only contain ' +
       'one talker at a time.';
+  instructions_practice = '<h3>Practice for Part 1</h3><p>Let\'s start with some practice since the first part of the experiment can be difficult. ' +
+      'You will hear recordings of a female and a male talker speaking at the same time. Your task is to <strong>focus only on the ' +
+      instruction_talker + ' talker</strong>. For each recording, you have to determine whether the ' + instruction_talker +
+      ' talker produced a word of English (for example, "table") or not (for example, "funtisc").</strong>.<br><br>Please listen carefully, ' +
+      'and answer as quickly and accurately as possible.<BR><BR>Since this is a practice block, you can make as many mistakes as you want. ' +
+      'Each time you get an answer wrong, we will let you know the correct answer, and practice will restart until you had time to ' +
+      'familiarize yourself with the task.</p>';
   instruction_exposure = 'That was the end of the practice phase. Now it\'s time to start the experiment!<br><br>' +
       '<h3>Part 1</h3><p>Remember to press the corresponding key on your keyboard to <strong>identify whether the ' +
-      instruction_talker + ' talker is saying a word of English or not</strong>.<br><br>' +
-      'Listen carefully, and answer as quickly and accurately as possible.<BR><BR>' +
-      'It is OK to make a few errors---that\'s human! We will only ever reject work when somebody is <em>clearly</em> gaming the ' +
-      'system by pressing random keys, reloading this page, or repeatedly taking this experiment.</p> ';
+      instruction_talker + ' talker is saying a word of English or not</strong>.<br><br>Listen carefully, and answer as quickly '
+      'and accurately as possible.<BR><BR>It is OK to make a few errors---that\'s human! We will only ever reject work when somebody ' +
+      'is <em>clearly</em> gaming the system by pressing random keys, reloading this page, or repeatedly taking this experiment.';
   // Only show this part of the instruction if feedback was given on every trial during practice
   if (practFeedback === true) {
     instruction_exposure = instruction_exposure +
@@ -162,16 +168,16 @@ $(document).ready(function() {
   }
 
   instruction_test = '<h3>Part 2</h3><p>Next, you will hear the same two talkers as during the first part of the experiment. ' +
-  'This time, however, each recording will either be from the male or the female talker. For each recording, <strong>your task '
-  'is to decide whether the talker is saying "asi" or a "ashi".</strong> To make this task as easy as possible, you will hear ' +
-  'chunks of 12 recordings from the same talker in a row. Then you will hear 12 recordings from the other talker, etc. for a ' +
-  'total of 72 recordings.<br><br>' +
-  'Please answer as quickly and accurately as possible, without rushing. You may hear similar sounds several times.<br><br></p>';
+      'This time, however, each recording will either be from the male or the female talker. For each recording, <strong>your task '
+      'is to decide whether the talker is saying "asi" or a "ashi".</strong> To make this task as easy as possible, you will hear ' +
+      'chunks of 12 recordings from the same talker in a row. Then you will hear 12 recordings from the other talker, etc. for a ' +
+      'total of 72 recordings.<br><br>Please answer as quickly and accurately as possible, without rushing. You may hear similar sounds ' +
+      'several times.<br><br></p>';
 
   ////////////////////////////////////////////////////////////////////////
   // Create and add instructions
   ////////////////////////////////////////////////////////////////////////
-  if ($.inArray(skipTo, ['l', 'p', 's'].concat(Array.from(Array(22).keys()).toString())) < 0) {
+  if ($.inArray(skipTo, ['l', 'p', 's'].concat(Array.from(Array(22).keys()).map(String))) < 0) {
     throwMessage("Creating instruction block.");
 
     var instructions = new InstructionsSubsectionsBlock(
@@ -293,7 +299,7 @@ $(document).ready(function() {
       ////////////////////////////////////////////////////////////////////////
       // Create and add PRELOADING block
       ////////////////////////////////////////////////////////////////////////
-      if ($.inArray(skipTo, ['p', 's'].concat(Array.from(Array(22).keys()).toString())) < 0) {
+      if ($.inArray(skipTo, ['p', 's'].concat(Array.from(Array(22).keys()).map(String))) < 0) {
         throwMessage("Preparing preloading block.");
         // Get all the unique filenames
         var unique_audio_filenames = all_audio_filenames.filter(function(item, pos, self) { return self.indexOf(item) == pos; });
@@ -324,25 +330,28 @@ $(document).ready(function() {
       ////////////////////////////////////////////////////////////////////////
       // Create and add PRACTICE block
       ////////////////////////////////////////////////////////////////////////
-      if ($.inArray(skipTo, ['s'].concat(Array.from(Array(22).keys()).toString())) < 0) {
+      if ($.inArray(skipTo, ['s'].concat(Array.from(Array(22).keys()).map(String))) < 0) {
         throwMessage("Starting practice block.");
 
-        // var filenames_practice = AttendedTalkerMaterial === 'A' ? ['Filler_W.Parakeet.F.L_N.Ganla.M.R.wav', ] : [];
         var filenames_practice = [
           'Filler_W.Umbrella.M.L_N.Lilgrai.F.R',
           'Filler_N.Galliwinou.F.L_W.Panicking.M.R',
           'Filler_W.Parakeet.F.L_N.Ganla.M.R',
           'Filler_N.Acomining.M.L_W.Wealthy.F.R'
         ];
-        var correct_practice = AttendedTalkerGender === 'M' ? ['word', 'word', 'non-word', 'non-word'] : ['non-word', 'non-word', 'word', 'word'];
-        var mapping_practice = {
-          filenames_practice[1] : correct_practice[1],
-          filenames_practice[2] : correct_practice[2],
-          filenames_practice[3] : correct_practice[3],
-          filenames_practice[4] : correct_practice[4]
+        var mapping_practice = AttendedTalkerGender === 'M' ? {
+          'Filler_W.Umbrella.M.L_N.Lilgrai.F.R'  : 'word',
+          'Filler_N.Galliwinou.F.L_W.Panicking.M.R' : 'word',
+          'Filler_W.Parakeet.F.L_N.Ganla.M.R' : 'non-word',
+          'Filler_N.Acomining.M.L_W.Wealthy.F.R' : 'non-word'
+        } : {
+          'Filler_W.Umbrella.M.L_N.Lilgrai.F.R'  : 'non-word',
+          'Filler_N.Galliwinou.F.L_W.Panicking.M.R' : 'non-word',
+          'Filler_W.Parakeet.F.L_N.Ganla.M.R' : 'word',
+          'Filler_N.Acomining.M.L_W.Wealthy.F.R' : 'word'
         };
 
-        throwMessage("Mapping from filenames to expected response in practice: " + mapping_practice.flatten(););
+        throwMessage("Filenames for practice: " + filenames_practice.flat());
         var stimuli_practice = new StimuliFileList({
             prefix: 'stimuli/exposure/',
             mediaType: 'audio',
@@ -361,6 +370,11 @@ $(document).ready(function() {
             namespace: 'practice'
         });
 
+        e.addBlock({
+            block: block_practice,
+            instructions: instructions_practice,
+            onPreview: false
+        });
       } // end of practice block
 
       ////////////////////////////////////////////////////////////////////////
@@ -373,7 +387,6 @@ $(document).ready(function() {
       var block_progressBarStartProportion = [];
       var block_progressBarEndProportion = [];
       for (let i = 0; i < block_type.length; i++) {
-
         // Count all stimuli so far (for progress bar adjustment)
         stimulus_list_length[i] = 0;
         for (let j = 0; j < stimulus_list[i].filenames.length; j++) {

@@ -168,9 +168,9 @@ $(document).ready(function() {
   }
 
   instruction_test = '<h3>Part 2</h3><p>Next, you will hear the same two talkers as during the first part of the experiment. ' +
-      'This time, however, each recording will either be from the male or the female talker. For each recording, <strong>your task '
+      'This time, however, each recording will either be from the male or the female talker. For each recording, <strong>your task ' +
       'is to decide whether the talker is saying "asi" or a "ashi".</strong> To make this task as easy as possible, you will hear ' +
-      'chunks of 12 recordings from the same talker in a row. Then you will hear 12 recordings from the other talker, etc. for a ' +
+      'chunks of 12 recordings from the same talker in a row. Then you will hear 12 recordings from the other talker, and so on, for a ' +
       'total of 72 recordings.<br><br>Please answer as quickly and accurately as possible, without rushing. You may hear similar sounds ' +
       'several times.<br><br></p>';
 

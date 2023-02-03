@@ -150,16 +150,16 @@ $(document).ready(function() {
   instructions_practice = '<h3>Practice for Part 1</h3><p>Let\'s start with some practice since the first part of the experiment can be difficult. ' +
       'You will hear recordings of a female and a male talker speaking at the same time. Your task is to <strong>focus only on the ' +
       instruction_talker + ' talker</strong>. For each recording, you have to determine whether the ' + instruction_talker +
-      ' talker produced a word of English (for example, "table") or not (for example, "funtisc").</strong>.<br><br>Please listen carefully, ' +
+      ' talker produced a word of English (for example, "table") or not (for example, "funtisc").<br><br>Please listen carefully, ' +
       'and answer as quickly and accurately as possible.<BR><BR>Since this is a practice block, you can make as many mistakes as you want. ' +
       'Each time you get an answer wrong, we will let you know the correct answer, and practice will restart until you had time to ' +
       'familiarize yourself with the task.</p>';
   instruction_exposure = 'That was the end of the practice phase. Now it\'s time to start the experiment!<br><br>' +
       '<h3>Part 1</h3><p>Remember to press the corresponding key on your keyboard to <strong>identify whether the ' +
-      instruction_talker + ' talker is saying a word of English or not</strong>.<br><br>Listen carefully, and answer as quickly '
+      instruction_talker + ' talker is saying a word of English or not</strong>.<br><br>Listen carefully, and answer as quickly ' +
       'and accurately as possible.<BR><BR>It is OK to make a few errors---that\'s human! We will only ever reject work when somebody ' +
-      'is <em>clearly</em> gaming the system by pressing random keys, reloading this page, or repeatedly taking this experiment.';
-  // Only show this part of the instruction if feedback was given on every trial during practice
+      'is <em>clearly</em> gaming the system by pressing random keys, reloading this page, or repeatedly taking this experiment. ';
+  // Only show this part of the instruction if feedback was given during practice
   if (practFeedback === true) {
     instruction_exposure = instruction_exposure +
     'Unlike during practice, you won’t any longer be receiving popup feedback after each trial, but we will still be recording your responses.</p>';
@@ -177,7 +177,7 @@ $(document).ready(function() {
   ////////////////////////////////////////////////////////////////////////
   // Create and add instructions
   ////////////////////////////////////////////////////////////////////////
-  if ($.inArray(skipTo, ['l', 'p', 's'].concat(Array.from(Array(22).keys()).map(String))) < 0) {
+  if ($.inArray(skipTo, ['l', 'p', 's'].concat(Array.from(Array(22).keys()).map(n => String(n + 1)))) < 0) {
     throwMessage("Creating instruction block.");
 
     var instructions = new InstructionsSubsectionsBlock(
@@ -299,7 +299,7 @@ $(document).ready(function() {
       ////////////////////////////////////////////////////////////////////////
       // Create and add PRELOADING block
       ////////////////////////////////////////////////////////////////////////
-      if ($.inArray(skipTo, ['p', 's'].concat(Array.from(Array(22).keys()).map(String))) < 0) {
+      if ($.inArray(skipTo, ['p', 's'].concat(Array.from(Array(22).keys()).map(n => String(n + 1)))) < 0) {
         throwMessage("Preparing preloading block.");
         // Get all the unique filenames
         var unique_audio_filenames = all_audio_filenames.filter(function(item, pos, self) { return self.indexOf(item) == pos; });
@@ -330,7 +330,7 @@ $(document).ready(function() {
       ////////////////////////////////////////////////////////////////////////
       // Create and add PRACTICE block
       ////////////////////////////////////////////////////////////////////////
-      if ($.inArray(skipTo, ['s'].concat(Array.from(Array(22).keys()).map(String))) < 0) {
+      if ($.inArray(skipTo, ['s'].concat(Array.from(Array(22).keys()).map(n => String(n + 1)))) < 0) {
         throwMessage("Starting practice block.");
 
         var filenames_practice = [
@@ -367,7 +367,44 @@ $(document).ready(function() {
             provideFeedback: true, // if true, provides feedback about correct (expected) response when participants make mistakes
             enforcePerfection: true, // if true, forces reset (repeat) of block every time a mistake is made.
             stimOrderMethod: "shuffle_across_blocks",
-            namespace: 'practice'
+            namespace: 'practice',
+
+            // Overwriting handle feedback function default
+            handleFeedback: function(e) {
+              var currentMediaType = this.media[this.stimOrder[this.n]].type;
+
+              // If no feedback is to be provided, end the trial
+              if (!this.provideFeedback) {
+                this.end(e);
+                return -1;
+              } else {
+              // Feedback should be provided, so determine what that feedback ought to be
+                var pressedKeyLabel = String.fromCharCode(e.which);
+                if (pressedKeyLabel === ' ') pressedKeyLabel = "SPACE";
+
+                // Determine what key response was and what that indicates.
+                var feedbackString = "You pressed \"" + pressedKeyLabel + "\", indicating that the " + instruction_talker + " tallker produced a " + this.respKeys[String.fromCharCode(e.which)] + ". ";
+
+                // If this was the correct response, provide positive feedback and end the trial
+                if (!this.isCatchTrial && (this.respKeys[String.fromCharCode(e.which)] === this.correctResponses[this.n])) {
+                  alert(feedbackString +  "This is CORRECT. Click OK to continue.");
+                  this.end(e);
+                  return -1;
+                } else if (this.respKeys[String.fromCharCode(e.which)] !== this.correctResponses[this.n]) {
+                  feedbackString += "This is INCORRECT. The " + instruction_talker + " talker produced a " + this.correctResponses[this.n] + ". " +
+                    'On trials like this one, you should press "' + valToKey(this.respKeys, this.correctResponses[this.n]) + '".';
+                } else {
+                  throwError("While computing feedback to the participant, some key event occurred that was not foreseen.");
+                }
+
+                feedbackString += "\n\nMaking mistakes during practice is absolutely OK---that's why we have a practice phase. " +
+                                  "Remember to listen closely and respond based on whether the " + instruction_talker + " talker says a " +
+                                  "real word of English or not. Press OK to continue.";
+                alert(feedbackString);
+
+                this.handleMistake(e);
+              }
+            }
         });
 
         e.addBlock({
@@ -409,16 +446,24 @@ $(document).ready(function() {
       }
 
       if ($.inArray(skipTo, ['s']) < 0) {
-        var current_instructions, current_stimOrderMethod, current_blockOrderMethod;
+        var current_instructions, current_catchTrialInstruction, current_stimOrderMethod, current_blockOrderMethod;
 
-        const starting_block = $.inArray(skipTo, Array.from(Array(22).keys()).toString()) < 0 ? 0 : parseInt(skipTo) - 1;
+        const starting_block = $.inArray(skipTo, Array.from(Array(22).keys()).map(n => String(n + 1))) < 0 ? 0 : parseInt(skipTo) - 1;
         for (let i = starting_block; i < block_type.length; i++) {
           // Before which blocks should what instructions (if any) be shown?
-          if (i >= 0) {
-            if (i === 0) { current_instructions = instruction_exposure; }
+          if (i >= 0 & i < 10) {
+            if (i === 0) {
+              current_instructions = instruction_exposure;
+            } else {
+              current_instructions = undefined;
+            }
             current_catchTrialInstruction = 'Remember to focus on the ' + instruction_talker + ' talker.';
           } else if (i >= 10) {
-            if (i === 10) { current_instructions = instruction_test; }
+            if (i === 10) {
+              current_instructions = instruction_test;
+            } else {
+              current_instructions = undefined;
+            }
             current_catchTrialInstruction = '';
           } else {
             current_instructions = undefined;
@@ -434,10 +479,9 @@ $(document).ready(function() {
             current_key_assignment = undefined;
           }
 
-          throwMessage("Adding block " + (i + 1) + " of type " + block_type[i])
+          throwMessage("Adding block " + (i + 1) + " of type " + block_type[i]);
           var current_block = new IdentificationBlock({
             stimuli: stimulus_list[i],
-            instructions: current_instructions,
             catchTrialInstruction: current_catchTrialInstruction,
             respKeys: current_key_assignment,
             stimOrderMethod: "dont_randomize",
@@ -450,11 +494,12 @@ $(document).ready(function() {
 
           e.addBlock({
             block: current_block,
+            instructions: current_instructions,
             onPreview: false,
             showInTest: true
           });
         } // end of exposure-test block for-loop
-      } // end of exposure-test block
+      } // end of exposure-test blocks
 
       $("#continue").hide();
       e.nextBlock();

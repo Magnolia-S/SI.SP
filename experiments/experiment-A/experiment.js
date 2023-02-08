@@ -142,37 +142,36 @@ $(document).ready(function() {
   instruction_payment = 'The experiment takes 15-20 minutes to complete and you will be paid $3.20.';
   instruction_experiment = 'The purpose of this experiment is to investigate listeners\’ ability to pay attention to a ' +
       'specific talker when there are multiple talkers speaking at once. <br><br>' +
-      'The experiment has two parts. In the first part, you will hear recordings of a female and a male talker speaking at the same time. ' +
+      'The experiment has two parts. In the first part, you will hear recordings of a female and a male talker speaking simultaneously. ' +
       'Your task is to <strong>focus only on the ' + instruction_talker + ' talker</strong>. For each recording, you have to determine ' +
-      'whether the ' + instruction_talker + ' talker produced a word or a non-word. This can be a difficult task. <br><br>' +
-      'In the second part, you will again hear recordings from the same two talkers. But this time, each recording will only contain ' +
-      'one talker at a time.';
-  instructions_practice = '<h3>Practice for Part 1</h3><p>Let\'s start with some practice since the first part of the experiment can be difficult. ' +
-      'You will hear recordings of a female and a male talker speaking at the same time. Your task is to <strong>focus only on the ' +
-      instruction_talker + ' talker</strong>. For each recording, you have to determine whether the ' + instruction_talker +
-      ' talker produced a word of English (for example, "table") or not (for example, "funtisc").<br><br>Please listen carefully, ' +
-      'and answer as quickly and accurately as possible.<BR><BR>Since this is a practice block, you can make as many mistakes as you want. ' +
-      'Each time you get an answer wrong, we will let you know the correct answer, and practice will restart until you had time to ' +
-      'familiarize yourself with the task.</p>';
-  instruction_exposure = 'That was the end of the practice phase. Now it\'s time to start the experiment!<br><br>' +
+      'whether the ' + instruction_talker + ' talker produced a WORD or a NON-WORD. <br><br>' +
+      'In the second part, you will hear recordings from the same two talkers. But this time, each recording will only contain ' +
+      'speech from one talker at a time.';
+  instructions_practice = '<h3>Practice for Part 1</h3><p>Let\'s start with some practice.<BR><BR> ' +
+      'You will hear a series of recordings of a female and a male talker speaking at the same time. Your task is to <strong>focus only on the ' +
+      instruction_talker + ' talker</strong>. For each recording, you are asked to determine whether the ' + instruction_talker +
+      ' talker produced a real WORD of English (for example, "table") or a NON-WORD (for example, "fultic").<br><br>Please listen carefully, ' +
+      'and respond as quickly and accurately as possible.<BR><BR>You can make as many mistakes as you\'d like during the practice block. ' +
+      'The purpose of these trials is to help you familiarize yourself with the task. You will receive feedback after each response. If ' +
+      'your response is incorrect, the practice block will restart.</p>';
+  instruction_exposure = 'You have successfully completed the practice block. Now we can begin the experiment!<br><br>' +
       '<h3>Part 1</h3><p>Remember to press the corresponding key on your keyboard to <strong>identify whether the ' +
-      instruction_talker + ' talker is saying a word of English or not</strong>.<br><br>Listen carefully, and answer as quickly ' +
+      instruction_talker + ' talker is saying a WORD of English or a NON-WORD</strong>.<br><br>Listen carefully, and answer as quickly ' +
       'and accurately as possible.<BR><BR>It is OK to make a few errors---that\'s human! We will only ever reject work when somebody ' +
       'is <em>clearly</em> gaming the system by pressing random keys, reloading this page, or repeatedly taking this experiment. ';
   // Only show this part of the instruction if feedback was given during practice
   if (practFeedback === true) {
     instruction_exposure = instruction_exposure +
-    'Unlike during practice, you won’t any longer be receiving popup feedback after each trial, but we will still be recording your responses.</p>';
+    'Unlike during practice, you will <strong> not</strong> receive feedback after each trial, but we are still recording your responses.</p>';
   } else {
     instruction_exposure = instruction_exposure + '</p>';
   }
 
   instruction_test = '<h3>Part 2</h3><p>Next, you will hear the same two talkers as during the first part of the experiment. ' +
-      'This time, however, each recording will either be from the male or the female talker. For each recording, <strong>your task ' +
-      'is to decide whether the talker is saying "asi" or a "ashi".</strong> To make this task as easy as possible, you will hear ' +
-      'chunks of 12 recordings from the same talker in a row. Then you will hear 12 recordings from the other talker, and so on, for a ' +
-      'total of 72 recordings.<br><br>Please answer as quickly and accurately as possible, without rushing. You may hear similar sounds ' +
-      'several times.<br><br></p>';
+      'However, in this part of the experiment, the talkers will be presented individually. For each recording, <strong>your task ' +
+      'is to decide whether the talker is saying "asi" or a "ashi".</strong> You will hear multiple recordings from the same talker ' +
+      'in a row, and these recordings may sound very similar. This is intentional.<br><br>Please answer as quickly and accurately ' +
+      'as possible.<br><br></p>';
 
   ////////////////////////////////////////////////////////////////////////
   // Create and add instructions

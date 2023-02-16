@@ -1,9 +1,9 @@
-...1,Phase,Item.Type,Item.Number,Version,Attended.Talker,Attended.Talker_Materials,Attended.Talker_Sound,Attended.Talker_Gender,Attended.Talker_Ear,Unattended.Talker,Unattended.Talker_Materials,Unattended.Talker_Sound,Unattended.Talker_Gender,Unattended.Talker_Ear,reps,feedback,filename,Block
-6,Exposure,Critical,6,Unshifted,Hallucinate,Materials A,S,Male,Right,Pediatrician,Materials A,Sh,Female,Left,1,FALSE,Critical_Sh.Pediatrician.F.L_S.Hallucinate.M.R.wav,6
-16,Exposure,Critical,16,Shifted,Efficient,Materials B,Sh,Male,Right,Personal,Materials B,S,Female,Left,1,FALSE,Critical_As.Personal.F.L_Ash.Efficient.M.R.wav,6
-36,Exposure,Filler,6,1,Gardenia,Set A,Word,Male,Left,Perkum,Set A,Nonword,Female,Right,1,FALSE,Filler_W.Gardenia.M.L_N.Perkum.F.R.wav,6
-37,Exposure,Filler,6,2,Omperoge,Set B,Nonword,Male,Right,Grammatical,Set B,Word,Female,Left,1,FALSE,Filler_W.Grammatical.F.L_N.Omperoge.M.R.wav,6
-38,Exposure,Filler,6,3,Almikquary,Set C,Nonword,Male,Left,Honeymoon,Set C,Word,Female,Right,1,FALSE,Filler_N.Almikquary.M.L_W.Honeymoon.F.R.wav,6
-66,Exposure,Filler,16,1,Pineapple,Set A,Word,Male,Left,Bikanian,Set A,Nonword,Female,Right,1,FALSE,Filler_W.Pineapple.M.L_N.Bikanian.F.R.wav,6
-67,Exposure,Filler,16,2,Dadigal,Set B,Nonword,Male,Right,Platonic,Set B,Word,Female,Left,1,FALSE,Filler_W.Platonic.F.L_N.Dadigal.M.R.wav,6
-68,Exposure,Filler,16,3,Dilkuaund,Set C,Nonword,Male,Left,Predict,Set C,Word,Female,Right,1,FALSE,Filler_N.Dilkuaund.M.L_W.Predict.F.R.wav,6
+...1,Phase,Item.Type,Item.Number,Version,Attended.Talker,Attended.Talker_Materials,Attended.Talker_Sound,Attended.Talker_Gender,Attended.Talker_Ear,Unattended.Talker,Unattended.Talker_Materials,Unattended.Talker_Sound,Unattended.Talker_Gender,Unattended.Talker_Ear,Correct.Response,reps,feedback,filename,Block
+6,Exposure,Critical,6,Unshifted,Hallucinate,Materials A,S,Male,Right,Pediatrician,Materials A,Sh,Female,Left,Word,1,FALSE,Critical_Sh.Pediatrician.F.L_S.Hallucinate.M.R.wav,6
+16,Exposure,Critical,16,Shifted,Efficient,Materials B,Sh,Male,Right,Personal,Materials B,S,Female,Left,Word,1,FALSE,Critical_As.Personal.F.L_Ash.Efficient.M.R.wav,6
+36,Exposure,Filler,6,1,Gardenia,Set A,Word,Male,Left,Perkum,Set A,Nonword,Female,Right,Word,1,FALSE,Filler_W.Gardenia.M.L_N.Perkum.F.R.wav,6
+37,Exposure,Filler,6,2,Omperoge,Set B,Nonword,Male,Right,Grammatical,Set B,Word,Female,Left,Nonword,1,FALSE,Filler_W.Grammatical.F.L_N.Omperoge.M.R.wav,6
+38,Exposure,Filler,6,3,Almikquary,Set C,Nonword,Male,Left,Honeymoon,Set C,Word,Female,Right,Nonword,1,FALSE,Filler_N.Almikquary.M.L_W.Honeymoon.F.R.wav,6
+66,Exposure,Filler,16,1,Pineapple,Set A,Word,Male,Left,Bikanian,Set A,Nonword,Female,Right,Word,1,FALSE,Filler_W.Pineapple.M.L_N.Bikanian.F.R.wav,6
+67,Exposure,Filler,16,2,Dadigal,Set B,Nonword,Male,Right,Platonic,Set B,Word,Female,Left,Nonword,1,FALSE,Filler_W.Platonic.F.L_N.Dadigal.M.R.wav,6
+68,Exposure,Filler,16,3,Dilkuaund,Set C,Nonword,Male,Left,Predict,Set C,Word,Female,Right,Nonword,1,FALSE,Filler_N.Dilkuaund.M.L_W.Predict.F.R.wav,6

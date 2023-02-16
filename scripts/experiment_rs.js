@@ -147,7 +147,7 @@ $(document).ready(function() {
       'whether the ' + instruction_talker + ' talker produced a WORD or a NON-WORD. This may be a difficult task! <br><br>' +
       'In the second part, you will again hear recordings from the same two talkers. However, this time each recording will only present ' +
       'one talker at a time.';
-  instruction_practice = '<h3>Practice for Part I</h3><p>Let\'s start with some practice.' +
+  instruction_practice = '<h3>Practice for Part I</h3><p> Let\'s start with some practice.' +
       'Please listen carefully to the <strong>' + instruction_talker + ' talker</strong> in the following recordings, ' +
       'and respond as quickly and accurately as possible. <br><br>' +
       'During the practice block, you may make as many mistakes as you’d like. The purpose of these trials is to help you familiarize ' +
@@ -162,19 +162,19 @@ $(document).ready(function() {
       'If you <em>do</em> recognize the word, but you believe the talker pronounced it strangely, <strong>please select word</strong>. ' +
       'Please consider noting strange pronunciations in our end survey if they do occur. Your feedback helps us improve our experiments!' +
       '<br><br> Please respond as quickly and accurately as possible!<BR><BR>. This task is designed to be difficult, and ' +
-      'we understand you may make mistakes! We have many trials to accomodate the occasional mistype, but please be as accurate as possible. ' +
-      'We will only ever reject work if we see a particiapnt is pressing random keys, reloading the page, or repeatedly taking this experiment.';
+      'we understand you may make mistakes! We have many trials to accommodate the occasional mistype, but please be as accurate as possible. ' +
+      'We will only ever reject work if we see a participant is pressing random keys, reloading the page, or repeatedly taking this experiment.';
   // Only show this part of the instruction if feedback was given during practice
   if (practFeedback === true) {
     instruction_exposure = instruction_exposure +
-    'Unlike during the practice block, you will <strong>not</strong> recieve feedback after each trial. We are still recording your responses!</p>';
+    'Unlike during the practice block, you will <strong>not</strong> receive feedback after each trial. We are still recording your responses!</p>';
   } else {
     instruction_exposure = instruction_exposure + '</p>';
   }
 
   instruction_test = '<h3>Experiment: Part II</h3><p>Next, you will hear the same two talkers from Part I. ' +
       'However, the talkers will be presented individually during Part II. For each recording, <strong>your task ' +
-      'is to decide whether the talker is saying "asi" or a "ashi".</strong> You will hear multiple recordings from the ' +
+      'is to decide whether the talker is saying "asi" or "ashi".</strong> You will hear multiple recordings from the ' +
       'same talker in a row, and these recordings may sound incredibly similar! This is intentional. ' +
       '<br><br>Please do your best to respond as quickly and accurately as possible.<br><br></p>';
 

@@ -120,7 +120,7 @@ Materials.A_S.Words = c(
   "Arkansas",
   "Compensate",
   "Dinosaur",
-  "Rehersal"
+  "Rehearsal"
 )
 
 Materials.A_Sh.Words = c(
@@ -692,6 +692,12 @@ tibble(
   ) %>%
   
   view() %>%
+  
+  # Correct Response
+  mutate(
+    Correct.Response =
+      paste0("Word")
+  ) %>%
   
   # repetition of File within List
   mutate(
@@ -1271,6 +1277,16 @@ tibble(
       )
   ) %>%
   
+  ## Correct Response
+  mutate(
+    Correct.Response = 
+      case_when(
+        Attended.Talker_Sound == "Word"
+        ~ "Word",
+        T ~ "Nonword"
+      )
+  ) %>%
+  
   ## repetition of File within List
   mutate(
     reps = 1
@@ -1440,6 +1456,11 @@ tibble(
       ~ "A",
       T ~ "B"
     )
+  ) %>%
+  
+  ## Correct Response
+  mutate(
+    Correct.Response = paste0("NULL")
   ) %>%
   
   ### repetition of File within List
@@ -1637,7 +1658,7 @@ for (f in file.list) {
   List <- read_csv(f, show_col_types = FALSE) %>%
     
     # Change Block column 
-    ## For each Order, change the + #
+    ## For each Order, change (Item.Number + #) -> # = Order - 1
    
     ### Remove old Block column
     select(-c(Block)) %>%    
@@ -1649,7 +1670,7 @@ for (f in file.list) {
     
     ### Create block column == Block; used to cut/sort .csv files
     mutate(
-      block = ((Item.Number + 9)%% 10) + 1
+      block = ((Item.Number + 9) %% 10) + 1
     ) %>%
     
     # Create new .csv
@@ -1721,3 +1742,80 @@ for (f in Files) {
   file.rename(old.files, new.files)
 }
 ```
+
+_____
+
+# URLs  
+```{r URLs}
+tibble(
+  AttendedTalkerGender = c(
+    "Male",
+    "Female"
+  )
+) %>%
+
+crossing(
+  AttendedTalkerEar = c(
+    "Left",
+    "Right"
+  ),
+  AttendedTalkerMaterial = c(
+    "A",
+    "B"
+  ),
+  AttendedTalkerLabel = c(
+    "S",
+    "Sh",
+    "As",
+    "Ash"
+  ),
+  
+  ExposureOrder = c(
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10"
+  ),
+  
+  TestOrder = c(
+    "A",
+    "B"
+  ),
+  respKeyExp = c(
+    "0",
+    "1"
+  ),
+  respKeyTest = c(
+    "0",
+    "1"
+  )
+) %>%
+
+  mutate(
+    URL = 
+      paste0("https://www.hlp.rochester.edu/experiments/PRATTLIM/experiment-A/experiment.html?",
+            
+             paste0("AttendedTalkerGender=")
+             case_when(
+               AttendedTalkerGender == "M"
+               ~ paste0("M&"),
+               T ~ paste0("F&")
+               ),
+             
+             paste0("AttendedTalkerEar=")
+             case_when(
+               AttendedTalkerEar == "L"
+               ~ paste0("L&"),
+               T ~ paste0("R&")
+               )
+      )) %>%
+
+```
+
+

@@ -1851,7 +1851,7 @@ write_csv(file = paste0("C:/Users/Rachel/Documents/SI.SP/Prolific_URLs.csv"))
 ```
 
 ## Specific to Exp. 1  
-```{r URLs}
+```{r Exp. A}
 tibble(
   AttendedTalkerGender = c(
     "M",
@@ -1922,6 +1922,10 @@ crossing(
   ) %>%
   
 mutate(
+  completion_URL = paste0("https://app.prolific.co/submissions/complete?cc=CIGXKI5C")
+) %>%
+  
+mutate(
   experiment_URL = 
     paste0("https://www.hlp.rochester.edu/experiments/PRATTLIM/experiment-A/experiment.html?",
       "AttendedTalkerGender=", AttendedTalkerGender, "&",
@@ -1940,9 +1944,9 @@ mutate(
   participants = paste0("1")
 ) %>%
   
-select(c(name, notes, experiment_URL, participants)) %>%
+select(c(name, notes, completion_URL, experiment_URL, participants)) %>%
 
-write_json(path = paste0("C:/Users/Rachel/Documents/SI.SP/experiment-A.cfg"), pretty = TRUE)
+write_json(path = paste0("C:/Users/Rachel/Documents/SI.SP/Test_experiment-A.config"), pretty = TRUE)
 ```
 
 

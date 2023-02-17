@@ -1800,10 +1800,31 @@ crossing(
   )
 ) %>%
 
-    
-mutate(
-  name = paste0("Condition_", c(1:1280))
-) %>%
+  mutate(
+    name = paste0(
+      "Condition.", 
+      c(1:64), "_",
+      AttendedTalkerGender, "_",
+      AttendedTalkerEar, "_",
+      AttendedTalkerMaterial, "_",
+      AttendedTalkerLabel, "_",
+      ExposureOrder, "_",
+      TestOrder, "_",
+      respKeyExp, "_",
+      respKeyTest)
+  ) %>%
+  
+  mutate(
+    notes = paste0(
+      "Gender=", AttendedTalkerGender, "_",
+      "Ear=", AttendedTalkerEar, "_",
+      "Material=", AttendedTalkerMaterial, "_",
+      "Sound=", AttendedTalkerLabel, "_",
+      "Exposure.Order=", ExposureOrder, "_",
+      "Test.Order=", TestOrder, "_",
+      "Exp.respKey=", respKeyExp, "_",
+      "Test.respKey=", respKeyTest)
+  ) %>%
   
 mutate(
   experiment_URL = 
@@ -1824,7 +1845,8 @@ mutate(
   participants = paste0("1")
 ) %>%
   
-select(c(name, experiment_URL, participants)) %>%
+select(c(name, notes, experiment_URL, participants)) %>%
+
 write_csv(file = paste0("C:/Users/Rachel/Documents/SI.SP/Prolific_URLs.csv"))
 ```
 
@@ -1873,9 +1895,31 @@ crossing(
   )
 ) %>%
 
-mutate(
-  name = paste0("Condition_", c(1:64))
-) %>%
+  mutate(
+    name = paste0(
+      "Condition.", 
+      c(1:64), "_",
+      AttendedTalkerGender, "_",
+      AttendedTalkerEar, "_",
+      AttendedTalkerMaterial, "_",
+      AttendedTalkerLabel, "_",
+      ExposureOrder, "_",
+      TestOrder, "_",
+      respKeyExp, "_",
+      respKeyTest)
+  ) %>%
+  
+  mutate(
+    notes = paste0(
+      "Gender=", AttendedTalkerGender, "_",
+      "Ear=", AttendedTalkerEar, "_",
+      "Material=", AttendedTalkerMaterial, "_",
+      "Sound=", AttendedTalkerLabel, "_",
+      "Exposure.Order=", ExposureOrder, "_",
+      "Test.Order=", TestOrder, "_",
+      "Exp.respKey=", respKeyExp, "_",
+      "Test.respKey=", respKeyTest)
+  ) %>%
   
 mutate(
   experiment_URL = 
@@ -1896,8 +1940,8 @@ mutate(
   participants = paste0("1")
 ) %>%
   
-select(c(name, experiment_URL, participants)) %>%
-  
+select(c(name, notes, experiment_URL, participants)) %>%
+
 write_json(path = paste0("C:/Users/Rachel/Documents/SI.SP/experiment-A.cfg"), pretty = TRUE)
 ```
 

@@ -145,7 +145,7 @@ $(document).ready(function() {
       'The experiment has two parts. In the first part, you will hear recordings of a female and a male talker speaking simultaneously. ' +
       'Your task is to <strong>focus only on the ' + instruction_talker + ' talker</strong>. For each recording, you have to determine ' +
       'whether the ' + instruction_talker + ' talker produced a WORD or a NON-WORD. <br><br>' +
-      'In the second part, you will hear recordings from the same two talkers. But this time, each recording will only contain ' +
+      'In the second part, you will hear recordings from the same two talkers. This time, each recording will only contain ' +
       'speech from one talker at a time.';
   instructions_practice = '<h3>Practice for Part 1</h3><p>Let\'s start with some practice.<BR><BR> ' +
       'You will hear a series of recordings of a female and a male talker speaking at the same time. Your task is to <strong>focus only on the ' +

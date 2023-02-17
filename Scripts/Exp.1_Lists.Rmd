@@ -1749,25 +1749,25 @@ _____
 ```{r URLs}
 tibble(
   AttendedTalkerGender = c(
-    "Male",
-    "Female"
+    "M",
+    "F"
   )
 ) %>%
 
 crossing(
   AttendedTalkerEar = c(
-    "Left",
-    "Right"
+    "L",
+    "R"
   ),
+  
   AttendedTalkerMaterial = c(
     "A",
     "B"
   ),
+  
   AttendedTalkerLabel = c(
     "S",
-    "Sh",
-    "As",
-    "Ash"
+    "Sh"
   ),
   
   ExposureOrder = c(
@@ -1787,35 +1787,116 @@ crossing(
     "A",
     "B"
   ),
+  
   respKeyExp = c(
     "0",
     "1"
   ),
+  
   respKeyTest = c(
     "0",
     "1"
   )
 ) %>%
 
-  mutate(
-    URL = 
-      paste0("https://www.hlp.rochester.edu/experiments/PRATTLIM/experiment-A/experiment.html?",
-            
-             paste0("AttendedTalkerGender=")
-             case_when(
-               AttendedTalkerGender == "M"
-               ~ paste0("M&"),
-               T ~ paste0("F&")
-               ),
-             
-             paste0("AttendedTalkerEar=")
-             case_when(
-               AttendedTalkerEar == "L"
-               ~ paste0("L&"),
-               T ~ paste0("R&")
-               )
-      )) %>%
-
+    
+mutate(
+  name = paste0("Condition_", c(1:1280))
+) %>%
+  
+mutate(
+  experiment_URL = 
+    paste0("https://www.hlp.rochester.edu/experiments/PRATTLIM/experiment-A/experiment.html?",
+      "AttendedTalkerGender=", AttendedTalkerGender, "&",
+      "AttendedTalkerEar=", AttendedTalkerEar, "&",
+      "AttendedTalkerMaterial=", AttendedTalkerMaterial, "&",
+      "AttendedTalkerLabel=", AttendedTalkerLabel, "&",
+      "ExposureOrder=", ExposureOrder, "&",
+      "TestOrder=", TestOrder, "&",
+      "respKeyExp=", respKeyExp, "&",
+      "respKeyTest=", respKeyTest,
+      ".html"
+    )
+  ) %>%
+  
+mutate(
+  participants = paste0("1")
+) %>%
+  
+select(c(name, experiment_URL, participants)) %>%
+write_csv(file = paste0("C:/Users/Rachel/Documents/SI.SP/Prolific_URLs.csv"))
 ```
 
+## Specific to Exp. 1  
+```{r URLs}
+tibble(
+  AttendedTalkerGender = c(
+    "M",
+    "F"
+  ),
+  
+  AttendedTalkerEar = c(
+    "L"
+  ),
+  
+  AttendedTalkerMaterial = c(
+    "A"
+  ),
+  
+) %>%
+
+crossing(
+  AttendedTalkerLabel = c(
+    "S",
+    "Sh"
+  ),
+  
+  ExposureOrder = c(
+    "01",
+    "05"
+  ),
+  
+  TestOrder = c(
+    "A",
+    "B"
+  ),
+  
+  respKeyExp = c(
+    "0",
+    "1"
+  ),
+  
+  respKeyTest = c(
+    "0",
+    "1"
+  )
+) %>%
+
+    
+mutate(
+  name = paste0("Condition_", c(1:64))
+) %>%
+  
+mutate(
+  experiment_URL = 
+    paste0("https://www.hlp.rochester.edu/experiments/PRATTLIM/experiment-A/experiment.html?",
+      "AttendedTalkerGender=", AttendedTalkerGender, "&",
+      "AttendedTalkerEar=", AttendedTalkerEar, "&",
+      "AttendedTalkerMaterial=", AttendedTalkerMaterial, "&",
+      "AttendedTalkerLabel=", AttendedTalkerLabel, "&",
+      "ExposureOrder=", ExposureOrder, "&",
+      "TestOrder=", TestOrder, "&",
+      "respKeyExp=", respKeyExp, "&",
+      "respKeyTest=", respKeyTest,
+      ".html"
+    )
+  ) %>%
+  
+mutate(
+  participants = paste0("1")
+) %>%
+  
+select(c(name, experiment_URL, participants)) %>%
+write_csv(file = paste0("C:/Users/Rachel/Documents/SI.SP/experiment-A.csv"))
+```
 

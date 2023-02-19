@@ -1836,8 +1836,7 @@ mutate(
       "ExposureOrder=", ExposureOrder, "&",
       "TestOrder=", TestOrder, "&",
       "respKeyExp=", respKeyExp, "&",
-      "respKeyTest=", respKeyTest,
-      ".html"
+      "respKeyTest=", respKeyTest
     )
   ) %>%
   
@@ -1845,7 +1844,7 @@ mutate(
   participants = paste0("1")
 ) %>%
   
-select(c(name, notes, experiment_URL, participants)) %>%
+select(c(name, experiment_URL, participants)) %>%
 
 write_csv(file = paste0("C:/Users/Rachel/Documents/SI.SP/Prolific_URLs.csv"))
 ```
@@ -1922,10 +1921,6 @@ crossing(
   ) %>%
   
 mutate(
-  completion_URL = paste0("https://app.prolific.co/submissions/complete?cc=CIGXKI5C")
-) %>%
-  
-mutate(
   experiment_URL = 
     paste0("https://www.hlp.rochester.edu/experiments/PRATTLIM/experiment-A/experiment.html?",
       "AttendedTalkerGender=", AttendedTalkerGender, "&",
@@ -1935,8 +1930,7 @@ mutate(
       "ExposureOrder=", ExposureOrder, "&",
       "TestOrder=", TestOrder, "&",
       "respKeyExp=", respKeyExp, "&",
-      "respKeyTest=", respKeyTest,
-      ".html"
+      "respKeyTest=", respKeyTest
     )
   ) %>%
   
@@ -1944,9 +1938,9 @@ mutate(
   participants = paste0("1")
 ) %>%
   
-select(c(name, notes, completion_URL, experiment_URL, participants)) %>%
+select(c(name, experiment_URL, participants)) %>%
 
-write_json(path = paste0("C:/Users/Rachel/Documents/SI.SP/Test_experiment-A.config"), pretty = TRUE)
+write_json(path = paste0("C:/Users/Rachel/Documents/SI.SP/experiment-A.config"), pretty = TRUE)
 ```
 
 

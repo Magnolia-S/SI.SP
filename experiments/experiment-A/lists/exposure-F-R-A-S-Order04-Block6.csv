@@ -1,9 +1,9 @@
 ...1,Phase,Item.Type,Item.Number,Version,Attended.Talker,Attended.Talker_Materials,Attended.Talker_Sound,Attended.Talker_Gender,Attended.Talker_Ear,Unattended.Talker,Unattended.Talker_Materials,Unattended.Talker_Sound,Unattended.Talker_Gender,Unattended.Talker_Ear,Correct.Response,reps,feedback,filename,Block
-2,Exposure,Critical,2,Shifted,Obscene,Materials A,S,Female,Right,Machinery,Materials A,Sh,Male,Left,Word,1,FALSE,Critical_Ash.Machinery.M.L_As.Obscene.F.R.wav,6
-12,Exposure,Critical,12,Unshifted,Beneficial,Materials B,Sh,Female,Right,Democracy,Materials B,S,Male,Left,Word,1,FALSE,Critical_S.Democracy.M.L_Sh.Beneficial.F.R.wav,6
-24,Exposure,Filler,2,2,Blueberry,Set A,Word,Female,Left,Ungelnin,Set A,Nonword,Male,Right,Word,1,FALSE,Filler_W.Blueberry.F.L_N.Ungelnin.M.R.wav,6
-25,Exposure,Filler,2,1,Tounamplem,Set B,Nonword,Female,Right,Bullying,Set B,Word,Male,Left,Nonword,1,FALSE,Filler_W.Bullying.M.L_N.Tounamplem.F.R.wav,6
-26,Exposure,Filler,2,4,Tymolape,Set C,Nonword,Female,Left,Burglary,Set C,Word,Male,Right,Nonword,1,FALSE,Filler_N.Tymolape.F.L_W.Burglary.M.R.wav,6
-54,Exposure,Filler,12,2,Lingering,Set A,Word,Female,Left,Inpaki,Set A,Nonword,Male,Right,Word,1,FALSE,Filler_W.Lingering.F.L_N.Inpaki.M.R.wav,6
-55,Exposure,Filler,12,1,Aknid,Set B,Nonword,Female,Right,Membrane,Set B,Word,Male,Left,Nonword,1,FALSE,Filler_W.Membrane.M.L_N.Aknid.F.R.wav,6
-56,Exposure,Filler,12,4,Halomimoc,Set C,Nonword,Female,Left,Metrical,Set C,Word,Male,Right,Nonword,1,FALSE,Filler_N.Halomimoc.F.L_W.Metrical.M.R.wav,6
+2,Exposure,Critical,2,Shifted,Obscene,Materials A,S,Female,Right,Machinery,Materials A,Sh,Male,Left,word,1,FALSE,Critical_Ash.Machinery.M.L_As.Obscene.F.R.wav,6
+12,Exposure,Critical,12,Unshifted,Beneficial,Materials B,Sh,Female,Right,Democracy,Materials B,S,Male,Left,word,1,FALSE,Critical_S.Democracy.M.L_Sh.Beneficial.F.R.wav,6
+24,Exposure,Filler,2,2,Blueberry,Set A,word,Female,Left,Ungelnin,Set A,non-word,Male,Right,word,1,FALSE,Filler_W.Blueberry.F.L_N.Ungelnin.M.R.wav,6
+25,Exposure,Filler,2,1,Tounamplem,Set B,non-word,Female,Right,Bullying,Set B,word,Male,Left,non-word,1,FALSE,Filler_W.Bullying.M.L_N.Tounamplem.F.R.wav,6
+26,Exposure,Filler,2,4,Tymolape,Set C,non-word,Female,Left,Burglary,Set C,word,Male,Right,non-word,1,FALSE,Filler_N.Tymolape.F.L_W.Burglary.M.R.wav,6
+54,Exposure,Filler,12,2,Lingering,Set A,word,Female,Left,Inpaki,Set A,non-word,Male,Right,word,1,FALSE,Filler_W.Lingering.F.L_N.Inpaki.M.R.wav,6
+55,Exposure,Filler,12,1,Aknid,Set B,non-word,Female,Right,Membrane,Set B,word,Male,Left,non-word,1,FALSE,Filler_W.Membrane.M.L_N.Aknid.F.R.wav,6
+56,Exposure,Filler,12,4,Halomimoc,Set C,non-word,Female,Left,Metrical,Set C,word,Male,Right,non-word,1,FALSE,Filler_N.Halomimoc.F.L_W.Metrical.M.R.wav,6

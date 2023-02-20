@@ -1,9 +1,9 @@
 ...1,Phase,Item.Type,Item.Number,Version,Attended.Talker,Attended.Talker_Materials,Attended.Talker_Sound,Attended.Talker_Gender,Attended.Talker_Ear,Unattended.Talker,Unattended.Talker_Materials,Unattended.Talker_Sound,Unattended.Talker_Gender,Unattended.Talker_Ear,Correct.Response,reps,feedback,filename,Block
-5,Exposure,Critical,5,Unshifted,Peninsula,Materials A,S,Male,Right,Crucial,Materials A,Sh,Female,Left,Word,1,FALSE,Critical_Sh.Crucial.F.L_S.Peninsula.M.R.wav,4
-15,Exposure,Critical,15,Shifted,Parachute,Materials B,Sh,Male,Right,Reconcile,Materials B,S,Female,Left,Word,1,FALSE,Critical_As.Reconcile.F.L_Ash.Parachute.M.R.wav,4
-33,Exposure,Filler,5,1,Dynamite,Set A,Word,Male,Left,Rakil,Set A,Nonword,Female,Right,Word,1,FALSE,Filler_W.Dynamite.M.L_N.Rakil.F.R.wav,4
-34,Exposure,Filler,5,2,Ploupelai,Set B,Nonword,Male,Right,Eighty,Set B,Word,Female,Left,Nonword,1,FALSE,Filler_W.Eighty.F.L_N.Ploupelai.M.R.wav,4
-35,Exposure,Filler,5,3,Pourilar,Set C,Nonword,Male,Left,Gullible,Set C,Word,Female,Right,Nonword,1,FALSE,Filler_N.Pourilar.M.L_W.Gullible.F.R.wav,4
-63,Exposure,Filler,15,1,Ornament,Set A,Word,Male,Left,Gairelom,Set A,Nonword,Female,Right,Word,1,FALSE,Filler_W.Ornament.M.L_N.Gairelom.F.R.wav,4
-64,Exposure,Filler,15,2,Ganla,Set B,Nonword,Male,Right,Parakeet,Set B,Word,Female,Left,Nonword,1,FALSE,Filler_W.Parakeet.F.L_N.Ganla.M.R.wav,4
-65,Exposure,Filler,15,3,Emhoutic,Set C,Nonword,Male,Left,Pilgrim,Set C,Word,Female,Right,Nonword,1,FALSE,Filler_N.Emhoutic.M.L_W.Pilgrim.F.R.wav,4
+5,Exposure,Critical,5,Unshifted,Peninsula,Materials A,S,Male,Right,Crucial,Materials A,Sh,Female,Left,word,1,FALSE,Critical_Sh.Crucial.F.L_S.Peninsula.M.R.wav,4
+15,Exposure,Critical,15,Shifted,Parachute,Materials B,Sh,Male,Right,Reconcile,Materials B,S,Female,Left,word,1,FALSE,Critical_As.Reconcile.F.L_Ash.Parachute.M.R.wav,4
+33,Exposure,Filler,5,1,Dynamite,Set A,word,Male,Left,Rakil,Set A,non-word,Female,Right,word,1,FALSE,Filler_W.Dynamite.M.L_N.Rakil.F.R.wav,4
+34,Exposure,Filler,5,2,Ploupelai,Set B,non-word,Male,Right,Eighty,Set B,word,Female,Left,non-word,1,FALSE,Filler_W.Eighty.F.L_N.Ploupelai.M.R.wav,4
+35,Exposure,Filler,5,3,Pourilar,Set C,non-word,Male,Left,Gullible,Set C,word,Female,Right,non-word,1,FALSE,Filler_N.Pourilar.M.L_W.Gullible.F.R.wav,4
+63,Exposure,Filler,15,1,Ornament,Set A,word,Male,Left,Gairelom,Set A,non-word,Female,Right,word,1,FALSE,Filler_W.Ornament.M.L_N.Gairelom.F.R.wav,4
+64,Exposure,Filler,15,2,Ganla,Set B,non-word,Male,Right,Parakeet,Set B,word,Female,Left,non-word,1,FALSE,Filler_W.Parakeet.F.L_N.Ganla.M.R.wav,4
+65,Exposure,Filler,15,3,Emhoutic,Set C,non-word,Male,Left,Pilgrim,Set C,word,Female,Right,non-word,1,FALSE,Filler_N.Emhoutic.M.L_W.Pilgrim.F.R.wav,4

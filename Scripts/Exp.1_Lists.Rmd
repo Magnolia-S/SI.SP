@@ -697,7 +697,7 @@ tibble(
   # Correct Response
   mutate(
     Correct.Response =
-      paste0("Word")
+      paste0("word")
   ) %>%
   
   # repetition of File within List
@@ -833,7 +833,7 @@ Set.C_Word = c(
   "Wrinkle"
 )
 
-Set.A_NonWord = c(
+Set.A_Nonword = c(
   "Wominid",
   "Ungelnin",
   "Tilegkalo",
@@ -934,11 +934,11 @@ tibble(
   ),  
   
   Talker.A_Sound = c(
-    rep("Word", 60)
+    rep("word", 60)
   ),
   
   Talker.B = c(
-    Set.A_NonWord,
+    Set.A_Nonword,
     Set.B_Nonword,
     Set.C_Nonword
   ),
@@ -950,7 +950,7 @@ tibble(
   ),
   
   Talker.B_Sound = c(
-    rep("Nonword", 60)
+    rep("non-word", 60)
   )
 ) %>%
   
@@ -1282,9 +1282,9 @@ tibble(
   mutate(
     Correct.Response = 
       case_when(
-        Attended.Talker_Sound == "Word"
-        ~ "Word",
-        T ~ "Nonword"
+        Attended.Talker_Sound == "word"
+        ~ "word",
+        T ~ "non-word"
       )
   ) %>%
   
@@ -1303,15 +1303,15 @@ tibble(
     Remove = 
       case_when(
         Attended.Talker_Materials == "Set A" &
-          Attended.Talker_Sound == "Nonword"
+          Attended.Talker_Sound == "non-word"
         ~ "TRUE",
         
         Attended.Talker_Materials == "Set B" &
-          Attended.Talker_Sound == "Word"
+          Attended.Talker_Sound == "word"
         ~ "TRUE",
         
         Attended.Talker_Materials == "Set C" &
-          Attended.Talker_Sound == "Word"
+          Attended.Talker_Sound == "word"
         ~ "TRUE",
         
         T ~ "FALSE"
@@ -1666,19 +1666,19 @@ for (f in file.list) {
     
     ### Create new Block column
     mutate(
-      Block = ((Item.Number + 9) %% 10) + 1
+      Block = ((Item.Number + 0) %% 10) + 1
     ) %>%
     
     ### Create block column == Block; used to cut/sort .csv files
     mutate(
-      block = ((Item.Number + 9) %% 10) + 1
+      block = ((Item.Number + 0) %% 10) + 1
     ) %>%
     
     # Create new .csv
     group_by(block) %>%
     
     ## For each Order, Change -Order*
-    group_map(.f = ~ write_csv(.x, file = paste0(sub(".csv", "", f), "-Order10", "-Block", .y$block, ".csv")))
+    group_map(.f = ~ write_csv(.x, file = paste0(sub(".csv", "", f), "-Order01", "-Block", .y$block, ".csv")))
 }
 ```
 _____
@@ -1836,7 +1836,8 @@ mutate(
       "ExposureOrder=", ExposureOrder, "&",
       "TestOrder=", TestOrder, "&",
       "respKeyExp=", respKeyExp, "&",
-      "respKeyTest=", respKeyTest
+      "respKeyTest=", respKeyTest, "&",
+      "platform=prolific"
     )
   ) %>%
   
@@ -1930,7 +1931,8 @@ mutate(
       "ExposureOrder=", ExposureOrder, "&",
       "TestOrder=", TestOrder, "&",
       "respKeyExp=", respKeyExp, "&",
-      "respKeyTest=", respKeyTest
+      "respKeyTest=", respKeyTest, "&",
+      "platform=prolific"
     )
   ) %>%
   
@@ -1942,5 +1944,7 @@ select(c(name, experiment_URL, participants)) %>%
 
 write_json(path = paste0("C:/Users/Rachel/Documents/SI.SP/experiment-A.config"), pretty = TRUE)
 ```
+
+write_csv(file = paste0("C:/Users/Rachel/Documents/SI.SP/experiment-A.csv"))
 
 

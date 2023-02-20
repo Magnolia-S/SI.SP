@@ -1,9 +1,9 @@
 ...1,Phase,Item.Type,Item.Number,Version,Attended.Talker,Attended.Talker_Materials,Attended.Talker_Sound,Attended.Talker_Gender,Attended.Talker_Ear,Unattended.Talker,Unattended.Talker_Materials,Unattended.Talker_Sound,Unattended.Talker_Gender,Unattended.Talker_Ear,Correct.Response,reps,feedback,filename,Block
-10,Exposure,Critical,10,Shifted,Vacation,Materials A,Sh,Female,Right,Rehearsal,Materials A,S,Male,Left,Word,1,FALSE,Critical_As.Rehearsal.M.L_Ash.Vacation.F.R.wav,1
-20,Exposure,Critical,20,Unshifted,Coliseum,Materials B,S,Female,Right,Impatient,Materials B,Sh,Male,Left,Word,1,FALSE,Critical_Sh.Impatient.M.L_S.Coliseum.F.R.wav,1
-48,Exposure,Filler,10,2,Keyboard,Set A,Word,Female,Left,Lenediaw,Set A,Nonword,Male,Right,Word,1,FALSE,Filler_W.Keyboard.F.L_N.Lenediaw.M.R.wav,1
-49,Exposure,Filler,10,1,Kermimer,Set B,Nonword,Female,Right,Lethal,Set B,Word,Male,Left,Nonword,1,FALSE,Filler_W.Lethal.M.L_N.Kermimer.F.R.wav,1
-50,Exposure,Filler,10,4,Imdalier,Set C,Nonword,Female,Left,Liability,Set C,Word,Male,Right,Nonword,1,FALSE,Filler_N.Imdalier.F.L_W.Liability.M.R.wav,1
-78,Exposure,Filler,20,2,Wealthy,Set A,Word,Female,Left,Acomining,Set A,Nonword,Male,Right,Word,1,FALSE,Filler_W.Wealthy.F.L_N.Acomining.M.R.wav,1
-79,Exposure,Filler,20,1,Admunker,Set B,Nonword,Female,Right,Worldly,Set B,Word,Male,Left,Nonword,1,FALSE,Filler_W.Worldly.M.L_N.Admunker.F.R.wav,1
-80,Exposure,Filler,20,4,Aigi,Set C,Nonword,Female,Left,Wrinkle,Set C,Word,Male,Right,Nonword,1,FALSE,Filler_N.Aigi.F.L_W.Wrinkle.M.R.wav,1
+10,Exposure,Critical,10,Shifted,Vacation,Materials A,Sh,Female,Right,Rehearsal,Materials A,S,Male,Left,word,1,FALSE,Critical_As.Rehearsal.M.L_Ash.Vacation.F.R.wav,1
+20,Exposure,Critical,20,Unshifted,Coliseum,Materials B,S,Female,Right,Impatient,Materials B,Sh,Male,Left,word,1,FALSE,Critical_Sh.Impatient.M.L_S.Coliseum.F.R.wav,1
+48,Exposure,Filler,10,2,Keyboard,Set A,word,Female,Left,Lenediaw,Set A,non-word,Male,Right,word,1,FALSE,Filler_W.Keyboard.F.L_N.Lenediaw.M.R.wav,1
+49,Exposure,Filler,10,1,Kermimer,Set B,non-word,Female,Right,Lethal,Set B,word,Male,Left,non-word,1,FALSE,Filler_W.Lethal.M.L_N.Kermimer.F.R.wav,1
+50,Exposure,Filler,10,4,Imdalier,Set C,non-word,Female,Left,Liability,Set C,word,Male,Right,non-word,1,FALSE,Filler_N.Imdalier.F.L_W.Liability.M.R.wav,1
+78,Exposure,Filler,20,2,Wealthy,Set A,word,Female,Left,Acomining,Set A,non-word,Male,Right,word,1,FALSE,Filler_W.Wealthy.F.L_N.Acomining.M.R.wav,1
+79,Exposure,Filler,20,1,Admunker,Set B,non-word,Female,Right,Worldly,Set B,word,Male,Left,non-word,1,FALSE,Filler_W.Worldly.M.L_N.Admunker.F.R.wav,1
+80,Exposure,Filler,20,4,Aigi,Set C,non-word,Female,Left,Wrinkle,Set C,word,Male,Right,non-word,1,FALSE,Filler_N.Aigi.F.L_W.Wrinkle.M.R.wav,1

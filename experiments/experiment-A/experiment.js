@@ -156,7 +156,8 @@ $(document).ready(function() {
       'your response is incorrect, the practice block will restart.</p>';
   instruction_exposure = 'You have successfully completed the practice block. Now we can begin the experiment!<br><br>' +
       '<h3>Part 1</h3><p>Remember to press the corresponding key on your keyboard to <strong>identify whether the ' +
-      instruction_talker + ' talker is saying a WORD of English or a NON-WORD</strong>.<br><br>Listen carefully, and answer as quickly ' +
+      instruction_talker + ' talker is saying a WORD of English or a NON-WORD</strong>. Like before, the response options will be ' +
+      'displayed during each trial.<br><br>Listen carefully, and answer as quickly ' +
       'and accurately as possible.<BR><BR>It is OK to make a few errors---that\'s human! We will only ever reject work when somebody ' +
       'is <em>clearly</em> gaming the system by pressing random keys, reloading this page, or repeatedly taking this experiment. ';
   // Only show this part of the instruction if feedback was given during practice
@@ -169,9 +170,11 @@ $(document).ready(function() {
 
   instruction_test = '<h3>Part 2</h3><p>Next, you will hear the same two talkers as during the first part of the experiment. ' +
       'However, in this part of the experiment, the talkers will be presented individually. For each recording, <strong>your task ' +
-      'is to decide whether the talker is saying "asi" or a "ashi".</strong> You will hear multiple recordings from the same talker ' +
-      'in a row, and these recordings may sound very similar. This is intentional.<br><br>Please answer as quickly and accurately ' +
-      'as possible.<br><br></p>';
+      'is to decide whether the talker is saying "ASI" or a "ASHI".</strong> You will use the same keys as before but now "' +
+      Object.keys(keys_test)[0] + '" will correspond to "' + keys_test[Object.keys(keys_test)[0]] + '" and "' +  Object.keys(keys_test)[1] +
+      '" will correspond to "' + keys_test[Object.keys(keys_test)[1]] + '". Like before, you will see these response options displayed ' +
+      'during each trial.<br><br>You will hear multiple recordings from the same talker in a row, and these recordings may sound ' +
+      'very similar. This is intentional.<br><br>Please answer as quickly and accurately as possible.<br><br></p>';
 
   ////////////////////////////////////////////////////////////////////////
   // Create and add instructions

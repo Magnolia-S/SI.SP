@@ -20,32 +20,35 @@
       <input id="audio_stall_some" type="radio" name="audio_stall" value="some"><label for="audio_stall_some">Yes, just a few</label></input><br/>
       <input id="audio_stall_no" type="radio" name="audio_stall" value="no"><label for="audio_stall_no">No, none</label></input><br/>
     </div>
+  </div>
 
+<div class="question_section" id="attended_talker" style="display:none">
     <div class="question">
       <p>In Part 1, were you focusing on the <strong>male</strong> or the <strong>female</strong> talker?</p>
-      <input id="speaker_male" type="radio" name="sex" value="male"><label for="speaker_male">Male</label></input><br/>
-      <input id="speaker_femalen" type="radio" name="sex" value="female"><label for="speaker_female">Female</label></input><br/>
+      <input id="speaker_male" type="radio" name="attended_talker" value="male"><label for="speaker_male">Male</label></input><br/>
+      <input id="speaker_female" type="radio" name="attended_talker" value="female"><label for="speaker_female">Female</label></input><br/>
     </div>
   </div>
   <!-- End general questions -->
 
   <!-- Questions about the attended talker -->
-  <div class="question_section" id="attended_talker" style="display:none">
-
+  <div class="question_section" id="attened_talker_comment" style="display:none">
     <div class="question">
       <p>Did you notice anything odd about the <strong>talker you were focusing on</strong> in Part 1? (Please note that we are specifically interested in how the talker spoke, not issues with the audio loading.)</p>
-      <textArea id="speaker1" name="speaker1" placeholder="Did you notice anything odd about the talker you were focusing on?" ></textArea>
+      <textArea id="attened_talker_comment" name="attened_talker_comment" placeholder="Did you notice anything odd about the talker you were focusing on?" ></textArea>
     </div>
+</div>
 
+  <div class="question_section" id="attended_talker_voice" style="display:none">
     <div class="question">
       <p>Please check any boxes that you feel describe the <strong>talker you were focusing on</strong> in Part 1.</p>
-      <input id="speaker1_slow" type="checkbox" name="pronun" value="slow"><label for="speaker1_slow">Slower than normal speaking rate</label></input><br/>
-      <input id="speaker1_normal" type="checkbox" name="pronun" value="normal"><label for="speaker1_normal">Normal speaking rate</label></input><br />
-      <input id="speaker1_fast" type="checkbox" name="pronun" value="fast"><label for="speaker1_fast">Faster than normal speaking rate</label></input><br/>
-      <input id="speaker1_high" type="checkbox" name="pronun" value="high"><label for="speaker1_high">Higher than normal voice pitch</label></input><br/>
-      <input id="speaker1_low" type="checkbox" name="pronun" value="low"><label for="speaker1_low">Lower than normal voice pitch</label></input><br/>
-      <input id="speaker1_relaxed" type="checkbox" name="pronun" value="relaxed"><label for="speaker1_relaxed">Relaxed</label></input><br/>
-      <input id="speaker1_serious" type="checkbox" name="pronun" value="serious"><label for="speaker1_serious">Serious</label></input><br/>
+      <input id="speaker1_slow" type="checkbox" name="attended_talker_pronun" value="slow"><label for="speaker1_slow">Slower than normal speaking rate</label></input><br/>
+      <input id="speaker1_normal" type="checkbox" name="attended_talker_pronun" value="normal"><label for="speaker1_normal">Normal speaking rate</label></input><br />
+      <input id="speaker1_fast" type="checkbox" name="attended_talker_pronun" value="fast"><label for="speaker1_fast">Faster than normal speaking rate</label></input><br/>
+      <input id="speaker1_high" type="checkbox" name="attended_talker_pronun" value="high"><label for="speaker1_high">Higher than normal voice pitch</label></input><br/>
+      <input id="speaker1_low" type="checkbox" name="attended_talker_pronun" value="low"><label for="speaker1_low">Lower than normal voice pitch</label></input><br/>
+      <input id="speaker1_relaxed" type="checkbox" name="attended_talker_pronun" value="relaxed"><label for="speaker1_relaxed">Relaxed</label></input><br/>
+      <input id="speaker1_serious" type="checkbox" name="attended_talker_pronun" value="serious"><label for="speaker1_serious">Serious</label></input><br/>
     </div>
 
     <div class="question">
@@ -59,22 +62,23 @@
   <!-- End attended talker -->
 
   <!-- Questions about the unattended talker -->
-  <div class="question_section" id="unattended_talker" style="display:none">
-
+  <div class="question_section" id="unattened_talker_comment" style="display:none">
     <div class="question">
       <p>Did you notice anything odd about the <strong>talker you were <em>not</em> focusing on</strong> in Part 1? <br/>(Please note that we are specifically interested in how the talker spoke, not issues with the audio loading.)</p>
-      <textArea id="speaker2" name="speaker2" placeholder="Did you notice anything odd about the talker you weren't lsitening to?" ></textArea>
+      <textArea id="unattened_talker_comment" name="unattened_talker_comment" placeholder="Did you notice anything odd about the talker you weren't focusing on?" ></textArea>
     </div>
+  </div>
 
+  <div class="question_section" id="unattened_talker_voice" style="display:none">
     <div class="question">
       <p>Please check any boxes that you feel describe the <strong>talker you were <em>not</em> focusing on</strong> in Part 1.</p>
-      <input id="speaker2_slow" type="checkbox" name="pronun" value="slow"><label for="speaker2_slow">Slower than normal speaking rate</label></input><br/>
-      <input id="speaker2_normal" type="checkbox" name="pronun" value="normal"><label for="speaker2_normal">Normal speaking rate</label></input><br/>
-      <input id="speaker2_fast" type="checkbox" name="pronun" value="fast"><label for="speaker2_fast">Faster than normal speaking rate</label></input><br/>
-      <input id="speaker2_high" type="checkbox" name="pronun" value="high"><label for="speaker2_high">Higher than normal voice pitch</label></input><br/>
-      <input id="speaker2_low" type="checkbox" name="pronun" value="low"><label for="speaker2_low">Lower than normal voice pitch</label></input><br/>
-      <input id="speaker2_relaxed" type="checkbox" name="pronun" value="relaxed"><label for="speaker2_relaxed">Relaxed</label></input><br/>
-      <input id="speaker2_serious" type="checkbox" name="pronun" value="serious"><label for="speaker2_serious">Serious</label></input><br/>
+      <input id="speaker2_slow" type="checkbox" name="unattended_talker_pronun" value="slow"><label for="speaker2_slow">Slower than normal speaking rate</label></input><br/>
+      <input id="speaker2_normal" type="checkbox" name="unattended_talker_pronun" value="normal"><label for="speaker2_normal">Normal speaking rate</label></input><br/>
+      <input id="speaker2_fast" type="checkbox" name="unattended_talker_pronun" value="fast"><label for="speaker2_fast">Faster than normal speaking rate</label></input><br/>
+      <input id="speaker2_high" type="checkbox" name="unattended_talker_pronun" value="high"><label for="speaker2_high">Higher than normal voice pitch</label></input><br/>
+      <input id="speaker2_low" type="checkbox" name="unattended_talker_pronun" value="low"><label for="speaker2_low">Lower than normal voice pitch</label></input><br/>
+      <input id="speaker2_relaxed" type="checkbox" name="unattended_talker_pronun" value="relaxed"><label for="speaker2_relaxed">Relaxed</label></input><br/>
+      <input id="speaker2_serious" type="checkbox" name="unattended_talker_pronun" value="serious"><label for="speaker2_serious">Serious</label></input><br/>
     </div>
 
     <div class="question">

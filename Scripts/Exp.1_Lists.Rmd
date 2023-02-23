@@ -1389,12 +1389,12 @@ tibble(
   ),  
   
   Attended.Talker = c(
-    "ashi.25",
-    "ashi.30",
-    "ashi.40",
-    "ashi.45",
-    "ashi.50",
-    "ashi.70"
+    "ashi.08",
+    "ashi.12",
+    "ashi.13",
+    "ashi.14",
+    "ashi.15",
+    "ashi.19"
   ),
   
   Unattended.Talker = c(
@@ -1484,10 +1484,7 @@ tibble(
         Attended.Talker_Gender == "Female"
         ~ paste0("F", sep = "."), 
         T ~ paste0("M", sep = ".")
-      ),
-      
-      Item.Number,
-      sep = "_",   
+      ),   
       Attended.Talker,
       paste0(".wav")
     )

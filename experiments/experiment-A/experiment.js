@@ -150,7 +150,9 @@ $(document).ready(function() {
   instructions_practice = '<h3>Practice for Part 1</h3><p>Let\'s start with some practice.<BR><BR> ' +
       'You will hear a series of recordings of a female and a male talker speaking at the same time. Your task is to <strong>focus only on the ' +
       instruction_talker + ' talker</strong>. For each recording, you are asked to determine whether the ' + instruction_talker +
-      ' talker produced a real WORD of English (for example, "table") or a NON-WORD (for example, "fultic").<br><br>Please listen carefully ' +
+      ' talker produced a real word of English (for example, "table") or a non-word (for example, "fultic"). Please press "' +
+      Object.keys(keys_exp)[0] + '" to respond "' + keys_exp[Object.keys(keys_exp)[0]] + '" and "' +  Object.keys(keys_exp)[1] +
+      '" to responsd "' + keys_exp[Object.keys(keys_exp)[1]] + '".<br><br>Please listen carefully ' +
       'to the entire recording, and then respond as quickly and accurately as possible. If you respond before the recording stopped ' +
       'playing, you will see a pop-up message reminding you to wait until the recording has stopped playing.<BR><BR>' +
       'You can make as many mistakes as you\'d like during the practice block. The purpose of these trials is to help ' +
@@ -158,8 +160,8 @@ $(document).ready(function() {
       'the practice block will restart.</p>';
   instruction_exposure = 'You have successfully completed the practice block. Now we can begin the experiment!<br><br>' +
       '<h3>Part 1</h3><p>Remember to press the corresponding key on your keyboard to <strong>identify whether the ' +
-      instruction_talker + ' talker is saying a WORD of English or a NON-WORD</strong>.<br><br>Listen carefully, and ' +
-      '<strong>when the recording has finished, answer as quickly and accurately as possible</strong>.<BR><BR>It is OK to make a few ' +
+      instruction_talker + ' talker is saying a word of English or a non-word</strong>.<br><br>Listen carefully, and ' +
+      'when the recording has finished, answer as quickly and accurately as possible.<BR><BR>It is OK to make a few ' +
       'errors---that\'s human! We will only ever reject work when somebody is <em>clearly</em> gaming the system by ' +
       'pressing random keys, reloading this page, or repeatedly taking this experiment. ';
   // Only show this part of the instruction if feedback was given during practice

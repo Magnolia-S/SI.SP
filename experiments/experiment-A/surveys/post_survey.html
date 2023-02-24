@@ -22,7 +22,7 @@
     </div>
   </div>
 
-<div class="question_section" id="attended_talker" style="display:none">
+ <div class="question_section" id="attended_talker" style="display:none">
     <div class="question">
       <p>In Part 1, were you focusing on the <strong>male</strong> or the <strong>female</strong> talker?</p>
       <input id="speaker_male" type="radio" name="attended_talker" value="male"><label for="speaker_male">Male</label></input><br/>
@@ -37,9 +37,9 @@
       <p>Did you notice anything odd about the <strong>talker you were focusing on</strong> in Part 1? (Please note that we are specifically interested in how the talker spoke, not issues with the audio loading.)</p>
       <textArea id="attened_talker_comment" name="attened_talker_comment" placeholder="Did you notice anything odd about the talker you were focusing on?" ></textArea>
     </div>
-</div>
+  </div>
 
-  <div class="question_section" id="attended_talker_voice" style="display:none">
+  <div class="question_section" id="attended_talker_pronun" style="display:none">
     <div class="question">
       <p>Please check any boxes that you feel describe the <strong>talker you were focusing on</strong> in Part 1.</p>
       <input id="speaker1_slow" type="checkbox" name="attended_talker_pronun" value="slow"><label for="speaker1_slow">Slower than normal speaking rate</label></input><br/>
@@ -56,7 +56,7 @@
       <input id="ssh1_normal" type="radio" name="ssh1" value="normal"><label for="ssh1_normal">Both S and SH sounded normal.</label></input><br/>
       <input id="ssh1_s_like_sh" type="radio" name="ssh1" value="s-like-sh"><label for="ssh1_s_like_sh">S sounded more like SH.</label></input><br/>
       <input id="ssh1_sh_like_s" type="radio" name="ssh1" value="sh-like-s"><label for="ssh1_sh_like_s">SH sounded more like S.</label></input><br/>
-      <input id="ssh1_swapped" type="radio" name="ssh1" value="swapped"><label for="ssh1_swapped">S sounded more like SH and SH sounded more like S.</label></input><br/>
+      <input id="ssh1_swapped" type="radio" name="ssh1" value="s-sh-inverted"><label for="ssh1_swapped">S sounded more like SH and SH sounded more like S.</label></input><br/>
     </div>
   </div>
   <!-- End attended talker -->
@@ -86,32 +86,32 @@
       <input id="ssh2_normal" type="radio" name="ssh2" value="normal"><label for="ssh2_normal">Both S and SH sounded normal.</label></input><br/>
       <input id="ssh2_s_like_sh" type="radio" name="ssh2" value="s-like-sh"><label for="ssh2_s_like_sh">S sounded more like SH.</label></input><br/>
       <input id="ssh2_sh_like_s" type="radio" name="ssh2" value="sh-like-s"><label for="ssh2_sh_like_s">SH sounded more like S.</label></input><br/>
-      <input id="ssh2_swapped" type="radio" name="ssh2" value="swapped"><label for="ssh2_swapped">S sounded more like SH and SH sounded more like S.</label></input><br/>
+      <input id="ssh2_swapped" type="radio" name="ssh2" value="s-sh-inverted"><label for="ssh2_swapped">S sounded more like SH and SH sounded more like S.</label></input><br/>
     </div>
   </div>
-<!-- End unattended talker -->
+  <!-- End unattended talker -->
 
-<!-- Word recall -->
-<div class="question_section" id="word_recall" style="display:none">
-  <div class="question">
-    <p>Please check the boxes of the words below that you remember hearing during the experiment:</p>
-    <input id="materials.b_1" type="checkbox" name="word_recall" value="word_S"><label for="materials.b_1">Episode</label></input><br/>
-    <input id="random_word_1" type="checkbox" name="word_recall" value="Null"><label for="random_word_1">Mistaken</label></input><br/>
-    <input id="materials.a_1" type="checkbox" name="word_recall" value="word_As"><label for="materials.a_1">Parasite</label></input><br/>
-    <input id="materials.a_2" type="checkbox" name="word_recall" value="word_Ash"><label for="materials.a_2">Ambition</label></input><br/>
-    <input id="materials.b_2" type="checkbox" name="word_recall" value="word_S"><label for="materials.b_2">Pregnancy</label></input><br/>
-    <input id="random_word_2" type="checkbox" name="word_recall" value="Null"><label for="random_word_2">Delightful</label></input><br/>
-    <input id="random_word_3" type="checkbox" name="word_recall" value="Null"><label for="random_word_3">January</label></input><br/>
-    <input id="materials.b_3" type="checkbox" name="word_recall" value="word_Sh"><label for="materials.b_3">Impatient</label></input><br/>
-    <input id="materials.a_3" type="checkbox" name="word_recall" value="word_As"><label for="materials.a_3">Dinosaur</label></input><br/>
-    <input id="materials.b_4" type="checkbox" name="word_recall" value="word_Sh"><label for="materials.b_4">Negotiate</label></input><br/>
-    <input id="materials.a_4" type="checkbox" name="word_recall" value="word_Ash"><label for="materials.a_4">Graduation</label></input><br/>
-    <input id="random_word_4" type="checkbox" name="word_recall" value="Null"><label for="random_word_4">Aromatic</label></input><br/>
+  <!-- Word recall -->
+  <div class="question_section" id="word_recall" style="display:none">
+    <div class="question">
+      <p>Please check the boxes of the words below that you remember hearing during the experiment:</p>
+      <input id="materials.b_1" type="checkbox" name="word_recall" value="word_S"><label for="materials.b_1">Episode</label></input><br/>
+      <input id="random_word_1" type="checkbox" name="word_recall" value="Null"><label for="random_word_1">Mistaken</label></input><br/>
+      <input id="materials.a_1" type="checkbox" name="word_recall" value="word_As"><label for="materials.a_1">Parasite</label></input><br/>
+      <input id="materials.a_2" type="checkbox" name="word_recall" value="word_Ash"><label for="materials.a_2">Ambition</label></input><br/>
+      <input id="materials.b_2" type="checkbox" name="word_recall" value="word_S"><label for="materials.b_2">Pregnancy</label></input><br/>
+      <input id="random_word_2" type="checkbox" name="word_recall" value="Null"><label for="random_word_2">Delightful</label></input><br/>
+      <input id="random_word_3" type="checkbox" name="word_recall" value="Null"><label for="random_word_3">January</label></input><br/>
+      <input id="materials.b_3" type="checkbox" name="word_recall" value="word_Sh"><label for="materials.b_3">Impatient</label></input><br/>
+      <input id="materials.a_3" type="checkbox" name="word_recall" value="word_As"><label for="materials.a_3">Dinosaur</label></input><br/>
+      <input id="materials.b_4" type="checkbox" name="word_recall" value="word_Sh"><label for="materials.b_4">Negotiate</label></input><br/>
+      <input id="materials.a_4" type="checkbox" name="word_recall" value="word_Ash"><label for="materials.a_4">Graduation</label></input><br/>
+      <input id="random_word_4" type="checkbox" name="word_recall" value="Null"><label for="random_word_4">Aromatic</label></input><br/>
+    </div>
   </div>
-</div>
-<!-- End word recall -->
+  <!-- End word recall -->
 
-<!-- General end questions -->
+  <!-- General end questions -->
   <div class="question_section" id="timezones" style="display:none">
 	  <div class="question">
 	     <p> What is your <strong>current timezone</strong>? </p>

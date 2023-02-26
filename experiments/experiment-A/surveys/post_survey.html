@@ -24,7 +24,7 @@
   <!-- End general questions -->
 
   <!-- Questions about the attended talker -->
-  <div class="question_section" id="which_talker_attended" style="display:none">
+  <div class="question_section" id="which_speaker_attended" style="display:none">
     <div class="question">
       <p>In Part 1, were you focusing on the <strong>male</strong> or the <strong>female</strong> talker?</p>
       <input id="speaker_male" type="radio" name="speaker_attended_sex" value="male"><label for="speaker_male">Male</label></input><br/>
@@ -32,15 +32,14 @@
     </div>
   </div>
 
-  <div class="question_section" id="attended_talker" style="display:none">
-
+ <div class="question_section" id="attended_speaker_comments" style="display:none">
     <div class="question">
       <p>Did you notice anything odd about the <strong>talker you were focusing on</strong> in Part 1? (Please note that we are specifically interested in how the talker spoke, not issues with the audio loading.)</p>
-      <textArea id="speaker_attended" name="speaker_attended" placeholder="Did you notice anything odd about the talker you were focusing on?" ></textArea>
+      <textArea id="attended_speaker_comments" name="attended_speaker_comments" placeholder="Did you notice anything odd about the talker you were focusing on?" ></textArea>
     </div>
   </div>
 
-  <div class="question_section" id="attended_talker2" style="display:none">
+  <div class="question_section" id="attended_speaker_voice" style="display:none">
     <div class="question">
       <p>Please check any boxes that you feel describe the <strong>talker you were focusing on</strong> in Part 1.</p>
       <input id="speaker_attended_slow" type="checkbox" name="speaker_attended_pronun" value="slow"><label for="speaker_attended_slow">Slower than normal speaking rate</label></input><br/>
@@ -57,19 +56,20 @@
       <input id="speaker_attended_ssh_normal" type="radio" name="speaker_attended_ssh" value="normal"><label for="speaker_attended_ssh_normal">Both S and SH sounded normal.</label></input><br/>
       <input id="speaker_attended_ssh_s_like_sh" type="radio" name="speaker_attended_ssh" value="s-like-sh"><label for="speaker_attended_ssh_s_like_sh">S sounded more like SH.</label></input><br/>
       <input id="speaker_attended_ssh_sh_like_s" type="radio" name="speaker_attended_ssh" value="sh-like-s"><label for="speaker_attended_ssh_sh_like_s">SH sounded more like S.</label></input><br/>
-      <input id="speaker_attended_ssh_swapped" type="radio" name="speaker_attended_ssh" value="swapped"><label for="speaker_attended_ssh_swapped">S sounded more like SH and SH sounded more like S.</label></input><br/>
+      <input id="speaker_attended_ssh_swapped" type="radio" name="speaker_attended_ssh" value="inverted_s-sh"><label for="speaker_attended_ssh_swapped">S sounded more like SH and SH sounded more like S.</label></input><br/>
     </div>
   </div>
   <!-- End attended talker -->
 
   <!-- Questions about the unattended talker -->
-  <div class="question_section" id="unattended_talker" style="display:none">
+  <div class="question_section" id="unattended_speaker_comments" style="display:none">
     <div class="question">
       <p>Did you notice anything odd about the <strong>talker you were <em>not</em> focusing on</strong> in Part 1? <br/>(Please note that we are specifically interested in how the talker spoke, not issues with the audio loading.)</p>
-      <textArea id="speaker_unattended" name="speaker_unattended" placeholder="Did you notice anything odd about the talker you weren't lsitening to?" ></textArea>
+      <textArea id="unattended_speaker_comments" name="unattended_speaker_comments" placeholder="Did you notice anything odd about the talker you weren't lsitening to?" ></textArea>
     </div>
   </div>
-  <div class="question_section" id="unattended_talker2" style="display:none">
+
+  <div class="question_section" id="unattended_speaker_voice" style="display:none">
     <div class="question">
       <p>Please check any boxes that you feel describe the <strong>talker you were <em>not</em> focusing on</strong> in Part 1.</p>
       <input id="speaker_unattended_slow" type="checkbox" name="speaker_unattended_pronun" value="slow"><label for="speaker_unattended_slow">Slower than normal speaking rate</label></input><br/>
@@ -86,7 +86,7 @@
       <input id="speaker_unattended_ssh_normal" type="radio" name="speaker_unattended_ssh" value="normal"><label for="speaker_unattended_ssh_normal">Both S and SH sounded normal.</label></input><br/>
       <input id="speaker_unattended_ssh_s_like_sh" type="radio" name="speaker_unattended_ssh" value="s-like-sh"><label for="speaker_unattended_ssh_s_like_sh">S sounded more like SH.</label></input><br/>
       <input id="speaker_unattended_ssh_sh_like_s" type="radio" name="speaker_unattended_ssh" value="sh-like-s"><label for="speaker_unattended_ssh_sh_like_s">SH sounded more like S.</label></input><br/>
-      <input id="speaker_unattended_ssh_swapped" type="radio" name="speaker_unattended_ssh" value="swapped"><label for="speaker_unattended_ssh_swapped">S sounded more like SH and SH sounded more like S.</label></input><br/>
+      <input id="speaker_unattended_ssh_swapped" type="radio" name="speaker_unattended_ssh" value="inverted_s-sh"><label for="speaker_unattended_ssh_swapped">S sounded more like SH and SH sounded more like S.</label></input><br/>
     </div>
   </div>
   <!-- End unattended talker -->

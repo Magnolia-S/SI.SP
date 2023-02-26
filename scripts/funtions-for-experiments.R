@@ -14,26 +14,26 @@ formatData <- function(.data, experiment) {
     
     # Separate the practice, exposure, and test columns into one column per trial
     # (each with one more parts then there are trials because the last element is also followed by a ";". 
-    # This last empty element should then be removed. If you get a warning, however, that means that at 
-    # least one participant has more trials than expected)
+    # This last empty element should then be removed. If you get a warning, however, that means that 
+    # at least one participant has more trials than expected)
      { if ("practiceResp" %in% names(.))     
         separate(., 
                  practiceResp,
-                 
                  # Practice Trial = 4
                  # Unused trials are discarded below
                  into = paste0("Practice_Trial", 1:4),
                  sep = ";",
-                 fill = "right") else . } %>%
+                 fill = "right") 
+       else . } %>%
     { if ("exposureResp" %in% names(.)) # <--- This needs to change so that it gets ALL exposure blocks ("exposure1Resp", etc.)
       separate(.,
                exposureResp,
-               
                # Exposure Trials = 60
                # Unused trials are discarded below
                into = paste0("Exposure_Trial", 1:60),
                sep = ";",
-               fill = "right") else . } %>%
+               fill = "right") 
+      else . } %>%
     { if ("testResp" %in% names(.)) # <--- This needs to change so that it gets ALL test blocks ("test20Resp", etc.)
     separate(.,
       testResp,
@@ -52,10 +52,15 @@ formatData <- function(.data, experiment) {
     separate(
       value,
       into = c("Task", 
-               "CHECK.Trial", "REMOVE1", 
+               "CHECK.Trial", 
+               "REMOVE1", 
                "Item.Filename", 
-               "Response.Keycode", "Response", "Correct.Response",
-               "Time.StartOfStimulus", "Time.EndOfTrial", "Response.RT"),
+               "Response.Keycode", 
+               "Response", 
+               "Correct.Response",
+               "Time.StartOfStimulus", 
+               "Time.EndOfTrial", 
+               "Response.RT"),
       sep = ",") %>%
     
     # Add Experiment information

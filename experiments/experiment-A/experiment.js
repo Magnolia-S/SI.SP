@@ -148,13 +148,13 @@ $(document).ready(function() {
       'In the second part, you will hear recordings from the same two talkers. This time, each recording will only contain ' +
       'speech from one talker at a time.';
   instructions_practice = '<h3>Practice for Part 1</h3><p>Let\'s start with some practice.<BR><BR> ' +
-      'You will hear a series of recordings of a female and a male talker speaking at the same time. Your task is to <strong>focus only on the ' +
-      instruction_talker + ' talker</strong>. For each recording, you are asked to determine whether the ' + instruction_talker +
-      ' talker produced a real word of English (for example, "table") or a non-word (for example, "fultic"). Please press "' +
+      'You will hear a series of recordings of a female and a male talker speaking at the same time. Your task is to <strong>' +
+      'focus only on the ' + instruction_talker + ' talker</strong>. For each recording, you are asked to determine whether the ' + instruction_talker +
+      ' talker produced a real word of English (for example, "table") or a non-word (for example, "fultic"). Press "' +
       Object.keys(keys_exp)[0] + '" to respond "' + keys_exp[Object.keys(keys_exp)[0]] + '" and "' +  Object.keys(keys_exp)[1] +
       '" to responsd "' + keys_exp[Object.keys(keys_exp)[1]] + '".<br><br>Please listen carefully ' +
-      'to the entire recording, and then respond as quickly and accurately as possible. If you respond before the recording stopped ' +
-      'playing, you will see a pop-up message reminding you to wait until the recording has stopped playing.<BR><BR>' +
+      'to the entire recording, and then respond as quickly and accurately as possible. If you respond before the end of ' +
+      'the recording, you will see a pop-up message reminding you to wait until the recording has stopped.<BR><BR>' +
       'You can make as many mistakes as you\'d like during the practice block. The purpose of these trials is to help ' +
       'you familiarize yourself with the task. You will receive feedback after each response. If your response is incorrect, ' +
       'the practice block will restart.</p>';

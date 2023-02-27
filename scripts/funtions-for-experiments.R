@@ -52,15 +52,18 @@ formatData <- function(.data, experiment) {
     separate(
       value,
       into = c("Task", 
-               "CHECK.Trial", 
-               "REMOVE1", 
+               "Attended.Talker_Gender",
+               "Attended.Talker_Ear",
+               "Attended.Talker_Material",
+               "Attended.Talker_Label",
                "Item.Filename", 
-               "Response.Keycode", 
                "Response", 
                "Correct.Response",
                "Time.StartOfStimulus", 
                "Time.EndOfTrial", 
-               "Response.RT"),
+               "Response.RT",
+               
+               ),
       sep = ",") %>%
     
     # Add Experiment information
@@ -94,14 +97,15 @@ formatData <- function(.data, experiment) {
         gsub("^(.*)\\.(webm|mp4)$", "\\1", Item.Filename)),
 
       # All of the stuff below this line needs to be adjusted to parse your filename into info about this trial/item
-      CHECK.Item.isCatchTrial = ifelse(grepl("-CATCH", Item.Filename), T, F),
       Item.Pen = ifelse(grepl("M", REMOVE.Item), "mouth", "hand"),
+      
       Item.Type = ifelse(Phase == "test", "test", gsub("^([A-Z]+)[0-9]+.*$", "\\1", REMOVE.Item)),
+      
       CHECK.Item.Label = case_when(
         Item.Type == "AS" ~ "S",
         Item.Type == "ASH" ~ "SH", 
         T ~ NA_character_),
-      Item.WordStatus = ifelse(Item.Type %in% c("test", "FN"), "non-word", "word"),
+      Item.WordStatus = ifelse(Item.Type %in% c("test", "filler"), "non-word", "word"),
       Item.Type = case_when(
         Item.Type %in% c("FN", "F") ~ "filler",
         Item.Type %in% c("S", "SH") ~ "typical",

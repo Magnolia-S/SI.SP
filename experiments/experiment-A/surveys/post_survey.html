@@ -24,7 +24,7 @@
   <!-- End general questions -->
 
   <!-- Questions about the attended talker -->
-  <div class="question_section" id="which_speaker_attended" style="display:none">
+  <div class="question_section" id="speaker_which_attended" style="display:none">
     <div class="question">
       <p>In Part 1, were you focusing on the <strong>male</strong> or the <strong>female</strong> talker?</p>
       <input id="speaker_male" type="radio" name="speaker_attended_sex" value="male"><label for="speaker_male">Male</label></input><br/>
@@ -32,23 +32,29 @@
     </div>
   </div>
 
- <div class="question_section" id="attended_speaker_comments" style="display:none">
+  <div class="question_section" id="speaker_attended_comments" style="display:none">
     <div class="question">
       <p>Did you notice anything odd about the <strong>talker you were focusing on</strong> in Part 1? (Please note that we are specifically interested in how the talker spoke, not issues with the audio loading.)</p>
-      <textArea id="attended_speaker_comments" name="attended_speaker_comments" placeholder="Did you notice anything odd about the talker you were focusing on?" ></textArea>
+      <textArea id="speaker_attended_comments" name="speaker_attended_comments" placeholder="Did you notice anything odd about the talker you were focusing on?" ></textArea>
     </div>
   </div>
 
   <div class="question_section" id="attended_speaker_voice" style="display:none">
     <div class="question">
       <p>Please check any boxes that you feel describe the <strong>talker you were focusing on</strong> in Part 1.</p>
-      <input id="speaker_attended_slow" type="checkbox" name="speaker_attended_pronun" value="slow"><label for="speaker_attended_slow">Slower than normal speaking rate</label></input><br/>
-      <input id="speaker_attended_normal" type="checkbox" name="speaker_attended_pronun" value="normal"><label for="speaker_attended_normal">Normal speaking rate</label></input><br />
-      <input id="speaker_attended_fast" type="checkbox" name="speaker_attended_pronun" value="fast"><label for="speaker_attended_fast">Faster than normal speaking rate</label></input><br/>
-      <input id="speaker_attended_high" type="checkbox" name="speaker_attended_pronun" value="high"><label for="speaker_attended_high">Higher than normal voice pitch</label></input><br/>
-      <input id="speaker_attended_low" type="checkbox" name="speaker_attended_pronun" value="low"><label for="speaker_attended_low">Lower than normal voice pitch</label></input><br/>
-      <input id="speaker_attended_relaxed" type="checkbox" name="speaker_attended_pronun" value="relaxed"><label for="speaker_attended_relaxed">Relaxed</label></input><br/>
-      <input id="speaker_attended_serious" type="checkbox" name="speaker_attended_pronun" value="serious"><label for="speaker_attended_serious">Serious</label></input><br/>
+      <input id="speaker_attended_slow" type="checkbox" name="speaker_attended_pronunciation" value="slow"><label for="speaker_attended_slow">Slower than normal speaking rate</label></input><br/>
+      <input id="speaker_attended_normal" type="checkbox" name="speaker_attended_pronunciation" value="normal"><label for="speaker_attended_normal">Normal speaking rate</label></input><br />
+      <input id="speaker_attended_fast" type="checkbox" name="speaker_attended_pronunciation" value="fast"><label for="speaker_attended_fast">Faster than normal speaking rate</label></input><br/>
+      <input id="speaker_attended_high" type="checkbox" name="speaker_attended_pronunciation" value="high"><label for="speaker_attended_high">Higher than normal voice pitch</label></input><br/>
+      <input id="speaker_attended_low" type="checkbox" name="speaker_attended_pronunciation" value="low"><label for="speaker_attended_low">Lower than normal voice pitch</label></input><br/>
+      <input id="speaker_attended_relaxed" type="checkbox" name="speaker_attended_pronunciation" value="relaxed"><label for="speaker_attended_relaxed">Relaxed</label></input><br/>
+      <input id="speaker_attended_serious" type="checkbox" name="speaker_attended_pronunciation" value="serious"><label for="speaker_attended_serious">Serious</label></input><br/>
+      <!-- Always keep an invisible checkbox with a NULL (or other reserved value) for checkboxes since FormData() used to
+           format the output for Proliferate by default omits unchecked checkboxes, and this can lead to issues not only
+           for that participants but also any subsequent participants recorded. Alternatively, we would have to add additional
+           javascript to catch these cases. See also https://www.tutorialspoint.com/post-unchecked-html-checkboxes
+      -->
+      <input id="speaker_attended_NULL" type="checkbox" name="speaker_attended_pronunciation" value="NULL"  style="display:none" checked></input>
     </div>
 
     <div class="question">
@@ -62,23 +68,29 @@
   <!-- End attended talker -->
 
   <!-- Questions about the unattended talker -->
-  <div class="question_section" id="unattended_speaker_comments" style="display:none">
+  <div class="question_section" id="speaker_unattended_comments" style="display:none">
     <div class="question">
       <p>Did you notice anything odd about the <strong>talker you were <em>not</em> focusing on</strong> in Part 1? <br/>(Please note that we are specifically interested in how the talker spoke, not issues with the audio loading.)</p>
-      <textArea id="unattended_speaker_comments" name="unattended_speaker_comments" placeholder="Did you notice anything odd about the talker you weren't lsitening to?" ></textArea>
+      <textArea id="speaker_unattended_comments" name="speaker_unattended_comments" placeholder="Did you notice anything odd about the talker you weren't lsitening to?" ></textArea>
     </div>
   </div>
 
   <div class="question_section" id="unattended_speaker_voice" style="display:none">
     <div class="question">
       <p>Please check any boxes that you feel describe the <strong>talker you were <em>not</em> focusing on</strong> in Part 1.</p>
-      <input id="speaker_unattended_slow" type="checkbox" name="speaker_unattended_pronun" value="slow"><label for="speaker_unattended_slow">Slower than normal speaking rate</label></input><br/>
-      <input id="speaker_unattended_normal" type="checkbox" name="speaker_unattended_pronun" value="normal"><label for="speaker_unattended_normal">Normal speaking rate</label></input><br/>
-      <input id="speaker_unattended_fast" type="checkbox" name="speaker_unattended_pronun" value="fast"><label for="speaker_unattended_fast">Faster than normal speaking rate</label></input><br/>
-      <input id="speaker_unattended_high" type="checkbox" name="speaker_unattended_pronun" value="high"><label for="speaker_unattended_high">Higher than normal voice pitch</label></input><br/>
-      <input id="speaker_unattended_low" type="checkbox" name="speaker_unattended_pronun" value="low"><label for="speaker_unattended_low">Lower than normal voice pitch</label></input><br/>
-      <input id="speaker_unattended_relaxed" type="checkbox" name="speaker_unattended_pronun" value="relaxed"><label for="speaker_unattended_relaxed">Relaxed</label></input><br/>
-      <input id="speaker_unattended_serious" type="checkbox" name="speaker_unattended_pronun" value="serious"><label for="speaker_unattended_serious">Serious</label></input><br/>
+      <input id="speaker_unattended_slow" type="checkbox" name="speaker_unattended_pronunciation" value="slow"><label for="speaker_unattended_slow">Slower than normal speaking rate</label></input><br/>
+      <input id="speaker_unattended_normal" type="checkbox" name="speaker_unattended_pronunciation" value="normal"><label for="speaker_unattended_normal">Normal speaking rate</label></input><br/>
+      <input id="speaker_unattended_fast" type="checkbox" name="speaker_unattended_pronunciation" value="fast"><label for="speaker_unattended_fast">Faster than normal speaking rate</label></input><br/>
+      <input id="speaker_unattended_high" type="checkbox" name="speaker_unattended_pronunciation" value="high"><label for="speaker_unattended_high">Higher than normal voice pitch</label></input><br/>
+      <input id="speaker_unattended_low" type="checkbox" name="speaker_unattended_pronunciation" value="low"><label for="speaker_unattended_low">Lower than normal voice pitch</label></input><br/>
+      <input id="speaker_unattended_relaxed" type="checkbox" name="speaker_unattended_pronunciation" value="relaxed"><label for="speaker_unattended_relaxed">Relaxed</label></input><br/>
+      <input id="speaker_unattended_serious" type="checkbox" name="speaker_unattended_pronunciation" value="serious"><label for="speaker_unattended_serious">Serious</label></input><br/>
+      <!-- Always keep an invisible checkbox with a NULL (or other reserved value) for checkboxes since FormData() used to
+           format the output for Proliferate by default omits unchecked checkboxes, and this can lead to issues not only
+           for that participants but also any subsequent participants recorded. Alternatively, we would have to add additional
+           javascript to catch these cases. See also https://www.tutorialspoint.com/post-unchecked-html-checkboxes
+      -->
+      <input id="speaker_unattended_NULL" type="checkbox" name="speaker_unattended_pronunciation" value="NULL"  style="display:none" checked></input>
     </div>
 
     <div class="question">
@@ -107,6 +119,12 @@
       <input id="materials.b_4" type="checkbox" name="word_recall" value="materials.b_sh_talker.b"><label for="materials.b_4">Negotiate</label></input><br/>
       <input id="materials.a_4" type="checkbox" name="word_recall" value="materials.a_sh_talker.a"><label for="materials.a_4">Graduation</label></input><br/>
       <input id="random_word_4" type="checkbox" name="word_recall" value="random_word_4"><label for="random_word_4">Aromatic</label></input><br/>
+      <!-- Always keep an invisible checkbox with a NULL (or other reserved value) for checkboxes since FormData() used to
+           format the output for Proliferate by default omits unchecked checkboxes, and this can lead to issues not only
+           for that participants but also any subsequent participants recorded. Alternatively, we would have to add additional
+           javascript to catch these cases. See also https://www.tutorialspoint.com/post-unchecked-html-checkboxes
+      -->
+      <input id="materials_NULL" type="checkbox" name="word_recall" value="NULL"  style="display:none" checked></input>
     </div>
   </div>
   <!-- End word recall -->

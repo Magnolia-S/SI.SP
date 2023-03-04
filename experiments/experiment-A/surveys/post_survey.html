@@ -2,8 +2,34 @@
   <h3>Please answer the questions on this survey truthfully. Your answers will not affect your compensation.</h3>
   <br/>
 
+  <!-- Word recall -->
+  <div class="question_section" id="word_recall" style="display:visible">
+    <div class="question">
+      <p>Please check the boxes of the words below that you remember hearing during the experiment:</p>
+      <input id="materials.b_1" type="checkbox" name="word_recall" value="materials.b_s_talker.a"><label for="materials.b_1">Episode</label></input><br/>
+      <input id="random_word_1" type="checkbox" name="word_recall" value="random_word_1"><label for="random_word_1">Mistaken</label></input><br/>
+      <input id="materials.a_1" type="checkbox" name="word_recall" value="materials.a_s_talker.b"><label for="materials.a_1">Parasite</label></input><br/>
+      <input id="materials.a_2" type="checkbox" name="word_recall" value="materials.a_sh_talker.a"><label for="materials.a_2">Ambition</label></input><br/>
+      <input id="materials.b_2" type="checkbox" name="word_recall" value="materials.b_s_talker.a"><label for="materials.b_2">Pregnancy</label></input><br/>
+      <input id="random_word_2" type="checkbox" name="word_recall" value="random_word_2"><label for="random_word_2">Delightful</label></input><br/>
+      <input id="random_word_3" type="checkbox" name="word_recall" value="random_word_3"><label for="random_word_3">January</label></input><br/>
+      <input id="materials.b_3" type="checkbox" name="word_recall" value="materials.b_sh_talker.b"><label for="materials.b_3">Impatient</label></input><br/>
+      <input id="materials.a_3" type="checkbox" name="word_recall" value="materials.a_s_talker.b"><label for="materials.a_3">Dinosaur</label></input><br/>
+      <input id="materials.b_4" type="checkbox" name="word_recall" value="materials.b_sh_talker.b"><label for="materials.b_4">Negotiate</label></input><br/>
+      <input id="materials.a_4" type="checkbox" name="word_recall" value="materials.a_sh_talker.a"><label for="materials.a_4">Graduation</label></input><br/>
+      <input id="random_word_4" type="checkbox" name="word_recall" value="random_word_4"><label for="random_word_4">Aromatic</label></input><br/>
+      <!-- Always keep an invisible checkbox with a NULL (or other reserved value) for checkboxes since FormData() used to
+           format the output for Proliferate by default omits unchecked checkboxes, and this can lead to issues not only
+           for that participants but also any subsequent participants recorded. Alternatively, we would have to add additional
+           javascript to catch these cases. See also https://www.tutorialspoint.com/post-unchecked-html-checkboxes
+      -->
+      <input id="materials_NULL" type="checkbox" name="word_recall" value="NULL"  style="display:none" checked></input>
+    </div>
+  </div>
+  <!-- End word recall -->
+
   <!-- General questions; The first question section should always be set to style display:visible; all others should be display:none -->
-  <div class="question_section" id="audio_type" style="display:visible">
+  <div class="question_section" id="audio_type" style="display:none">
     <div class="question">
       <p>What kind of <strong>audio equipment</strong> did you use for the experiment?</p>
       <input id="audio_type_inear" type="radio" name="audio_type" value="in-ear"><label for="audio_type_inear">In-ear headphones</label></input><br/>
@@ -102,32 +128,6 @@
     </div>
   </div>
   <!-- End unattended talker -->
-
-  <!-- Word recall -->
-  <div class="question_section" id="word_recall" style="display:none">
-    <div class="question">
-      <p>Please check the boxes of the words below that you remember hearing during the experiment:</p>
-      <input id="materials.b_1" type="checkbox" name="word_recall" value="materials.b_s_talker.a"><label for="materials.b_1">Episode</label></input><br/>
-      <input id="random_word_1" type="checkbox" name="word_recall" value="random_word_1"><label for="random_word_1">Mistaken</label></input><br/>
-      <input id="materials.a_1" type="checkbox" name="word_recall" value="materials.a_s_talker.b"><label for="materials.a_1">Parasite</label></input><br/>
-      <input id="materials.a_2" type="checkbox" name="word_recall" value="materials.a_sh_talker.a"><label for="materials.a_2">Ambition</label></input><br/>
-      <input id="materials.b_2" type="checkbox" name="word_recall" value="materials.b_s_talker.a"><label for="materials.b_2">Pregnancy</label></input><br/>
-      <input id="random_word_2" type="checkbox" name="word_recall" value="random_word_2"><label for="random_word_2">Delightful</label></input><br/>
-      <input id="random_word_3" type="checkbox" name="word_recall" value="random_word_3"><label for="random_word_3">January</label></input><br/>
-      <input id="materials.b_3" type="checkbox" name="word_recall" value="materials.b_sh_talker.b"><label for="materials.b_3">Impatient</label></input><br/>
-      <input id="materials.a_3" type="checkbox" name="word_recall" value="materials.a_s_talker.b"><label for="materials.a_3">Dinosaur</label></input><br/>
-      <input id="materials.b_4" type="checkbox" name="word_recall" value="materials.b_sh_talker.b"><label for="materials.b_4">Negotiate</label></input><br/>
-      <input id="materials.a_4" type="checkbox" name="word_recall" value="materials.a_sh_talker.a"><label for="materials.a_4">Graduation</label></input><br/>
-      <input id="random_word_4" type="checkbox" name="word_recall" value="random_word_4"><label for="random_word_4">Aromatic</label></input><br/>
-      <!-- Always keep an invisible checkbox with a NULL (or other reserved value) for checkboxes since FormData() used to
-           format the output for Proliferate by default omits unchecked checkboxes, and this can lead to issues not only
-           for that participants but also any subsequent participants recorded. Alternatively, we would have to add additional
-           javascript to catch these cases. See also https://www.tutorialspoint.com/post-unchecked-html-checkboxes
-      -->
-      <input id="materials_NULL" type="checkbox" name="word_recall" value="NULL"  style="display:none" checked></input>
-    </div>
-  </div>
-  <!-- End word recall -->
 
   <!-- General end questions -->
   <div class="question_section" id="timezones" style="display:none">

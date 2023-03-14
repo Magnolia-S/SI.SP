@@ -1,0 +1,6 @@
+workerid,proliferate.condition,speaker_unattended_pronun,error
+408,Condition.23_F_L_A_Sh_01_B_1_0,"normal,serious",
+420,Condition.12_F_L_A_S_05_A_1_1,normal,
+405,Condition.41_M_L_A_S_05_A_0_0,"normal,serious",
+430,Condition.43_M_L_A_S_05_A_1_0,"normal,serious",
+419,Condition.24_F_L_A_Sh_01_B_1_1,,Field speaker_unattended_pronun not present for participant!

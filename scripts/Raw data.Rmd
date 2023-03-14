@@ -1,0 +1,227 @@
+---
+title: "Experiment A Data Read-in"
+author: "Rachel"
+date: /today
+geometry: margin = 2cm
+header-includes:
+  - /usepackage{booktabs}
+  - /usepackage{siunitx}
+  - /usepackage{tabto}
+  - /usepackage{soul}
+  - /usepackage{xcolor}
+  - /usepackage{placeins}
+  - /usepackage{lscape}
+  - /usepackage{animate}
+  - /newcommand{/blandscape}{/begin{landscape}}
+  - /newcommand{/elandscape}{/end{landscape}}
+  - /makeatletter/renewcommand{/fps@table}{!ht}/makeatother
+  - /setstcolor{red}
+  - /usepackage{sectsty}
+  - /sectionfont{/color{blue}} 
+  - /subsectionfont{/color{blue}}
+  - /subsubsectionfont{/color{darkgray}}
+
+output:
+  pdf_document: 
+    fig_caption: yes
+    fig_width: 7
+    keep_tex: yes
+    latex_engine: xelatex
+    number_sections: yes
+    toc: yes
+    toc_depth: 4
+  fontsize: 10pt
+editor_options: 
+  chunk_output_type: inline
+---   
+***
+# Housekeeping   
+The purpose of this file is to create the lists for Experiment 1.  
+_Goal:_ To create csv files that contain the .wav filenames to be called for every possible block in Experiment A.  
+*Color file here: http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf*  
+*crtl + I for reformat*   
+
+## Knitting    
+```{r Knitting, include=F}
+
+library(knitr)
+
+opts_chunk$set(
+  dev = 'pdf',
+  comment = "", 
+  echo = FALSE, 
+  warning = TRUE, 
+  message = TRUE,
+  cache = FALSE, 
+  size = "small",
+  tidy.opts = list(width.cutoff = 200),
+  fig.width = 8, 
+  fig.height = 4.5, 
+  fig.align = "center")
+
+def.chunk.hook  <- knitr::knit_hooks$get("chunk")
+
+knitr::knit_hooks$set(
+  chunk = function(x, options) {
+    x <- def.chunk.hook(x, options)
+    ifelse(
+      options$size != "normalsize", 
+      paste0(
+        "/n //", 
+        options$size,
+        "/n/n", 
+        x, 
+        "/n/n //normalsize"), 
+      x)
+  })
+
+color_block = function(color) {
+  function(x, options)        sprintf('//color{%s}//begin{verbatim}%s//end{verbatim}//color{black}', color, x)
+}
+knitr::knit_hooks$set(error = color_block('red'))
+knitr::knit_hooks$set(warning = color_block('orange'))
+```
+
+## Libraries   
+```{r Library, include=F}
+library(tidyverse)
+library(magrittr)
+library(broom)          # for extraction of coefficients
+library(gganimate)      # to animate plots
+library(RColorBrewer)   # to select brewer colors
+library(kableExtra) 
+library(lme4)
+library(lmerTest)
+library(ggpubr)
+library(data.table)
+library(jsonlite)
+```
+
+```{r, Format, include=F}
+options(width = 110)
+theme_set(theme_bw())
+```
+_____
+
+```{r file.rename}
+Files <- list.files(path = "C:/Users/Rachel/Documents/SI.SP/data/Pilot_03.06_11/")
+
+for (f in Files) {
+  
+  old.files <- paste0(
+    "C:/Users/Rachel/Documents/SI.SP/data/Pilot_03.06_11/",
+    f) 
+  
+  f.new = gsub("PRPR", "PR", f)
+  
+  new.files <- paste0("C:/Users/Rachel/Documents/SI.SP/data/Pilot_03.06_11/", f.new)
+  
+  file.rename(old.files, new.files)
+}
+```
+
+``` {r simple concat, include = f}
+folder <- paste0("C:/Users/Rachel/Documents/SI.SP/x/")
+
+pilot.data <- fread("xxxx.csv")
+main.data <- fread("xxx.csv")
+
+data <- rbind(main.data, pilot.data, fill=TRUE)
+
+write.csv(data, "combo.csv")
+```
+
+```{r Concat Experiments}
+path <- paste0("C:/Users/Rachel/Documents/SI.SP/data")
+
+Exp.A <- list.files(
+  path = "C:/Users/Rachel/Documents/SI.SP/data", 
+  full.names = T,
+  pattern = "^Attention")
+  
+Pilot <- list.files(
+  path = "C:/Users/Rachel/Documents/SI.SP/data", 
+  pattern = "^Pilot_Attention")
+
+for (a in Exp.A){
+  A <- read.csv(a)
+  A
+  b <- gsub("Attention", "Pilot_Attention", a)  
+  B <- read.csv(b)
+  B
+  write.csv(rbind(A, B), a)
+}
+```  
+
+```{r}
+unlink("C:/Users/Rachel/Documents/SI.SP/data/*_Attention")
+```
+
+
+___________
+
+```{r}
+left_join(data, by = "workerid", copy = TRUE)
+
+```
+
+
+```{r}
+case_when (
+ (a in Experiment.A) == (b in Pilot)  
+  ~ write.csv(rbind((read.csv(a), read.csv(b)), a))
+
+```
+
+```{r}
+
+for (a in Experiment.A) { 
+  Exp.A_data <- read.csv(a)
+  
+ 
+ for (b in Pilot) {
+   Pilot_data <- read.csv(b)
+   
+   case_when(a == b 
+             ~ write.csv(rbind(Exp.A_data, Pilot_data), a))
+  }
+}
+```
+
+
+
+```{r Combine data}
+file.list <- list.files("C:/Users/Rachel/Documents/SI.SP/data", full.names = TRUE, pattern = ".csv")
+
+for (f in file.list) {
+   # Read each CSV file
+  data <- read_csv(f, show_col_types = FALSE)
+  
+  left_join(data, by = "workerid", copy = TRUE)
+}
+```
+
+             
+
+
+for (a in Exp.A) {
+  A <- read_csv(a,show_col_types = FALSE)
+  b <- find(a in Match)
+  B <- read_csv(b,show_col_types = FALSE)
+ view (B)
+}
+
+```
+  write.csv(rbind(A, B), a)
+csv_list <- lapply(csv_files, read_csv) %>%
+# Concatenate the data in each csv file into one combined data frame
+do.call(rbind, csv_list) %>%
+## Group files
+group_by(workerid) %>%
+  
+group_map(.f = ~ write_csv(.x, file = paste0("C:/Users/Rachel/Documents/SI.SP/data/new/worker.",  .y$workerid, ".csv")))
+```
+
+```{r}
+  csv.list = lapply(csv_files, read_csv,show_col_types = FALSE)
+```

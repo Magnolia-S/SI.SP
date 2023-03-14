@@ -51,18 +51,27 @@ formatData <- function(.data, experiment) {
     # Separate trial-level information into multiple columns
     separate(
       value,
-      into = c("Task", 
+      into = c("random_id",
+               "participant_id",
+               "experiment_id", 
                "Attended.Talker_Gender",
                "Attended.Talker_Ear",
                "Attended.Talker_Material",
                "Attended.Talker_Label",
                "Item.Filename", 
                "Response", 
-               "Correct.Response",
+               "PracticeResp",
+               "preloadResp",
+               "Word_recall",
+               "TestOrder",
+               "ExposureOrder",
+               "audio_type",
+               "audio_stall",
                "Time.StartOfStimulus", 
                "Time.EndOfTrial", 
                "Response.RT",
-               
+               "platform",
+               "comments"
                ),
       sep = ",") %>%
     
@@ -89,7 +98,8 @@ formatData <- function(.data, experiment) {
         cut(Trial, if (first(Phase) == "exposure") 8 else 6, labels = FALSE)) %>% # 8 and 6 should be replaced by the number of trials in each block of exposure and test, respectively
     ungroup() %>%
     mutate(
-     
+
+### What?
        # Extract item information
       REMOVE.Item = ifelse(
         grepl("\\-occluder", Item.Filename),
@@ -120,6 +130,8 @@ formatData <- function(.data, experiment) {
         Task == "test" ~ "identification",
         T ~ NA_character_
       )) %>%
+###  
+    
     # Get key character based on Gevher's reading of the JS code (labelingBlock.js)
                       # (and make sure that "B" responses lead to NAs in the Response variable)
                       mutate(

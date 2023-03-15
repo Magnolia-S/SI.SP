@@ -84,6 +84,8 @@ knitr::knit_hooks$set(warning = color_block('orange'))
 
 ## Libraries   
 ```{r Library, include=F}
+library(readr)
+library(dplyr)
 library(tidyverse)
 library(magrittr)
 library(broom)          # for extraction of coefficients
@@ -95,44 +97,62 @@ library(lmerTest)
 library(ggpubr)
 library(data.table)
 library(jsonlite)
+library(purrr)
 ```
 
 ```{r, Format, include=F}
 options(width = 110)
 theme_set(theme_bw())
 ```
-_____
 
+____
+
+# Remove Extra participants
+```{r}
+data <- list.files(
+  path = "C:/Users/Rachel/Documents/SI.SP/data", 
+  full.names = T,
+  pattern = "^Attention")
+
+for (f in data) {
+ Remove <- read.csv(f)
+    Removed.data <- subset(Remove,
+      E$workerid != "531" &
+      E$workerid != "533" &
+      E$workerid != "509" &
+      E$workerid != "534" &
+      E$workerid != "523" &
+      E$workerid != "517" &
+      E$workerid != "524" &
+      E$workerid != "521" &
+      E$workerid != "508"
+    )
+    write.csv(Removed.data, f)
+}
+```
+
+# File Rename   
 ```{r file.rename}
 Files <- list.files(path = "C:/Users/Rachel/Documents/SI.SP/data/Pilot_03.06_11/")
 
 for (f in Files) {
   
   old.files <- paste0(
-    "C:/Users/Rachel/Documents/SI.SP/data/Pilot_03.06_11/",
+    "C:/Users/Rachel/Documents/SI.SP/data/Experiment.A_03.15_9/",
     f) 
   
-  f.new = gsub("PRPR", "PR", f)
+  f.new = gsub("Attention_", "V2_Attention_", f)
   
-  new.files <- paste0("C:/Users/Rachel/Documents/SI.SP/data/Pilot_03.06_11/", f.new)
+  new.files <- paste0("C:/Users/Rachel/Documents/SI.SP/data/", f.new)
   
   file.rename(old.files, new.files)
 }
 ```
 
-``` {r simple concat, include = f}
-folder <- paste0("C:/Users/Rachel/Documents/SI.SP/x/")
+_______
 
-pilot.data <- fread("xxxx.csv")
-main.data <- fread("xxx.csv")
-
-data <- rbind(main.data, pilot.data, fill=TRUE)
-
-write.csv(data, "combo.csv")
-```
-
+# Combine CSVs across experiments
 ```{r Concat Experiments}
-path <- paste0("C:/Users/Rachel/Documents/SI.SP/data")
 
 Exp.A <- list.files(
   path = "C:/Users/Rachel/Documents/SI.SP/data", 
@@ -143,85 +163,85 @@ Pilot <- list.files(
   path = "C:/Users/Rachel/Documents/SI.SP/data", 
   pattern = "^Pilot_Attention")
 
+V2 <- list.files(
+  path = "C:/Users/Rachel/Documents/SI.SP/data", 
+  pattern = "^V2_Attention")
+
 for (a in Exp.A){
   A <- read.csv(a)
-  A
   b <- gsub("Attention", "Pilot_Attention", a)  
   B <- read.csv(b)
-  B
-  write.csv(rbind(A, B), a)
+  D <- rbind(A,B)
+  c <- gsub("Attention", "V2_Attention", a)
+  C <- read.csv(C)
+  
+  write.csv(rbind(C, D), a)
 }
+
+# lowercase: file name
+# uppercase: CSV file
+
+# A/a: Exp.A (53 participants)
+# B/b: Pilot (11 participants)
+# C/c: Exp.B (9 participants)
 ```  
 
+## Remove other file versions  
 ```{r}
-unlink("C:/Users/Rachel/Documents/SI.SP/data/*_Attention")
+Path <- "C:/Users/Rachel/Documents/SI.SP/data/"
+
+X <- list.files(
+  path = "C:/Users/Rachel/Documents/SI.SP/data", 
+  pattern = "_Attention")
+
+Remove.Files <- paste0(Path, X)
+
+file.remove(Remove.Files)
+
+# Also do not need data from these CSV files
+file.remove(
+  c(
+  "C:/Users/Rachel/Documents/SI.SP/data/Attention_PR-workerids.csv", 
+  "C:/Users/Rachel/Documents/SI.SP/data/Attention_PR-platform.csv")
+ # Note useful but keep for now "C:/Users/Rachel/Documents/SI.SP/data/Attention_PR-AttendedTalkerEar.csv",
+ # Note useful but keep for now "C:/Users/Rachel/Documents/SI.SP/data/Attention_PR-AttendedTalkerMaterial.csv"
+)
 ```
 
-
-___________
-
+## Remove unnecessary columns from individual files
 ```{r}
-left_join(data, by = "workerid", copy = TRUE)
+Exp.A <- list.files(
+  path = "C:/Users/Rachel/Documents/SI.SP/data", 
+  full.names = T,
+  pattern = "^Attention")
 
-```
-
-
-```{r}
-case_when (
- (a in Experiment.A) == (b in Pilot)  
-  ~ write.csv(rbind((read.csv(a), read.csv(b)), a))
-
-```
-
-```{r}
-
-for (a in Experiment.A) { 
-  Exp.A_data <- read.csv(a)
-  
- 
- for (b in Pilot) {
-   Pilot_data <- read.csv(b)
-   
-   case_when(a == b 
-             ~ write.csv(rbind(Exp.A_data, Pilot_data), a))
-  }
+for (a in Exp.A){
+  read.csv(a) %>%
+  select(-c("X","error","proliferate.condition"))
 }
 ```
 
-
-
+# Join data by workerid
 ```{r Combine data}
-file.list <- list.files("C:/Users/Rachel/Documents/SI.SP/data", full.names = TRUE, pattern = ".csv")
+file.list <- list.files(
+  "C:/Users/Rachel/Documents/SI.SP/data", 
+  full.names = TRUE, 
+  pattern = ".csv")
+
+# empty data frame for loop to store
+## Large enough to have a place for all workerids
+result <- data.frame(workerid = 405:600)
 
 for (f in file.list) {
-   # Read each CSV file
-  data <- read_csv(f, show_col_types = FALSE)
-  
-  left_join(data, by = "workerid", copy = TRUE)
+  Data <- read.csv(f) 
+  Data2 <- Data [,-1]
+  result <- left_join(result, Data2, by = "workerid") %>%
+    filter(!is.na(AttendedTalkerEar)) ## removes unused workerids
+  write.csv(
+    result, 
+    "C:/Users/Rachel/Documents/SI.SP/data/data.csv", 
+    row.names = FALSE)
 }
 ```
 
-             
 
-
-for (a in Exp.A) {
-  A <- read_csv(a,show_col_types = FALSE)
-  b <- find(a in Match)
-  B <- read_csv(b,show_col_types = FALSE)
- view (B)
-}
-
-```
-  write.csv(rbind(A, B), a)
-csv_list <- lapply(csv_files, read_csv) %>%
-# Concatenate the data in each csv file into one combined data frame
-do.call(rbind, csv_list) %>%
-## Group files
-group_by(workerid) %>%
-  
-group_map(.f = ~ write_csv(.x, file = paste0("C:/Users/Rachel/Documents/SI.SP/data/new/worker.",  .y$workerid, ".csv")))
-```
-
-```{r}
-  csv.list = lapply(csv_files, read_csv,show_col_types = FALSE)
-```

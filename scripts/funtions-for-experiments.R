@@ -21,23 +21,23 @@ formatData <- function(.data, experiment) {
                  practiceResp,
                  # Practice Trial = 4
                  # Unused trials are discarded below
-                 into = paste0("Practice_Trial", 1:4),
+                 into = paste0("Practice.Trial_", 1:10),
                  sep = ";",
                  fill = "right") 
        else . } %>%
-    { if ("exposureResp" %in% names(.)) # <--- This needs to change so that it gets ALL exposure blocks ("exposure1Resp", etc.)
+    { if ("exposure[0-9][0-9]Resp" %in% names(.)) # <--- This needs to change so that it gets ALL exposure blocks ("exposure1Resp", etc.)
       separate(.,
                exposureResp,
                # Exposure Trials = 60
                # Unused trials are discarded below
-               into = paste0("Exposure_Trial", 1:60),
+               into = paste0("Exposure_Trial.", 1:60),
                sep = ";",
                fill = "right") 
       else . } %>%
-    { if ("testResp" %in% names(.)) # <--- This needs to change so that it gets ALL test blocks ("test20Resp", etc.)
+    { if ("test[0-9][0-9]Resp" %in% names(.)) # <--- This needs to change so that it gets ALL test blocks ("test20Resp", etc.)
     separate(.,
       testResp,
-      into = paste0("Test_Trial", 1:72),
+      into = paste0("Test_Trial.", 1:72),
       sep = ";") else . } %>%
     pivot_longer(
       cols = contains("_Trial"), 
@@ -99,7 +99,9 @@ formatData <- function(.data, experiment) {
     ungroup() %>%
     mutate(
 
-### What?
+      
+### CHANGE !!!
+      
        # Extract item information
       REMOVE.Item = ifelse(
         grepl("\\-occluder", Item.Filename),
@@ -107,20 +109,34 @@ formatData <- function(.data, experiment) {
         gsub("^(.*)\\.(webm|mp4)$", "\\1", Item.Filename)),
 
       # All of the stuff below this line needs to be adjusted to parse your filename into info about this trial/item
-      Item.Pen = ifelse(grepl("M", REMOVE.Item), "mouth", "hand"),
+     
+     
+      
+      # Critical
+      Critical.Item = ("^Critical_\\.csv", Item.Filename)
+        
+      
+      # Filler
+      Filler.Item = grepl("^Filler_\\.csv", REMOVE.Item)
+      ifelse(Filler.Item grepl("W", Item), "mouth", "hand"),
+    
+      # Test
+      Test.Item = ("^Test_\\.csv", REMOVE.Item)
       
       Item.Type = ifelse(Phase == "test", "test", gsub("^([A-Z]+)[0-9]+.*$", "\\1", REMOVE.Item)),
       
       CHECK.Item.Label = case_when(
-        Item.Type == "AS" ~ "S",
-        Item.Type == "ASH" ~ "SH", 
+        Item.Type == "As" ~ "S",
+        Item.Type == "Ash" ~ "Sh", 
         T ~ NA_character_),
-      Item.WordStatus = ifelse(Item.Type %in% c("test", "filler"), "non-word", "word"),
+      Item.WordStatus = ifelse(Item.Type %in% c("Critical", "filler"), "non-word", "word"),
       Item.Type = case_when(
-        Item.Type %in% c("FN", "F") ~ "filler",
-        Item.Type %in% c("S", "SH") ~ "typical",
-        Item.Type %in% c("AS", "ASH") ~ "shifted",
+        Item.Type %in% c("W", "N") ~ "filler",
+        
+        Item.Type %in% c("S", "sh") ~ "typical",
+        Item.Type %in% c("As", "Ash") ~ "shifted",
         T ~ Item.Type),
+      
       ItemID = ifelse(Phase == "test", 
                       gsub("^.*(Frame[0-9]+)\\-.*$", "\\1", REMOVE.Item), 
                       gsub("^A?([A-Z]+[0-9]+)[A-Z].*$", "\\1", REMOVE.Item)),
@@ -135,18 +151,31 @@ formatData <- function(.data, experiment) {
     # Get key character based on Gevher's reading of the JS code (labelingBlock.js)
                       # (and make sure that "B" responses lead to NAs in the Response variable)
                       mutate(
-                        Response = ifelse(Response == "", NA, Response),
+                        Response = ifelse(Response == "NO RESPONSE PROVIDED", NA, Response),
                         Response.Keycode.Character = case_when(
                           Response.Keycode == "77" ~ "M",
                           Response.Keycode == "88" ~ "X",
                           T ~ NA_character_),
-                        Response.CorrectWordStatus = case_when(
-                          Phase == "test" ~ NA_real_,
-                          is.na(Response) ~ NA_real_,
+  
+### Change!!!                      
+                         Response.CorrectWordStatus = case_when(
+                           
+                           item.type == "Critical" 
+                           ~ "word"
+                           
+                           item.type == "Filler" &
+                           "Attended.Talker_Gender" == M
+                           ~ 
+                          
+                          
+                          Phase == "test" ~ NA_real_ %>%
+              
                           as.character(Response) == as.character(Item.WordStatus) ~ 1,
                           as.character(Response) != as.character(Item.WordStatus) ~ 0,
                           T ~ NA_real_)) %>%
-                        # Add time information based on assignment submit time
+###                    
+    
+                     # Add time information based on assignment submit time
                         { if ("userDateTimeOffset" %in% names(.)) 
                           dplyr::rename(., Assignment.Submit.DateTime.UserLocalTime.OffsetFromUTC = userDateTimeOffset) else 
                             mutate(., Assignment.Submit.DateTime.UserLocalTime.OffsetFromUTC = NA) } %>%
@@ -157,7 +186,8 @@ formatData <- function(.data, experiment) {
                           mutate(.,
                                  Assignment.Submit.DateTime.UserLocalTime = Assignment.Submit.DateTime.UTC - minutes(Assignment.Submit.DateTime.UserLocalTime.OffsetFromUTC),
                                  Assignment.Submit.DuringDayTime = ifelse(between(hour(Assignment.Submit.DateTime.UserLocalTime), 7, 21), T, F)) %>%
-                            # Get durational measures (in minutes)
+                      
+                       # Get durational measures (in minutes)
                             group_by(ParticipantID) %>%
                             mutate(
                               Duration.Assignment = difftime(Assignment.Submit.DateTime.UTC, Assignment.Accept.DateTime.UTC, units = "mins")) %>%
@@ -172,6 +202,7 @@ formatData <- function(.data, experiment) {
                                        AssignmentID),
                                   factor) %>%
                         mutate(
+                          
                           # Make factor levels
                           ItemID = # fill in,
                             Item.Type = factor(Item.Type, levels = levels.Item.Type),
@@ -192,7 +223,8 @@ formatData <- function(.data, experiment) {
                         mutate(
                           Duration.AllPhases = (max(Time.EndOfTrial) - min(Time.StartOfStimulus)) / 60000) %>%
                         ungroup() %>%
-                        # Remove unnecessary columns and order remaining columns
+                    
+                     # Remove unnecessary columns and order remaining columns
                         select(
                           -starts_with("CHECK"),
                           -starts_with("REMOVE")) %>%
@@ -201,3 +233,4 @@ formatData <- function(.data, experiment) {
                       
                       return(.data)
 }
+

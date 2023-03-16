@@ -19,22 +19,22 @@ formatData <- function(.data, experiment) {
      { if ("practiceResp" %in% names(.))     
         separate(., 
                  practiceResp,
-                 # Practice Trial = 4
+                 # Practice Trial = unlimted, should be no more than 4
                  # Unused trials are discarded below
                  into = paste0("Practice.Trial_", 1:10),
                  sep = ";",
                  fill = "right") 
        else . } %>%
-    { if ("exposure[0-9][0-9]Resp" %in% names(.)) # <--- This needs to change so that it gets ALL exposure blocks ("exposure1Resp", etc.)
+    { if ("exposure//Resp" %in% names(.)) # <--- This needs to change so that it gets ALL exposure blocks ("exposure1Resp", etc.)
       separate(.,
                exposureResp,
-               # Exposure Trials = 60
+               # Exposure Trials = 80
                # Unused trials are discarded below
-               into = paste0("Exposure_Trial.", 1:60),
+               into = paste0("Exposure_Trial.", 1:80),
                sep = ";",
                fill = "right") 
       else . } %>%
-    { if ("test[0-9][0-9]Resp" %in% names(.)) # <--- This needs to change so that it gets ALL test blocks ("test20Resp", etc.)
+    { if ("test//Resp" %in% names(.)) # <--- This needs to change so that it gets ALL test blocks ("test20Resp", etc.)
     separate(.,
       testResp,
       into = paste0("Test_Trial.", 1:72),
@@ -48,7 +48,7 @@ formatData <- function(.data, experiment) {
     # Remove empty final trial from each phase, as well as all unused practice trials (which are NA)
     filter(value != "" & !is.na(value)) %>%
     
-    # Separate trial-level information into multiple columns
+    # Separate *trial-level* information into multiple columns
     separate(
       value,
       into = c("random_id",
@@ -75,6 +75,7 @@ formatData <- function(.data, experiment) {
                ),
       sep = ",") %>%
     
+    ### ???
     # Add Experiment information
     mutate(Experiment = experiment) %>%
     
@@ -89,8 +90,10 @@ formatData <- function(.data, experiment) {
    
     # Make Trial numerical
     mutate(Trial = as.numeric(Trial)) %>%
+    
    
      # Create block variable (1-10 for exposure, 1-12 for test)
+    ### My trial-level data is already grouped by block
     group_by(Phase) %>% 
     mutate(
       Phase = factor(tolower(Phase), levels = levels.Phase),
@@ -102,8 +105,20 @@ formatData <- function(.data, experiment) {
       
 ### CHANGE !!!
       
-       # Extract item information
-      REMOVE.Item = ifelse(
+    # remove .wav from the file name
+     Item = gsub("*.wav$", "", Item.Filename),
+     
+    # Item types
+    Critical.Item = 
+    
+    Filler.Item = 
+    
+    Test.Item =   
+     
+     
+      
+      # Extract item information
+       REMOVE.Item = ifelse(
         grepl("\\-occluder", Item.Filename),
         gsub("^(.*)\\-occluder\\.(webm|mp4)$", "\\1", Item.Filename),
         gsub("^(.*)\\.(webm|mp4)$", "\\1", Item.Filename)),

@@ -107,7 +107,8 @@ theme_set(theme_bw())
 
 ____
 
-# Remove Extra participants
+# Remove Extra participants  
+## I work but am not needed  
 ```{r}
 data <- list.files(
   path = "C:/Users/Rachel/Documents/SI.SP/data", 

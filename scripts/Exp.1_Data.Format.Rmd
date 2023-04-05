@@ -1,0 +1,248 @@
+---
+title: "Experiment A Data Read-in"
+author: "Rachel"
+date: /today
+geometry: margin = 2cm
+header-includes:
+  - /usepackage{booktabs}
+  - /usepackage{siunitx}
+  - /usepackage{tabto}
+  - /usepackage{soul}
+  - /usepackage{xcolor}
+  - /usepackage{placeins}
+  - /usepackage{lscape}
+  - /usepackage{animate}
+  - /newcommand{/blandscape}{/begin{landscape}}
+  - /newcommand{/elandscape}{/end{landscape}}
+  - /makeatletter/renewcommand{/fps@table}{!ht}/makeatother
+  - /setstcolor{red}
+  - /usepackage{sectsty}
+  - /sectionfont{/color{blue}} 
+  - /subsectionfont{/color{blue}}
+  - /subsubsectionfont{/color{darkgray}}
+
+output:
+  pdf_document: 
+    fig_caption: yes
+    fig_width: 7
+    keep_tex: yes
+    latex_engine: xelatex
+    number_sections: yes
+    toc: yes
+    toc_depth: 4
+  fontsize: 10pt
+editor_options: 
+  chunk_output_type: inline
+---   
+***
+# Housekeeping   
+The purpose of this file is to format the data collected in Exp.1 .  
+_Goal:_ Use the functions-for-experiment-reports script to convert the data collected from Prolific into an accessible form.  
+*Color file here: http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf*  
+*crtl + I for reformat*   
+
+## Knitting    
+```{r Knitting, include=F}
+
+library(knitr)
+
+opts_chunk$set(
+  dev = 'pdf',
+  comment = "", 
+  echo = FALSE, 
+  warning = TRUE, 
+  message = TRUE,
+  cache = FALSE, 
+  size = "small",
+  tidy.opts = list(width.cutoff = 200),
+  fig.width = 8, 
+  fig.height = 4.5, 
+  fig.align = "center")
+
+def.chunk.hook  <- knitr::knit_hooks$get("chunk")
+
+knitr::knit_hooks$set(
+  chunk = function(x, options) {
+    x <- def.chunk.hook(x, options)
+    ifelse(
+      options$size != "normalsize", 
+      paste0(
+        "/n //", 
+        options$size,
+        "/n/n", 
+        x, 
+        "/n/n //normalsize"), 
+      x)
+  })
+
+color_block = function(color) {
+  function(x, options)        sprintf('//color{%s}//begin{verbatim}%s//end{verbatim}//color{black}', color, x)
+}
+knitr::knit_hooks$set(error = color_block('red'))
+knitr::knit_hooks$set(warning = color_block('orange'))
+```
+
+## Libraries   
+```{r Library, include=F}
+library(readr)
+library(dplyr)
+library(tidyverse)
+library(magrittr)
+library(broom)          # for extraction of coefficients
+library(gganimate)      # to animate plots
+library(RColorBrewer)   # to select brewer colors
+library(kableExtra) 
+library(lme4)
+library(lmerTest)
+library(ggpubr)
+library(data.table)
+library(jsonlite)
+library(purrr)
+```
+
+```{r, Format, include=F}
+options(width = 110)
+theme_set(theme_bw())
+```
+
+____
+
+# Remove Extra participants  
+## I work but am not needed  
+```{r}
+data <- list.files(
+  path = "C:/Users/Rachel/Documents/SI.SP/data", 
+  full.names = T,
+  pattern = "^Attention")
+
+for (f in data) {
+ Remove <- read.csv(f)
+    Removed.data <- subset(Remove,
+      E$workerid != "531" &
+      E$workerid != "533" &
+      E$workerid != "509" &
+      E$workerid != "534" &
+      E$workerid != "523" &
+      E$workerid != "517" &
+      E$workerid != "524" &
+      E$workerid != "521" &
+      E$workerid != "508"
+    )
+    write.csv(Removed.data, f)
+}
+```
+
+# File Rename   
+```{r file.rename}
+Files <- list.files(path = "C:/Users/Rachel/Documents/SI.SP/data/Pilot_03.06_11/")
+
+for (f in Files) {
+  
+  old.files <- paste0(
+    "C:/Users/Rachel/Documents/SI.SP/data/Experiment.A_03.15_9/",
+    f) 
+  
+  f.new = gsub("Attention_", "V2_Attention_", f)
+  
+  new.files <- paste0("C:/Users/Rachel/Documents/SI.SP/data/", f.new)
+  
+  file.rename(old.files, new.files)
+}
+```
+
+_______
+
+# Combine CSVs across experiments
+```{r Concat Experiments}
+
+Exp.A <- list.files(
+  path = "C:/Users/Rachel/Documents/SI.SP/data", 
+  full.names = T,
+  pattern = "^Attention")
+  
+Pilot <- list.files(
+  path = "C:/Users/Rachel/Documents/SI.SP/data", 
+  pattern = "^Pilot_Attention")
+
+V2 <- list.files(
+  path = "C:/Users/Rachel/Documents/SI.SP/data", 
+  pattern = "^V2_Attention")
+
+for (a in Exp.A){
+  A <- read.csv(a)
+  b <- gsub("Attention", "Pilot_Attention", a)  
+  B <- read.csv(b)
+  D <- rbind(A,B)
+  c <- gsub("Attention", "V2_Attention", a)
+  C <- read.csv(C)
+  
+  write.csv(rbind(C, D), a)
+}
+
+# lowercase: file name
+# uppercase: CSV file
+
+# A/a: Exp.A (53 participants)
+# B/b: Pilot (11 participants)
+# C/c: Exp.B (9 participants)
+```  
+
+## Remove other file versions  
+```{r}
+Path <- "C:/Users/Rachel/Documents/SI.SP/data/"
+
+X <- list.files(
+  path = "C:/Users/Rachel/Documents/SI.SP/data", 
+  pattern = "_Attention")
+
+Remove.Files <- paste0(Path, X)
+
+file.remove(Remove.Files)
+
+# Also do not need data from these CSV files
+file.remove(
+  c(
+  "C:/Users/Rachel/Documents/SI.SP/data/Attention_PR-workerids.csv", 
+  "C:/Users/Rachel/Documents/SI.SP/data/Attention_PR-platform.csv")
+ # Note useful but keep for now "C:/Users/Rachel/Documents/SI.SP/data/Attention_PR-AttendedTalkerEar.csv",
+ # Note useful but keep for now "C:/Users/Rachel/Documents/SI.SP/data/Attention_PR-AttendedTalkerMaterial.csv"
+)
+```
+
+## Remove unnecessary columns from individual files
+```{r}
+Exp.A <- list.files(
+  path = "C:/Users/Rachel/Documents/SI.SP/data", 
+  full.names = T,
+  pattern = "^Attention")
+
+for (a in Exp.A){
+  read.csv(a) %>%
+  select(-c("X","error","proliferate.condition"))
+}
+```
+
+# Join data by workerid
+```{r Combine data}
+file.list <- list.files(
+  "C:/Users/Rachel/Documents/SI.SP/data", 
+  full.names = TRUE, 
+  pattern = ".csv")
+
+# empty data frame for loop to store
+## Large enough to have a place for all workerids
+result <- data.frame(workerid = 405:600)
+
+for (f in file.list) {
+  Data <- read.csv(f) 
+  Data2 <- Data [,-1]
+  result <- left_join(result, Data2, by = "workerid") %>%
+    filter(!is.na(AttendedTalkerEar)) ## removes unused workerids
+  write.csv(
+    result, 
+    "C:/Users/Rachel/Documents/SI.SP/data/data.csv", 
+    row.names = FALSE)
+}
+```
+
+

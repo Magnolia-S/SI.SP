@@ -1939,9 +1939,8 @@ mutate(
   
 select(c(name, experiment_URL, participants)) %>%
 
-write_json(path = paste0("C:/Users/Rachel/Documents/SI.SP/Attention_PR.config"), pretty = TRUE)
+#write_json(path = paste0("C:/Users/Rachel/Documents/SI.SP/Attention_PR.config"), pretty = TRUE)
+
+write_csv(file = paste0("C:/Users/Rachel/Documents/SI.SP/experiment.csv"))
 ```
-
-write_csv(file = paste0("C:/Users/Rachel/Documents/SI.SP/experiment-A.csv"))
-
 

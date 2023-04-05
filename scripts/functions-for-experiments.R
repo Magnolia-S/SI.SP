@@ -49,8 +49,10 @@ formatData <- function(.data, experiment) {
       names_to = c("Phase", "Trial"),
       names_pattern = "(.*)_Trial(.*)"
     ) %>%
+    
     # Remove empty final trial from each phase, as well as all unused practice trials (which are NA)
     filter(value != "" & !is.na(value)) %>%
+    
     # Separate *trial-level* information into multiple columns
     separate(
       value,
@@ -90,6 +92,9 @@ formatData <- function(.data, experiment) {
     rename_at(
       vars(starts_with("rsrb")), 
       ~ gsub("rsrb\\.([a-z])", "Participant\\.\\U\\1", .x, perl = T)) %>%
+    
+   mutate(Filename = case_when(Filename == "Filler_W.Heroine.F.L_M.Neramgory.M.R.wav" ~ gsub("M.N", "N.N", Filename), T ~ Filename)) %>%
+    
     # Item.Type = Critical/Filler/Test
     mutate(Item.Type = case_when(Response == "word" | Response == "non-word" ~ str_replace(Filename, "(.*)_.*_.*\\.wav$", "\\1"),
                                  Response == "ASI" | Response == "ASHI" ~ str_replace(Filename, "(.*)_.*\\.wav$", "\\1")),
@@ -98,6 +103,7 @@ formatData <- function(.data, experiment) {
            Talker.R = case_when(Item.Type == "Critical" | Item.Type == "Filler" ~ str_replace(Filename, ".*_.*_(.*)\\.wav$", "\\1"),
                                 Item.Type != "Critical" | Item.Type != "Filler" ~ NA),
            Talker.Test = ifelse(Item.Type == "Test", str_replace(Filename, ".*_(.*)\\.wav$", "\\1"), NA),
+           
            # Left Talker
            Talker.L_Label = str_replace(Talker.L, "(.*)\\..*\\..*\\.L", "\\1"),
            Talker.L_Item.Version = case_when(Talker.L_Label == "As" | Talker.L_Label == "Ash" ~ "Shifted",
@@ -112,6 +118,7 @@ formatData <- function(.data, experiment) {
            Talker.L_Gender = str_replace(Talker.L, ".*\\..*\\.(.*).L", "\\1"),
            Talker.L_Gender = case_when(Talker.L_Gender == "M" ~ "Male", Talker.L_Gender == "F" ~ "Female"),
            
+           
            # Right Talker
            Talker.R_Label = str_replace(Talker.R, "(.*)\\..*\\..*.R", "\\1"),
            Talker.R_Item.Version = case_when(Talker.R_Label == "As" | Talker.R_Label == "Ash" ~ "Shifted",
@@ -125,11 +132,11 @@ formatData <- function(.data, experiment) {
            Talker.R_Item = str_replace(Talker.R, ".*\\.(.*)\\..*.R", "\\1"),
            Talker.R_Gender = str_replace(Talker.R, ".*\\..*\\.(.*).R", "\\1"),
            Talker.R_Gender = case_when(Talker.R_Gender == "M" ~ "Male",Talker.R_Gender == "F" ~ "Female"),
-
+           
            # Test Talker
-           Talker.Test_Gender = str_replace(Talker.Test, "(.*)\\.ashi\\.\\d{2}", "\\1"),
-           Talker.Test_Item = str_replace(Talker.Test, ".*\\.(.*)$", "\\1"),
-           Talker.Test_Item = str_replace(Talker.Test, ".*\\.(.*)$", "\\1"),
+           Talker.Test_Gender = str_replace(Talker.Test, "^(.*)\\.ashi\\.\\d{2}$", "\\1"),
+           Talker.Test_Item = str_replace(Talker.Test, "^.*\\.(ashi\\.\\d{2})$", "\\1"),
+           
            # Attended Talker
            Attended.Talker = case_when(Talker.Test_Gender == "M" ~ "Male",
                                        Talker.Test_Gender == "F" ~ "Female",
@@ -147,22 +154,26 @@ formatData <- function(.data, experiment) {
            # Attended Item 
            Attended.Talker_Item = case_when(Attended.Talker == "Talker.L" ~ Talker.L_Item,
                                             Attended.Talker == "Talker.R" ~ Talker.R_Item,
+                                            Phase == "Test" ~ Talker.Test_Item,
                                             T ~ "NA"),
            # Attended Gender
-           Attended.Talker_Gender =  case_when(Attended.Talker == "Talker.L" ~ Talker.L_Gender, 
+           Attended.Talker_Gender =  case_when(Phase == "Test" & Talker.Test_Gender == "M" ~ "Male",
+                                               Phase == "Test" & Talker.Test_Gender == "F" ~ "Female",
+                                               Attended.Talker == "Talker.L" ~ Talker.L_Gender, 
                                                Attended.Talker == "Talker.R" ~ Talker.R_Gender,
                                                T ~ "NA"), 
            # Attended Ear
            Attended.Talker_Ear = case_when(Attended.Talker == "Talker.L" ~ "Left", 
                                            Attended.Talker == "Talker.R" ~ "Right", 
                                            T ~ "NA"), 
+           
            # Unattended Talker
            Unattended.Talker = case_when(AttendedTalkerGender == "M" & Talker.L_Gender == "Male" ~ "Talker.R",
                                          AttendedTalkerGender == "F" & Talker.L_Gender == "Female" ~ "Talker.R",
                                          AttendedTalkerGender == "M" & Talker.L_Gender == "Female" ~ "Talker.L",
                                          AttendedTalkerGender == "F" & Talker.L_Gender == "Male" ~ "Talker.L",
                                          T ~ "NA"), 
-           # Attended Version
+           # Unattended Version
            Unattended.Talker_Version = case_when(Attended.Talker == "Talker.L" ~ Talker.R_Item.Version, 
                                                  Attended.Talker == "Talker.R" ~ Talker.L_Item.Version,
                                                  T ~ "NA"),
@@ -187,8 +198,23 @@ formatData <- function(.data, experiment) {
                                        Item.Type == "Critical" & Response == "word" ~ "True",
                                        Attended.Talker_Sound == "Word" & Response == "word" ~ "True", 
                                        Attended.Talker_Sound == "Nonword" & Response == "non-word" ~ "True",
-                                       T ~ "False")) %>% 
+                                       T ~ "False")) %>%
+    
     # -------------------------------------------
+          
+          # Correct Response Attended Sex
+          mutate(
+            speaker_attended_sex = case_when(
+              speaker_attended_sex == "male" ~ "Male",
+              speaker_attended_sex == "female" ~ "Female",
+              T ~ NA
+            ),
+            
+            Correct_Attended.Talker = case_when(
+             Phase != "Test" &  speaker_attended_sex == Attended.Talker_Gender ~ "True", 
+             Phase == "Test" ~ "True",
+             T ~ "False")
+            ) %>%
   
   # Get key character based on Gevher's reading of the JS code (labelingBlock.js)
   # (and make sure that "B" responses lead to NAs in the Response variable)

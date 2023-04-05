@@ -1,0 +1,317 @@
+---
+title: "Experiment A List Design"
+author: "Rachel"
+date: /today
+geometry: margin = 2cm
+header-includes:
+  - /usepackage{booktabs}
+  - /usepackage{siunitx}
+  - /usepackage{tabto}
+  - /usepackage{soul}
+  - /usepackage{xcolor}
+  - /usepackage{placeins}
+  - /usepackage{lscape}
+  - /usepackage{animate}
+  - /newcommand{/blandscape}{/begin{landscape}}
+  - /newcommand{/elandscape}{/end{landscape}}
+  - /makeatletter/renewcommand{/fps@table}{!ht}/makeatother
+  - /setstcolor{red}
+  - /usepackage{sectsty}
+  - /sectionfont{/color{blue}} 
+  - /subsectionfont{/color{blue}}
+  - /subsubsectionfont{/color{darkgray}}
+
+output:
+  pdf_document: 
+    fig_caption: yes
+    fig_width: 7
+    keep_tex: yes
+    latex_engine: xelatex
+    number_sections: yes
+    toc: yes
+    toc_depth: 4
+  fontsize: 10pt
+editor_options: 
+  chunk_output_type: inline
+---   
+***
+# Housekeeping   
+The purpose of this file is to analyze the data collected in Experiment 1.  
+_Goal:_ To determine how participant's adapted their perception to the Attended and Unattended Talkers.  
+*Color file here: http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf*  
+*crtl + I for reformat*   
+
+## Knitting    
+```{r Knitting, include=F}
+
+library(knitr)
+
+opts_chunk$set(
+  dev = 'pdf',
+  comment = "", 
+  echo = FALSE, 
+  warning = TRUE, 
+  message = TRUE,
+  cache = FALSE, 
+  size = "small",
+  tidy.opts = list(width.cutoff = 200),
+  fig.width = 8, 
+  fig.height = 4.5, 
+  fig.align = "center")
+
+def.chunk.hook  <- knitr::knit_hooks$get("chunk")
+
+knitr::knit_hooks$set(
+  chunk = function(x, options) {
+    x <- def.chunk.hook(x, options)
+    ifelse(
+      options$size != "normalsize", 
+      paste0(
+        "/n //", 
+        options$size,
+        "/n/n", 
+        x, 
+        "/n/n //normalsize"), 
+      x)
+  })
+
+color_block = function(color) {
+  function(x, options)        sprintf('//color{%s}//begin{verbatim}%s//end{verbatim}//color{black}', color, x)
+}
+knitr::knit_hooks$set(error = color_block('red'))
+knitr::knit_hooks$set(warning = color_block('orange'))
+```
+
+## Libraries   
+```{r Library, include=F}
+library(readr)
+library(dplyr)
+library(tidyverse)
+library(magrittr)
+library(broom)          # for extraction of coefficients
+library(gganimate)      # to animate plots
+library(RColorBrewer)   # to select brewer colors
+library(kableExtra) 
+library(lme4)
+library(lmerTest)
+library(ggpubr)
+library(data.table)
+library(jsonlite)
+library(purrr)
+```
+
+```{r, Format, include=F}
+options(width = 110)
+theme_set(theme_bw())
+```
+_____
+```{r}
+## Altered the sortVars function to accommodate my data 
+sortVars <- function(.data) {
+  .data %>%
+    relocate(
+      ParticipantID,
+      Phase,
+      Block,
+      Trial,
+      starts_with("Item."), 
+      Response,
+      Response.Correct,
+      Attended.Talker_Item,
+      Attended.Talker_Gender,
+      Attended.Talker_Ear,
+      Attended.Talker_Sound,
+      starts_with("Attended.Talker"),
+      Unattended.Talker_Item,
+      Unattended.Talker_Gender,
+      Unattended.Talker_Ear,
+      Unattended.Talker_Sound,
+      starts_with("Unattended.Talker"),
+      Filename,
+      Correct_Attended.Talker,
+      ExposureOrder,
+      TestOrder,
+      TrialOrder,
+      starts_with("AttendedTalker"),
+      starts_with("resp"),
+      starts_with("Response"),
+      starts_with("speaker_"),
+      Assignment.Comment,
+      starts_with("Participant."), 
+      starts_with("audio_"),
+      starts_with("Duration"),
+      starts_with("Time"),
+      starts_with("Assignment.Submit"),
+      userDateTimeAtSubmit,
+      userDateTimeAtInitialization,
+      userAgent,
+      word_recall,
+      participant_id,
+      everything())
+}
+```
+
+
+```{r}
+experiment = "experiment.a"
+  read_csv(
+    "C:/Users/Rachel/Documents/SI.SP/data/experiment.a/Exp.1_raw.csv",
+    show_col_types = FALSE) %>%
+
+formatData(experiment) %>%
+sortVars() %>%
+  view()
+  # write.csv(., "C:/Users/Rachel/Documents/SI.SP/data/experiment.a/Exp.1_data.csv")
+```
+
+```{r store data}
+data <- read_csv("C:/Users/Rachel/Documents/SI.SP/data/experiment.a/Exp.1_data.csv",
+    show_col_types = FALSE)
+```
+
+# Check  
+## Have any participants completed the experiment more than once?  
+```{r}
+data %>%
+  group_by(ParticipantID, userDateTimeAtInitialization) %>%
+  summarise() %>%
+  group_by(ParticipantID) %>%
+  tally() %>% filter(n != 1)
+```
+
+## Are there the right number of Blocks?  
+```{r Check number of blocks}
+data %>%
+  group_by(ParticipantID, Block) %>%
+  summarise() %>%   
+  tally() %>%
+  group_by(ParticipantID) %>%
+ filter(n != 23)
+```
+
+## Are there the right number of trials per block?  
+```{r Trials/Block}
+data %>%
+  group_by(ParticipantID, Phase, Block, Trial) %>%
+  summarise() %>%   
+  tally() %>%
+  group_by(ParticipantID) %>%
+ filter(n != 1) %>%
+ filter(n != 6) %>%
+ filter(n != 8)
+```
+
+```{r Correct # of Filler and Critical trials per exposure block}
+data %>%
+  group_by(ParticipantID, Phase, Block, Item.Type, Trial) %>%
+  summarise() %>%   
+  tally() %>%
+  filter(Phase == "Exposure") %>%
+  filter(Item.Type == "Critical" & n != 2 | 
+         Item.Type == "Filler" & n != 6)
+```
+
+```{r Correct # Test trials per test block}
+data %>%
+  group_by(ParticipantID, Phase, Block, Trial) %>%
+  summarise() %>%   
+  tally() %>%
+  filter(Phase == "Test") %>%
+  filter(n != 6)
+```
+
+### Average Participant Age
+```{r age}
+x <- data %>%
+  group_by(ParticipantID, Participant.Age) %>%
+  filter(Participant.Age != "NA") %>%
+  summarize()
+
+mean(x$Participant.Age)
+sd(x$Participant.Age)
+```
+
+# Exclusions  
+```{r Attended Talker Check}
+# Reported Attending to the wrong talker
+data %>%
+  group_by(ParticipantID, Correct_Attended.Talker) %>%
+  filter(Correct_Attended.Talker != "TRUE") %>%
+  tally() %>%
+  summarize() 
+
+## 1 participant (P.533) excluded due to incorrectly responding which talker they were attending to during the exposure phase
+data.A <- data %>%
+    group_by(ParticipantID, Correct_Attended.Talker) %>%
+    filter(Correct_Attended.Talker != "False")
+```
+
+```{r Equipment Check}
+# Reported using incorrect equipment 
+data.A %>%
+  group_by(ParticipantID, audio_type) %>%
+  filter(audio_type != "in-ear") %>%
+  filter(audio_type != "over-ear") %>%
+  summarise()
+
+## 1 participant (P. 454) excluded due to reporting they used external laptop speakers during the experiment
+data.B <- data.A %>%
+  group_by(ParticipantID, audio_type) %>%
+  filter(audio_type != "computer speakers") 
+```
+
+
+```{r Correct Response Check}
+# Correct Responses
+Response.False <- data.B %>%
+  group_by(ParticipantID, Phase, Response.Correct) %>%
+  filter(Phase != "Practice") %>%  ## Remove the practice trials
+  filter(Response.Correct == "FALSE") %>%
+  tally()
+
+# Total_Exposure.Items <- 80; 50% of 80 trials is 40
+
+avg_Response.False <- mean(Response.False$n)
+avg_Response.False
+
+sd_Response.False <- sd(Response.False$n)
+sd_Response.False
+
+(sd_Response.False * 3) + avg_Response.False  ## validate correct response exclusion criteria ?
+
+Response.False %>%
+  filter(n >= 40) %>%
+  summarise()
+
+## 1 participant (P.467) excluded for incorrectly answering more than half of the exposure trials
+data.C <- 
+  data.B %>%
+  filter(ParticipantID != 467)
+```
+## Experiment Duration ? <- Does not match Prolific data  
+```{r}
+Exp.time <- data.C %>%
+  group_by(ParticipantID, Duration.AllPhases)
+  
+mean(Exp.time$Duration.AllPhases)
+sd(Exp.time$Duration.AllPhases)
+
+## What are these units?? 
+```
+
+## Trial-level exclusions (?)
+```{r}
+data.C %>%
+  group_by(ParticipantID, Time.ResponseRT) %>%
+  aggregate(Time.ResponseRT ~ ParticipantID, ., length) %>%
+  aggregate(Time.ResponseRT ~ ParticipantID, ., sum) %>%
+  summarise()
+
+### I want to add the Time.ResponseRT by ParticipantID, and find the average/sd for each participant. The I can exclude trials with a Time.ResponseRT > mean(Time.ResponseRT) + (3 * sd(Time.ResponseRT))
+```
+
+
+ 
+
+
+

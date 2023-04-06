@@ -151,8 +151,8 @@ sortVars <- function(.data) {
 }
 ```
 
-
-```{r}
+# Reformat Raw Data  
+```{r data}
 experiment = "experiment.a"
   read_csv(
     "C:/Users/Rachel/Documents/SI.SP/data/experiment.a/Exp.1_raw.csv",
@@ -176,7 +176,8 @@ data %>%
   group_by(ParticipantID, userDateTimeAtInitialization) %>%
   summarise() %>%
   group_by(ParticipantID) %>%
-  tally() %>% filter(n != 1)
+  tally() %>% 
+  filter(n != 1)
 ```
 
 ## Are there the right number of Blocks?  
@@ -190,15 +191,24 @@ data %>%
 ```
 
 ## Are there the right number of trials per block?  
-```{r Trials/Block}
+```{r Exposure Trial #}
 data %>%
   group_by(ParticipantID, Phase, Block, Trial) %>%
-  summarise() %>%   
+  summarise() %>% 
+  filter(Block != 1) %>%
   tally() %>%
-  group_by(ParticipantID) %>%
- filter(n != 1) %>%
- filter(n != 6) %>%
- filter(n != 8)
+  filter(Phase == "Exposure") %>%
+  filter(n != 8)
+```
+
+```{r Test Trial #}
+data %>%
+  group_by(ParticipantID, Phase, Block, Trial) %>%
+  summarise() %>% 
+  filter(Block != 1) %>%
+  tally() %>%
+  filter(Phase == "Test") %>%
+  filter(n != 6)
 ```
 
 ```{r Correct # of Filler and Critical trials per exposure block}
@@ -211,14 +221,15 @@ data %>%
          Item.Type == "Filler" & n != 6)
 ```
 
-```{r Correct # Test trials per test block}
+```{r Correct trials/# Test trials per test block}
 data %>%
-  group_by(ParticipantID, Phase, Block, Trial) %>%
+  group_by(ParticipantID, Phase, Block, Item.Type, Trial) %>%
   summarise() %>%   
   tally() %>%
   filter(Phase == "Test") %>%
-  filter(n != 6)
+  filter(Item.Type == "Test" & n !=  6)
 ```
+
 
 ### Average Participant Age
 ```{r age}
@@ -288,6 +299,7 @@ data.C <-
   data.B %>%
   filter(ParticipantID != 467)
 ```
+
 ## Experiment Duration ? <- Does not match Prolific data  
 ```{r}
 Exp.time <- data.C %>%

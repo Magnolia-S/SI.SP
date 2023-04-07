@@ -20,7 +20,6 @@ header-includes:
   - /sectionfont{/color{blue}} 
   - /subsectionfont{/color{blue}}
   - /subsubsectionfont{/color{darkgray}}
-
 output:
   pdf_document: 
     fig_caption: yes
@@ -164,6 +163,8 @@ sortVars() %>%
   # write.csv(., "C:/Users/Rachel/Documents/SI.SP/data/experiment.a/Exp.1_data.csv")
 ```
 
+_____
+
 ```{r store data}
 data <- read_csv("C:/Users/Rachel/Documents/SI.SP/data/experiment.a/Exp.1_data.csv",
     show_col_types = FALSE)
@@ -190,7 +191,8 @@ data %>%
  filter(n != 23)
 ```
 
-## Are there the right number of trials per block?  
+## Are there the right number of trials per block?   
+### Exposure Block (8)  
 ```{r Exposure Trial #}
 data %>%
   group_by(ParticipantID, Phase, Block, Trial) %>%
@@ -201,16 +203,7 @@ data %>%
   filter(n != 8)
 ```
 
-```{r Test Trial #}
-data %>%
-  group_by(ParticipantID, Phase, Block, Trial) %>%
-  summarise() %>% 
-  filter(Block != 1) %>%
-  tally() %>%
-  filter(Phase == "Test") %>%
-  filter(n != 6)
-```
-
+#### 2 Critical Items and 6 Filler Items / Exposure Block  
 ```{r Correct # of Filler and Critical trials per exposure block}
 data %>%
   group_by(ParticipantID, Phase, Block, Item.Type, Trial) %>%
@@ -221,6 +214,18 @@ data %>%
          Item.Type == "Filler" & n != 6)
 ```
 
+### Test Block (6)  
+```{r Test Trial #}
+data %>%
+  group_by(ParticipantID, Phase, Block, Trial) %>%
+  summarise() %>% 
+  filter(Block != 1) %>%
+  tally() %>%
+  filter(Phase == "Test") %>%
+  filter(n != 6)
+``` 
+
+#### All Test Items / Test Block  
 ```{r Correct trials/# Test trials per test block}
 data %>%
   group_by(ParticipantID, Phase, Block, Item.Type, Trial) %>%
@@ -230,33 +235,29 @@ data %>%
   filter(Item.Type == "Test" & n !=  6)
 ```
 
-
-### Average Participant Age
-```{r age}
-x <- data %>%
-  group_by(ParticipantID, Participant.Age) %>%
-  filter(Participant.Age != "NA") %>%
-  summarize()
-
-mean(x$Participant.Age)
-sd(x$Participant.Age)
-```
-
-# Exclusions  
+# Exclusions    
+## Survey Qs  
+### Reported Attended Talker  
 ```{r Attended Talker Check}
 # Reported Attending to the wrong talker
 data %>%
-  group_by(ParticipantID, Correct_Attended.Talker) %>%
+  group_by(ParticipantID, Phase, Correct_Attended.Talker) %>%
+  filter(Phase == "Exposure") %>%
   filter(Correct_Attended.Talker != "TRUE") %>%
   tally() %>%
   summarize() 
 
 ## 1 participant (P.533) excluded due to incorrectly responding which talker they were attending to during the exposure phase
 data.A <- data %>%
-    group_by(ParticipantID, Correct_Attended.Talker) %>%
-    filter(Correct_Attended.Talker != "False")
+    group_by(ParticipantID, Phase, Correct_Attended.Talker) %>%
+    filter(Phase == "Exposure") %>%
+    filter(Correct_Attended.Talker != "FALSE") %>%
+    ungroup()
+
+data.A
 ```
 
+### Reported Equipment
 ```{r Equipment Check}
 # Reported using incorrect equipment 
 data.A %>%
@@ -268,60 +269,200 @@ data.A %>%
 ## 1 participant (P. 454) excluded due to reporting they used external laptop speakers during the experiment
 data.B <- data.A %>%
   group_by(ParticipantID, audio_type) %>%
-  filter(audio_type != "computer speakers") 
+  filter(audio_type != "computer speakers") %>%
+  ungroup()
+
+data.B
 ```
 
-
-```{r Correct Response Check}
-# Correct Responses
-Response.False <- data.B %>%
+## Number of Incorrect Responses  
+```{r Incorrect Responses}
+data.B %>%
   group_by(ParticipantID, Phase, Response.Correct) %>%
-  filter(Phase != "Practice") %>%  ## Remove the practice trials
+  filter(Phase == "Exposure") %>%  ## Remove the practice trials
   filter(Response.Correct == "FALSE") %>%
   tally()
 
-# Total_Exposure.Items <- 80; 50% of 80 trials is 40
+## 59 of the remaining 62 participants answered at least 1 question incorrectly
+```
 
-avg_Response.False <- mean(Response.False$n)
-avg_Response.False
+### Unshifted Critical Items + Filler Items  
+```{r Correct Response Check}
+# Correct Responses to the filler items and the unshifted filler items
+Resp_False <- data.B %>%
+  group_by(ParticipantID, Phase, Response.Correct) %>%
+  filter(Phase == "Exposure") %>%  ## Remove the practice trials
+  filter(Attended.Talker_Version == "Unshifted" | Item.Type == "Filler") %>%
+  filter(Response.Correct == "FALSE") %>%
+  tally()
 
-sd_Response.False <- sd(Response.False$n)
-sd_Response.False
+Resp_False
 
-(sd_Response.False * 3) + avg_Response.False  ## validate correct response exclusion criteria ?
+Resp_False_Max <- 0.15 * 70   # Number of trials can get incorrect; 80% correct (incorrect responses =< 10.5)
+                              # 70 because 80 Exposure trials - 10 Critical Shifted Items
 
-Response.False %>%
-  filter(n >= 40) %>%
+Resp_False %>%
+  filter(n >= Resp_False_Max)
+
+## Remove P. 461, P.467, and P.549 for # of incorrect responses 
+data.C <- data.B %>%
+  group_by(ParticipantID) %>% 
+  filter(ParticipantID != 461) %>%
+  filter(ParticipantID != 467) %>%
+  filter(ParticipantID != 549) %>%
+  ungroup()
+
+data.C
+```
+
+### Critical Shifted Items
+```{r Incorrect Response: Shifted}
+# Correct Responses for the shifted critical items (X > 6)
+Crit.Resp_False <- data.C %>%
+  group_by(ParticipantID, Item.Type, Attended.Talker_Version, Response.Correct) %>%
+  filter(Item.Type == "Critical") %>% 
+  filter(Attended.Talker_Version == "Shifted") %>%
+  filter(Response.Correct == "FALSE") %>%
+  tally()
+
+Crit.Resp_False
+
+Crit.Resp_False_Max <- 4 
+# 10 shifted critical Items; at least 6 correct; 6 correct (4 incorrect) is likely the lowest value to still see adaptation
+
+Crit.Resp_False %>%
+  filter(n > Crit.Resp_False_Max)
+
+## Remove P.548 for too many incorrect Critical Trials
+data.D <- data.C %>%
+  group_by(ParticipantID) %>% 
+  filter(ParticipantID != 548) %>%
+  ungroup()
+
+data.D
+```
+
+#### Shifted S
+```{r Incorrect Response: Shifted S}
+# Correct Responses for the shifted S critical trials (1/2 participants) --> Compare to Sh
+Crit.S.Resp_False <- data.D %>%
+  group_by(ParticipantID, Item.Type, Attended.Talker_Sound, Attended.Talker_Version,  Response.Correct) %>%
+  filter(Item.Type == "Critical") %>% 
+  filter(Attended.Talker_Sound == "S") %>% 
+  filter(Attended.Talker_Version == "Shifted") %>%
+  filter(Response.Correct == "FALSE") %>%
+  tally()
+
+Crit.S.Resp_False
+
+Crit.S.Resp_False_Max <-  5 # Half of the S shifted trials
+
+Crit.S.Resp_False %>%
+  filter(n >= Crit.S.Resp_False_Max)
+```
+
+#### Shifted Sh
+```{r Incorrect Response: Shifted Sh}
+# Correct Responses for the shifted Sh critical trials (1/2 participants) --> Compare to S
+Crit.Sh.Resp_False <- data.D %>%
+  group_by(ParticipantID, Item.Type, Attended.Talker_Sound, Attended.Talker_Version,Response.Correct) %>%
+  filter(Item.Type == "Critical") %>% 
+  filter(Attended.Talker_Sound == "Sh") %>%
+  filter(Attended.Talker_Version == "Shifted") %>%
+  filter(Response.Correct == "FALSE") %>%
+  tally()
+
+Crit.Sh.Resp_False
+
+Crit.Sh.Resp_False_Max <- 5 # Half of the S shifted trials
+
+Crit.Sh.Resp_False %>%
+  filter(n >= Crit.Sh.Resp_False_Max) %>%
   summarise()
-
-## 1 participant (P.467) excluded for incorrectly answering more than half of the exposure trials
-data.C <- 
-  data.B %>%
-  filter(ParticipantID != 467)
 ```
 
-## Experiment Duration ? <- Does not match Prolific data  
-```{r}
-Exp.time <- data.C %>%
-  group_by(ParticipantID, Duration.AllPhases)
-  
-mean(Exp.time$Duration.AllPhases)
-sd(Exp.time$Duration.AllPhases)
+```{r Avg/sd incorrect responses}
+Resp_False <- data.D %>%
+  group_by(ParticipantID, Phase, Response.Correct) %>%
+  filter(Phase == "Exposure") %>%  ## Remove the practice trials
+  filter(Attended.Talker_Version == "Unshifted" | Item.Type == "Filler") %>%
+  filter(Response.Correct == "FALSE") %>%
+  tally()
 
-## What are these units?? 
+Resp_False
+
+  avg_Resp.False <- mean(Resp_False$n)
+  avg_Resp.False              # Print Mean incorrect trials
+
+  sd_Resp.False <- sd(Resp_False$n)
+  sd_Resp.False
+
+# (sd_Resp.False * 2.5) + avg_Resp.False  ## validate correct response exclusion criteria
 ```
 
-## Trial-level exclusions (?)
-```{r}
-data.C %>%
-  group_by(ParticipantID, Time.ResponseRT) %>%
-  aggregate(Time.ResponseRT ~ ParticipantID, ., length) %>%
-  aggregate(Time.ResponseRT ~ ParticipantID, ., sum) %>%
-  summarise()
+# Sig. difference between Response.Correct exclusions between conditions
+```{r sig diff}
+## All Trial Responses
+data.C %>%  # data.C before Response.Correct exclusions
+  group_by(ParticipantID, Response.Correct) %>%
+  filter(Response.Correct == "FALSE") %>%
+  group_by(Attended.Talker_Sound, Attended.Talker_Version) %>%
+  tally() 
 
-### I want to add the Time.ResponseRT by ParticipantID, and find the average/sd for each participant. The I can exclude trials with a Time.ResponseRT > mean(Time.ResponseRT) + (3 * sd(Time.ResponseRT))
+data.D %>%
+  group_by(ParticipantID, Response.Correct) %>%
+  filter(Response.Correct == "FALSE") %>%
+  group_by(Attended.Talker_Sound, Attended.Talker_Version) %>%
+  tally() 
+
+# Only Critical Responses, separated by sound + version
+data.C %>%  # data.C before Response.Correct exclusions
+  group_by(ParticipantID, Response.Correct) %>%
+  filter(Response.Correct == "FALSE") %>%
+  group_by(ParticipantID, Attended.Talker_Sound, Attended.Talker_Version) %>%
+  filter(Item.Type == "Critical") %>%
+  group_by(Attended.Talker_Sound, Attended.Talker_Version) %>%
+  tally() 
+
+data.D %>%  
+  group_by(ParticipantID, Response.Correct) %>%
+  filter(Response.Correct == "FALSE") %>%
+  group_by(ParticipantID, Attended.Talker_Sound, Attended.Talker_Version) %>%
+  filter(Item.Type == "Critical") %>%
+  group_by(Attended.Talker_Sound, Attended.Talker_Version) %>%
+  tally()
+
+
+# Only Critical Responses, separated by Gender
+data.C %>%  # data.C before Response.Correct exclusions
+  group_by(ParticipantID, Response.Correct) %>%
+  filter(Response.Correct == "FALSE") %>%
+  group_by(ParticipantID, Attended.Talker_Sound, Attended.Talker_Version, Attended.Talker_Gender) %>%
+  filter(Item.Type == "Critical") %>%
+  group_by(Attended.Talker_Gender) %>%
+  tally()
+
+data.D %>%  
+  group_by(ParticipantID, Response.Correct) %>%
+  filter(Response.Correct == "FALSE") %>%
+  group_by(ParticipantID, Attended.Talker_Sound, Attended.Talker_Version, Attended.Talker_Gender) %>%
+  filter(Item.Type == "Critical") %>%
+  group_by(Attended.Talker_Gender) %>%
+  tally()
+
+chisq.test()
 ```
 
+# Average Participant Age
+```{r age}
+x <- data %>%
+  group_by(ParticipantID, Participant.Age) %>%
+  filter(Participant.Age != "NA") %>%
+  summarize()
+
+mean(x$Participant.Age)
+sd(x$Participant.Age)
+```
 
  
 

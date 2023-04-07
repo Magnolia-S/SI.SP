@@ -212,7 +212,7 @@ formatData <- function(.data, experiment) {
             
             Correct_Attended.Talker = case_when(
              Phase != "Test" &  speaker_attended_sex == Attended.Talker_Gender ~ "True", 
-             Phase == "Test" ~ "True",
+             Phase == "Test" ~ "NA",
              T ~ "False")
             ) %>%
   

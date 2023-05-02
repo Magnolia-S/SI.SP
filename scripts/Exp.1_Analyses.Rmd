@@ -83,6 +83,8 @@ knitr::knit_hooks$set(warning = color_block('orange'))
 
 ## Libraries   
 ```{r Library, include=F}
+library(htmltools)
+library(Hmisc)
 library(readr)
 library(dplyr)
 library(tidyverse)
@@ -131,7 +133,7 @@ sortVars <- function(.data) {
       ExposureOrder,
       TestOrder,
       TrialOrder,
-      starts_with("AttendedTalker"),
+      starts_with("Condition_"),
       starts_with("resp"),
       starts_with("Response"),
       starts_with("speaker_"),
@@ -159,41 +161,40 @@ experiment = "experiment.a"
 
 formatData(experiment) %>%
 sortVars() %>%
-  view()
-  # write.csv(., "C:/Users/Rachel/Documents/SI.SP/data/experiment.a/Exp.1_data.csv")
+  #view()
+  write.csv(., "C:/Users/Rachel/Documents/SI.SP/data/experiment.a/Exp.1_data.csv")
 ```
-
 _____
 
-```{r store data}
+# Data from Prolific   
+```{r data}
 data <- read_csv("C:/Users/Rachel/Documents/SI.SP/data/experiment.a/Exp.1_data.csv",
     show_col_types = FALSE)
 ```
 
-# Check  
-## Have any participants completed the experiment more than once?  
-```{r}
+## Data Check  
+```{r Checks}
+# All should return 0!
+
+# Have any participants completed the experiment more than once?  
 data %>%
   group_by(ParticipantID, userDateTimeAtInitialization) %>%
   summarise() %>%
   group_by(ParticipantID) %>%
   tally() %>% 
   filter(n != 1)
-```
 
-## Are there the right number of Blocks?  
-```{r Check number of blocks}
+# Are there the right number of Blocks?  
 data %>%
   group_by(ParticipantID, Block) %>%
   summarise() %>%   
   tally() %>%
   group_by(ParticipantID) %>%
  filter(n != 23)
-```
 
-## Are there the right number of trials per block?   
-### Exposure Block (8)  
-```{r Exposure Trial #}
+# Are there the right number of trials per block?   
+
+## Exposure (8)  
 data %>%
   group_by(ParticipantID, Phase, Block, Trial) %>%
   summarise() %>% 
@@ -201,10 +202,8 @@ data %>%
   tally() %>%
   filter(Phase == "Exposure") %>%
   filter(n != 8)
-```
 
-#### 2 Critical Items and 6 Filler Items / Exposure Block  
-```{r Correct # of Filler and Critical trials per exposure block}
+### 2 Critical Items and 6 Filler Items / Exposure Block  
 data %>%
   group_by(ParticipantID, Phase, Block, Item.Type, Trial) %>%
   summarise() %>%   
@@ -212,10 +211,8 @@ data %>%
   filter(Phase == "Exposure") %>%
   filter(Item.Type == "Critical" & n != 2 | 
          Item.Type == "Filler" & n != 6)
-```
 
-### Test Block (6)  
-```{r Test Trial #}
+## Test Block (6)  
 data %>%
   group_by(ParticipantID, Phase, Block, Trial) %>%
   summarise() %>% 
@@ -223,10 +220,8 @@ data %>%
   tally() %>%
   filter(Phase == "Test") %>%
   filter(n != 6)
-``` 
 
-#### All Test Items / Test Block  
-```{r Correct trials/# Test trials per test block}
+### All Test Items / Test Block  
 data %>%
   group_by(ParticipantID, Phase, Block, Item.Type, Trial) %>%
   summarise() %>%   
@@ -236,29 +231,23 @@ data %>%
 ```
 
 # Exclusions    
-## Survey Qs  
-### Reported Attended Talker  
-```{r Attended Talker Check}
+```{r Survey Questions}
 # Reported Attending to the wrong talker
 data %>%
   group_by(ParticipantID, Phase, Correct_Attended.Talker) %>%
   filter(Phase == "Exposure") %>%
   filter(Correct_Attended.Talker != "TRUE") %>%
-  tally() %>%
-  summarize() 
+  tally()
 
-## 1 participant (P.533) excluded due to incorrectly responding which talker they were attending to during the exposure phase
-data.A <- data %>%
-    group_by(ParticipantID, Phase, Correct_Attended.Talker) %>%
-    filter(Phase == "Exposure") %>%
-    filter(Correct_Attended.Talker != "FALSE") %>%
-    ungroup()
+  ## 1 participant (P.533) excluded due to incorrectly responding which talker they were attending to during the exposure phase
+  data.A <- data %>%
+      group_by(ParticipantID, Phase, Correct_Attended.Talker) %>%
+      filter(Phase == "Exposure") %>%
+      filter(Correct_Attended.Talker != "FALSE") %>%
+      ungroup()
 
-data.A
-```
+  data.A
 
-### Reported Equipment
-```{r Equipment Check}
 # Reported using incorrect equipment 
 data.A %>%
   group_by(ParticipantID, audio_type) %>%
@@ -267,58 +256,68 @@ data.A %>%
   summarise()
 
 ## 1 participant (P. 454) excluded due to reporting they used external laptop speakers during the experiment
-data.B <- data.A %>%
-  group_by(ParticipantID, audio_type) %>%
-  filter(audio_type != "computer speakers") %>%
-  ungroup()
+  data.B <- data.A %>%
+    group_by(ParticipantID, audio_type) %>%
+    filter(audio_type != "computer speakers") %>%
+    ungroup()
 
-data.B
+  data.B
 ```
 
-## Number of Incorrect Responses  
-```{r Incorrect Responses}
-data.B %>%
+# Performance
+## Lexcical Decision Task  
+```{r Performance}
+## Performance before exclusions
+X <- data.B %>%
   group_by(ParticipantID, Phase, Response.Correct) %>%
   filter(Phase == "Exposure") %>%  ## Remove the practice trials
   filter(Response.Correct == "FALSE") %>%
-  tally() %>%
-  ungroup()
+  tally() 
+X
+## 59 of the remaining 62 participants answered at least 1 question incorrectly (# of rows)
 
-## 59 of the remaining 62 participants answered at least 1 question incorrectly
-```
-
-### Unshifted Critical Items + Filler Items  
-```{r Correct Response Check}
 # Correct Responses to the filler items and the unshifted filler items
 Resp_False <- data.B %>%
   group_by(ParticipantID, Phase, Response.Correct) %>%
   filter(Phase == "Exposure") %>%  ## Remove the practice trials
-  filter(Attended.Talker_Version == "Unshifted" | Item.Type == "Filler") %>%
+  #filter(Attended.Talker_Version == "Unshifted" | Item.Type == "Filler") %>%
   filter(Response.Correct == "FALSE") %>%
   tally()
-
 Resp_False
 
-Resp_False_Max <- 0.15 * 70   # Number of trials can get incorrect; 80% correct (incorrect responses =< 10.5)
-                              # 70 because 80 Exposure trials - 10 Critical Shifted Items
-
+Resp_False_Max <- 0.20 * 80   # Number of trials can get incorrect; 80% correct (60+)
+                             
 Resp_False %>%
   filter(n >= Resp_False_Max)
 
-## Remove P. 461, P.467, and P.549 for # of incorrect responses 
+## Remove P.461 and P.467 for # of incorrect responses 
 data.C <- data.B %>%
   group_by(ParticipantID) %>% 
   filter(ParticipantID != 461) %>%
   filter(ParticipantID != 467) %>%
-  filter(ParticipantID != 549) %>%
   ungroup()
 
-data.C
+data.C %>%
+  group_by(ParticipantID, Response.Correct) %>%
+  tally() ## Check number of rows; all intended participants excluded? -> should be 4
+
+
+# Get avg. sd incorrect responses
+C <- data.C %>%
+  group_by(ParticipantID, Phase, Response.Correct) %>%
+  filter(Phase == "Exposure") %>%  ## Remove the practice trials
+  filter(Response.Correct == "FALSE") %>%
+  tally() 
+
+mean(C$n)
+sd(C$n)
 ```
 
-### Critical Shifted Items
-```{r Incorrect Response: Shifted}
-# Correct Responses for the shifted critical items (X > 6)
+## Critical Shifted Items
+```{r Critical ? Trials}
+# Correct Responses (8) for the shifted critical items (10)
+## Backed by previous lit
+
 Crit.Resp_False <- data.C %>%
   group_by(ParticipantID, Item.Type, Attended.Talker_Version, Response.Correct) %>%
   filter(Item.Type == "Critical") %>% 
@@ -328,9 +327,8 @@ Crit.Resp_False <- data.C %>%
 
 Crit.Resp_False
 
-Crit.Resp_False_Max <- 4 
-# 10 shifted critical Items; at least 6 correct; 6 correct (4 incorrect) is likely the lowest value to still see adaptation
-
+Crit.Resp_False_Max <- 4
+# 10 shifted critical Items; must recognize at least 6 of the critical shifts as words to expect adaptation.
 Crit.Resp_False %>%
   filter(n > Crit.Resp_False_Max)
 
@@ -340,55 +338,19 @@ data.D <- data.C %>%
   filter(ParticipantID != 548) %>%
   ungroup()
 
-data.D
-```
-
-#### Shifted S
-```{r Incorrect Response: Shifted S}
-# Correct Responses for the shifted S critical trials (1/2 participants) --> Compare to Sh
-Crit.S.Resp_False <- data.D %>%
-  group_by(ParticipantID, Item.Type, Attended.Talker_Sound, Attended.Talker_Version,  Response.Correct) %>%
-  filter(Item.Type == "Critical") %>% 
-  filter(Attended.Talker_Sound == "S") %>% 
-  filter(Attended.Talker_Version == "Shifted") %>%
-  filter(Response.Correct == "FALSE") %>%
+data.D %>%
+  group_by(ParticipantID) %>%
   tally()
-
-Crit.S.Resp_False
-
-Crit.S.Resp_False_Max <-  5 # Half of the S shifted trials
-
-Crit.S.Resp_False %>%
-  filter(n >= Crit.S.Resp_False_Max)
-```
-
-#### Shifted Sh
-```{r Incorrect Response: Shifted Sh}
-# Correct Responses for the shifted Sh critical trials (1/2 participants) --> Compare to S
-Crit.Sh.Resp_False <- data.D %>%
-  group_by(ParticipantID, Item.Type, Attended.Talker_Sound, Attended.Talker_Version,Response.Correct) %>%
-  filter(Item.Type == "Critical") %>% 
-  filter(Attended.Talker_Sound == "Sh") %>%
-  filter(Attended.Talker_Version == "Shifted") %>%
-  filter(Response.Correct == "FALSE") %>%
-  tally()
-
-Crit.Sh.Resp_False
-
-Crit.Sh.Resp_False_Max <- 5 # Half of the S shifted trials
-
-Crit.Sh.Resp_False %>%
-  filter(n >= Crit.Sh.Resp_False_Max) %>%
-  summarise()
 ```
 
 ```{r Avg/sd incorrect responses}
 Resp_False <- data.D %>%
   group_by(ParticipantID, Phase, Response.Correct) %>%
   filter(Phase == "Exposure") %>%  ## Remove the practice trials
-  filter(Attended.Talker_Version == "Unshifted" | Item.Type == "Filler") %>%
+  #filter(Attended.Talker_Version == "Unshifted" | Item.Type == "Filler") %>%
+  filter(Attended.Talker_Version == "Shifted") %>%
   filter(Response.Correct == "FALSE") %>%
-  tally()
+  tally() ## stats for the number of critical trials incorrect
 
 Resp_False
 
@@ -398,20 +360,8 @@ Resp_False
   sd_Resp.False <- sd(Resp_False$n)
   sd_Resp.False
 
-# (sd_Resp.False * 2.5) + avg_Resp.False  ## validate correct response exclusion criteria
+# (sd_Resp.False * 3) + avg_Resp.False  ## validate correct response exclusion criteria
 ```
-
-# Average Participant Age
-```{r age}
-x <- Data %>%
-  group_by(ParticipantID, Participant.Age) %>%
-  filter(Participant.Age != "NA") %>%
-  summarize()
-
-mean(x$Participant.Age)
-sd(x$Participant.Age)
-```
-
 
 # Sig. difference between Response.Correct exclusions between conditions
 ```{r sig diff}
@@ -430,10 +380,6 @@ A2 <- data.D %>%
 
 A1
 A2
-
-table(A1$n, A2$n)
-
-chisq.test(table(A1$n, A2$n))
 
 # Only Critical Responses, separated by sound + version
 B1 <- data.C %>%  # data.C before Response.Correct exclusions
@@ -455,17 +401,13 @@ B2 <- data.D %>%
 B1
 B2
 
-table(B1$n, B2$n)
-
-chisq.test(table(B1$n, B2$n))
-
 # Only Critical Responses, separated by Gender
 C1 <- data.C %>%  # data.C before Response.Correct exclusions
   group_by(ParticipantID, Response.Correct) %>%
   filter(Response.Correct == "FALSE") %>%
   group_by(ParticipantID, Attended.Talker_Sound, Attended.Talker_Version, Attended.Talker_Gender) %>%
   filter(Item.Type == "Critical") %>%
-  group_by(Attended.Talker_Gender) %>%
+  group_by(Attended.Talker_Gender, Attended.Talker_Sound, Attended.Talker_Version) %>%
   tally()
 
 C2 <- data.D %>%  
@@ -473,42 +415,42 @@ C2 <- data.D %>%
   filter(Response.Correct == "FALSE") %>%
   group_by(ParticipantID, Attended.Talker_Sound, Attended.Talker_Version, Attended.Talker_Gender) %>%
   filter(Item.Type == "Critical") %>%
-  group_by(Attended.Talker_Gender) %>%
+  group_by(Attended.Talker_Gender, Attended.Talker_Sound, Attended.Talker_Version) %>%
   tally()
 
 C1
 C2
 
-table(C1$n, C2$n)
+## Difference between item type (filler words/nonewords, critical s/sh shifted/unshifted)
+table(A1$n, A2$n)
+chisq.test(table(A2$n, A1$n))
 
-chisq.test(table(C1$n, C2$n))
+# Difference between critical items (critical s/sh shifted/unshifted) 
+table(B1$n, B2$n)
+chisq.test(table(B2$n, B1$n))
+
+# Difference between critical items by gender (F/M critical s/sh shifted/unshifted)
+table(C1$n, C2$n)
+chisq.test(table(C2$n, C1$n))
 
 # No statistical sig. diff (P > .05) between how exclusion criteria applied to participants across conditions 
 
-## DOuble check this is actually functioning as intended
+## Double check this is actually functioning as intended
 ```
 
 # Plot data  
-## Divide panes by *Attended Talker* and *Unattended Talker*   
-### Curve for ?s (more Ashi) and curve for ?sh (more Asi) 
-### y = proportion of ASHI (~25% - ~75%); x = ashi.08 -> ashi.19 (6 step cont.: 08, 12, 13, 14, 15, 19)  
 ```{r}
 data %>%
   group_by(ParticipantID) %>%
    filter(ParticipantID != 461) %>%
    filter(ParticipantID != 467) %>%
-   filter(ParticipantID != 549) %>%
    filter(ParticipantID != 533) %>%
-   filter(ParticipantID != 454) %>%
- 
-  mutate(AttendedTalkerGender = case_when(
-    AttendedTalkerGender == "F" ~ "Female",
-    AttendedTalkerGender == "M" ~ "Male",
-    T ~ "NA"
-  )) %>%
+   filter(ParticipantID != 548) %>%
+  
   
    select(-c("...1")) %>%
- write.csv(., "C:/Users/Rachel/Documents/SI.SP/data/experiment.a/Exp.1_clean.csv", row.names = FALSE)
+view()
+ #write.csv(., "C:/Users/Rachel/Documents/SI.SP/data/experiment.a/Exp.1_clean.csv", row.names = FALSE)
 ```
 
 ```{r}
@@ -516,43 +458,209 @@ Data <- read_csv("C:/Users/Rachel/Documents/SI.SP/data/experiment.a/Exp.1_clean.
     show_col_types = FALSE)
 ```
 
-```{r, fig.width=6, fig.height=5, warning=FALSE, fig.cap=""}
+# Average Participant Age
+```{r age}
+x <- Data %>%
+  group_by(ParticipantID, Participant.Age) %>%
+  filter(Participant.Age != "NA") %>%
+  summarize()
+
+X
+mean(x$Participant.Age)
+sd(x$Participant.Age)
+
+Data %>%
+  group_by(ParticipantID,Participant.Sex ) %>%
+  
+```
+# Comments
+```{r comments}
+Data %>%
+  group_by(ParticipantID, Assignment.Comment) %>%
+  filter(Assignment.Comment != "NA") %>%
+  summarise()
+```
+
+# Survey
+```{r}
+Data %>%
+  group_by(ParticipantID, Condition_Attended.Label, speaker_attended_ssh, speaker_unattended_ssh) %>%
+  filter(speaker_unattended_ssh != "normal") %>%
+  #filter(speaker_attended_ssh != "normal") %>%
+  filter(Condition_Attended.Label == "?s") %>%
+  summarise()
+```
+
+# Results
+## Attended Talker 
+```{r, Attended Talker Resp}
 Data %>%                           
-  group_by(ParticipantID, 
-           Item.Type,
-           AttendedTalkerGender,
-           Attended.Talker_Item,
-           Attended.Talker_Gender, 
-           Attended.Talker_Sound,
-           Attended.Talker_Version
-           ) %>%
   
-  filter(Item.Type == "Test") %>%    
- 
-# Will be covered by the aggregate function 
-  # Attended.Resp <-
-  ## filter(Attended.Talker_Gender == AttendedTalkerGender)
-  ## group_by(Attended.talker_Sound, Attended.Talker_Version)
-
-  # Unattended.Resp <- 
-  ## filter(Attended.Talker_Gender != AttendedTalkerGender)
-  ## group_by(Attended.talker_Sound, Attended.Talker_Version)
-  
-# Also need a within-group comparison by shift (?s/?sh) ?
-  # Attended.Resp <-
-  ## filter(Attended.Talker_Gender == AttendedTalkerGender)
-  ## group_by(Attended.talker_Sound, Attended.Talker_Version)  
-  ## group_by(Attended.talker_version) ?
-
-
+  filter(Item.Type == "Test") %>%
   mutate(Response.Ashi = ifelse(Response == "ASHI", 1, 0)) %>%
   
-  # tally() %>%        # Check the correct # of observations
-  # filter (n != 6)  
+  # Attended Talker
+  mutate(Attended.Talker_Test = ifelse(Attended.Talker_Gender == Condition_Attended.Gender, "Attended Talker", "Unattended Talker")) %>% 
   
+  group_by(ParticipantID, Attended.Talker_Test,   Condition_Attended.Label, Attended.Talker_Item) %>%
+  summarise(Response.Ashi = mean(Response.Ashi)) 
+```
+
+# See vars  
+```{r}
+Data %>%
+  view()
+```
+
+##Figures  
+# By attended Talker
+```{r, fig.width=10, fig.height=5, warning=FALSE, fig.cap="Figure X: Compares the average proportion of ASHI responses for the Attended Talker and the Unattended Talker across ?s (blue curve) and ?sh (orange curve) shift conditions. The curves intercept the gray dashed line estimates when participants are equally likely to respond either ASI or ASHI for the test token."}
+
+Data %>%    
+  filter(Phase == "Test") %>%
+  mutate(
+    Response.Ashi = ifelse(Response == "ASHI", 1, 0),
+    Attended.Talker_Test = ifelse(Attended.Talker_Gender == Condition_Attended.Gender, "Attended Talker", "Unattended Talker"),
+    Attended.Talker_Item = 32 - as.numeric(gsub("ashi.(.*)$", "\\1", Attended.Talker_Item))) %>%  ## total cont. = 31 steps Lui & Jaeger
+  
+ group_by(ParticipantID, Attended.Talker_Test, Condition_Attended.Gender, Attended.Talker_Gender, Condition_Attended.Label, Attended.Talker_Item) %>%
+  summarise(Response.Ashi = mean(Response.Ashi)) %>%
+  
+  mutate(Ambiguous_Sound = case_when(
+  Attended.Talker_Test == "Attended Talker" ~ Condition_Attended.Label,
+  Attended.Talker_Test != "Attended Talker" & Condition_Attended.Label == "?s" ~ "?sh",
+  Attended.Talker_Test != "Attended Talker" & Condition_Attended.Label == "?sh" ~ "?s",
+  T ~ NA
+  )) %>%
+    
+  mutate(Ambiguous_Sound = gsub( "$", " sound", Condition_Attended.Label)) %>%
+ 
   ggplot(aes(
     x = Attended.Talker_Item, 
-    y = Response.Ashi)) +
+    y = Response.Ashi,
+    color = Ambiguous_Sound,
+    fill = Ambiguous_Sound
+    )) +
+  
+  stat_summary(fun.data = mean_cl_boot, geom = "pointrange", position = position_dodge(.1)) +
+ 
+  geom_smooth(
+    method = "glm",
+    formula = y ~ x, 
+    method.args = list(family = "binomial"),
+    show.legend = TRUE) +
+  
+  
+  scale_color_manual(values = c("lightpink4", "lightsalmon")) +
+  scale_fill_manual(values = alpha(c("lightpink4", "lightsalmon"), .1)) +
+  
+  # Inflection pt
+  geom_segment(
+    x = 7.5, xend = 32,
+    y = .5, yend = .5,
+    color = "darkgray", 
+    linetype = 2,
+    size = .75) +
+ 
+  ## Graph aes  
+  scale_x_continuous(
+    name = "Test Item",  breaks = c(13, 17, 18, 19, 20, 24), labels = c("13 (Most ASI-like)", "17", "18 ", "19", "20", "24 (Most ASHI-like)"), limits = c(12, 25)) +
+  scale_y_continuous("Proportion of ASHI Responses",
+  limits = c(0,1)) +
+facet_grid(Attended.Talker_Gender ~ Attended.Talker_Test) +
+  theme(legend.position = "top")
+```
+
+# By Condition
+```{r, fig.width=9.5, fig.height=4.5, warning=FALSE, fig.cap="Figure X: Compares the average proportion of ASHI responses for the Attended Talker and the Unattended Talker *within* ?s (blue curve) and ?sh (orange curve) shift conditions. The curves intercept the gray dashed line estimates when participants are equally likely to respond either ASI or ASHI for the test token."}
+
+Data %>%    
+  
+  filter(Phase == "Test") %>%
+  
+  mutate(
+    
+    Response.Ashi = 
+      ifelse(Response == "ASHI", 1, 0),
+    
+    Talker = 
+      ifelse(Attended.Talker_Gender == Condition_Attended.Gender, "Attended Talker", "Unattended Talker"),
+    
+    Attended.Talker_Item = 
+      32 - as.numeric(gsub("ashi.(.*)$", "\\1", Attended.Talker_Item)), ## 31 steps Liu & Jaeger
+    
+    Condition.Label = 
+      gsub( "^", "Attended to ", Condition_Attended.Label)
+    
+    ) %>%  
+  
+  group_by(ParticipantID, 
+          Talker, 
+          Condition_Attended.Gender, 
+          Attended.Talker_Gender, 
+          Condition.Label, 
+          Attended.Talker_Item
+          ) %>%
+  
+  summarise(Response.Ashi = mean(Response.Ashi, )) %>%
+ 
+  ggplot(aes(
+    x = Attended.Talker_Item, 
+    y = Response.Ashi,
+    color = Talker,
+    fill = Talker
+    )) +
+  
+  stat_summary(
+    fun.data = mean_cl_boot, geom = "pointrange", position = position_dodge(.1)
+    ) +
+ 
+  geom_smooth(
+    method = "glm",
+    formula = y ~ x, 
+    method.args = list(family = "binomial"),
+    show.legend = TRUE) +
+  
+  # Inflection pt
+  geom_segment(
+    x = 7.5, xend = 32,
+    y = .5, yend = .5,
+    color = "darkgray", 
+    linetype = 2,
+    size = .75) +
+  
+  ## Graph aes  
+  scale_color_manual(values = c("lightskyblue", "orange")) +
+  scale_fill_manual(values = alpha(c("lightskyblue", "orange"), .1)) +
+  
+  scale_x_continuous(
+    name = "Test Item",  breaks = c(13, 17, 18, 19, 20, 24), labels = c("13 (Most ASI-like)", "17", "18 ", "19", "20", "24 (Most ASHI-like)"), limits = c(12, 25)) +
+  scale_y_continuous("Proportion of ASHI Responses (%)",
+  limits = c(0,1)) +
+  facet_wrap( ~ Condition.Label) +
+  theme(legend.position = "top")
+```
+
+## Split by gender
+```{r, fig.width=4, fig.height=2, warning=FALSE, fig.cap=""}
+Data %>%    
+  filter(Phase == "Test") %>%
+  mutate(
+    Response.Ashi = ifelse(Response == "ASHI", 1, 0),
+    Attended.Talker_Test = ifelse(Attended.Talker_Gender == Condition_Attended.Gender, "Attended Talker", "Unattended Talker"),
+    Attended.Talker_Item = 32 - as.numeric(gsub("ashi.(.*)$", "\\1", Attended.Talker_Item))) %>%  ## total cont. = 31 steps Lui & Jaeger
+  
+  group_by(ParticipantID, Attended.Talker_Test, Condition_Attended.Gender, Attended.Talker_Gender, Condition_Attended.Label, Attended.Talker_Item) %>%
+  summarise(Response.Ashi = mean(Response.Ashi)) %>%
+ 
+  ggplot(aes(
+    x = Attended.Talker_Item, 
+    y = Response.Ashi,
+    color = Condition_Attended.Label,
+    fill = Condition_Attended.Label
+    )) +
+  
+  stat_summary(fun.data = mean_cl_boot, geom = "pointrange", position = position_dodge(.1)) +
  
  geom_smooth(
     method = "glm",
@@ -560,11 +668,198 @@ Data %>%
     method.args = list(family = "binomial"),
     show.legend = TRUE) +
  
-  ## Graph info   
-  ggtitle("Attended Talker/Unattended Talker") +
-   scale_x_discrete("ASHI Item (ASI -> ASHI)") +
-   scale_y_continuous("Proportion of ASHI Responses (%)",
+  scale_color_manual(values = c("lightskyblue", "orange")) +
+  scale_fill_manual(values = alpha(c("lightskyblue", "orange"), .1)) + 
+  
+    # Inflection pt
+  geom_segment(
+    x = 7.5, xend = 22.5,
+    y = .5, yend = .5,
+    color = "darkgray", 
+    linetype = 2,
+    size = .75) +
+ 
+  ## Graph aes  
+  scale_x_continuous("Continuum Step (ASI -> ASHI)") +
+  scale_y_continuous("Proportion of ASHI Responses (%)",
   limits = c(0,1)) +
+  facet_grid(Condition_Attended.Gender ~ Attended.Talker_Test) +
+  theme(legend.position = "top")
+```
+
+# Grid of test responses in order
+```{r, fig.width= 11, fig.height= 7, warning=FALSE, fig.cap="Figure X: Each column represents a participant (vertically, across both panes; need to change X-axis scale; ?s has 32 participants and ?sh has 26), and each row represented the continuum step (Ashi.19 = ss, 1, Ashi.08 = sh, 0). The fill represents the participants number of Asi-Ashi response for that item."}
+Data %>%
+  filter(Phase == "Test") %>% 
+  mutate(
+    Response.Ashi = 
+      ifelse(Response == "ASHI", 0, 1),
+    Attended.Talker_Test = 
+      ifelse(Attended.Talker_Gender == Condition_Attended.Gender, "Attended Talker", "Unattended Talker"),
+    Item = Attended.Talker_Item
+    ) %>%
+     
+  group_by(ParticipantID, Attended.Talker_Test, Attended.Talker_Gender, Condition_Attended.Label, Attended.Talker_Item) %>%
+  
+  mutate(Number.of_Ashi.Responses = (6 * mean(Response.Ashi))) %>%
+  mutate(Condition.Label = gsub( "^", "Condition: Attended to ", Condition_Attended.Label)) %>%
+  
+  
+  ggplot(aes(x = ParticipantID, y = Item)) +
+  geom_col(aes(fill = Number.of_Ashi.Responses)) +
+  
+  scale_x_continuous(name = "Participant", breaks = NULL) + 
+  scale_y_discrete(name = "Test Item", breaks = waiver(), labels = c("Most ASI-like: 13", "17", "18 ", "19", "20", "Most ASHI-like: 24")) +
+  scale_fill_viridis_b(option = "rocket", breaks = seq(0, 6, by = (1))) +
+  coord_cartesian(expand = F) +
+  facet_grid(Attended.Talker_Test ~ Condition.Label, 
+    scales = "free_x", 
+    space = "free_x") +
+  theme(legend.position = "top") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+```{r ANOVA}
+X <- Data %>%
+  filter(Phase == "Test") %>% 
+  filter(Block < 17) %>%
+  mutate(
+    Response.Ashi = 
+      ifelse(Response == "ASHI", 0, 1),
+    
+    Talker = 
+      ifelse(Attended.Talker_Gender == Condition_Attended.Gender, "Attended Talker", "Unattended Talker"),
+    
+    Item = Attended.Talker_Item
+  
+    ) %>%
+     
+  group_by(ParticipantID, Talker, Attended.Talker_Gender, Condition_Attended.Label, Attended.Talker_Item) %>%
+  mutate(avg.Response = mean(Response.Ashi)) %>%
+  mutate(Number.of_Ashi.Responses = (6 * mean(Response.Ashi))) %>%
+  mutate(Condition.Label = gsub( "^", "Condition: Attended to ", Condition_Attended.Label)) 
+
+ggplot(X, aes(x = Item, y = avg.Response, color = Condition.Label)) + 
+  geom_boxplot() +
+  scale_x_discrete("Continuum Step (ASI -> ASHI)") +
+  scale_y_discrete("Proportion of ASHI Responses (%)", limits = c(0,1)) +
+  facet_grid( ~ Talker) +
+  theme(legend.position = "top")
+
+model = lm(avg.Response ~ Item * Talker, data = X)
+
+lm(avg.Response ~ Item, X)
+
+aov(avg.Response ~ Item + Condition.Label * Item + Talker, data = X)
+```
+
+# by gender and by block  
+```{r, fig.width=10, fig.height=7, warning=FALSE, fig.cap="Figure X: Compares the proportion of ASHI responses across participants by block for both talkers by shift conditon and talker gender. Ribbon represents 95% confidence interval."}
+Data %>%    
+  filter(Phase == "Test") %>%
+  mutate(
+    Response.Ashi = ifelse(Response == "ASHI", 1, 0),
+    Talker = ifelse(Attended.Talker_Gender == Condition_Attended.Gender, "Attended Talker", "Unattended Talker")) %>%
+  
+  group_by(ParticipantID, Talker, Condition_Attended.Gender, Attended.Talker_Gender, Condition_Attended.Label, Block) %>%
+  summarise(Response.Ashi = mean(Response.Ashi)) %>%
+   mutate(Condition.Label = gsub( "^", "Attended to ", Condition_Attended.Label)) %>%
+  mutate(Attended.Gender = gsub("^", "Attended Talker Gender: ", Condition_Attended.Gender)) %>%
+ 
+  ggplot(aes(
+    x = Block, 
+    y = Response.Ashi,
+    color = Talker,
+    fill = Talker
+    )) +
+
+  stat_summary(fun.data = mean_cl_boot, geom = "ribbon", alpha = .3, aes(group = paste(Condition_Attended.Label, Attended.Gender, Talker)))  +
+  
+  stat_summary(fun.y = mean, geom = "line", aes(group = paste(Condition_Attended.Label, Attended.Gender,  Talker))) +
+  
+  stat_summary(fun.data = mean_cl_boot, geom = "pointrange", position = position_dodge(.1)) +
+
+  scale_color_manual(values = c("lightskyblue", "orange")) +
+  scale_fill_manual(values = c("lightskyblue", "orange")) +
+  
+  ## Graph aes  
+  ggtitle("Proportion of ASHI responses by Block for the Attended Talker and Unattended Talker, separated by Attended Talker Gender") + 
+  scale_x_continuous("Block") +
+  scale_y_continuous("Proportion of ASHI Responses (%)",
+  limits = c(0,1)) +
+  facet_grid(Attended.Gender ~ Condition.Label) +
+  theme(legend.position = "top")
+```
+
+
+```{r, fig.width=6, fig.height=3, warning=FALSE, fig.cap="Figure X: Compares the average proportion of ASHI responses for the Attended Talker and the Unattended Talker *within* ?s (blue curve) and ?sh (orange curve) shift conditions. The curves intercept the gray dashed line estimates when participants are equally likely to respond either ASI or ASHI for the test token."}
+
+Data %>%    
+  
+  filter(Phase == "Test") %>%
+  filter(Block < 18) %>%
+  
+  mutate(
+    
+    Response.Ashi = 
+      ifelse(Response == "ASHI", 1, 0),
+    
+    Talker = 
+      ifelse(Attended.Talker_Gender == Condition_Attended.Gender, "Attended Talker", "Unattended Talker"),
+    
+    Attended.Talker_Item = 
+      32 - as.numeric(gsub("ashi.(.*)$", "\\1", Attended.Talker_Item)), ## 31 steps Liu & Jaeger
+    
+    Condition.Label = 
+      gsub( "^", "Condition: Attended to ", Condition_Attended.Label)
+    
+    ) %>%  
+  
+  group_by(ParticipantID, 
+          Talker, 
+          Condition_Attended.Gender, 
+          Attended.Talker_Gender, 
+          Condition.Label, 
+          Attended.Talker_Item, 
+          Block
+          ) %>%
+  
+  summarise(Response.Ashi = mean(Response.Ashi, )) %>%
+ 
+  ggplot(aes(
+    x = Attended.Talker_Item, 
+    y = Response.Ashi,
+    color = Talker,
+    fill = Talker
+    )) +
+  
+  stat_summary(
+    fun.data = mean_cl_boot, geom = "pointrange", position = position_dodge(.1)
+    ) +
+ 
+  geom_smooth(
+    method = "glm",
+    formula = y ~ x, 
+    method.args = list(family = "binomial"),
+    show.legend = TRUE) +
+  
+  # Inflection pt
+  geom_segment(
+    x = 7.5, xend = 32,
+    y = .5, yend = .5,
+    color = "darkgray", 
+    linetype = 2,
+    size = .75) +
+  
+  ## Graph aes  
+  scale_color_manual(values = c("lightskyblue", "orange")) +
+  scale_fill_manual(values = alpha(c("lightskyblue", "orange"), .1)) +
+  
+  scale_x_continuous(
+    name = "ASI -> ASHI") +
+  scale_y_continuous("Proportion of ASHI Responses (%)",
+  limits = c(0,1)) +
+  facet_wrap(~ Condition.Label + Block) +
   theme(legend.position = "top")
 ```
 

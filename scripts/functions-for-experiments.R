@@ -193,15 +193,15 @@ formatData <- function(.data, experiment) {
            Unattended.Talker_Ear = case_when(Attended.Talker == "Talker.L" ~ "Right",
                                              Attended.Talker == "Talker.R" ~ "Left",
                                              T ~ "NA"), 
+  
+           
            # Correct Response
            Response.Correct = case_when(Item.Type == "Test" ~ "NA",
                                        Item.Type == "Critical" & Response == "word" ~ "True",
                                        Attended.Talker_Sound == "Word" & Response == "word" ~ "True", 
                                        Attended.Talker_Sound == "Nonword" & Response == "non-word" ~ "True",
                                        T ~ "False")) %>%
-    
-    # -------------------------------------------
-          
+
           # Correct Response Attended Sex
           mutate(
             speaker_attended_sex = case_when(
@@ -215,6 +215,28 @@ formatData <- function(.data, experiment) {
              Phase == "Test" ~ "NA",
              T ~ "False")
             ) %>%
+
+#-----  
+    # Change Condition factor labels
+    mutate(
+      Condition_Attended.Ear = case_when(
+        AttendedTalkerEar == "L" ~ "Left", 
+        T ~ "Right"),
+      
+      Condition_Attended.Gender = case_when(
+        AttendedTalkerGender == "M" ~ "Male", 
+        T ~ "Female"),
+      
+      Condition_Attended.Material = case_when(
+        AttendedTalkerMaterial == "A" ~ "A", 
+        T ~ "B"),
+      
+      Condition_Attended.Label = case_when(
+        AttendedTalkerLabel == "S" ~ "?s",
+        AttendedTalkerLabel == "Sh" ~ "?sh",
+        T ~ NA)
+    ) %>%
+#-----
   
   # Get key character based on Gevher's reading of the JS code (labelingBlock.js)
   # (and make sure that "B" responses lead to NAs in the Response variable)
@@ -258,6 +280,7 @@ formatData <- function(.data, experiment) {
      select(-c(starts_with("Talker.Test"),
                          starts_with("Talker.L"),
                          starts_with("Talker.R"),
+                         starts_with("AttendedTalker"),
                Attended.Talker, Unattended.Talker, AssignmentID, Stimulus, Blank_col)) %>%
     arrange(Experiment, ParticipantID, Phase, Block, Trial) %>% 
 

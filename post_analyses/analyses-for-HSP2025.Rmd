@@ -47,6 +47,8 @@ _Goal:_ To determine how participant's adapted their perception to the Attended 
 ```{r libraries, include=F}
 library(tidyverse)
 library(magrittr)
+
+library(lme4)
 ```
 
 ```{r, Format, include=F}
@@ -364,8 +366,16 @@ chisq.test(table(C2$n, C1$n))
 # Participant Summary
 ## Import updated data set -> Removed excluded participants
 ```{r data_clean}
-Data <- read_csv("data/data_clean.csv",
-    show_col_types = FALSE)
+Data <- 
+  read_csv("data/data_clean.csv", show_col_types = FALSE) %>%
+  mutate(
+    Condition_Attended.Label = factor(Condition_Attended.Label, levels = c("?s", "?sh")), 
+    Condition_Attended.Label = `contrasts<-`(Condition_Attended.Label, , cbind("sh-vs-s-bias" = c(-.5, +.5))), 
+    Condition_Attended.Gender = factor(Condition_Attended.Gender, levels = c("Male", "Female")), 
+    Condition_Attended.Gender = `contrasts<-`(Condition_Attended.Gender, , cbind("female-vs-male" = c(-.5, +.5))),
+    Attended.Talker_Sound = factor(Attended.Talker_Sound, levels = c("S", "Sh", "Word", "Nonword"))
+  )
+
 Data
 ```
 
@@ -402,6 +412,67 @@ Data %>%
 ```
 
 # Results
+
+## Exposure
+WARNING: this section takes for granted that the variable Response.Correct correctly captures whether the word/non-word response was correct relative to the *attended talker*. Once this has been confirmed, this note can be removed.
+
+TO DO: 
+
+ + determine proportion of word/non-words for filler and critical trial (not responses. the actual words/non-words)
+
+```{r}
+p <- position_dodge(.4)
+
+Data %>%                           
+  
+  filter(Phase == "Exposure") %>%
+  
+  # Generate by participant averages
+  group_by(
+    ParticipantID, 
+    Condition_Attended.Label, Condition_Attended.Gender, Condition_Attended.Ear, Condition_Attended.Material,
+    Item.Type) %>%
+  summarise(Response.Correct = mean(Response.Correct)) %>%
+  ggplot(aes(x = Condition_Attended.Gender, y = Response.Correct, color = Condition_Attended.Label, fill = Condition_Attended.Label)) +
+  geom_dotplot(binaxis = "y", color = NA, alpha = .3, dotsize = .5, stackdir = "center", position = p) +
+  stat_summary(fun.data = mean_cl_boot, geom = "pointrange", position = p) +
+  facet_grid(~ Item.Type) +
+  scale_x_discrete("Attended talker's gender") +
+  scale_y_continuous("Lexical decision accuracy", limits = c(.8, 1)) +
+  scale_color_discrete(
+    "Attended talker's bias:", breaks = c("?s", "?sh"), labels = c("s-biased", "sh-biased"),
+    aes = c("color", "fill")) +
+  theme(legend.position = "top")
+```
+For filler words, there were no significant differences in lexical decision accuracy between conditions:
+
+```{r}
+m <- 
+  glmer(
+  formula = Response.Correct ~ 1 + Condition_Attended.Label * Condition_Attended.Gender + (1 | ParticipantID),
+  family = binomial(link = "logit"),
+  data = Data %>% filter(Phase == "Exposure", Item.Type == "Filler"))
+
+summary(m)
+```
+
+For critical words, there was a significant interaction between the attended talker's bias and the target sound of the critical word (p < .0001), so that shifted words were less likely to be recognized as a word. Additionally, there was a marginally significant main effect of the attended talker's gender (p < .06), so that critical words from female talkers were less likely to be recognized as words.
+
+```{r}
+m <- 
+  glmer(
+  formula = Response.Correct ~ 1 + Condition_Attended.Label * Condition_Attended.Gender * Attended.Talker_Sound + (1 | ParticipantID),
+  family = binomial(link = "logit"),
+  data = Data %>% 
+    filter(Phase == "Exposure", Item.Type == "Critical") %>%
+    mutate(
+      Attended.Talker_Sound = factor(Attended.Talker_Sound, levels = c("S", "Sh")),
+      Attended.Talker_Sound = `contrasts<-`(Attended.Talker_Sound, , cbind("sh-vs-s" = c(-.5, +.5))))
+  )
+
+summary(m)
+```
+
 ## Attended Talker 
 ```{r, Attended_Talker}
 Data %>%                           

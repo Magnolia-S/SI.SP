@@ -1,25 +1,31 @@
 ---
-title: "Experiment A List Design"
-author: "Rachel"
-date: /today
+title: "Visualizations and analyses for HSP 2025 abstract"
+author: "Rachel Sabetello"
+date: \today
 geometry: margin = 2cm
 header-includes:
-  - /usepackage{booktabs}
-  - /usepackage{siunitx}
-  - /usepackage{tabto}
-  - /usepackage{soul}
-  - /usepackage{xcolor}
-  - /usepackage{placeins}
-  - /usepackage{lscape}
-  - /usepackage{animate}
-  - /newcommand{/blandscape}{/begin{landscape}}
-  - /newcommand{/elandscape}{/end{landscape}}
-  - /makeatletter/renewcommand{/fps@table}{!ht}/makeatother
-  - /setstcolor{red}
-  - /usepackage{sectsty}
-  - /sectionfont{/color{blue}} 
-  - /subsectionfont{/color{blue}}
-  - /subsubsectionfont{/color{darkgray}}
+ - \usepackage{sectsty}
+ - \usepackage{animate}
+ - \usepackage{amsmath}
+ - \usepackage{tikz}
+ - \usetikzlibrary{bayesnet}
+ - \usepackage{booktabs}
+ - \usepackage{siunitx}
+ - \usepackage{soul}
+ - \usepackage{tabto}
+ - \usepackage{xcolor}
+ - \usepackage{placeins}
+ - \setstcolor{red}
+ - \sectionfont{\color{black}}
+ - \subsectionfont{\color{black}}
+ - \subsubsectionfont{\color{black}}
+ - \usepackage{setspace}\doublespacing
+ - \usepackage{subfig}
+ - \usepackage{float} 
+ - \floatplacement{figure}{H} 
+ - \usepackage{multirow}
+ - \usepackage{lscape}
+ - \usepackage{pdflscape}
 output:
   pdf_document: 
     fig_caption: yes
@@ -30,22 +36,26 @@ output:
     toc: yes
     toc_depth: 4
   fontsize: 10pt
-editor_options: 
-  chunk_output_type: inline
 ---   
-***
+
 # Housekeeping   
 The purpose of this file is to analyze the data collected in Experiment 1.  
 _Goal:_ To determine how participant's adapted their perception to the Attended and Unattended Talkers.  
 *Color file here: http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf*  
 *crtl + I for reformat*   
 
-## Knitting    
-```{r Knitting, include=F}
+```{r libraries, include=F}
+library(tidyverse)
+library(magrittr)
+```
 
-library(knitr)
+```{r, Format, include=F}
+options(width = 110)
+theme_set(theme_bw())
+```
 
-opts_chunk$set(
+```{r knitting, include=F}
+knitr::opts_chunk$set(
   dev = 'pdf',
   comment = "", 
   echo = FALSE, 
@@ -81,36 +91,11 @@ knitr::knit_hooks$set(error = color_block('red'))
 knitr::knit_hooks$set(warning = color_block('orange'))
 ```
 
-## Libraries   
-```{r Library, include=F}
-library(htmltools)
-library(Hmisc)
-library(readr)
-library(dplyr)
-library(tidyverse)
-library(magrittr)
-library(broom)          # for extraction of coefficients
-library(gganimate)      # to animate plots
-library(RColorBrewer)   # to select brewer colors
-library(kableExtra) 
-library(lme4)
-library(lmerTest)
-library(ggpubr)
-library(data.table)
-library(jsonlite)
-library(purrr)
-```
-
-```{r, Format, include=F}
-options(width = 110)
-theme_set(theme_bw())
-```
-_____
 # Data 
+
 ## Import 
 ```{r data_import}
-data <- read_csv("C:/Users/Rachel/Documents/SI.SP/post_analyses/data/data.csv",
-    show_col_types = FALSE)
+data <- read_csv("data/data.csv", show_col_types = FALSE)
 ```
 
 ## Verify Data  
@@ -379,7 +364,7 @@ chisq.test(table(C2$n, C1$n))
 # Participant Summary
 ## Import updated data set -> Removed excluded participants
 ```{r data_clean}
-Data <- read_csv("C:/Users/Rachel/Documents/SI.SP/post_analyses/data/data_clean.csv",
+Data <- read_csv("data/data_clean.csv",
     show_col_types = FALSE)
 Data
 ```

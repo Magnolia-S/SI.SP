@@ -1,0 +1,539 @@
+---
+title: "Experiment A List Design"
+author: "Rachel"
+date: /today
+geometry: margin = 2cm
+header-includes:
+  - /usepackage{booktabs}
+  - /usepackage{siunitx}
+  - /usepackage{tabto}
+  - /usepackage{soul}
+  - /usepackage{xcolor}
+  - /usepackage{placeins}
+  - /usepackage{lscape}
+  - /usepackage{animate}
+  - /newcommand{/blandscape}{/begin{landscape}}
+  - /newcommand{/elandscape}{/end{landscape}}
+  - /makeatletter/renewcommand{/fps@table}{!ht}/makeatother
+  - /setstcolor{red}
+  - /usepackage{sectsty}
+  - /sectionfont{/color{blue}} 
+  - /subsectionfont{/color{blue}}
+  - /subsubsectionfont{/color{darkgray}}
+output:
+  pdf_document: 
+    fig_caption: yes
+    fig_width: 7
+    keep_tex: yes
+    latex_engine: xelatex
+    number_sections: yes
+    toc: yes
+    toc_depth: 4
+  fontsize: 10pt
+editor_options: 
+  chunk_output_type: inline
+---   
+***
+# Housekeeping   
+The purpose of this file is to analyze the data collected in Experiment 1.  
+_Goal:_ To determine how participant's adapted their perception to the Attended and Unattended Talkers.  
+*Color file here: http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf*  
+*crtl + I for reformat*   
+
+## Knitting    
+```{r Knitting, include=F}
+
+library(knitr)
+
+opts_chunk$set(
+  dev = 'pdf',
+  comment = "", 
+  echo = FALSE, 
+  warning = TRUE, 
+  message = TRUE,
+  cache = FALSE, 
+  size = "small",
+  tidy.opts = list(width.cutoff = 200),
+  fig.width = 8, 
+  fig.height = 4.5, 
+  fig.align = "center")
+
+def.chunk.hook  <- knitr::knit_hooks$get("chunk")
+
+knitr::knit_hooks$set(
+  chunk = function(x, options) {
+    x <- def.chunk.hook(x, options)
+    ifelse(
+      options$size != "normalsize", 
+      paste0(
+        "/n //", 
+        options$size,
+        "/n/n", 
+        x, 
+        "/n/n //normalsize"), 
+      x)
+  })
+
+color_block = function(color) {
+  function(x, options)        sprintf('//color{%s}//begin{verbatim}%s//end{verbatim}//color{black}', color, x)
+}
+knitr::knit_hooks$set(error = color_block('red'))
+knitr::knit_hooks$set(warning = color_block('orange'))
+```
+
+## Libraries   
+```{r Library, include=F}
+library(htmltools)
+library(Hmisc)
+library(readr)
+library(dplyr)
+library(tidyverse)
+library(magrittr)
+library(broom)          # for extraction of coefficients
+library(gganimate)      # to animate plots
+library(RColorBrewer)   # to select brewer colors
+library(kableExtra) 
+library(lme4)
+library(lmerTest)
+library(ggpubr)
+library(data.table)
+library(jsonlite)
+library(purrr)
+```
+
+```{r, Format, include=F}
+options(width = 110)
+theme_set(theme_bw())
+```
+_____
+# Data 
+## Import 
+```{r data_import}
+data <- read_csv("C:/Users/Rachel/Documents/SI.SP/post_analyses/data/data.csv",
+    show_col_types = FALSE)
+```
+
+## Verify Data  
+```{r data_verify}
+# **All should return 0**
+
+# Have any participants completed the experiment more than once?  
+data %>%
+  group_by(ParticipantID, userDateTimeAtInitialization) %>%
+  summarise() %>%
+  group_by(ParticipantID) %>%
+  tally() %>% 
+  filter(n != 1)
+
+# Are there the right number of Blocks?  
+data %>%
+  group_by(ParticipantID, Block) %>%
+  summarise() %>%   
+  tally() %>%
+  group_by(ParticipantID) %>%
+  filter(n != 23)
+
+# Are there the right number of trials per block?   
+## Exposure_Block = 8 
+    data %>%
+      group_by(ParticipantID, Phase, Block, Trial) %>%
+      summarise() %>% 
+      filter(Block != 1) %>%
+      tally() %>%
+      filter(Phase == "Exposure") %>%
+      filter(n != 8)
+
+### Critical_Items = 2 & Filler_Items = 6 /Exposure_Block  
+    data %>%
+      group_by(ParticipantID, Phase, Block, Item.Type, Trial) %>%
+      summarise() %>%   
+      tally() %>%
+      filter(Phase == "Exposure") %>%
+      filter(Item.Type == "Critical" & n != 2 | 
+           Item.Type == "Filler" & n != 6)
+
+## Test_Block = 6  
+  data %>%
+    group_by(ParticipantID, Phase, Block, Trial) %>%
+    summarise() %>% 
+    filter(Block != 1) %>%
+    tally() %>%
+    filter(Phase == "Test") %>%
+    filter(n != 6)
+
+### Test_Items /Test_Block  
+    data %>%
+      group_by(ParticipantID, Phase, Block, Item.Type, Trial) %>%
+      summarise() %>%   
+      tally() %>%
+      filter(Phase == "Test") %>%
+      filter(Item.Type == "Test" & n !=  6)
+```
+
+# Exclusions    
+```{r Survey}
+# Reported Attending to the wrong talker
+data %>%
+  group_by(ParticipantID, Phase, Correct_Attended.Talker) %>%
+  filter(Phase == "Exposure") %>%
+  filter(Correct_Attended.Talker != "TRUE") %>%
+  tally()
+
+  ## 1 participant (P.533) excluded due to incorrectly responding which talker they were attending to during the exposure phase
+  data.A <- data %>%
+      group_by(ParticipantID, Phase, Correct_Attended.Talker) %>%
+      filter(Phase == "Exposure") %>%
+      filter(Correct_Attended.Talker != "FALSE") %>%
+      ungroup()
+  data.A
+
+# Reported using incorrect equipment 
+data.A %>%
+  group_by(ParticipantID, audio_type) %>%
+  filter(audio_type != "in-ear") %>%
+  filter(audio_type != "over-ear") %>%
+  summarise()
+
+## 1 participant (P. 454) excluded due to reporting they used external laptop speakers during the experiment
+  data.B <- data.A %>%
+    group_by(ParticipantID, audio_type) %>%
+    filter(audio_type != "computer speakers") %>%
+    ungroup()
+  data.B
+```
+
+# Performance
+## Lexcical Recognition Task  
+```{r Performance_Lex}
+# Performance before exclusions
+X <- data.B %>%
+  group_by(ParticipantID, Phase, Response.Correct) %>%
+  filter(Phase == "Exposure") %>%  ## Remove the practice trials
+  filter(Response.Correct == "FALSE") %>%
+  tally() 
+X
+## 59 of the remaining 62 participants answered at least 1 question incorrectly (# of rows)
+
+# Correct Responses to the filler items and the unshifted filler items
+Resp_False <- data.B %>%
+  group_by(ParticipantID, Phase, Response.Correct) %>%
+  filter(Phase == "Exposure") %>%  ## Remove the practice trials
+  #filter(Attended.Talker_Version == "Unshifted" | Item.Type == "Filler") %>%
+  filter(Response.Correct == "FALSE") %>%
+  tally()
+Resp_False
+
+Resp_False_Max <- 0.20 * 80   # Number of trials can get incorrect; 80% correct (60+)
+                             
+Resp_False %>%
+  filter(n >= Resp_False_Max)
+
+## Remove P.461 and P.467 for # of incorrect responses 
+data.C <- data.B %>%
+  group_by(ParticipantID) %>% 
+  filter(ParticipantID != 461) %>%
+  filter(ParticipantID != 467) %>%
+  ungroup()
+
+data.C %>%
+  group_by(ParticipantID, Response.Correct) %>%
+  tally() 
+  ## Check number of rows; all intended participants excluded? -> should be 4
+
+# Get avg. sd incorrect responses
+C <- data.C %>%
+  group_by(ParticipantID, Phase, Response.Correct) %>%
+  filter(Phase == "Exposure") %>%  ## Remove the practice trials
+  filter(Response.Correct == "FALSE") %>%
+  tally() 
+
+mean(C$n)
+sd(C$n)
+```
+
+## Exlusions: Lexical Recognition Task Accuracy
+```{r Exclusions}
+# Correct_Responses (8) for the shifted_critical_items (10)
+## Backed by previous lit
+Crit.Resp_False <- data.C %>%
+  group_by(ParticipantID, Item.Type, Attended.Talker_Version, Response.Correct) %>%
+  filter(Item.Type == "Critical") %>% 
+  filter(Attended.Talker_Version == "Shifted") %>%
+  filter(Response.Correct == "FALSE") %>%
+  tally()
+
+Crit.Resp_False
+
+Crit.Resp_False_Max <- 4
+# 10 shifted critical Items; must recognize at least 6 of the critical shifts as words to expect adaptation.
+Crit.Resp_False %>%
+  filter(n > Crit.Resp_False_Max)
+
+## Remove P.548 for too many incorrect Critical_Trials
+data.D <- data.C %>%
+  group_by(ParticipantID) %>% 
+  filter(ParticipantID != 548) %>%
+  ungroup()
+
+data.D %>%
+  group_by(ParticipantID) %>%
+  tally()
+```
+
+## Exclusion Criterion Check
+```{r Exclusions_Check}
+Resp_False <- data.D %>%
+  group_by(ParticipantID, Phase, Response.Correct) %>%
+  filter(Phase == "Exposure") %>%  ## Remove the practice trials
+  #filter(Attended.Talker_Version == "Unshifted" | Item.Type == "Filler") %>%
+  filter(Attended.Talker_Version == "Shifted") %>%
+  filter(Response.Correct == "FALSE") %>%
+  tally() ## stats for the number of critical trials incorrect
+
+Resp_False
+
+  avg_Resp.False <- mean(Resp_False$n)
+  avg_Resp.False              # Print Mean incorrect trials
+
+  sd_Resp.False <- sd(Resp_False$n)
+  sd_Resp.False
+
+# (sd_Resp.False * 3) + avg_Resp.False  
+  ## validate correct response exclusion criteria
+```
+
+## Sig. difference between Response.Correct Exclusions between conditions
+```{r Exclusion_bias}
+## All Trial Responses
+A1 <- data.C %>%  # data.C before Response.Correct exclusions
+  group_by(ParticipantID, Response.Correct) %>%
+  filter(Response.Correct == "FALSE") %>%
+  group_by(Attended.Talker_Sound, Attended.Talker_Version) %>%
+  tally() 
+
+A2 <- data.D %>%
+  group_by(ParticipantID, Response.Correct) %>%
+  filter(Response.Correct == "FALSE") %>%
+  group_by(Attended.Talker_Sound, Attended.Talker_Version) %>%
+  tally() 
+
+A1
+A2
+
+# Only Critical Responses, separated by sound + version
+B1 <- data.C %>%  # data.C before Response.Correct exclusions
+  group_by(ParticipantID, Response.Correct) %>%
+  filter(Response.Correct == "FALSE") %>%
+  group_by(ParticipantID, Attended.Talker_Sound, Attended.Talker_Version) %>%
+  filter(Item.Type == "Critical") %>%
+  group_by(Attended.Talker_Sound, Attended.Talker_Version) %>%
+  tally() 
+
+B2 <- data.D %>%  
+  group_by(ParticipantID, Response.Correct) %>%
+  filter(Response.Correct == "FALSE") %>%
+  group_by(ParticipantID, Attended.Talker_Sound, Attended.Talker_Version) %>%
+  filter(Item.Type == "Critical") %>%
+  group_by(Attended.Talker_Sound, Attended.Talker_Version) %>%
+  tally()
+
+B1
+B2
+
+# Only Critical Responses, separated by Gender
+C1 <- data.C %>%  # data.C before Response.Correct exclusions
+  group_by(ParticipantID, Response.Correct) %>%
+  filter(Response.Correct == "FALSE") %>%
+  group_by(ParticipantID, Attended.Talker_Sound, Attended.Talker_Version, Attended.Talker_Gender) %>%
+  filter(Item.Type == "Critical") %>%
+  group_by(Attended.Talker_Gender, Attended.Talker_Sound, Attended.Talker_Version) %>%
+  tally()
+
+C2 <- data.D %>%  
+  group_by(ParticipantID, Response.Correct) %>%
+  filter(Response.Correct == "FALSE") %>%
+  group_by(ParticipantID, Attended.Talker_Sound, Attended.Talker_Version, Attended.Talker_Gender) %>%
+  filter(Item.Type == "Critical") %>%
+  group_by(Attended.Talker_Gender, Attended.Talker_Sound, Attended.Talker_Version) %>%
+  tally()
+
+C1
+C2
+
+## Difference between item type (filler words/nonewords, critical s/sh shifted/unshifted)
+table(A1$n, A2$n)
+chisq.test(table(A2$n, A1$n))
+
+# Difference between critical items (critical s/sh shifted/unshifted) 
+table(B1$n, B2$n)
+chisq.test(table(B2$n, B1$n))
+
+# Difference between critical items by gender (F/M critical s/sh shifted/unshifted)
+table(C1$n, C2$n)
+chisq.test(table(C2$n, C1$n))
+
+# No statistical sig. diff (P > .05) between how exclusion criteria applied to participants across conditions 
+  ## Double check this is actually functioning as intended
+```
+
+# Participant Summary
+## Import updated data set -> Removed excluded participants
+```{r data_clean}
+Data <- read_csv("C:/Users/Rachel/Documents/SI.SP/post_analyses/data/data_clean.csv",
+    show_col_types = FALSE)
+Data
+```
+
+## Average Participant Age
+```{r Participant_Age}
+x <- Data %>%
+  group_by(ParticipantID, Participant.Age) %>%
+  filter(Participant.Age != "NA") %>%
+  summarise()
+
+mean(x$Participant.Age)
+sd(x$Participant.Age)
+```
+
+## Read Comments (optional)
+```{r Participant_Comments}
+Data %>%
+  group_by(ParticipantID, Assignment.Comment) %>%
+  filter(Assignment.Comment != "NA") %>%
+  summarise()
+```
+
+## Survey
+```{r Particpant_Survey}
+Data %>%
+  group_by(ParticipantID, Condition_Attended.Label, speaker_attended_ssh, speaker_unattended_ssh) %>%
+  # Speaker_(Un)Attended -> conscious perception
+    #filter(speaker_unattended_ssh != "normal") %>% 
+    filter(speaker_attended_ssh != "normal") %>%
+  # Condition_Attended -> shift of the attended talker
+    filter(Condition_Attended.Label == "?s") %>%
+    #filter(Condition_Attended.Label == "?sh") %>%
+  summarise()
+```
+
+# Results
+## Attended Talker 
+```{r, Attended_Talker}
+Data %>%                           
+  
+  filter(Item.Type == "Test") %>%
+  mutate(Response.Ashi = ifelse(Response == "ASHI", 1, 0)) %>%
+
+  # Attended Talker var
+  mutate(Attended.Talker_Test = ifelse(Attended.Talker_Gender == Condition_Attended.Gender, "Attended Talker", "Unattended Talker")) %>% 
+  group_by(ParticipantID, Attended.Talker_Test,   Condition_Attended.Label, Attended.Talker_Item) %>%
+  summarise(Response.Ashi = mean(Response.Ashi)) 
+```
+### See Vars  
+```{r}
+Data %>%
+  view()
+```
+
+## Significance Test (ANOVA)
+```{r ANOVA}
+X <- Data %>%
+  filter(Phase == "Test") %>% 
+  filter(Block < 17) %>%
+  mutate(
+    Response.Ashi = 
+      ifelse(Response == "ASHI", 0, 1),
+    Talker = 
+      ifelse(Attended.Talker_Gender == Condition_Attended.Gender, "Attended Talker", "Unattended Talker"),
+    Item = Attended.Talker_Item
+    )%>%
+     
+  group_by(ParticipantID, Talker, Attended.Talker_Gender, Condition_Attended.Label, Attended.Talker_Item) %>%
+  mutate(avg.Response = mean(Response.Ashi)) %>%
+  mutate(Number.of_Ashi.Responses = (6 * mean(Response.Ashi))) %>%
+  mutate(Condition.Label = gsub( "^", "Condition: Attended to ", Condition_Attended.Label)) 
+
+  ggplot(X, aes(x = Item, y = avg.Response, color = Condition.Label)) + 
+    geom_boxplot() +
+    scale_x_discrete("Continuum Step (ASI -> ASHI)") +
+    scale_y_discrete("Proportion of ASHI Responses (%)", limits = c(0,1)) +
+    facet_grid( ~ Talker) +
+    theme(legend.position = "top")
+  model = lm(avg.Response ~ Item * Talker, data = X)
+  lm(avg.Response ~ Item, X)
+  aov(avg.Response ~ Item + Condition.Label * Item + Talker, data = X)
+```
+
+## Figures
+### Figure 1
+```{r fig.cap="Figure 1 compares participants' responses to the lexical discrimination task by Talker and between Shift Conditions: The left pane compares responses to the Attended Talker by the Talker production shift the participant encountered, and the right pane compares the same for the Unattended Talker.", fig.height=5, fig.width=9, warning=FALSE}
+Data %>%    
+  filter(Phase == "Test") %>%
+  mutate(
+    Response.Ashi = 
+      ifelse(Response == "ASHI", 1, 0),
+    Talker = 
+      ifelse(Attended.Talker_Gender == Condition_Attended.Gender, "Attended Talker", "Unattended Talker"),
+    Attended.Talker_Item = 
+      32 - as.numeric(gsub("ashi.(.*)$", "\\1", Attended.Talker_Item)), ## 31 steps Liu & Jaeger
+    Talker.Production = 
+      gsub( "^", "Produced ", Condition_Attended.Label),
+    )%>%  
+  
+  group_by(
+    ParticipantID, 
+    Talker, 
+    Condition_Attended.Gender, 
+    Attended.Talker_Gender, 
+    Talker.Production, 
+    Attended.Talker_Item
+    )%>%
+  
+  summarise(Response.Ashi = mean(Response.Ashi, ))%>%
+ 
+  ggplot(
+    aes(
+      x = Attended.Talker_Item, 
+      y = Response.Ashi,
+      color = Talker.Production,
+      fill = Talker.Production
+    )) +
+  
+  stat_summary(
+    fun.data = mean_cl_boot, 
+    geom = "pointrange", 
+    position = position_dodge(.1)
+    ) +
+ 
+  geom_smooth(
+    method = "glm",
+    formula = y ~ x, 
+    method.args = list(family = "binomial"),
+    show.legend = TRUE
+    ) +
+  
+  # Inflection pt
+    geom_segment(
+    x = 7.5, xend = 32,
+    y = .5, yend = .5,
+    color = "darkgray", 
+    linetype = 2,
+    size = .75) +
+  
+  # Graph aes  
+  scale_color_manual(values = c("lightskyblue", "orange")) +
+  scale_fill_manual(values = alpha(c("lightskyblue", "orange"), .1)) +
+  
+  scale_x_continuous(
+    name = "Test Item",  
+    breaks = c(13, 17, 18, 19, 20, 24), 
+    labels = c("13 (Most ASI-like)", "17", "18 ", "19", "20", "24 (Most ASHI-like)"), 
+    limits = c(12, 25)
+    ) +
+  scale_y_continuous(
+    "Proportion of ASHI Responses (%)",
+    limits = c(0,1)
+    ) +
+  facet_wrap( ~ Talker) +
+  theme(legend.position = "top")
+```

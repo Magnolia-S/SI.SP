@@ -584,7 +584,7 @@ Data %>%
       ifelse(Response == "ASHI", 1, 0),
     
     Talker = 
-      ifelse(Attended.Talker_Gender == Condition_Attended.Gender, "Attended Talker", "Unattended Talker"),
+      ifelse(Attended.Talker_Sound == Condition_Attended.Gender, "Attended Talker", "Unattended Talker"),
     
     Attended.Talker_Item = 
       32 - as.numeric(gsub("ashi.(.*)$", "\\1", Attended.Talker_Item)), ## 31 steps Liu & Jaeger

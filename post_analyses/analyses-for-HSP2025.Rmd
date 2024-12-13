@@ -80,7 +80,7 @@ knitr::knit_hooks$set(
       paste0(
         "\n \\", 
         options$size,
-        "/n/n", 
+        "\n\n", 
         x, 
         "\n\n \\normalsize"), 
       x)

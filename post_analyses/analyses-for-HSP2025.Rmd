@@ -49,6 +49,7 @@ library(tidyverse)
 library(magrittr)
 
 library(lme4)
+library(broom.mixed)
 ```
 
 ```{r, Format, include=F}
@@ -453,7 +454,7 @@ m <-
   family = binomial(link = "logit"),
   data = Data %>% filter(Phase == "Exposure", Item.Type == "Filler"))
 
-summary(m)
+tidy(m, effects = "fixed") %>% select(-effect) %>% knitr::kable(digits = 3)
 ```
 
 For critical words, there shifted words were less likely to be recognized as a word than unshifted words (p < .0001). Additionally, there was a marginally significant main effect of the attended talker's gender (p < .06), so that critical words from female talkers were less likely to be recognized as words. No other effects were significant (p > .12).
@@ -472,7 +473,7 @@ m <-
       Attended.Talker_Version = `contrasts<-`(Attended.Talker_Version, , cbind("Shifted-vs-unshifted" = c(-.5, +.5))))
   )
 
-summary(m, cor = F)
+tidy(m, effects = "fixed") %>% select(-effect) %>% knitr::kable(digits = 3)
 ```
 
 ## Attended Talker 

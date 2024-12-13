@@ -456,18 +456,20 @@ m <-
 summary(m)
 ```
 
-For critical words, there was a significant interaction between the attended talker's bias and the target sound of the critical word (p < .0001), so that shifted words were less likely to be recognized as a word. Additionally, there was a marginally significant main effect of the attended talker's gender (p < .06), so that critical words from female talkers were less likely to be recognized as words.
+For critical words, there shifted words were less likely to be recognized as a word than unshifted words (p < .0001). Additionally, there was a marginally significant main effect of the attended talker's gender (p < .06), so that critical words from female talkers were less likely to be recognized as words. No other effects were significant (p > .12).
 
 ```{r}
 m <- 
   glmer(
-  formula = Response.Correct ~ 1 + Condition_Attended.Label * Condition_Attended.Gender * Attended.Talker_Sound + (1 | ParticipantID),
+  formula = Response.Correct ~ 1 + Condition_Attended.Label * Condition_Attended.Gender * Attended.Talker_Version + (1 | ParticipantID),
   family = binomial(link = "logit"),
   data = Data %>% 
     filter(Phase == "Exposure", Item.Type == "Critical") %>%
     mutate(
       Attended.Talker_Sound = factor(Attended.Talker_Sound, levels = c("S", "Sh")),
-      Attended.Talker_Sound = `contrasts<-`(Attended.Talker_Sound, , cbind("sh-vs-s" = c(-.5, +.5))))
+      Attended.Talker_Sound = `contrasts<-`(Attended.Talker_Sound, , cbind("sh-vs-s" = c(-.5, +.5))),
+      Attended.Talker_Version = factor(Attended.Talker_Version, levels = c("Unshifted", "Shifted")),
+      Attended.Talker_Version = `contrasts<-`(Attended.Talker_Version, , cbind("Shifted-vs-unshifted" = c(-.5, +.5))))
   )
 
 summary(m, cor = F)

@@ -78,16 +78,16 @@ knitr::knit_hooks$set(
     ifelse(
       options$size != "normalsize", 
       paste0(
-        "/n //", 
+        "\n \\", 
         options$size,
         "/n/n", 
         x, 
-        "/n/n //normalsize"), 
+        "\n\n \\normalsize"), 
       x)
   })
 
 color_block = function(color) {
-  function(x, options)        sprintf('//color{%s}//begin{verbatim}%s//end{verbatim}//color{black}', color, x)
+  function(x, options)        sprintf('\\color{%s}\\begin{verbatim}%s\\end{verbatim}\\color{black}', color, x)
 }
 knitr::knit_hooks$set(error = color_block('red'))
 knitr::knit_hooks$set(warning = color_block('orange'))
@@ -470,7 +470,7 @@ m <-
       Attended.Talker_Sound = `contrasts<-`(Attended.Talker_Sound, , cbind("sh-vs-s" = c(-.5, +.5))))
   )
 
-summary(m)
+summary(m, cor = F)
 ```
 
 ## Attended Talker 

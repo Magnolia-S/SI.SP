@@ -50,6 +50,7 @@ library(magrittr)
 
 library(lme4)
 library(broom.mixed)
+library(sjPlot)
 ```
 
 ```{r, Format, include=F}
@@ -435,11 +436,11 @@ TO DO:
  + determine proportion of word/non-words for filler and critical trial (not responses. the actual words/non-words)
 
 ```{r}
+Data.exposure <- Data %>% filter(Phase == "Exposure")
+
 p <- position_dodge(.4)
 
-Data %>%                           
-  
-  filter(Phase == "Exposure") %>%
+Data.exposure %>%
   
   # Generate by participant averages
   group_by(
@@ -468,7 +469,7 @@ m <-
   glmer(
   formula = Response.Correct ~ 1 + Condition_Attended.Label * Condition_Attended.Gender + (1 | ParticipantID),
   family = binomial(link = "logit"),
-  data = Data %>% filter(Phase == "Exposure", Item.Type == "Filler"))
+  data = Data.exposure %>% filter(Item.Type == "Filler"))
 
 tidy(m, effects = "fixed") %>% select(-effect) %>% knitr::kable(digits = 3)
 ```
@@ -480,8 +481,8 @@ m <-
   glmer(
   formula = Response.Correct ~ 1 + Condition_Attended.Label * Condition_Attended.Gender * Attended.Talker_Version + (1 | ParticipantID),
   family = binomial(link = "logit"),
-  data = Data %>% 
-    filter(Phase == "Exposure", Item.Type == "Critical") %>%
+  data = Data.exposure %>% 
+    filter(Item.Type == "Critical") %>%
     mutate(
       Attended.Talker_Sound = factor(Attended.Talker_Sound, levels = c("S", "Sh")),
       Attended.Talker_Sound = `contrasts<-`(Attended.Talker_Sound, , cbind("sh-vs-s" = c(-.5, +.5))),
@@ -569,7 +570,7 @@ Data.test %>%
   theme(legend.position = "top")
 ```
 
-Analyzing main effects of condition:
+### Analyzing main effects of condition
 
 ```{r}
 m <- 
@@ -586,31 +587,131 @@ m <-
   )
 
 tidy(m, effects = "fixed") %>% select(-effect) %>% knitr::kable(digits = 3)
+
+plot_model(
+  m, 
+  title = "Effects on ASHI responses during test", 
+  show.values = TRUE, show.p = TRUE, ci.lvl = .95, value.offset = .4) +
+  aes(
+    color = 
+      case_when(
+        p.stars == "" ~ "n.s.",
+        estimate > 1 ~ "pos", 
+        estimate < 1 ~ "neg",
+        T ~ NA_character_)) +
+  scale_colour_manual(breaks = c("n.s.", "pos", "neg"), values = c("gray", "blue", "orange")) + 
+  theme_blank()
 ```
 
-Analyzing changes across blocks while ignoring gender:
+Analyzing main effects of condition, while taking into account that participants differed in terms of how well they performed during exposure (which can be estimated on the filler trials during exposure) and in terms of how much they heard the shifted stimuli as words (which can be estimated from the critical shifted trials):
 
 ```{r}
+# Ideally we might derive a single measure of how much participants perceived the shifted stimuli as words.
+# For that, we would need to remove the word-response bias (estimated from fillers). Overall, there were 
+# 40 words (20 critical and 20 fillers) and 40 non-words for the attended talker. But, for fillers, only 1/3
+# of all stimuli were words. We thus estimate the word bias for each participant as the log-odds of word 
+# responses during exposure minus the logit of (20/60).
+
+# Estimate word-biase from fillers
+m.word_bias <- 
+  glmer(
+  formula = Response == "word" ~ 1 + (1 | ParticipantID),
+  family = binomial(link = "logit"),
+  data = Data.exposure %>% filter(Item.Type == "Filler"))
+
+# Estimate how much shifted words are treated as words
+m.shifted_perceived_as_word <- 
+  glmer(
+  formula = Response == "word" ~ 1 + (1 | ParticipantID),
+  family = binomial(link = "logit"),
+  data = Data.exposure %>% filter(Item.Type == "Critical", Attended.Talker_Version == "Shifted"))
+
+# Remove word bias from word responses for shifted words and use this as an estimate how much the participant
+# perceived the shifted words as words.
+Data.test %<>%
+  left_join(
+    { coef(m.shifted_perceived_as_word)$ParticipantID - (coef(m.word_bias)$ParticipantID - qlogis(20 / 60)) } %>%
+      rownames_to_column("ParticipantID") %>%
+      rename(Attended.Talker_shifted_word_acceptance_logodds = `(Intercept)`)) %>%
+  # Create a predictor that combines the label condition with the estimates word bias to capture the expected 
+  # degree of category expansion from -1 (very s-biased) to 1 (very sh-biased)
+  mutate(Condition_Attended.Label_logodds = ifelse(Condition_Attended.Label == "?sh", plogis(Attended.Talker_shifted_word_acceptance_logodds), -plogis(Attended.Talker_shifted_word_acceptance_logodds)))
+
+gelman_scale <- function(x) {
+  (x - mean(x)) / (2 * sd(x))
+}
+
 m <- 
   glmer(
-  formula = Response.Ashi ~ 1  + Block * Condition_Attended.Label * Talker + (1 + Talker | ParticipantID),
+  formula = Response.Ashi ~ 1 + Condition_Attended.Label_logodds * Talker + (1 + Talker | ParticipantID),
   family = binomial(link = "logit"),
   data = 
     Data.test %>%
     mutate(
       Block = Block - min(Block),
+      Step = gelman_scale(Step),
+      Attended.Talker_shifted_word_acceptance_logodds = gelman_scale(Attended.Talker_shifted_word_acceptance_logodds),
+      Condition_Attended.Label_logodds = gelman_scale(Condition_Attended.Label_logodds),
+      Talker = factor(Talker, levels = c("Unattended", "Attended")),
+      Talker = `contrasts<-`(Talker, , cbind("attended-vs-unattended" = c(-.5, +.5))))
+  )
+
+tidy(m, effects = "fixed") %>% select(-effect) %>% knitr::kable(digits = 3)
+
+plot_model(
+  m, 
+  title = "Effects on ASHI responses during test", 
+  show.values = TRUE, show.p = TRUE, ci.lvl = .95, value.offset = .4) +
+  aes(
+    color = 
+      case_when(
+        p.stars == "" ~ "n.s.",
+        estimate > 1 ~ "pos", 
+        estimate < 1 ~ "neg",
+        T ~ NA_character_)) +
+  scale_colour_manual(breaks = c("n.s.", "pos", "neg"), values = c("gray", "blue", "orange")) + 
+  theme_blank()
+```
+
+### Analyzing changes across blocks (while ignoring gender)
+
+```{r, fig.height = 6, fig.width=12}
+m <- 
+  glmer(
+  formula = Response.Ashi ~ 1 + Step * Block * Condition_Attended.Label * Talker + (1 + Talker | ParticipantID),
+  family = binomial(link = "logit"),
+  data = 
+    Data.test %>%
+    mutate(
+      # Group into Blocks of 24 stimuli so that Block is not confounded with Talker order 
+      # (the attended talker was, by chance, much more frequently the talker that was tested first)
+      Block = floor((Block - min(Block)) / 4),
       Step = (Step - mean(Step)) / (2 * sd(Step)),
       Talker = factor(Talker, levels = c("Unattended", "Attended")),
       Talker = `contrasts<-`(Talker, , cbind("attended-vs-unattended" = c(-.5, +.5))))
   )
 
 tidy(m, effects = "fixed") %>% select(-effect) %>% knitr::kable(digits = 3)
+
+plot_model(
+  m, 
+  title = "Effects on ASHI responses during test", 
+  show.values = TRUE, show.p = TRUE, ci.lvl = .95, value.offset = .4) +
+  aes(
+    color = 
+      case_when(
+        p.stars == "" ~ "n.s.",
+        estimate > 1 ~ "pos", 
+        estimate < 1 ~ "neg",
+        T ~ NA_character_)) +
+  scale_colour_manual(breaks = c("n.s.", "pos", "neg"), values = c("gray", "blue", "orange")) + 
+  theme_blank()
 ```
 
 
 Analyzing everything at once:
 
-```{r}
+```{r fig.height = 10, fig.width=12}
 m <- 
   glmer(
   formula = Response.Ashi ~ 1 + Step * Block * Condition_Attended.Label * Condition_Attended.Gender * Talker + (1 + Talker | ParticipantID),
@@ -618,16 +719,32 @@ m <-
   data = 
     Data.test %>%
     mutate(
-      Block = Block - min(Block),
+      # Group into Blocks of 24 stimuli so that Block is not confounded with Talker order 
+      # (the attended talker was, by chance, much more frequently the talker that was tested first)
+      Block = floor((Block - min(Block)) / 4),
       Step = (Step - mean(Step)) / (2 * sd(Step)),
       Talker = factor(Talker, levels = c("Unattended", "Attended")),
       Talker = `contrasts<-`(Talker, , cbind("attended-vs-unattended" = c(-.5, +.5))))
   )
 
 tidy(m, effects = "fixed") %>% select(-effect) %>% knitr::kable(digits = 3)
+
+plot_model(
+  m, 
+  title = "Effects on ASHI responses during test", 
+  show.values = TRUE, show.p = TRUE, ci.lvl = .95, value.offset = .4) +
+  aes(
+    color = 
+      case_when(
+        p.stars == "" ~ "n.s.",
+        estimate > 1 ~ "pos", 
+        estimate < 1 ~ "neg",
+        T ~ NA_character_)) +
+  scale_colour_manual(breaks = c("n.s.", "pos", "neg"), values = c("gray", "blue", "orange")) + 
+  theme_blank()
 ```
 
-
+# OTHER STUFF
 
 ## Attended Talker 
 ```{r, Attended_Talker}

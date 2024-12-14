@@ -414,6 +414,19 @@ Data %>%
 
 # Results
 
+```{r}
+Data <- 
+  read_csv("data/data_clean.csv", show_col_types = FALSE) %>%
+  mutate(
+    across(c(ParticipantID), factor),
+    Condition_Attended.Label = factor(Condition_Attended.Label, levels = c("?s", "?sh")), 
+    Condition_Attended.Label = `contrasts<-`(Condition_Attended.Label, , cbind("sh-vs-s-bias" = c(-.5, +.5))), 
+    Condition_Attended.Gender = factor(Condition_Attended.Gender, levels = c("Male", "Female")), 
+    Condition_Attended.Gender = `contrasts<-`(Condition_Attended.Gender, , cbind("female-vs-male" = c(-.5, +.5))),
+    Attended.Talker_Sound = factor(Attended.Talker_Sound, levels = c("S", "Sh", "Word", "Nonword"))
+  )
+```
+
 ## Exposure
 WARNING: this section takes for granted that the variable Response.Correct correctly captures whether the word/non-word response was correct relative to the *attended talker*. Once this has been confirmed, this note can be removed.
 
@@ -440,9 +453,12 @@ Data %>%
   facet_grid(~ Item.Type) +
   scale_x_discrete("Attended talker's gender") +
   scale_y_continuous("Lexical decision accuracy", limits = c(.8, 1)) +
-  scale_color_discrete(
-    "Attended talker's bias:", breaks = c("?s", "?sh"), labels = c("s-biased", "sh-biased"),
-    aes = c("color", "fill")) +
+  scale_color_manual(
+    "Attended talker's bias", 
+    breaks = c("?s", "?sh"), 
+    labels = c("s-biased", "sh-biased"),
+    values = c("lightskyblue", "orange"), 
+    aesthetics = c("color", "fill")) +
   theme(legend.position = "top")
 ```
 For filler words, there were no significant differences in lexical decision accuracy between conditions:
@@ -475,6 +491,143 @@ m <-
 
 tidy(m, effects = "fixed") %>% select(-effect) %>% knitr::kable(digits = 3)
 ```
+
+## Test
+
+```{r}
+Data.test <- 
+  Data %>%    
+  filter(Phase == "Test") %>%
+  mutate(
+    Talker = 
+      ifelse(Attended.Talker_Gender == Condition_Attended.Gender, "Attended", "Unattended"),
+    Response.Ashi = 
+      ifelse(Response == "ASHI", 1, 0),
+    Step = 
+      32 - as.numeric(gsub("ashi.(.*)$", "\\1", Attended.Talker_Item)) ## 31 steps Liu & Jaeger
+  )
+```
+
+```{r fig.cap="Participants' categorization responses in the 2AFC task during test.", fig.height=6, fig.width=9, warning=FALSE}
+Data.test %>%  
+  
+  group_by(
+    ParticipantID, 
+    Condition_Attended.Label,
+    Condition_Attended.Gender, 
+    Talker, 
+    Step
+  ) %>%
+  
+  summarise(Response.Ashi = mean(Response.Ashi)) %>%
+  ungroup() %>%
+  mutate(
+    Talker = paste(Talker, "talker"),
+    Condition_Attended.Gender = paste("Attended talker's gender =", Condition_Attended.Gender)) %>%
+ 
+  ggplot(
+    aes(
+      x = Step, 
+      y = Response.Ashi,
+      color = Condition_Attended.Label,
+      fill = Condition_Attended.Label
+    )) +
+  
+  stat_summary(
+    fun.data = mean_cl_boot, 
+    geom = "pointrange", 
+    position = position_dodge(.1)
+    ) +
+ 
+  geom_smooth(
+    method = "glm",
+    formula = y ~ x, 
+    method.args = list(family = "binomial"),
+    show.legend = TRUE
+    ) +
+  
+  scale_x_continuous(
+    name = "Test Item",  
+    breaks = c(13, 17, 18, 19, 20, 24), 
+    labels = c("13 (Most ASI-like)", "17", "18 ", "19", "20", "24 (Most ASHI-like)"), 
+    limits = c(12, 25)
+  ) +
+  scale_y_continuous(
+    "Proportion of ASHI Responses (%)",
+    limits = c(0,1)
+  ) +
+
+  scale_color_manual(
+    "Attended talker's bias", 
+    breaks = c("?s", "?sh"), 
+    labels = c("s-biased", "sh-biased"),
+    values = c("lightskyblue", "orange"), 
+    aesthetics = c("color", "fill")
+  ) +
+  
+  facet_grid(Condition_Attended.Gender ~ Talker) +
+  theme(legend.position = "top")
+```
+
+Analyzing main effects of condition:
+
+```{r}
+m <- 
+  glmer(
+  formula = Response.Ashi ~ 1 + Condition_Attended.Label * Condition_Attended.Gender * Talker + (1 + Talker | ParticipantID),
+  family = binomial(link = "logit"),
+  data = 
+    Data.test %>%
+    mutate(
+      Block = Block - min(Block),
+      Step = (Step - mean(Step)) / (2 * sd(Step)),
+      Talker = factor(Talker, levels = c("Unattended", "Attended")),
+      Talker = `contrasts<-`(Talker, , cbind("attended-vs-unattended" = c(-.5, +.5))))
+  )
+
+tidy(m, effects = "fixed") %>% select(-effect) %>% knitr::kable(digits = 3)
+```
+
+Analyzing changes across blocks while ignoring gender:
+
+```{r}
+m <- 
+  glmer(
+  formula = Response.Ashi ~ 1  + Block * Condition_Attended.Label * Talker + (1 + Talker | ParticipantID),
+  family = binomial(link = "logit"),
+  data = 
+    Data.test %>%
+    mutate(
+      Block = Block - min(Block),
+      Step = (Step - mean(Step)) / (2 * sd(Step)),
+      Talker = factor(Talker, levels = c("Unattended", "Attended")),
+      Talker = `contrasts<-`(Talker, , cbind("attended-vs-unattended" = c(-.5, +.5))))
+  )
+
+tidy(m, effects = "fixed") %>% select(-effect) %>% knitr::kable(digits = 3)
+```
+
+
+Analyzing everything at once:
+
+```{r}
+m <- 
+  glmer(
+  formula = Response.Ashi ~ 1 + Step * Block * Condition_Attended.Label * Condition_Attended.Gender * Talker + (1 + Talker | ParticipantID),
+  family = binomial(link = "logit"),
+  data = 
+    Data.test %>%
+    mutate(
+      Block = Block - min(Block),
+      Step = (Step - mean(Step)) / (2 * sd(Step)),
+      Talker = factor(Talker, levels = c("Unattended", "Attended")),
+      Talker = `contrasts<-`(Talker, , cbind("attended-vs-unattended" = c(-.5, +.5))))
+  )
+
+tidy(m, effects = "fixed") %>% select(-effect) %>% knitr::kable(digits = 3)
+```
+
+
 
 ## Attended Talker 
 ```{r, Attended_Talker}
@@ -524,75 +677,4 @@ X <- Data %>%
 ```
 
 ## Figures
-### Figure 1
-```{r fig.cap="Figure 1 compares participants' responses to the lexical discrimination task by Talker and between Shift Conditions: The left pane compares responses to the Attended Talker by the Talker production shift the participant encountered, and the right pane compares the same for the Unattended Talker.", fig.height=5, fig.width=9, warning=FALSE}
-Data %>%    
-  filter(Phase == "Test") %>%
-  mutate(
-    Response.Ashi = 
-      ifelse(Response == "ASHI", 1, 0),
-    Talker = 
-      ifelse(Attended.Talker_Gender == Condition_Attended.Gender, "Attended Talker", "Unattended Talker"),
-    Attended.Talker_Item = 
-      32 - as.numeric(gsub("ashi.(.*)$", "\\1", Attended.Talker_Item)), ## 31 steps Liu & Jaeger
-    Talker.Production = 
-      gsub( "^", "Produced ", Condition_Attended.Label),
-    )%>%  
-  
-  group_by(
-    ParticipantID, 
-    Talker, 
-    Condition_Attended.Gender, 
-    Attended.Talker_Gender, 
-    Talker.Production, 
-    Attended.Talker_Item
-    )%>%
-  
-  summarise(Response.Ashi = mean(Response.Ashi, ))%>%
- 
-  ggplot(
-    aes(
-      x = Attended.Talker_Item, 
-      y = Response.Ashi,
-      color = Talker.Production,
-      fill = Talker.Production
-    )) +
-  
-  stat_summary(
-    fun.data = mean_cl_boot, 
-    geom = "pointrange", 
-    position = position_dodge(.1)
-    ) +
- 
-  geom_smooth(
-    method = "glm",
-    formula = y ~ x, 
-    method.args = list(family = "binomial"),
-    show.legend = TRUE
-    ) +
-  
-  # Inflection pt
-    geom_segment(
-    x = 7.5, xend = 32,
-    y = .5, yend = .5,
-    color = "darkgray", 
-    linetype = 2,
-    size = .75) +
-  
-  # Graph aes  
-  scale_color_manual(values = c("lightskyblue", "orange")) +
-  scale_fill_manual(values = alpha(c("lightskyblue", "orange"), .1)) +
-  
-  scale_x_continuous(
-    name = "Test Item",  
-    breaks = c(13, 17, 18, 19, 20, 24), 
-    labels = c("13 (Most ASI-like)", "17", "18 ", "19", "20", "24 (Most ASHI-like)"), 
-    limits = c(12, 25)
-    ) +
-  scale_y_continuous(
-    "Proportion of ASHI Responses (%)",
-    limits = c(0,1)
-    ) +
-  facet_wrap( ~ Talker) +
-  theme(legend.position = "top")
-```
+

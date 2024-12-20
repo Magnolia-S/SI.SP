@@ -1,0 +1,143 @@
+<div id="endForm" class="survey">
+  <h3>Please answer the questions on this survey truthfully. Your answers will not affect your compensation.</h3>
+  <br/>
+
+  <!-- Word recall -->
+  <div class="question_section" id="word_recall" style="display:visible">
+    <div class="question">
+      <p>Please check the boxes of the words below that you remember hearing during the experiment:</p>
+      <input id="materials.b_1" type="checkbox" name="word_recall" value="materials.b_s_talker.a"><label for="materials.b_1">Episode</label></input><br/>
+      <input id="random_word_1" type="checkbox" name="word_recall" value="random_word_1"><label for="random_word_1">Mistaken</label></input><br/>
+      <input id="materials.a_1" type="checkbox" name="word_recall" value="materials.a_s_talker.b"><label for="materials.a_1">Parasite</label></input><br/>
+      <input id="materials.a_2" type="checkbox" name="word_recall" value="materials.a_sh_talker.a"><label for="materials.a_2">Ambition</label></input><br/>
+      <input id="materials.b_2" type="checkbox" name="word_recall" value="materials.b_s_talker.a"><label for="materials.b_2">Pregnancy</label></input><br/>
+      <input id="random_word_2" type="checkbox" name="word_recall" value="random_word_2"><label for="random_word_2">Delightful</label></input><br/>
+      <input id="random_word_3" type="checkbox" name="word_recall" value="random_word_3"><label for="random_word_3">January</label></input><br/>
+      <input id="materials.b_3" type="checkbox" name="word_recall" value="materials.b_sh_talker.b"><label for="materials.b_3">Impatient</label></input><br/>
+      <input id="materials.a_3" type="checkbox" name="word_recall" value="materials.a_s_talker.b"><label for="materials.a_3">Dinosaur</label></input><br/>
+      <input id="materials.b_4" type="checkbox" name="word_recall" value="materials.b_sh_talker.b"><label for="materials.b_4">Negotiate</label></input><br/>
+      <input id="materials.a_4" type="checkbox" name="word_recall" value="materials.a_sh_talker.a"><label for="materials.a_4">Graduation</label></input><br/>
+      <input id="random_word_4" type="checkbox" name="word_recall" value="random_word_4"><label for="random_word_4">Aromatic</label></input><br/>
+    </div>
+  </div>
+  <!-- End word recall -->
+
+  <!-- General questions; The first question section should always be set to style display:visible; all others should be display:none -->
+  <div class="question_section" id="audio_type" style="display:none">
+    <div class="question">
+      <p>What kind of <strong>audio equipment</strong> did you use for the experiment?</p>
+      <input id="audio_type_inear" type="radio" name="audio_type" value="in-ear"><label for="audio_type_inear">In-ear headphones</label></input><br/>
+      <input id="audio_type_overear" type="radio" name="audio_type" value="over-ear"><label for="audio_type_overear">Over-the-ear headphones</label></input><br/>
+      <input id="audio_type_external" type="radio" name="audio_type" value="external"><label for="audio_type_external">External Speakers</label></input><br/>
+      <input id="audio_type_computer" type="radio" name="audio_type" value="computer speakers"><label for="audio_type_computer">Laptop Speakers</label></input><br/>
+    </div>
+  </div>
+
+  <div class="question_section" id="audio_stall" style="display:none">
+    <div class="question">
+      <p>Did any of the audio clips fail to load or stop playing for a moment and then restart during the experiment?</p>
+      <input id="audio_stall_yes" type="radio" name="audio_stall" value="yes"><label for="audio_stall_yes">Yes, many</label></input><br/>
+      <input id="audio_stall_some" type="radio" name="audio_stall" value="some"><label for="audio_stall_some">Yes, just a few</label></input><br/>
+      <input id="audio_stall_no" type="radio" name="audio_stall" value="no"><label for="audio_stall_no">No, none</label></input><br/>
+    </div>
+  </div>
+  <!-- End general questions -->
+
+  <!-- Questions about the attended talker -->
+  <div class="question_section" id="speaker_which_attended" style="display:none">
+    <div class="question">
+      <p>In Part 1, were you focusing on the <strong>male</strong> or the <strong>female</strong> talker?</p>
+      <input id="speaker_male" type="radio" name="speaker_attended_sex" value="male"><label for="speaker_male">Male</label></input><br/>
+      <input id="speaker_female" type="radio" name="speaker_attended_sex" value="female"><label for="speaker_female">Female</label></input><br/>
+    </div>
+  </div>
+
+  <div class="question_section" id="speaker_attended_comments" style="display:none">
+    <div class="question">
+      <p>Did you notice anything odd about the <strong>talker you were focusing on</strong> in Part 1? (Please note that we are specifically interested in how the talker spoke, not issues with the audio loading.)</p>
+      <textArea id="speaker_attended_comments" name="speaker_attended_comments" placeholder="Did you notice anything odd about the talker you were focusing on?" ></textArea>
+    </div>
+  </div>
+
+  <div class="question_section" id="attended_speaker_voice" style="display:none">
+    <div class="question">
+      <p>Please check any boxes that you feel describe the <strong>talker you were focusing on</strong> in Part 1.</p>
+      <input id="speaker_attended_slow" type="checkbox" name="speaker_attended_pronunciation" value="slow"><label for="speaker_attended_slow">Slower than normal speaking rate</label></input><br/>
+      <input id="speaker_attended_normal" type="checkbox" name="speaker_attended_pronunciation" value="normal"><label for="speaker_attended_normal">Normal speaking rate</label></input><br />
+      <input id="speaker_attended_fast" type="checkbox" name="speaker_attended_pronunciation" value="fast"><label for="speaker_attended_fast">Faster than normal speaking rate</label></input><br/>
+      <input id="speaker_attended_high" type="checkbox" name="speaker_attended_pronunciation" value="high"><label for="speaker_attended_high">Higher than normal voice pitch</label></input><br/>
+      <input id="speaker_attended_low" type="checkbox" name="speaker_attended_pronunciation" value="low"><label for="speaker_attended_low">Lower than normal voice pitch</label></input><br/>
+      <input id="speaker_attended_relaxed" type="checkbox" name="speaker_attended_pronunciation" value="relaxed"><label for="speaker_attended_relaxed">Relaxed</label></input><br/>
+      <input id="speaker_attended_serious" type="checkbox" name="speaker_attended_pronunciation" value="serious"><label for="speaker_attended_serious">Serious</label></input><br/>
+    </div>
+
+    <div class="question">
+      <p> Did you notice anything in particular about how the <strong>talker you were focusing on</strong> in Part 1 spoke words that contained an "S" or "SH" sound?</p>
+      <input id="speaker_attended_ssh_normal" type="radio" name="speaker_attended_ssh" value="normal"><label for="speaker_attended_ssh_normal">Both S and SH sounded normal.</label></input><br/>
+      <input id="speaker_attended_ssh_s_like_sh" type="radio" name="speaker_attended_ssh" value="s-like-sh"><label for="speaker_attended_ssh_s_like_sh">S sounded more like SH.</label></input><br/>
+      <input id="speaker_attended_ssh_sh_like_s" type="radio" name="speaker_attended_ssh" value="sh-like-s"><label for="speaker_attended_ssh_sh_like_s">SH sounded more like S.</label></input><br/>
+      <input id="speaker_attended_ssh_swapped" type="radio" name="speaker_attended_ssh" value="inverted_s-sh"><label for="speaker_attended_ssh_swapped">S sounded more like SH and SH sounded more like S.</label></input><br/>
+    </div>
+  </div>
+  <!-- End attended talker -->
+
+  <!-- Questions about the unattended talker -->
+  <div class="question_section" id="speaker_unattended_comments" style="display:none">
+    <div class="question">
+      <p>Did you notice anything odd about the <strong>talker you were <em>not</em> focusing on</strong> in Part 1? <br/>(Please note that we are specifically interested in how the talker spoke, not issues with the audio loading.)</p>
+      <textArea id="speaker_unattended_comments" name="speaker_unattended_comments" placeholder="Did you notice anything odd about the talker you weren't lsitening to?" ></textArea>
+    </div>
+  </div>
+
+  <div class="question_section" id="unattended_speaker_voice" style="display:none">
+    <div class="question">
+      <p>Please check any boxes that you feel describe the <strong>talker you were <em>not</em> focusing on</strong> in Part 1.</p>
+      <input id="speaker_unattended_slow" type="checkbox" name="speaker_unattended_pronunciation" value="slow"><label for="speaker_unattended_slow">Slower than normal speaking rate</label></input><br/>
+      <input id="speaker_unattended_normal" type="checkbox" name="speaker_unattended_pronunciation" value="normal"><label for="speaker_unattended_normal">Normal speaking rate</label></input><br/>
+      <input id="speaker_unattended_fast" type="checkbox" name="speaker_unattended_pronunciation" value="fast"><label for="speaker_unattended_fast">Faster than normal speaking rate</label></input><br/>
+      <input id="speaker_unattended_high" type="checkbox" name="speaker_unattended_pronunciation" value="high"><label for="speaker_unattended_high">Higher than normal voice pitch</label></input><br/>
+      <input id="speaker_unattended_low" type="checkbox" name="speaker_unattended_pronunciation" value="low"><label for="speaker_unattended_low">Lower than normal voice pitch</label></input><br/>
+      <input id="speaker_unattended_relaxed" type="checkbox" name="speaker_unattended_pronunciation" value="relaxed"><label for="speaker_unattended_relaxed">Relaxed</label></input><br/>
+      <input id="speaker_unattended_serious" type="checkbox" name="speaker_unattended_pronunciation" value="serious"><label for="speaker_unattended_serious">Serious</label></input><br/>
+    </div>
+
+    <div class="question">
+      <p>Did you notice anything in particular about how the <strong>talker you were <em>not</em> focusing on</strong> in Part 1 spoke words that contained an "S" or "SH" sound?</p>
+      <input id="speaker_unattended_ssh_normal" type="radio" name="speaker_unattended_ssh" value="normal"><label for="speaker_unattended_ssh_normal">Both S and SH sounded normal.</label></input><br/>
+      <input id="speaker_unattended_ssh_s_like_sh" type="radio" name="speaker_unattended_ssh" value="s-like-sh"><label for="speaker_unattended_ssh_s_like_sh">S sounded more like SH.</label></input><br/>
+      <input id="speaker_unattended_ssh_sh_like_s" type="radio" name="speaker_unattended_ssh" value="sh-like-s"><label for="speaker_unattended_ssh_sh_like_s">SH sounded more like S.</label></input><br/>
+      <input id="speaker_unattended_ssh_swapped" type="radio" name="speaker_unattended_ssh" value="inverted_s-sh"><label for="speaker_unattended_ssh_swapped">S sounded more like SH and SH sounded more like S.</label></input><br/>
+    </div>
+  </div>
+  <!-- End unattended talker -->
+
+  <!-- General end questions -->
+  <div class="question_section" id="timezones" style="display:none">
+	  <div class="question">
+	     <p> What is your <strong>current timezone</strong>? </p>
+	     <select name="us.timezone">
+		       <option value="None">--Select your timezone--</option>
+		       <option value="HST">Hawaii Standard Time (UTC -10)</option>
+		       <!--<option value="HDT">Hawaii-Aleutian Daylight Time (UTC -9)</option>-->
+			   <option value="AKST">Alaska Standard Time (UTC -9)</option>
+			   <!--<option value="AKDT">Alaska Daylight Time (UTC -8)</option>-->
+		       <option value="PST">Pacific Standard Time (UTC -8)</option>
+			   <!--<option value="PDT">Pacific Daylight Time (UTC -7)</option>-->
+		       <option value="MST">Mountain Standard Time (UTC -7)</option>
+		       <!--<option value="MDT">Mountain Daylight Time (UTC -6)</option>-->
+		       <option value="CST">Central Standard Time (UTC -6)</option>
+			   <!--<option value="CDT">Central Daylight Time (UTC -5)</option>-->
+		       <option value="EST">Eastern Standard Time (UTC -5)</option>
+			   <!--<option value="EDT">Eastern Daylight Time (UTC -4)</option>-->
+		       <option value="Other">--other--</option>
+	     </select>
+	  </div>
+  </div>
+
+  <div class="question_section" id="comments" style="display:none">
+      <p>Please enter any other comments you have below.</p>
+      <textArea id="comments" name="comments" placeholder="Enter your comments here." ></textArea>
+  </div>
+
+  <input class="moveOn" id="SurveyContinue" name="Continue" type="button" value="Continue"/>
+</div>

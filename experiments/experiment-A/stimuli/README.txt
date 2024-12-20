@@ -1,1 +1,0 @@
-This includes all stimuli for all experiments.

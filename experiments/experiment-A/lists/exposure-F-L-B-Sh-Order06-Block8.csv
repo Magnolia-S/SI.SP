@@ -1,9 +1,0 @@
-...1,Phase,Item.Type,Item.Number,Version,Attended.Talker,Attended.Talker_Materials,Attended.Talker_Sound,Attended.Talker_Gender,Attended.Talker_Ear,Unattended.Talker,Unattended.Talker_Materials,Unattended.Talker_Sound,Unattended.Talker_Gender,Unattended.Talker_Ear,Correct.Response,reps,feedback,filename,Block
-2,Exposure,Critical,2,Unshifted,Obscene,Materials A,S,Female,Left,Machinery,Materials A,Sh,Male,Right,word,1,FALSE,Critical_S.Obscene.F.L_Sh.Machinery.M.R.wav,8
-12,Exposure,Critical,12,Shifted,Beneficial,Materials B,Sh,Female,Left,Democracy,Materials B,S,Male,Right,word,1,FALSE,Critical_Ash.Beneficial.F.L_As.Democracy.M.R.wav,8
-24,Exposure,Filler,2,3,Blueberry,Set A,word,Female,Right,Ungelnin,Set A,non-word,Male,Left,word,1,FALSE,Filler_N.Ungelnin.M.L_W.Blueberry.F.R.wav,8
-25,Exposure,Filler,2,4,Tounamplem,Set B,non-word,Female,Left,Bullying,Set B,word,Male,Right,non-word,1,FALSE,Filler_N.Tounamplem.F.L_W.Bullying.M.R.wav,8
-26,Exposure,Filler,2,1,Tymolape,Set C,non-word,Female,Right,Burglary,Set C,word,Male,Left,non-word,1,FALSE,Filler_W.Burglary.M.L_N.Tymolape.F.R.wav,8
-54,Exposure,Filler,12,3,Lingering,Set A,word,Female,Right,Inpaki,Set A,non-word,Male,Left,word,1,FALSE,Filler_N.Inpaki.M.L_W.Lingering.F.R.wav,8
-55,Exposure,Filler,12,4,Aknid,Set B,non-word,Female,Left,Membrane,Set B,word,Male,Right,non-word,1,FALSE,Filler_N.Aknid.F.L_W.Membrane.M.R.wav,8
-56,Exposure,Filler,12,1,Halomimoc,Set C,non-word,Female,Right,Metrical,Set C,word,Male,Left,non-word,1,FALSE,Filler_W.Metrical.M.L_N.Halomimoc.F.R.wav,8

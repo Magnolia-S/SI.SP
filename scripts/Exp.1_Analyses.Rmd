@@ -156,19 +156,19 @@ sortVars <- function(.data) {
 ```{r data}
 experiment = "experiment.a"
   read_csv(
-    "C:/Users/Rachel/Documents/SI.SP/data/experiment.a/Exp.1_raw.csv",
+    "C:/Users/Rachel/Documents/SI.SP/data/exp.1_data_raw.csv",
     show_col_types = FALSE) %>%
 
 formatData(experiment) %>%
 sortVars() %>%
   #view()
-  write.csv(., "C:/Users/Rachel/Documents/SI.SP/data/experiment.a/Exp.1_data.csv")
+  write.csv(., "C:/Users/Rachel/Documents/SI.SP/data/exp.1_data.csv")
 ```
 _____
 
 # Data from Prolific   
 ```{r data}
-data <- read_csv("C:/Users/Rachel/Documents/SI.SP/data/experiment.a/Exp.1_data.csv",
+data <- read_csv("C:/Users/Rachel/Documents/SI.SP/data/exp.1_data.csv",
     show_col_types = FALSE)
 ```
 
@@ -450,11 +450,11 @@ data %>%
   
    select(-c("...1")) %>%
 view()
- #write.csv(., "C:/Users/Rachel/Documents/SI.SP/data/experiment.a/Exp.1_clean.csv", row.names = FALSE)
+ #write.csv(., "C:/Users/Rachel/Documents/SI.SP/data/exp.1_data.csv", row.names = FALSE)
 ```
 
 ```{r}
-Data <- read_csv("C:/Users/Rachel/Documents/SI.SP/data/experiment.a/Exp.1_clean.csv",
+Data <- read_csv("C:/Users/Rachel/Documents/SI.SP/data/exp.1_data.csv",
     show_col_types = FALSE)
 ```
 

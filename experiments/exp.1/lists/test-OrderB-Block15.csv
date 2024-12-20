@@ -1,0 +1,7 @@
+Phase,Item.Type,Attended.Talker,Unattended.Talker,Item.Number,Attended.Talker_Gender,Correct.Response,reps,feedback,filename
+Test,Test,ashi.08,"NA",1,Female,NULL,1,FALSE,Test_F.ashi.08.wav
+Test,Test,ashi.12,"NA",2,Female,NULL,1,FALSE,Test_F.ashi.12.wav
+Test,Test,ashi.13,"NA",3,Female,NULL,1,FALSE,Test_F.ashi.13.wav
+Test,Test,ashi.14,"NA",4,Female,NULL,1,FALSE,Test_F.ashi.14.wav
+Test,Test,ashi.15,"NA",5,Female,NULL,1,FALSE,Test_F.ashi.15.wav
+Test,Test,ashi.19,"NA",6,Female,NULL,1,FALSE,Test_F.ashi.19.wav

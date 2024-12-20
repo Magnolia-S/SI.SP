@@ -1,0 +1,9 @@
+...1,Phase,Item.Type,Item.Number,Version,Attended.Talker,Attended.Talker_Materials,Attended.Talker_Sound,Attended.Talker_Gender,Attended.Talker_Ear,Unattended.Talker,Unattended.Talker_Materials,Unattended.Talker_Sound,Unattended.Talker_Gender,Unattended.Talker_Ear,Correct.Response,reps,feedback,filename,Block
+3,Exposure,Critical,3,Shifted,Brochure,Materials A,Sh,Male,Right,Medicine,Materials A,S,Female,Left,word,1,FALSE,Critical_As.Medicine.F.L_Ash.Brochure.M.R.wav,7
+13,Exposure,Critical,13,Unshifted,Embassy,Materials B,S,Male,Right,Negotiate,Materials B,Sh,Female,Left,word,1,FALSE,Critical_Sh.Negotiate.F.L_S.Embassy.M.R.wav,7
+27,Exposure,Filler,3,1,Camera,Set A,word,Male,Left,Tilegkalo,Set A,non-word,Female,Right,word,1,FALSE,Filler_W.Camera.M.L_N.Tilegkalo.F.R.wav,7
+28,Exposure,Filler,3,2,Ryligal,Set B,non-word,Male,Right,Continually,Set B,word,Female,Left,non-word,1,FALSE,Filler_W.Continually.F.L_N.Ryligal.M.R.wav,7
+29,Exposure,Filler,3,3,Tamical,Set C,non-word,Male,Left,Domineering,Set C,word,Female,Right,non-word,1,FALSE,Filler_N.Tamical.M.L_W.Domineering.F.R.wav,7
+57,Exposure,Filler,13,1,Melancholy,Set A,word,Male,Left,Hintarber,Set A,non-word,Female,Right,word,1,FALSE,Filler_W.Melancholy.M.L_N.Hintarber.F.R.wav,7
+58,Exposure,Filler,13,2,Ibirak,Set B,non-word,Male,Right,Negate,Set B,word,Female,Left,non-word,1,FALSE,Filler_W.Negate.F.L_N.Ibirak.M.R.wav,7
+59,Exposure,Filler,13,3,Gerbualo,Set C,non-word,Male,Left,Nightmare,Set C,word,Female,Right,non-word,1,FALSE,Filler_N.Gerbualo.M.L_W.Nightmare.F.R.wav,7

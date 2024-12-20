@@ -1,0 +1,9 @@
+...1,Phase,Item.Type,Item.Number,Version,Attended.Talker,Attended.Talker_Materials,Attended.Talker_Sound,Attended.Talker_Gender,Attended.Talker_Ear,Unattended.Talker,Unattended.Talker_Materials,Unattended.Talker_Sound,Unattended.Talker_Gender,Unattended.Talker_Ear,Correct.Response,reps,feedback,filename,Block
+4,Exposure,Critical,4,Shifted,Official,Materials A,Sh,Female,Left,Tennessee,Materials A,S,Male,Right,word,1,FALSE,Critical_Ash.Official.F.L_As.Tennessee.M.R.wav,7
+14,Exposure,Critical,14,Unshifted,Legacy,Materials B,S,Female,Left,Commercial,Materials B,Sh,Male,Right,word,1,FALSE,Critical_S.Legacy.F.L_Sh.Commercial.M.R.wav,7
+30,Exposure,Filler,4,3,Directory,Set A,word,Female,Right,Rimkeluwar,Set A,non-word,Male,Left,word,1,FALSE,Filler_N.Rimkeluwar.M.L_W.Directory.F.R.wav,7
+31,Exposure,Filler,4,4,Rawamtee,Set B,non-word,Female,Left,Document,Set B,word,Male,Right,non-word,1,FALSE,Filler_N.Rawamtee.F.L_W.Document.M.R.wav,7
+32,Exposure,Filler,4,1,Rengime,Set C,non-word,Female,Right,Embody,Set C,word,Male,Left,non-word,1,FALSE,Filler_W.Embody.M.L_N.Rengime.F.R.wav,7
+60,Exposure,Filler,14,3,Napkin,Set A,word,Female,Right,Gardimuallay,Set A,non-word,Male,Left,word,1,FALSE,Filler_N.Gardimuallay.M.L_W.Napkin.F.R.wav,7
+61,Exposure,Filler,14,4,Halken,Set B,non-word,Female,Left,Outnumber,Set B,word,Male,Right,non-word,1,FALSE,Filler_N.Halken.F.L_W.Outnumber.M.R.wav,7
+62,Exposure,Filler,14,1,Galliwinou,Set C,non-word,Female,Right,Panicking,Set C,word,Male,Left,non-word,1,FALSE,Filler_W.Panicking.M.L_N.Galliwinou.F.R.wav,7

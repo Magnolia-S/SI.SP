@@ -1,9 +1,0 @@
-...1,Phase,Item.Type,Item.Number,Version,Attended.Talker,Attended.Talker_Materials,Attended.Talker_Sound,Attended.Talker_Gender,Attended.Talker_Ear,Unattended.Talker,Unattended.Talker_Materials,Unattended.Talker_Sound,Unattended.Talker_Gender,Unattended.Talker_Ear,Correct.Response,reps,feedback,filename,Block
-8,Exposure,Critical,8,Shifted,Reassure,Materials A,Sh,Male,Left,Compensate,Materials A,S,Female,Right,word,1,FALSE,Critical_Ash.Reassure.M.L_As.Compensate.F.R.wav,4
-18,Exposure,Critical,18,Unshifted,Episode,Materials B,S,Male,Left,Glacier,Materials B,Sh,Female,Right,word,1,FALSE,Critical_S.Episode.M.L_Sh.Glacier.F.R.wav,4
-42,Exposure,Filler,8,4,Hurdle,Set A,word,Male,Right,Namuary,Set A,non-word,Female,Left,word,1,FALSE,Filler_N.Namuary.F.L_W.Hurdle.M.R.wav,4
-43,Exposure,Filler,8,3,Mibgem,Set B,non-word,Male,Left,Interior,Set B,word,Female,Right,non-word,1,FALSE,Filler_N.Mibgem.M.L_W.Interior.F.R.wav,4
-44,Exposure,Filler,8,2,Makid,Set C,non-word,Male,Right,Ironic,Set C,word,Female,Left,non-word,1,FALSE,Filler_W.Ironic.F.L_N.Makid.M.R.wav,4
-72,Exposure,Filler,18,4,Therapeutic,Set A,word,Male,Right,Amalar,Set A,non-word,Female,Left,word,1,FALSE,Filler_N.Amalar.F.L_W.Therapeutic.M.R.wav,4
-73,Exposure,Filler,18,3,Anemer,Set B,non-word,Male,Left,Titanium,Set B,word,Female,Right,non-word,1,FALSE,Filler_N.Anemer.M.L_W.Titanium.F.R.wav,4
-74,Exposure,Filler,18,2,Anolipa,Set C,non-word,Male,Right,Turbulent,Set C,word,Female,Left,non-word,1,FALSE,Filler_W.Turbulent.F.L_N.Anolipa.M.R.wav,4

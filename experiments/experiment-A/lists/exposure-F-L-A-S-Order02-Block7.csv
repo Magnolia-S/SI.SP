@@ -1,9 +1,0 @@
-...1,Phase,Item.Type,Item.Number,Version,Attended.Talker,Attended.Talker_Materials,Attended.Talker_Sound,Attended.Talker_Gender,Attended.Talker_Ear,Unattended.Talker,Unattended.Talker_Materials,Unattended.Talker_Sound,Unattended.Talker_Gender,Unattended.Talker_Ear,Correct.Response,reps,feedback,filename,Block
-5,Exposure,Critical,5,Shifted,Peninsula,Materials A,S,Female,Left,Crucial,Materials A,Sh,Male,Right,word,1,FALSE,Critical_As.Peninsula.F.L_Ash.Crucial.M.R.wav,7
-15,Exposure,Critical,15,Unshifted,Parachute,Materials B,Sh,Female,Left,Reconcile,Materials B,S,Male,Right,word,1,FALSE,Critical_Sh.Parachute.F.L_S.Reconcile.M.R.wav,7
-33,Exposure,Filler,5,3,Dynamite,Set A,word,Female,Right,Rakil,Set A,non-word,Male,Left,word,1,FALSE,Filler_N.Rakil.M.L_W.Dynamite.F.R.wav,7
-34,Exposure,Filler,5,4,Ploupelai,Set B,non-word,Female,Left,Eighty,Set B,word,Male,Right,non-word,1,FALSE,Filler_N.Ploupelai.F.L_W.Eighty.M.R.wav,7
-35,Exposure,Filler,5,1,Pourilar,Set C,non-word,Female,Right,Gullible,Set C,word,Male,Left,non-word,1,FALSE,Filler_W.Gullible.M.L_N.Pourilar.F.R.wav,7
-63,Exposure,Filler,15,3,Ornament,Set A,word,Female,Right,Gairelom,Set A,non-word,Male,Left,word,1,FALSE,Filler_N.Gairelom.M.L_W.Ornament.F.R.wav,7
-64,Exposure,Filler,15,4,Ganla,Set B,non-word,Female,Left,Parakeet,Set B,word,Male,Right,non-word,1,FALSE,Filler_N.Ganla.F.L_W.Parakeet.M.R.wav,7
-65,Exposure,Filler,15,1,Emhoutic,Set C,non-word,Female,Right,Pilgrim,Set C,word,Male,Left,non-word,1,FALSE,Filler_W.Pilgrim.M.L_N.Emhoutic.F.R.wav,7

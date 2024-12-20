@@ -1,9 +1,0 @@
-...1,Phase,Item.Type,Item.Number,Version,Attended.Talker,Attended.Talker_Materials,Attended.Talker_Sound,Attended.Talker_Gender,Attended.Talker_Ear,Unattended.Talker,Unattended.Talker_Materials,Unattended.Talker_Sound,Unattended.Talker_Gender,Unattended.Talker_Ear,Correct.Response,reps,feedback,filename,Block
-9,Exposure,Critical,9,Shifted,Graduation,Materials A,Sh,Male,Right,Dinosaur,Materials A,S,Female,Left,word,1,FALSE,Critical_As.Dinosaur.F.L_Ash.Graduation.M.R.wav,1
-19,Exposure,Critical,19,Unshifted,Literacy,Materials B,S,Male,Right,Refreshing,Materials B,Sh,Female,Left,word,1,FALSE,Critical_Sh.Refreshing.F.L_S.Literacy.M.R.wav,1
-45,Exposure,Filler,9,1,Inhabit,Set A,word,Male,Left,Logelai,Set A,non-word,Female,Right,word,1,FALSE,Filler_W.Inhabit.M.L_N.Logelai.F.R.wav,1
-46,Exposure,Filler,9,2,Meidnow,Set B,non-word,Male,Right,Knowingly,Set B,word,Female,Left,non-word,1,FALSE,Filler_W.Knowingly.F.L_N.Meidnow.M.R.wav,1
-47,Exposure,Filler,9,3,Kaldemia,Set C,non-word,Male,Left,Laminate,Set C,word,Female,Right,non-word,1,FALSE,Filler_N.Kaldemia.M.L_W.Laminate.F.R.wav,1
-75,Exposure,Filler,19,1,Tutorial,Set A,word,Male,Left,Ailounam,Set A,non-word,Female,Right,word,1,FALSE,Filler_W.Tutorial.M.L_N.Ailounam.F.R.wav,1
-76,Exposure,Filler,19,2,Lilgrai,Set B,non-word,Male,Right,Umbrella,Set B,word,Female,Left,non-word,1,FALSE,Filler_W.Umbrella.F.L_N.Lilgrai.M.R.wav,1
-77,Exposure,Filler,19,3,Alnadiro,Set C,non-word,Male,Left,Undermine,Set C,word,Female,Right,non-word,1,FALSE,Filler_N.Alnadiro.M.L_W.Undermine.F.R.wav,1

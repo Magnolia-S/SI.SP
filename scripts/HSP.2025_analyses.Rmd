@@ -49,6 +49,7 @@ library(tidyverse)
 library(magrittr)
 library(lme4)
 library(broom.mixed)
+library(sjPlot)
 ```
 
 ```{r, Format, include=F}
@@ -172,7 +173,6 @@ data %>%
   filter(audio_type != "over-ear") %>%
   summarise()
 ```
-
 ### Performance
 #### Lexcical Recognition Task  
 ```{r Performance_Lex}
@@ -288,6 +288,20 @@ Data %>%
 ```
 
 # Results
+```{r}
+Data <- 
+  read_csv("C:/Users/Rachel/Documents/SI.SP/data/exp.1_data.csv", show_col_types = FALSE) %>%
+  mutate(
+    across(c(ParticipantID), factor),
+    Condition_Attended.Label = factor(Condition_Attended.Label, levels = c("?s", "?sh")), 
+    Condition_Attended.Label = `contrasts<-`(Condition_Attended.Label, , cbind("sh-vs-s-bias" = c(-.5, +.5))), 
+    Condition_Attended.Gender = factor(Condition_Attended.Gender, levels = c("Male", "Female")), 
+    Condition_Attended.Gender = `contrasts<-`(Condition_Attended.Gender, , cbind("female-vs-male" = c(-.5, +.5))),
+    Attended.Talker_Sound = factor(Attended.Talker_Sound, levels = c("S", "Sh", "Word", "Nonword"))
+  )
+```
+
+
 ## Exposure
 ### Response.Correct == Correct Word/Nonword response relative to the *attended talker*
 ```{r Response.Correct Check}
@@ -324,14 +338,14 @@ data %>%
 
 |Item Type       |Proportion of *Words : Nonwords*|
 | :------------- | :----------------------------: |
-|All Items       | 47 : 47 |
+|All Items       | 40 : 40 |
 |Critical Items  | 20 : 0  |
-|Filler Items    | 27 : 47 |
+|Filler Items    | 20 : 40 |
 
 ```{r Word:Nonword}
 data %>% 
   group_by(ParticipantID, Item.Type, Attended.Talker_Sound) %>%
-    filter(Item.Type != "Test") %>%
+    filter(Phase == "Exposure") %>%
     # Pick a participant
     filter(ParticipantID == "405") %>%
     mutate(Word.Nonword = case_when(
@@ -344,11 +358,11 @@ data %>%
  
 
 ```{r}
+Data.exposure <- data %>% filter(Phase == "Exposure")
+
 p <- position_dodge(.4)
 
-data %>%                           
-  
-  filter(Phase == "Exposure") %>%
+Data.exposure %>%
   
   # Generate by participant averages
   group_by(
@@ -385,18 +399,17 @@ data %>%
     position = p
     ) +
   facet_grid(~ Item) +
-  scale_x_discrete("Attended talker's gender") +
-  scale_y_continuous("Lexical decision accuracy", 
-                     limits = c(.8, 1)
-    ) +
-  scale_color_discrete(
-    "Attended talker's bias:", 
+  scale_y_continuous("Lexical decision accuracy", limits = c(.8, 1)) +
+  scale_color_manual(
+    "Attended talker's bias", 
     breaks = c("?s", "?sh"), 
     labels = c("s-biased", "sh-biased"),
-    ) +
+    values = c("lightskyblue", "orange"), 
+    aesthetics = c("color", "fill")) +
   
-  scale_color_manual(values = c("lightskyblue", "orange")) +
-  scale_fill_manual(values = c("lightskyblue", "orange")) +
+    scale_color_manual(values = c("lightskyblue", "orange")) +
+    scale_fill_manual(values = c("lightskyblue", "orange")) +
+
   theme(legend.position = "top")
 ```
 
@@ -406,8 +419,7 @@ m <-
   glmer(
   formula = Response.Correct ~ 1 + Condition_Attended.Label * Condition_Attended.Gender + (1 | ParticipantID),
   family = binomial(link = "logit"),
-  data = data %>% filter(Phase == "Exposure", Item.Type == "Filler"))
-
+  data = Data.exposure %>% filter(Item.Type == "Filler"))
 tidy(m, effects = "fixed") %>% select(-effect) %>% knitr::kable(digits = 3)
 ```
 
@@ -417,8 +429,8 @@ m <-
   glmer(
   formula = Response.Correct ~ 1 + Condition_Attended.Label * Condition_Attended.Gender * Attended.Talker_Version + (1 | ParticipantID),
   family = binomial(link = "logit"),
-  data = data %>% 
-    filter(Phase == "Exposure", Item.Type == "Critical") %>%
+  data = Data.exposure %>% 
+    filter(Item.Type == "Critical") %>%
     mutate(
       Attended.Talker_Sound = factor(Attended.Talker_Sound, levels = c("S", "Sh")),
       Attended.Talker_Sound = `contrasts<-`(Attended.Talker_Sound, , cbind("sh-vs-s" = c(-.5, +.5))),
@@ -429,13 +441,259 @@ m <-
 tidy(m, effects = "fixed") %>% select(-effect) %>% knitr::kable(digits = 3)
 ```
 
+## Test
+```{r}
+Data.test <- 
+  Data %>%    
+  filter(Phase == "Test") %>%
+  mutate(
+    Talker = 
+      ifelse(Attended.Talker_Gender == Condition_Attended.Gender, "Attended", "Unattended"),
+    Response.Ashi = 
+      ifelse(Response == "ASHI", 1, 0),
+    Step = 
+      32 - as.numeric(gsub("ashi.(.*)$", "\\1", Attended.Talker_Item)) ## 31 steps Liu & Jaeger
+  )
+```
+
+```{r fig.cap="Participants' categorization responses in the 2AFC task during test.", fig.height=6, fig.width=9, warning=FALSE}
+Data.test %>%  
+  
+  group_by(
+    ParticipantID, 
+    Condition_Attended.Label,
+    Condition_Attended.Gender, 
+    Talker, 
+    Step
+  ) %>%
+  
+  summarise(Response.Ashi = mean(Response.Ashi)) %>%
+  ungroup() %>%
+  mutate(
+    Talker = paste(Talker, "talker"),
+    Condition_Attended.Gender = paste("Attended talker's gender =", Condition_Attended.Gender)) %>%
+ 
+  ggplot(
+    aes(
+      x = Step, 
+      y = Response.Ashi,
+      color = Condition_Attended.Label,
+      fill = Condition_Attended.Label
+    )) +
+  
+  stat_summary(
+    fun.data = mean_cl_boot, 
+    geom = "pointrange", 
+    position = position_dodge(.1)
+    ) +
+ 
+  geom_smooth(
+    method = "glm",
+    formula = y ~ x, 
+    method.args = list(family = "binomial"),
+    show.legend = TRUE
+    ) +
+  
+  scale_x_continuous(
+    name = "Test Item",  
+    breaks = c(13, 17, 18, 19, 20, 24), 
+    labels = c("13 (Most ASI-like)", "17", "18 ", "19", "20", "24 (Most ASHI-like)"), 
+    limits = c(12, 25)
+  ) +
+  scale_y_continuous(
+    "Proportion of ASHI Responses (%)",
+    limits = c(0,1)
+  ) +
+
+  scale_color_manual(
+    "Attended talker's bias", 
+    breaks = c("?s", "?sh"), 
+    labels = c("s-biased", "sh-biased"),
+    values = c("lightskyblue", "orange"), 
+    aesthetics = c("color", "fill")
+  ) +
+  
+  facet_grid(Condition_Attended.Gender ~ Talker) +
+  theme(legend.position = "top")
+```
+
+### Analyzing main effects of condition
+```{r}
+m <- 
+  glmer(
+  formula = Response.Ashi ~ 1 + Condition_Attended.Label * Condition_Attended.Gender * Talker + (1 + Talker | ParticipantID),
+  family = binomial(link = "logit"),
+  data = 
+    Data.test %>%
+    mutate(
+      Block = Block - min(Block),
+      Step = (Step - mean(Step)) / (2 * sd(Step)),
+      Talker = factor(Talker, levels = c("Unattended", "Attended")),
+      Talker = `contrasts<-`(Talker, , cbind("attended-vs-unattended" = c(-.5, +.5))))
+  )
+
+tidy(m, effects = "fixed") %>% select(-effect) %>% knitr::kable(digits = 3)
+
+plot_model(
+  m, 
+  title = "Effects on ASHI responses during test", 
+  show.values = TRUE, show.p = TRUE, ci.lvl = .95, value.offset = .4) +
+  aes(
+    color = 
+      case_when(
+        p.stars == "" ~ "n.s.",
+        estimate > 1 ~ "pos", 
+        estimate < 1 ~ "neg",
+        T ~ NA_character_)) +
+  scale_colour_manual(breaks = c("n.s.", "pos", "neg"), values = c("gray", "blue", "orange")) + 
+  theme_blank()
+```
+
+Analyzing main effects of condition, while taking into account that participants differed in terms of how well they performed during exposure (which can be estimated on the filler trials during exposure) and in terms of how much they heard the shifted stimuli as words (which can be estimated from the critical shifted trials):
+
+```{r}
+# Ideally we might derive a single measure of how much participants perceived the shifted stimuli as words.
+# For that, we would need to remove the word-response bias (estimated from fillers). Overall, there were 
+# 40 words (20 critical and 20 fillers) and 40 non-words for the attended talker. But, for fillers, only 1/3
+# of all stimuli were words. We thus estimate the word bias for each participant as the log-odds of word 
+# responses during exposure minus the logit of (20/60).
+
+# Estimate word-biase from fillers
+m.word_bias <- 
+  glmer(
+  formula = Response == "word" ~ 1 + (1 | ParticipantID),
+  family = binomial(link = "logit"),
+  data = Data.exposure %>% filter(Item.Type == "Filler"))
+
+# Estimate how much shifted words are treated as words
+m.shifted_perceived_as_word <- 
+  glmer(
+  formula = Response == "word" ~ 1 + (1 | ParticipantID),
+  family = binomial(link = "logit"),
+  data = Data.exposure %>% filter(Item.Type == "Critical", Attended.Talker_Version == "Shifted"))
+
+# Remove word bias from word responses for shifted words and use this as an estimate how much the participant
+# perceived the shifted words as words.
+Data.test %<>%
+  left_join(
+    { coef(m.shifted_perceived_as_word)$ParticipantID - (coef(m.word_bias)$ParticipantID - qlogis(20 / 60)) } %>%
+      rownames_to_column("ParticipantID") %>%
+      rename(Attended.Talker_shifted_word_acceptance_logodds = `(Intercept)`)) %>%
+  # Create a predictor that combines the label condition with the estimates word bias to capture the expected 
+  # degree of category expansion from -1 (very s-biased) to 1 (very sh-biased)
+  mutate(Condition_Attended.Label_logodds = ifelse(Condition_Attended.Label == "?sh", plogis(Attended.Talker_shifted_word_acceptance_logodds), -plogis(Attended.Talker_shifted_word_acceptance_logodds)))
+
+gelman_scale <- function(x) {
+  (x - mean(x)) / (2 * sd(x))
+}
+
+m <- 
+  glmer(
+  formula = Response.Ashi ~ 1 + Condition_Attended.Label_logodds * Talker + (1 + Talker | ParticipantID),
+  family = binomial(link = "logit"),
+  data = 
+    Data.test %>%
+    mutate(
+      Block = Block - min(Block),
+      Step = gelman_scale(Step),
+      Attended.Talker_shifted_word_acceptance_logodds = gelman_scale(Attended.Talker_shifted_word_acceptance_logodds),
+      Condition_Attended.Label_logodds = gelman_scale(Condition_Attended.Label_logodds),
+      Talker = factor(Talker, levels = c("Unattended", "Attended")),
+      Talker = `contrasts<-`(Talker, , cbind("attended-vs-unattended" = c(-.5, +.5))))
+  )
+
+tidy(m, effects = "fixed") %>% select(-effect) %>% knitr::kable(digits = 3)
+
+plot_model(
+  m, 
+  title = "Effects on ASHI responses during test", 
+  show.values = TRUE, show.p = TRUE, ci.lvl = .95, value.offset = .4) +
+  aes(
+    color = 
+      case_when(
+        p.stars == "" ~ "n.s.",
+        estimate > 1 ~ "pos", 
+        estimate < 1 ~ "neg",
+        T ~ NA_character_)) +
+  scale_colour_manual(breaks = c("n.s.", "pos", "neg"), values = c("gray", "blue", "orange")) + 
+  theme_blank()
+```
+
+### Analyzing changes across blocks (while ignoring gender)
+```{r, fig.height = 6, fig.width=12}
+m <- 
+  glmer(
+  formula = Response.Ashi ~ 1 + Step * Block * Condition_Attended.Label * Talker + (1 + Talker | ParticipantID),
+  family = binomial(link = "logit"),
+  data = 
+    Data.test %>%
+    mutate(
+      # Group into Blocks of 24 stimuli so that Block is not confounded with Talker order 
+      # (the attended talker was, by chance, much more frequently the talker that was tested first)
+      Block = floor((Block - min(Block)) / 4),
+      Step = (Step - mean(Step)) / (2 * sd(Step)),
+      Talker = factor(Talker, levels = c("Unattended", "Attended")),
+      Talker = `contrasts<-`(Talker, , cbind("attended-vs-unattended" = c(-.5, +.5))))
+  )
+
+tidy(m, effects = "fixed") %>% select(-effect) %>% knitr::kable(digits = 3)
+
+plot_model(
+  m, 
+  title = "Effects on ASHI responses during test", 
+  show.values = TRUE, show.p = TRUE, ci.lvl = .95, value.offset = .4) +
+  aes(
+    color = 
+      case_when(
+        p.stars == "" ~ "n.s.",
+        estimate > 1 ~ "pos", 
+        estimate < 1 ~ "neg",
+        T ~ NA_character_)) +
+  scale_colour_manual(breaks = c("n.s.", "pos", "neg"), values = c("gray", "blue", "orange")) + 
+  theme_blank()
+```
+
+
+Analyzing everything at once:
+```{r fig.height = 10, fig.width=12}
+m <- 
+  glmer(
+  formula = Response.Ashi ~ 1 + Step * Block * Condition_Attended.Label * Condition_Attended.Gender * Talker + (1 + Talker | ParticipantID),
+  family = binomial(link = "logit"),
+  data = 
+    Data.test %>%
+    mutate(
+      # Group into Blocks of 24 stimuli so that Block is not confounded with Talker order 
+      # (the attended talker was, by chance, much more frequently the talker that was tested first)
+      Block = floor((Block - min(Block)) / 4),
+      Step = (Step - mean(Step)) / (2 * sd(Step)),
+      Talker = factor(Talker, levels = c("Unattended", "Attended")),
+      Talker = `contrasts<-`(Talker, , cbind("attended-vs-unattended" = c(-.5, +.5))))
+  )
+
+tidy(m, effects = "fixed") %>% select(-effect) %>% knitr::kable(digits = 3)
+
+plot_model(
+  m, 
+  title = "Effects on ASHI responses during test", 
+  show.values = TRUE, show.p = TRUE, ci.lvl = .95, value.offset = .4) +
+  aes(
+    color = 
+      case_when(
+        p.stars == "" ~ "n.s.",
+        estimate > 1 ~ "pos", 
+        estimate < 1 ~ "neg",
+        T ~ NA_character_)) +
+  scale_colour_manual(breaks = c("n.s.", "pos", "neg"), values = c("gray", "blue", "orange")) + 
+  theme_blank()
+```
+
+# OTHER STUFF
 ## Attended Talker 
 ```{r, Attended_Talker}
 data %>%                           
-  
   filter(Item.Type == "Test") %>%
   mutate(Response.Ashi = ifelse(Response == "ASHI", 1, 0)) %>%
-
   # Attended Talker var
   mutate(Attended.Talker_Test = ifelse(Attended.Talker_Gender == Condition_Attended.Gender, "Attended Talker", "Unattended Talker")) %>% 
   group_by(ParticipantID, Attended.Talker_Test,   Condition_Attended.Label, Attended.Talker_Item) %>%
@@ -620,3 +878,4 @@ data %>%
   facet_grid(Talker ~ Condition_Attended.Gender) +
   theme(legend.position = "top")
 ```
+

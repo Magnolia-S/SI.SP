@@ -1,48 +1,14 @@
 ---
-title: "Visualizations and analyses for HSP 2025 abstract"
+title: "Visualizations and analyses for LabPhon 20 abstract"
 author: "Rachel"
 date: \today
 geometry: margin = 2cm
-header-includes:
- - \usepackage{sectsty}
- - \usepackage{animate}
- - \usepackage{amsmath}
- - \usepackage{tikz}
- - \usetikzlibrary{bayesnet}
- - \usepackage{booktabs}
- - \usepackage{siunitx}
- - \usepackage{soul}
- - \usepackage{tabto}
- - \usepackage{xcolor}
- - \usepackage{placeins}
- - \setstcolor{red}
- - \sectionfont{\color{black}}
- - \subsectionfont{\color{black}}
- - \subsubsectionfont{\color{black}}
- - \usepackage{setspace}\doublespacing
- - \usepackage{subfig}
- - \usepackage{float} 
- - \floatplacement{figure}{H} 
- - \usepackage{multirow}
- - \usepackage{lscape}
- - \usepackage{pdflscape}
-output:
-  pdf_document: 
-    fig_caption: yes
-    fig_width: 7
-    keep_tex: yes
-    latex_engine: xelatex
-    number_sections: yes
-    toc: yes
-    toc_depth: 4
-  fontsize: 10pt
+fontsize: 10pt
 ---   
 
 # Housekeeping   
 The purpose of this file is to analyze the data collected in Experiment 1.  
-_Goal:_ To determine how participant's adapted their perception to the Attended and Unattended Talkers.  
-*Color file here: http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf*  
-*crtl + I for reformat*   
+_Goal:_ To determine how participant's adapted their perception to the Attended and Unattended Talkers.   
 
 ```{r libraries, include=F}
 library(tidyverse)
@@ -52,58 +18,16 @@ library(broom.mixed)
 library(sjPlot)
 ```
 
-```{r, Format, include=F}
-options(width = 110)
-theme_set(theme_bw())
-```
-
-```{r knitting, include=F}
-knitr::opts_chunk$set(
-  dev = 'pdf',
-  comment = "", 
-  echo = FALSE, 
-  warning = TRUE, 
-  message = TRUE,
-  cache = FALSE, 
-  size = "small",
-  tidy.opts = list(width.cutoff = 200),
-  fig.width = 8, 
-  fig.height = 4.5, 
-  fig.align = "center")
-
-def.chunk.hook  <- knitr::knit_hooks$get("chunk")
-
-knitr::knit_hooks$set(
-  chunk = function(x, options) {
-    x <- def.chunk.hook(x, options)
-    ifelse(
-      options$size != "normalsize", 
-      paste0(
-        "\n \\", 
-        options$size,
-        "\n\n", 
-        x, 
-        "\n\n \\normalsize"), 
-      x)
-  })
-
-color_block = function(color) {
-  function(x, options)        sprintf('\\color{%s}\\begin{verbatim}%s\\end{verbatim}\\color{black}', color, x)
-}
-knitr::knit_hooks$set(error = color_block('red'))
-knitr::knit_hooks$set(warning = color_block('orange'))
-```
-
 # Data 
 ## Import 
 ```{r data_import}
-data <- read_csv("C:/Users/Rachel/Documents/SI.SP/data/exp.1_data.csv", show_col_types = FALSE) %>%
+data <- read_csv("C:/Users/rache/SI.SP/data/exp.1_data.csv", show_col_types = FALSE) %>%
   view()
 ```
 
-## Verify Data  
+# Verify Data   
+**All should return 0**  
 ```{r data_verify}
-# **All should return 0**
 # Have any participants completed the experiment more than once?  
 data %>%
   group_by(ParticipantID, userDateTimeAtInitialization) %>%
@@ -173,8 +97,8 @@ data %>%
   filter(audio_type != "over-ear") %>%
   summarise()
 ```
-### Performance
-#### Lexcical Recognition Task  
+# Performance
+## Lexcical Recognition Task  
 ```{r Performance_Lex}
 # How many participants answered at least 1 question incorrectly (# of rows)
 Resp_Incorrect <- data %>%
@@ -257,7 +181,7 @@ Resp_False
 # Participant Summary
 ## Average Participant Age
 ```{r Participant_Age}
-Part_Age <- Data %>%
+Part_Age <- data %>%
   group_by(ParticipantID, Participant.Age) %>%
   filter(Participant.Age != "NA") %>%
   summarise()
@@ -268,7 +192,7 @@ sd(Part_Age$Participant.Age)
 
 ## Read Comments (optional)
 ```{r Participant_Comments}
-Data %>%
+data %>%
   group_by(ParticipantID, Assignment.Comment) %>%
   filter(Assignment.Comment != "NA") %>%
   summarise()
@@ -276,7 +200,7 @@ Data %>%
 
 ## Survey
 ```{r Particpant_Survey}
-Data %>%
+data %>%
   group_by(ParticipantID, Condition_Attended.Label, speaker_attended_ssh, speaker_unattended_ssh) %>%
   # Speaker_(Un)Attended -> conscious perception
     #filter(speaker_unattended_ssh != "normal") %>% 
@@ -286,21 +210,6 @@ Data %>%
     #filter(Condition_Attended.Label == "?sh") %>%
   summarise()
 ```
-
-# Results
-```{r}
-Data <- 
-  read_csv("C:/Users/Rachel/Documents/SI.SP/data/exp.1_data.csv", show_col_types = FALSE) %>%
-  mutate(
-    across(c(ParticipantID), factor),
-    Condition_Attended.Label = factor(Condition_Attended.Label, levels = c("?s", "?sh")), 
-    Condition_Attended.Label = `contrasts<-`(Condition_Attended.Label, , cbind("sh-vs-s-bias" = c(-.5, +.5))), 
-    Condition_Attended.Gender = factor(Condition_Attended.Gender, levels = c("Male", "Female")), 
-    Condition_Attended.Gender = `contrasts<-`(Condition_Attended.Gender, , cbind("female-vs-male" = c(-.5, +.5))),
-    Attended.Talker_Sound = factor(Attended.Talker_Sound, levels = c("S", "Sh", "Word", "Nonword"))
-  )
-```
-
 
 ## Exposure
 ### Response.Correct == Correct Word/Nonword response relative to the *attended talker*
@@ -444,7 +353,7 @@ tidy(m, effects = "fixed") %>% select(-effect) %>% knitr::kable(digits = 3)
 ## Test
 ```{r}
 Data.test <- 
-  Data %>%    
+  data %>%    
   filter(Phase == "Test") %>%
   mutate(
     Talker = 
@@ -456,65 +365,66 @@ Data.test <-
   )
 ```
 
-```{r fig.cap="Participants' categorization responses in the 2AFC task during test.", fig.height=6, fig.width=9, warning=FALSE}
-Data.test %>%  
-  
+```{r fig.cap="Participants' categorization responses in the 2AFC task during test.", fig.height=6, fig.width=12, warning=FALSE}
+
+df <- 
+  Data.test %>%
   group_by(
-    ParticipantID, 
+    ParticipantID,
     Condition_Attended.Label,
-    Condition_Attended.Gender, 
-    Talker, 
+    Condition_Attended.Gender,
+    Talker,
     Step
   ) %>%
-  
   summarise(Response.Ashi = mean(Response.Ashi)) %>%
   ungroup() %>%
   mutate(
     Talker = paste(Talker, "talker"),
-    Condition_Attended.Gender = paste("Attended talker's gender =", Condition_Attended.Gender)) %>%
+    X = case_when(
+      Condition_Attended.Label == "?s" ~ "/s/",
+      Condition_Attended.Label == "?sh" ~ "/ʃ/",
+      T ~ "fuck"),
+    Talker_Bias =
+      paste0(X, "-biased"
+      ))
+#view(df)
  
   ggplot(
+  data = df,
+  mapping =
     aes(
-      x = Step, 
+      x = Step,
       y = Response.Ashi,
-      color = Condition_Attended.Label,
-      fill = Condition_Attended.Label
+      color = Talker_Bias,
+      fill = Talker_Bias
     )) +
-  
   stat_summary(
-    fun.data = mean_cl_boot, 
-    geom = "pointrange", 
+    fun.data = mean_cl_boot,
+    geom = "pointrange",
     position = position_dodge(.1)
-    ) +
- 
+  ) +
   geom_smooth(
     method = "glm",
-    formula = y ~ x, 
+    formula = y ~ x,
     method.args = list(family = "binomial"),
     show.legend = TRUE
-    ) +
-  
+  ) +
   scale_x_continuous(
-    name = "Test Item",  
-    breaks = c(13, 17, 18, 19, 20, 24), 
-    labels = c("13 (Most ASI-like)", "17", "18 ", "19", "20", "24 (Most ASHI-like)"), 
+    name = "Test Item",
+    breaks = c(13, 17, 18, 19, 20, 24),
+    labels = c("13 (Most ASI-like)", "17", "18 ", "19", "20", "24 (Most ASHI-like)"),
     limits = c(12, 25)
   ) +
   scale_y_continuous(
     "Proportion of ASHI Responses (%)",
     limits = c(0,1)
   ) +
-
   scale_color_manual(
-    "Attended talker's bias", 
-    breaks = c("?s", "?sh"), 
-    labels = c("s-biased", "sh-biased"),
-    values = c("lightskyblue", "orange"), 
+    values = c("lightskyblue", "orange"),
     aesthetics = c("color", "fill")
   ) +
-  
-  facet_grid(Condition_Attended.Gender ~ Talker) +
-  theme(legend.position = "top")
+  facet_grid( ~ Talker) +
+  theme(legend.position = "right")
 ```
 
 ### Analyzing main effects of condition
